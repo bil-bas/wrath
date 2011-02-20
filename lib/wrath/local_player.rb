@@ -17,21 +17,35 @@ class LocalPlayer < Player
 
   def update
     # Move the character.
-    if holding? :w
-      self.y -= speed
-    elsif holding? :a
-      self.x -= speed
-    elsif holding? :s
-      self.y += speed
-    elsif holding? :d
-      self.x += speed
+    if holding_any? :left, :a
+      if holding_any? :up, :w
+        self.x -= @speed * 0.707
+        self.y -= @speed * 0.707
+      elsif holding_any? :down, :s
+        self.x -= @speed * 0.707
+        self.y += @speed * 0.707
+      else
+        self.x -= @speed
+      end
+    elsif holding_any? :right, :d
+      if holding_any? :up, :w
+        self.x += @speed * 0.707
+        self.y -= @speed * 0.707
+      elsif holding_any? :down, :s
+        self.x += @speed * 0.707
+        self.y += @speed * 0.707
+      else
+        self.x += @speed
+      end
+    elsif holding_any? :up, :w
+      self.y -= @speed
+    elsif holding_any? :down, :s
+      self.y += @speed
     end
 
-    # Keep co-ordinates inside the screen.
+   # Keep co-ordinates inside the screen.
     self.x = [[x, ($window.width / $window.factor) - (width / (2 * factor))].min, width / (2 * factor)].max
     self.y = [[y, ($window.height / $window.factor)].min, height / factor].max
-
-    super
   end
 
   def action
@@ -56,7 +70,7 @@ class LocalPlayer < Player
       # Find the nearest goat and pick it up.
       nearest = state.goats.min_by {|g| distance_to g }
 
-      if distance_to(nearest) <= ACTION_DISTANCE
+      if nearest and distance_to(nearest) <= ACTION_DISTANCE
         @carrying = nearest
         state.goats.delete @carrying
       end

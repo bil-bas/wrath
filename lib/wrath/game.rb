@@ -4,6 +4,8 @@ require 'chingu'
 include Gosu
 include Chingu
 
+require_relative 'chingu_ext'
+
 # Objects
 require_relative 'local_player'
 require_relative 'player'
@@ -18,12 +20,6 @@ module ZOrder
   BACKGROUND = -1
   OBJECTS = 0..640
   GUI = 10000
-end
-
-class GameObject
-  def distance_to(other)
-    distance(self.x, self.y, other.x, other.y)
-  end
 end
 
 class SpriteSheet
