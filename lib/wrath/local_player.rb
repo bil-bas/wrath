@@ -2,8 +2,9 @@ require_relative 'player'
 
 class LocalPlayer < Player
   ACTION_DISTANCE = 10
-  CARRY_OFFSET = -6
+  CARRY_OFFSET = 6
   DIAGONAL_SPEED = Math.sqrt(2) / 2
+  CARRY_SPEED = 0.6
 
   def initialize(options = {})
     options = {
@@ -16,36 +17,44 @@ class LocalPlayer < Player
     on_input(:space, :action)
   end
 
+  def effective_speed
+    @carrying ? (@speed * CARRY_SPEED) : @speed
+  end
+
   def update
     old_pos = [x, y]
 
     # Move the character.
     if holding_any? :left, :a
       self.factor_x = -1
+      @carrying.factor_x = -1 if @carrying
+
       if holding_any? :up, :w
-        self.x -= @speed * DIAGONAL_SPEED
-        self.y -= @speed * DIAGONAL_SPEED
+        self.x -= effective_speed * DIAGONAL_SPEED
+        self.y -= effective_speed * DIAGONAL_SPEED
       elsif holding_any? :down, :s
-        self.x -= @speed * DIAGONAL_SPEED
-        self.y += @speed * DIAGONAL_SPEED
+        self.x -= effective_speed * DIAGONAL_SPEED
+        self.y += effective_speed * DIAGONAL_SPEED
       else
-        self.x -= @speed
+        self.x -= effective_speed
       end
     elsif holding_any? :right, :d
       self.factor_x = 1
+      @carrying.factor_x = 1 if @carrying
+
       if holding_any? :up, :w
-        self.x += @speed * DIAGONAL_SPEED
-        self.y -= @speed * DIAGONAL_SPEED
+        self.x += effective_speed * DIAGONAL_SPEED
+        self.y -= effective_speed * DIAGONAL_SPEED
       elsif holding_any? :down, :s
-        self.x += @speed * DIAGONAL_SPEED
-        self.y += @speed * DIAGONAL_SPEED
+        self.x += effective_speed * DIAGONAL_SPEED
+        self.y += effective_speed * DIAGONAL_SPEED
       else
-        self.x += @speed
+        self.x += effective_speed
       end
     elsif holding_any? :up, :w
-      self.y -= @speed
+      self.y -= effective_speed
     elsif holding_any? :down, :s
-      self.y += @speed
+      self.y += effective_speed
     end
 
     # Keep co-ordinates inside the screen.
@@ -56,9 +65,7 @@ class LocalPlayer < Player
       # broadcast our new position.
     end
 
-    if @carrying
-      @carrying.x, @carrying.y = x, y + CARRY_OFFSET
-    end
+    super
   end
 
   def action
@@ -73,7 +80,7 @@ class LocalPlayer < Player
             @carrying.destroy
           else
             state.goats.push @carrying
-            @carrying.y = y
+            @carrying.drop(factor_x * 0.5, 0, 0.5)
           end
 
       end
@@ -85,6 +92,7 @@ class LocalPlayer < Player
 
       if nearest and distance_to(nearest) <= ACTION_DISTANCE
         @carrying = nearest
+        @carrying.pick_up(self, CARRY_OFFSET)
         state.goats.delete @carrying
       end
     end

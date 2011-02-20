@@ -17,6 +17,10 @@ class Play < GameState
     @goats = Array.new(NUM_GOATS) { Goat.create(:spawn => true) }
   end
 
+  def setup
+    puts "Started Playing"
+  end
+
   def draw
     $window.pixel.draw 0, 0, ZOrder::BACKGROUND, $window.width, $window.height, @background_color
     super

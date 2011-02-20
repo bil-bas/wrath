@@ -13,13 +13,13 @@ class Server < GameStates::NetworkServer
 
     @address = options[:address]
     @port = options[:port]
-    start(@address, @port)
-
     @remote_socket = nil
 
     @font = Font[16]
 
     super options
+
+    start(@address, @port)
   end
 
   #
@@ -29,7 +29,7 @@ class Server < GameStates::NetworkServer
     puts "* New player: #{socket.inspect}"
 
     @remote_socket = socket
-    push_game_state Play
+    $window.push_game_state Play
   end
 
   def on_disconnect(socket)
@@ -42,7 +42,7 @@ class Server < GameStates::NetworkServer
   end
 
   def draw
-    @font.draw("Waiting for client...", 0, 0, 0)
+    @font.draw("Waiting for client...", 0, 0, ZOrder::GUI)
   end
 
   def restart
@@ -50,7 +50,7 @@ class Server < GameStates::NetworkServer
   end
 
   def on_msg(socket, data)
-    case data[:cmd]
+    case data[:type]
       when :position
         @remote_player.x = data[:x]
         @remote_player.y = data[:y]
