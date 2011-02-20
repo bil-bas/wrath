@@ -5,9 +5,11 @@ class Play < GameState
 
   attr_reader :goats, :altar
 
-  def setup
+  def initialize(socket = nil)
+    super
+
     @local_player = LocalPlayer.create(x: 40, y: 60)
-    @remote_player = Player.create(x: 120, y: 60)
+    @remote_player = RemotePlayer.create(socket, x: 120, y: 60)
 
     @altar = Altar.create
     @background_color = Color.rgb(0, 100, 0)

@@ -3,8 +3,9 @@ require_relative 'player'
 class LocalPlayer < Player
   ACTION_DISTANCE = 10
   CARRY_OFFSET = -6
+  DIAGONAL_SPEED = Math.sqrt(2) / 2
 
-  def initialize(options)
+  def initialize(options = {})
     options = {
     }.merge! options
 
@@ -16,24 +17,28 @@ class LocalPlayer < Player
   end
 
   def update
+    old_pos = [x, y]
+
     # Move the character.
     if holding_any? :left, :a
+      self.factor_x = -1
       if holding_any? :up, :w
-        self.x -= @speed * 0.707
-        self.y -= @speed * 0.707
+        self.x -= @speed * DIAGONAL_SPEED
+        self.y -= @speed * DIAGONAL_SPEED
       elsif holding_any? :down, :s
-        self.x -= @speed * 0.707
-        self.y += @speed * 0.707
+        self.x -= @speed * DIAGONAL_SPEED
+        self.y += @speed * DIAGONAL_SPEED
       else
         self.x -= @speed
       end
     elsif holding_any? :right, :d
+      self.factor_x = 1
       if holding_any? :up, :w
-        self.x += @speed * 0.707
-        self.y -= @speed * 0.707
+        self.x += @speed * DIAGONAL_SPEED
+        self.y -= @speed * DIAGONAL_SPEED
       elsif holding_any? :down, :s
-        self.x += @speed * 0.707
-        self.y += @speed * 0.707
+        self.x += @speed * DIAGONAL_SPEED
+        self.y += @speed * DIAGONAL_SPEED
       else
         self.x += @speed
       end
@@ -43,9 +48,17 @@ class LocalPlayer < Player
       self.y += @speed
     end
 
-   # Keep co-ordinates inside the screen.
-    self.x = [[x, ($window.width / $window.factor) - (width / (2 * factor))].min, width / (2 * factor)].max
-    self.y = [[y, ($window.height / $window.factor)].min, height / factor].max
+    # Keep co-ordinates inside the screen.
+    self.x = [[x, $window.retro_width - (width / (2 * factor))].min, width / (2 * factor)].max
+    self.y = [[y, $window.retro_height].min, height / factor].max
+
+    if [x, y] != old_pos
+      # broadcast our new position.
+    end
+
+    if @carrying
+      @carrying.x, @carrying.y = x, y + CARRY_OFFSET
+    end
   end
 
   def action
@@ -74,14 +87,6 @@ class LocalPlayer < Player
         @carrying = nearest
         state.goats.delete @carrying
       end
-    end
-  end
-
-  def draw
-    super
-
-    if @carrying
-      @carrying.x, @carrying.y = x, y + CARRY_OFFSET
     end
   end
 end
