@@ -1,3 +1,5 @@
+require_relative '../carriable'
+
 class Rock < WrathObject
   include Carriable
 

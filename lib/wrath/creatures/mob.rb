@@ -1,4 +1,6 @@
-require_relative 'carriable'
+# encoding: utf-8
+
+require_relative '../carriable'
 
 class Mob < WrathObject
   include Carriable

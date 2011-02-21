@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require_relative 'wrath_object'
+require_relative '../objects/wrath_object'
 
 class Player < WrathObject
   attr_reader :speed, :favor, :health

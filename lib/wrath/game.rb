@@ -6,21 +6,23 @@ include Chingu
 
 require_relative 'chingu_ext'
 
+# Creatures
+require_relative 'creatures/local_player'
+require_relative 'creatures/remote_player'
+require_relative 'creatures/goat'
+require_relative 'creatures/virgin'
+require_relative 'creatures/knight'
+
 # Objects
-require_relative 'local_player'
-require_relative 'remote_player'
-require_relative 'altar'
-require_relative 'goat'
-require_relative 'virgin'
-require_relative 'knight'
-require_relative 'rock'
+require_relative 'objects/altar'
+require_relative 'objects/rock'
 
 # States
-require_relative 'server'
-require_relative 'client'
-require_relative 'menu'
-require_relative 'play'
-require_relative 'transition'
+require_relative 'states/server'
+require_relative 'states/client'
+require_relative 'states/menu'
+require_relative 'states/play'
+require_relative 'states/transition'
 
 module ZOrder
   BACKGROUND = -Float::INFINITY

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class RemotePlayer < Player
   attr_reader :socket
 
