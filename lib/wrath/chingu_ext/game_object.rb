@@ -2,6 +2,6 @@
 
 class GameObject
   def distance_to(other)
-    distance(x, y, other.x, other.y)
+    Math.sqrt((x - other.x) ** 2 + (y - other.y) ** 2 + (y - other.y) ** 2)
   end
 end
