@@ -22,6 +22,9 @@ class Player < WrathObject
     @health = options[:health]
     @gui_pos = options[:gui_pos]
 
+    @sparkle = GameObject.new(image: $window.object_sprites[13, 4])
+    @sparkle.alpha = 150
+
     @font = Font[8]
 
     super(options)
@@ -29,6 +32,10 @@ class Player < WrathObject
 
   def draw
     super
+
+    sparkle_factor = (favor / 200.0) - @sparkle.factor
+    @sparkle.draw_relative(x + 4 * factor_x, y - height, y, - milliseconds / 10.0, 0, 0, sparkle_factor, sparkle_factor)
+
     @font.draw "F: #{@favor} H: #{@health}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
 end
