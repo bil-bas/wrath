@@ -13,6 +13,7 @@ require_relative 'creatures/goat'
 require_relative 'creatures/virgin'
 require_relative 'creatures/knight'
 require_relative 'creatures/chicken'
+require_relative 'creatures/horse'
 
 # Objects
 require_relative 'objects/altar'
