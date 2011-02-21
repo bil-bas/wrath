@@ -23,6 +23,8 @@ class Play < GameState
     @mobs += Array.new(NUM_GOATS) { Goat.create(spawn: true) }
     @mobs += Array.new(NUM_CHICKENS) { Chicken.create(spawn: true) }
     @mobs += Array.new(4) { Rock.create(spawn: true) }
+
+    @fires = [Fire.create(x: 20, y: 60), Fire.create(x: 140, y: 60)]
   end
 
   def setup

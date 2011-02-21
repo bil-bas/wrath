@@ -19,6 +19,7 @@ require_relative 'objects/altar'
 require_relative 'objects/rock'
 require_relative 'objects/pebble'
 require_relative 'objects/blood'
+require_relative 'objects/fire'
 
 # States
 require_relative 'states/server'
