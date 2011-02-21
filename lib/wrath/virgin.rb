@@ -2,13 +2,13 @@
 
 require_relative 'mob'
 
-class Goat < Mob
+class Virgin < Mob
   def initialize(options = {})
     options = {
-      image: $window.character_sprites[2, 13],
-      speed: 0.5,
+      image: $window.character_sprites[2, 1],
+      speed: 0.3,
     }.merge! options
 
-    super(options)
+    super options
   end
 end

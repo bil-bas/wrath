@@ -74,11 +74,11 @@ class LocalPlayer < Player
     if @carrying
       # Drop whatever we are carrying.
       case @carrying
-        when Goat
+        when Goat, Virgin
           if state.altar.ready? and distance_to(state.altar) <= ACTION_DISTANCE
             state.altar.sacrifice(@carrying)
           else
-            state.goats.push @carrying
+            state.mobs.push @carrying
             @carrying.drop(factor_x * 0.5, 0, 0.5)
           end
 
@@ -87,12 +87,12 @@ class LocalPlayer < Player
       @carrying = nil
     else
       # Find the nearest goat and pick it up.
-      nearest = state.goats.min_by {|g| distance_to g }
+      nearest = state.mobs.min_by {|g| distance_to g }
 
       if nearest and distance_to(nearest) <= ACTION_DISTANCE
         @carrying = nearest
         @carrying.pick_up(self, CARRY_OFFSET)
-        state.goats.delete @carrying
+        state.mobs.delete @carrying
       end
     end
   end

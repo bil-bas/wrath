@@ -7,7 +7,7 @@ class Player < WrathObject
 
   def initialize(options = {})
     options = {
-      image: $window.character_sprites[5, 3],
+      image: $window.character_sprites[3, 5],
       speed: 0.5,
     }.merge! options
 

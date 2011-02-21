@@ -3,7 +3,7 @@
 class Play < GameState
   NUM_GOATS = 5
 
-  attr_reader :goats, :altar
+  attr_reader :mobs, :altar
 
   def initialize(socket = nil)
     super
@@ -14,7 +14,8 @@ class Play < GameState
     @altar = Altar.create
     @background_color = Color.rgb(0, 100, 0)
 
-    @goats = Array.new(NUM_GOATS) { Goat.create(:spawn => true) }
+    @mobs = Array.new(NUM_GOATS) { Goat.create(:spawn => true) }
+    @mobs.push Virgin.create(:spawn => true)
   end
 
   def setup

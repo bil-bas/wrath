@@ -11,6 +11,7 @@ require_relative 'local_player'
 require_relative 'remote_player'
 require_relative 'altar'
 require_relative 'goat'
+require_relative 'virgin'
 
 # States
 require_relative 'server'
@@ -32,7 +33,7 @@ class SpriteSheet
   end
 
   def [](x, y)
-    @sprites[x * @tiles_wide + y]
+    @sprites[y * @tiles_wide + x]
   end
 end
 
