@@ -34,6 +34,16 @@ class Mob < Creature
   end
 
   def sacrificed(player, altar)
+    ((favor / 10) + 4).times do
+      angle = rand(360)
+      speed = 0.02 + rand(0.05)
+      y_velocity = Math::sin(angle) * speed
+      x_velocity = Math::cos(angle) * speed
+      z_velocity = -0.1 + rand(0.2)
+      Blood.create(x: altar.x, y: altar.y, z: altar.z + altar.height,
+        x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity)
+    end
+
     destroy
   end
 

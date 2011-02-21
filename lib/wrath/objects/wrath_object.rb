@@ -13,6 +13,7 @@ class WrathObject < GameObject
       rotation_center: :bottom_center,
       factor_x: [1, -1][rand(2)],
       spawn: false,
+      elasticity: 0.6,
       x_velocity: 0,
       y_velocity: 0,
       z_velocity: 0,
@@ -25,6 +26,7 @@ class WrathObject < GameObject
     @y_velocity = options[:y_velocity]
     @z_velocity = options[:z_velocity]
     @shadow_width = options[:shadow_width]
+    @elasticity = options[:elasticity]
 
     super(options)
 
@@ -50,7 +52,7 @@ class WrathObject < GameObject
 
       if @z <= 0
         @z = 0
-        @z_velocity = - @z_velocity * 0.6
+        @z_velocity = - @z_velocity * @elasticity
 
         if @z_velocity < 0.2
           @z_velocity = 0

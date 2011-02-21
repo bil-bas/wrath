@@ -14,6 +14,7 @@ class Rock < StaticObject
   def initialize(options = {})
     options = {
       encumbrance: 0.6,
+      elasticity: 0.4,
       shadow_width: 6,
     }.merge! options
 
