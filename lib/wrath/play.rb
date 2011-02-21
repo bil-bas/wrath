@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Play < GameState
-  NUM_GOATS = 5
+  NUM_GOATS = 6
 
   attr_reader :mobs, :altar
 

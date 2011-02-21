@@ -26,4 +26,12 @@ class Mob < WrathObject
 
     after(800 + (rand(400) + rand(400))) { jump }
   end
+
+  def sacrificed
+    destroy
+  end
+
+  def ghost_disappeared
+
+  end
 end

@@ -17,15 +17,18 @@ class Altar < WrathObject
     }.merge! options
 
     @blood = 0
+    @player = nil
+    @sacrifice = nil
 
     super(options)
   end
 
-  def sacrifice(object)
+  def sacrifice(player, sacrifice)
     @blood = 100
-    @ghost_image = object.image
+    @player = player
+    @sacrifice = sacrifice
+    @sacrifice.sacrificed
     after(CLEAR_DELAY) { clear_blood }
-    object.destroy
   end
 
   def draw
@@ -33,16 +36,19 @@ class Altar < WrathObject
 
     unless ready?
       $window.pixel.draw(x - 2, y - 6, zorder + y, 4, 6, Color.rgba(255, 0, 0, @blood + 100))
-      @ghost_image.draw(x - @ghost_image.width / 2, y - (height * 1.5) + (@blood - 100) / 10.0, zorder + y, 1, 1, Color.rgba(230, 230, 255, @blood + 25))
+      @sacrifice.image.draw(x - @sacrifice.image.width / 2, y - (height * 1.5) + (@blood - 100) / 10.0, zorder + y, 1, 1, Color.rgba(230, 230, 255, @blood + 25))
     end
   end
 
   def clear_blood
     if @blood > 0
       @blood -= 1
+      @player.favor += @sacrifice.favor / 10 if @blood % 10 == 0
     end
 
-    unless ready?
+    if ready?
+      @sacrifice.ghost_disappeared
+    else
       after(CLEAR_DELAY) { clear_blood }
     end
   end

@@ -3,6 +3,8 @@
 require_relative 'mob'
 
 class Goat < Mob
+  def favor; 10; end
+
   def initialize(options = {})
     options = {
       image: $window.character_sprites[2, 13],
