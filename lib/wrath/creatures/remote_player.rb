@@ -7,7 +7,6 @@ class RemotePlayer < Player
 
   def initialize(socket, options = {})
     options = {
-        gui_pos: [100, 110]
     }.merge! options
 
     @socket = socket

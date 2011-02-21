@@ -3,17 +3,17 @@
 require_relative 'creature'
 
 class Player < Creature
+  CARRY_OFFSET = 6
+  STATUS_COLOR = Color.rgba(255, 255, 255, 150)
+
   attr_reader :speed, :favor, :health
   attr_writer :favor, :health # TODO: hook into these values changing.
-
-  STATUS_COLOR = Color.rgba(255, 255, 255, 150)
 
   def initialize(image_row, options = {})
     options = {
       speed: 0.5,
       favor: 10,
       health: 100,
-      gui_pos: [10, 110]
     }.merge! options
 
     @speed = options[:speed]
@@ -21,12 +21,14 @@ class Player < Creature
     @health = options[:health]
     @gui_pos = options[:gui_pos]
 
+    @carrying = nil
+
     @sparkle = GameObject.new(image: SpriteSheet.new("objects.png", 8, 8, 4)[1, 2])
     @sparkle.alpha = 150
 
     @font = Font[8]
 
-    super(image_row, options)
+    super(options[:image_row], options)
   end
 
   def draw
@@ -37,4 +39,6 @@ class Player < Creature
 
     @font.draw "F: #{@favor} H: #{@health}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
+
+
 end

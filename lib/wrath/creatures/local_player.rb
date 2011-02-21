@@ -4,7 +4,6 @@ require_relative 'player'
 
 class LocalPlayer < Player
   ACTION_DISTANCE = 10
-  CARRY_OFFSET = 6
   DIAGONAL_SPEED = Math.sqrt(2) / 2
   IMAGE_ROW = 0
 
@@ -12,11 +11,14 @@ class LocalPlayer < Player
     options = {
     }.merge! options
 
-    @carrying = nil
+    @keys_up = options[:keys_up]
+    @keys_down = options[:keys_down]
+    @keys_left = options[:keys_left]
+    @keys_right = options[:keys_right]
 
-    super(IMAGE_ROW, options)
+    super(options[:image_row], options)
 
-    on_input(:space, :action)
+    on_input(options[:keys_action], :action)
   end
 
   def effective_speed
@@ -27,33 +29,33 @@ class LocalPlayer < Player
     old_pos = [x, y]
 
     # Move the character.
-    if holding_any? :left, :a
+    if holding_any? *@keys_left
       self.factor_x = -1
 
-      if holding_any? :up, :w
+      if holding_any? *@keys_up
         self.x -= effective_speed * DIAGONAL_SPEED
         self.y -= effective_speed * DIAGONAL_SPEED
-      elsif holding_any? :down, :s
+      elsif holding_any? *@keys_down
         self.x -= effective_speed * DIAGONAL_SPEED
         self.y += effective_speed * DIAGONAL_SPEED
       else
         self.x -= effective_speed
       end
-    elsif holding_any? :right, :d
+    elsif holding_any? *@keys_right
       self.factor_x = 1
 
-      if holding_any? :up, :w
+      if holding_any? *@keys_up
         self.x += effective_speed * DIAGONAL_SPEED
         self.y -= effective_speed * DIAGONAL_SPEED
-      elsif holding_any? :down, :s
+      elsif holding_any? *@keys_down
         self.x += effective_speed * DIAGONAL_SPEED
         self.y += effective_speed * DIAGONAL_SPEED
       else
         self.x += effective_speed
       end
-    elsif holding_any? :up, :w
+    elsif holding_any? *@keys_up
       self.y -= effective_speed
-    elsif holding_any? :down, :s
+    elsif holding_any? *@keys_down
       self.y += effective_speed
     end
 
