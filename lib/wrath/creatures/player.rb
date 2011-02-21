@@ -4,7 +4,7 @@ require_relative 'creature'
 
 class Player < Creature
   attr_reader :speed, :favor, :health
-  attr_writer :favor
+  attr_writer :favor, :health # TODO: hook into these values changing.
 
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
 

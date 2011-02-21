@@ -17,6 +17,7 @@ require_relative 'creatures/chicken'
 # Objects
 require_relative 'objects/altar'
 require_relative 'objects/rock'
+require_relative 'objects/pebble'
 
 # States
 require_relative 'states/server'

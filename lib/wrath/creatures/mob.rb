@@ -33,7 +33,7 @@ class Mob < Creature
     after(@jump_delay + (rand(@jump_delay / 2.0) + rand(@jump_delay / 2.0))) { jump }
   end
 
-  def sacrificed
+  def sacrificed(player, altar)
     destroy
   end
 

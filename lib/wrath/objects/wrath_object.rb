@@ -13,13 +13,16 @@ class WrathObject < GameObject
       rotation_center: :bottom_center,
       factor_x: [1, -1][rand(2)],
       spawn: false,
+      x_velocity: 0,
+      y_velocity: 0,
+      z_velocity: 0,
       z: 0,
     }.merge! options
 
     @z = options[:z]
-    @x_velocity = 0
-    @y_velocity = 0
-    @z_velocity = 0
+    @x_velocity = options[:x_velocity]
+    @y_velocity = options[:y_velocity]
+    @z_velocity = options[:z_velocity]
 
     super(options)
 

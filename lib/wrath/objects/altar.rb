@@ -28,11 +28,15 @@ class Altar < StaticObject
   end
 
   def sacrifice(player, sacrifice)
-    @blood = 100
-    @player = player
-    @sacrifice = sacrifice
-    @sacrifice.sacrificed
-    after(CLEAR_DELAY) { clear_blood }
+    case sacrifice
+      when Mob
+        @blood = 100
+        @player = player
+        @sacrifice = sacrifice
+        after(CLEAR_DELAY) { clear_blood }
+    end
+
+    sacrifice.sacrificed(player, self)
   end
 
   def draw
