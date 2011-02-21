@@ -26,7 +26,7 @@ class LocalPlayer < Player
     # Move the character.
     if holding_any? :left, :a
       self.factor_x = -1
-      @carrying.factor_x = -1 if @carrying
+
 
       if holding_any? :up, :w
         self.x -= effective_speed * DIAGONAL_SPEED
@@ -39,7 +39,6 @@ class LocalPlayer < Player
       end
     elsif holding_any? :right, :d
       self.factor_x = 1
-      @carrying.factor_x = 1 if @carrying
 
       if holding_any? :up, :w
         self.x += effective_speed * DIAGONAL_SPEED
@@ -55,6 +54,8 @@ class LocalPlayer < Player
     elsif holding_any? :down, :s
       self.y += effective_speed
     end
+
+    @carrying.factor_x = factor_x if @carrying
 
     # Keep co-ordinates inside the screen.
     self.x = [[x, $window.retro_width - (width / (2 * factor))].min, width / (2 * factor)].max
@@ -91,6 +92,7 @@ class LocalPlayer < Player
       if nearest and distance_to(nearest) <= ACTION_DISTANCE
         @carrying = nearest
         @carrying.pick_up(self, CARRY_OFFSET)
+        @carrying.factor_x = factor_x if @carrying
         state.mobs.delete @carrying
       end
     end
