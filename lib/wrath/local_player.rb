@@ -75,9 +75,8 @@ class LocalPlayer < Player
       # Drop whatever we are carrying.
       case @carrying
         when Goat
-          if distance_to(state.altar) <= ACTION_DISTANCE
-            # Goat disappears.
-            @carrying.destroy
+          if state.altar.ready? and distance_to(state.altar) <= ACTION_DISTANCE
+            state.altar.sacrifice(@carrying)
           else
             state.goats.push @carrying
             @carrying.drop(factor_x * 0.5, 0, 0.5)

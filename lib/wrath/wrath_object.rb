@@ -31,9 +31,10 @@ class WrathObject < GameObject
   end
 
   def draw
-    draw_relative(0, -z, y)
     # Draw a shadow
-    $window.pixel.draw(x - width/2, y - 1, z - 0.01, width, 1, Color.rgba(0, 0, 0, 50))
+    $window.pixel.draw(x - width/2, y - 1, y, width, 1, Color.rgba(0, 0, 0, 50))
+
+    draw_relative(0, -z, y)
   end
 
   def update
