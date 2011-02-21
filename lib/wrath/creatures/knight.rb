@@ -12,7 +12,7 @@ class Knight < Mob
       vertical_jump: 0.3,
       horizontal_jump: 1,
       jump_delay: 800,
-      encumbrance: 0.6,
+      encumbrance: 0.4,
     }.merge! options
 
     super IMAGE_ROW, options
