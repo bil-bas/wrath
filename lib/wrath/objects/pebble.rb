@@ -8,6 +8,7 @@ class Pebble < StaticObject
   def initialize(options = {})
     options = {
       encumbrance: 0.9,
+      shadow_width: 2,
     }.merge! options
 
     super IMAGE_POS, options

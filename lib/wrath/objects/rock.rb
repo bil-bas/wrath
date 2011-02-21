@@ -12,6 +12,7 @@ class Rock < StaticObject
   def initialize(options = {})
     options = {
       encumbrance: 0.6,
+      shadow_width: 6,
     }.merge! options
 
     super IMAGE_POS[rand(IMAGE_POS.size)], options

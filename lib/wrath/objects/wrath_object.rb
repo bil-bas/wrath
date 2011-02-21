@@ -17,12 +17,14 @@ class WrathObject < GameObject
       y_velocity: 0,
       z_velocity: 0,
       z: 0,
+      shadow_width: 8,
     }.merge! options
 
     @z = options[:z]
     @x_velocity = options[:x_velocity]
     @y_velocity = options[:y_velocity]
     @z_velocity = options[:z_velocity]
+    @shadow_width = options[:shadow_width]
 
     super(options)
 
@@ -36,7 +38,7 @@ class WrathObject < GameObject
 
   def draw
     # Draw a shadow
-    $window.pixel.draw(x - width / 2, y - 1, y, width, 1, Color.rgba(0, 0, 0, 50))
+    $window.pixel.draw(x - @shadow_width / 2, y - 1, y, @shadow_width, 1, Color.rgba(0, 0, 0, 50))
 
     draw_relative(0, -z, y)
   end
