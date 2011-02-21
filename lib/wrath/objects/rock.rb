@@ -3,7 +3,9 @@ require_relative '../carriable'
 
 class Rock < StaticObject
   NUM_PEBBLES = 9
-  EXPLOSION_DAMAGE = 40
+
+  EXPLOSION_HEALTH = -40
+  EXPLOSION_FAVOR = -10
 
   include Carriable
 
@@ -19,7 +21,8 @@ class Rock < StaticObject
   end
 
   def sacrificed(player, altar)
-    player.health -= EXPLOSION_DAMAGE
+    player.health += EXPLOSION_HEALTH
+    player.favor += EXPLOSION_FAVOR
 
     NUM_PEBBLES.times do
       angle = rand(360)
