@@ -9,6 +9,7 @@ class Knight < Mob
     options = {
       image: $window.character_sprites[8, 0],
       speed: 0.3,
+      encumbrance: 0.6,
     }.merge! options
 
     super options

@@ -3,7 +3,15 @@ module Carriable
   def carried?; not @carrier.nil?; end
   def affected_by_gravity?; @carrier.nil?; end
 
+  attr_reader :encumbrance
+
   def initialize (options = {})
+    options = {
+        encumbrance: 0.2,
+    }.merge! options
+
+    @encumbrance = options[:encumbrance]
+
     @carrier = nil
 
     super options

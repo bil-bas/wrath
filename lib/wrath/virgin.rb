@@ -9,6 +9,7 @@ class Virgin < Mob
     options = {
       image: $window.character_sprites[2, 1],
       speed: 0.3,
+      encumbrance: 0.4,
     }.merge! options
 
     super options

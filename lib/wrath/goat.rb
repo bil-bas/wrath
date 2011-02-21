@@ -9,6 +9,7 @@ class Goat < Mob
     options = {
       image: $window.character_sprites[2, 13],
       speed: 0.5,
+      encumbrance: 0.2,
     }.merge! options
 
     super(options)

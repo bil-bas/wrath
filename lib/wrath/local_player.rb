@@ -4,7 +4,6 @@ class LocalPlayer < Player
   ACTION_DISTANCE = 10
   CARRY_OFFSET = 6
   DIAGONAL_SPEED = Math.sqrt(2) / 2
-  CARRY_SPEED = 0.6
 
   def initialize(options = {})
     options = {
@@ -18,7 +17,7 @@ class LocalPlayer < Player
   end
 
   def effective_speed
-    @carrying ? (@speed * CARRY_SPEED) : @speed
+    @carrying ? (@speed * (1 - @carrying.encumbrance)) : @speed
   end
 
   def update
