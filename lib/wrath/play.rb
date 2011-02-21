@@ -14,8 +14,9 @@ class Play < GameState
     @altar = Altar.create
     @background_color = Color.rgb(0, 100, 0)
 
-    @mobs = Array.new(NUM_GOATS) { Goat.create(:spawn => true) }
-    @mobs.push Virgin.create(:spawn => true)
+    @mobs = Array.new(NUM_GOATS) { Goat.create(spawn: true) }
+    @mobs.push Virgin.create(spawn: true)
+    @mobs += Array.new(4) { Rock.create(spawn: true) }
   end
 
   def setup

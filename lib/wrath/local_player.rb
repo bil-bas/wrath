@@ -27,7 +27,6 @@ class LocalPlayer < Player
     if holding_any? :left, :a
       self.factor_x = -1
 
-
       if holding_any? :up, :w
         self.x -= effective_speed * DIAGONAL_SPEED
         self.y -= effective_speed * DIAGONAL_SPEED
@@ -81,6 +80,9 @@ class LocalPlayer < Player
             state.mobs.push @carrying
             @carrying.drop(factor_x * 0.5, 0, 0.5)
           end
+        when Rock
+          state.mobs.push @carrying
+          @carrying.drop(factor_x * 0.5, 0, 0.5)
 
       end
 

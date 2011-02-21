@@ -13,6 +13,7 @@ require_relative 'altar'
 require_relative 'goat'
 require_relative 'virgin'
 require_relative 'knight'
+require_relative 'rock'
 
 # States
 require_relative 'server'

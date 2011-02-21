@@ -11,6 +11,7 @@ class WrathObject < GameObject
   def initialize(options)
     options = {
       rotation_center: :bottom_center,
+      factor_x: [1, -1][rand(2)],
       spawn: false,
       z: 0,
     }.merge! options
