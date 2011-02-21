@@ -8,7 +8,7 @@ class WrathObject < GameObject
   def carriable?; false; end
   def affected_by_gravity?; true; end
 
-  def initialize(options)
+  def initialize(image_row, options = {})
     options = {
       rotation_center: :bottom_center,
       factor_x: [1, -1][rand(2)],
@@ -33,7 +33,7 @@ class WrathObject < GameObject
 
   def draw
     # Draw a shadow
-    $window.pixel.draw(x - width/2, y - 1, y, width, 1, Color.rgba(0, 0, 0, 50))
+    $window.pixel.draw(x - width / 2, y - 1, y, width, 1, Color.rgba(0, 0, 0, 50))
 
     draw_relative(0, -z, y)
   end

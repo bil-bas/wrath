@@ -3,16 +3,17 @@
 require_relative 'mob'
 
 class Virgin < Mob
+  IMAGE_ROW = 4
+
   def favor; 30; end
 
   def initialize(options = {})
     options = {
-      image: $window.character_sprites[2, 1],
       speed: 0.3,
       encumbrance: 0.4,
     }.merge! options
 
-    super options
+    super IMAGE_ROW, options
   end
 
   def ghost_disappeared

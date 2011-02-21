@@ -6,6 +6,7 @@ class LocalPlayer < Player
   ACTION_DISTANCE = 10
   CARRY_OFFSET = 6
   DIAGONAL_SPEED = Math.sqrt(2) / 2
+  IMAGE_ROW = 0
 
   def initialize(options = {})
     options = {
@@ -13,7 +14,7 @@ class LocalPlayer < Player
 
     @carrying = nil
 
-    super(options)
+    super(IMAGE_ROW, options)
 
     on_input(:space, :action)
   end

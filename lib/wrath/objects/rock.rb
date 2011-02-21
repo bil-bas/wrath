@@ -1,15 +1,17 @@
+require_relative 'static_object'
 require_relative '../carriable'
 
-class Rock < WrathObject
+class Rock < StaticObject
   include Carriable
+
+  IMAGE_POS = [[0, 0], [1, 0]]
 
   def initialize(options = {})
     options = {
-      image: $window.furniture_sprites[[3, 4][rand 2], 3],
       encumbrance: 0.6,
     }.merge! options
 
-    super options
+    super IMAGE_POS[rand(IMAGE_POS.size)], options
   end
 
 end

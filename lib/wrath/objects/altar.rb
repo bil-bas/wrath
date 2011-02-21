@@ -1,8 +1,9 @@
 # encoding: utf-8
 
-require_relative 'wrath_object'
+require_relative 'static_object'
 
-class Altar < WrathObject
+class Altar < StaticObject
+  IMAGE_POS = [0, 1]
   trait :timer
 
   CLEAR_DELAY = 25
@@ -11,7 +12,6 @@ class Altar < WrathObject
 
   def initialize(options = {})
     options = {
-      image: $window.furniture_sprites[1, 1],
       x: 80,
       y: 60,
     }.merge! options
@@ -20,7 +20,7 @@ class Altar < WrathObject
     @player = nil
     @sacrifice = nil
 
-    super(options)
+    super(IMAGE_POS, options)
   end
 
   def sacrifice(player, sacrifice)
@@ -35,7 +35,7 @@ class Altar < WrathObject
     super
 
     unless ready?
-      $window.pixel.draw(x - 2, y - 6, zorder + y, 4, 6, Color.rgba(255, 0, 0, @blood + 100))
+      @@sprites[1, 1].draw(x - 3.5, y - 8, zorder + y, 1, 1, Color.rgba(255, 255, 255, @blood + 100))
       @sacrifice.image.draw(x - @sacrifice.image.width / 2, y - (height * 1.5) + (@blood - 100) / 10.0, zorder + y, 1, 1, Color.rgba(230, 230, 255, @blood + 25))
     end
   end

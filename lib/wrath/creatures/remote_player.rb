@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class RemotePlayer < Player
+  IMAGE_ROW = 1
+
   attr_reader :socket
 
   def initialize(socket, options = {})
@@ -10,6 +12,6 @@ class RemotePlayer < Player
 
     @socket = socket
 
-    super options
+    super IMAGE_ROW, options
   end
 end

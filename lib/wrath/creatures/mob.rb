@@ -1,19 +1,20 @@
 # encoding: utf-8
 
+require_relative 'creature'
 require_relative '../carriable'
 
-class Mob < WrathObject
+class Mob < Creature
   include Carriable
 
   trait :timer
 
-  def initialize(options = {})
+  def initialize(image_row, options = {})
     options = {
     }.merge! options
 
     @speed = options[:speed]
 
-    super(options)
+    super(image_row, options)
 
     after(800 + (rand(400) + rand(400))) { jump }
   end

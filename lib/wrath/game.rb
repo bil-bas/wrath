@@ -12,6 +12,7 @@ require_relative 'creatures/remote_player'
 require_relative 'creatures/goat'
 require_relative 'creatures/virgin'
 require_relative 'creatures/knight'
+require_relative 'creatures/chicken'
 
 # Objects
 require_relative 'objects/altar'
@@ -45,7 +46,7 @@ class Game < Window
   SIZE = [640, 480]
 
   TITLE = "=== Wrath! === Appease the gods or suffer the consequences..."
-  attr_reader :character_sprites, :furniture_sprites, :object_sprites, :pixel
+  attr_reader :pixel
 
   def sprite_scale; @sprite_scale; end
   def retro_width; width / @sprite_scale; end
@@ -61,10 +62,6 @@ class Game < Window
 
     retrofy
     @sprite_scale = 4 # 160x120
-
-    @character_sprites = SpriteSheet.new("char.png", 8, 8, 16)
-    @furniture_sprites = SpriteSheet.new("furniture.png", 8, 8, 12)
-    @object_sprites = SpriteSheet.new("object.png", 8, 8, 16)
 
     @pixel = Image["pixel.png"]
 

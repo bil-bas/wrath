@@ -2,8 +2,8 @@
 
 require_relative 'mob'
 
-class Goat < Mob
-  IMAGE_ROW = 3
+class Chicken < Mob
+  IMAGE_ROW = 2
 
   def favor; 10; end
 
