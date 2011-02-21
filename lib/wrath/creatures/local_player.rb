@@ -78,7 +78,7 @@ class LocalPlayer < Player
     if @carrying
       # Drop whatever we are carrying.
       case @carrying
-        when Mob, Rock
+        when Mob, StaticObject
           if state.altar.ready? and distance_to(state.altar) <= ACTION_DISTANCE
             state.altar.sacrifice(self, @carrying)
           else
