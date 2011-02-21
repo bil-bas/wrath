@@ -9,7 +9,9 @@ class Knight < Mob
 
   def initialize(options = {})
     options = {
-      speed: 0.3,
+      vertical_jump: 0.3,
+      horizontal_jump: 1,
+      jump_delay: 800,
       encumbrance: 0.6,
     }.merge! options
 

@@ -9,7 +9,9 @@ class Chicken < Mob
 
   def initialize(options = {})
     options = {
-      speed: 0.5,
+      vertical_jump: 0.1,
+      horizontal_jump: 0.2,
+      jump_delay: 250,
       encumbrance: 0.2,
     }.merge! options
 

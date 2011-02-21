@@ -5,11 +5,13 @@ require_relative 'mob'
 class Goat < Mob
   IMAGE_ROW = 3
 
-  def favor; 10; end
+  def favor; 20; end
 
   def initialize(options = {})
     options = {
-      speed: 0.5,
+      vertical_jump: 0.3,
+      horizontal_jump: 0.6,
+      jump_delay: 1000,
       encumbrance: 0.2,
     }.merge! options
 

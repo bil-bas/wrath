@@ -5,11 +5,13 @@ require_relative 'mob'
 class Virgin < Mob
   IMAGE_ROW = 4
 
-  def favor; 30; end
+  def favor; 40; end
 
   def initialize(options = {})
     options = {
-      speed: 0.3,
+      vertical_jump: 0.05,
+      horizontal_jump: 0.5,
+      jump_delay: 500,
       encumbrance: 0.4,
     }.merge! options
 
