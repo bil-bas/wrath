@@ -26,6 +26,8 @@ class Play < GameState
     @mobs += Array.new(3) { Chest.create(spawn: true, contains: [Crown, Chicken, Knight]) }
     @mobs += [Fire.create(x: 20, y: 60), Fire.create(x: 140, y: 60)]
 
+
+    on_input(:escape) { switch_game_state self.class }
   end
 
   def setup
