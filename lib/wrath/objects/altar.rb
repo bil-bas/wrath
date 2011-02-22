@@ -3,9 +3,12 @@
 require_relative 'static_object'
 
 class Altar < StaticObject
+  include Carriable
   trait :timer
 
   CLEAR_DELAY = 25
+  BLOOD_DRIP_DELAY = 300
+  BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
 
   def ready?; @blood == 0; end
 
@@ -21,6 +24,10 @@ class Altar < StaticObject
     @sacrifice = nil
 
     super(options)
+
+    @blood_drip_animation = @frames[BLOOD_DRIP_FRAME_RANGE]
+    @blood_drip_animation.delay = BLOOD_DRIP_DELAY
+    @blood_drip_animation.loop = false
   end
 
   def sacrifice(player, sacrifice)
@@ -29,7 +36,7 @@ class Altar < StaticObject
         @blood = 100
         @player = player
         @sacrifice = sacrifice
-        self.image = @frames[3]
+        @blood_drip_animation.reset
         after(CLEAR_DELAY) { clear_blood }
     end
 
@@ -54,6 +61,7 @@ class Altar < StaticObject
       self.image = @frames[0]
       @sacrifice.ghost_disappeared
     else
+      self.image = @blood_drip_animation.next
       after(CLEAR_DELAY) { clear_blood }
     end
   end
