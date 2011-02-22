@@ -1,8 +1,14 @@
 require_relative 'static_object'
 
 class Fire < StaticObject
+  trait :timer
+
+  include Carriable
+
   SPRITE_POSITIONS = [[0, 3], [1, 3]]
   ANIMATION_DELAY = 300
+  WEAR_HURT_DELAY = 300
+  WEAR_BURN_DAMAGE = 1
 
   trait :timer
 
@@ -10,6 +16,8 @@ class Fire < StaticObject
 
   def initialize(options = {})
     options = {
+      encumbrance: -0.5,
+      elasticity: 0.2,
       shadow_width: 0,
     }.merge! options
 
@@ -22,5 +30,17 @@ class Fire < StaticObject
       @frame_index = (@frame_index + 1) % @frames.size
       self.image = @frames[@frame_index]
     end
+  end
+
+  def pick_up(player, offset)
+    every(WEAR_HURT_DELAY, name: :burn) { player.health -= WEAR_BURN_DAMAGE }
+
+    super(player, offset)
+  end
+
+  def drop(*args)
+    stop_timer(:burn)
+
+    super(*args)
   end
 end

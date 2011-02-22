@@ -16,8 +16,4 @@ class Crown < StaticObject
 
     super IMAGE_POS, options
   end
-
-  def sacrificed(player, altar)
-    destroy
-  end
 end

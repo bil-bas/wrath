@@ -77,4 +77,8 @@ class WrathObject < GameObject
     [rand(($window.width / $window.sprite_scale) - width) + width / 2,
      rand(($window.height / $window.sprite_scale) - height) + height / 2]
   end
+
+  def sacrificed(player, altar)
+    destroy
+  end
 end

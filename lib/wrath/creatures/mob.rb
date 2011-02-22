@@ -44,7 +44,7 @@ class Mob < Creature
         x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity)
     end
 
-    destroy
+    super
   end
 
   def ghost_disappeared

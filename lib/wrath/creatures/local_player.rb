@@ -89,14 +89,18 @@ class LocalPlayer < Player
 
       @carrying = nil
     else
-      # Find the nearest goat and pick it up.
+      # Find the nearest object and activate it (generally, pick it up)
       nearest = state.mobs.min_by {|g| distance_to g }
 
       if nearest and distance_to(nearest) <= ACTION_DISTANCE
-        @carrying = nearest
-        @carrying.pick_up(self, CARRY_OFFSET)
-        @carrying.factor_x = factor_x if @carrying
-        state.mobs.delete @carrying
+        if nearest.is_a? Chest and nearest.closed?
+          nearest.open
+        else
+          @carrying = nearest
+          @carrying.pick_up(self, CARRY_OFFSET)
+          @carrying.factor_x = factor_x if @carrying
+          state.mobs.delete @carrying
+        end
       end
     end
   end
