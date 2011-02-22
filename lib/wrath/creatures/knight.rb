@@ -3,8 +3,6 @@
 require_relative 'mob'
 
 class Knight < Mob
-  IMAGE_ROW = 5
-
   def favor; 30; end
 
   def initialize(options = {})
@@ -14,8 +12,9 @@ class Knight < Mob
       elasticity: 0.4,
       jump_delay: 800,
       encumbrance: 0.4,
+      animation: "knight_8x8.png",
     }.merge! options
 
-    super IMAGE_ROW, options
+    super options
   end
 end

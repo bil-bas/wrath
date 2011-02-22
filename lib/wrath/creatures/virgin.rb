@@ -3,8 +3,6 @@
 require_relative 'mob'
 
 class Virgin < Mob
-  IMAGE_ROW = 4
-
   def favor; 40; end
 
   def initialize(options = {})
@@ -13,9 +11,10 @@ class Virgin < Mob
       horizontal_jump: 0.5,
       jump_delay: 500,
       encumbrance: 0.4,
+      animation: "virgin_8x8.png",
     }.merge! options
 
-    super IMAGE_ROW, options
+    super options
   end
 
   def ghost_disappeared

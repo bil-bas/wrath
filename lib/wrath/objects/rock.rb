@@ -9,16 +9,14 @@ class Rock < StaticObject
 
   include Carriable
 
-  IMAGE_POS = [[0, 0], [1, 0]]
-
   def initialize(options = {})
     options = {
       encumbrance: 0.6,
       elasticity: 0.4,
-      shadow_width: 6,
+      animation: "rock_6x6.png",
     }.merge! options
 
-    super IMAGE_POS[rand(IMAGE_POS.size)], options
+    super  options
   end
 
   def sacrificed(player, altar)

@@ -9,10 +9,10 @@ class Play < GameState
   def initialize(socket = nil)
     super
 
-    @local_player = LocalPlayer.create(x: 40, y: 60, image_row: 0, gui_pos: [10, 110],
+    @local_player = LocalPlayer.create(x: 40, y: 60, animation: "player1_8x8.png", gui_pos: [10, 110],
       keys_up: [:w], keys_left: [:a], keys_right: [:d], keys_down: [:s], keys_action: [:space, :left_control, :left_shift])
 
-    @remote_player = LocalPlayer.create(x: 120, y: 60, image_row: 1, gui_pos: [100, 110],
+    @remote_player = LocalPlayer.create(x: 120, y: 60, animation: "player2_8x8.png", gui_pos: [100, 110],
       keys_up: [:up], keys_left: [:left], keys_right: [:right], keys_down: [:down], keys_action: [:right_control, :right_shift, :enter])
 
     @altar = Altar.create

@@ -9,7 +9,7 @@ class Player < Creature
   attr_reader :speed, :favor, :health
   attr_writer :favor, :health # TODO: hook into these values changing.
 
-  def initialize(image_row, options = {})
+  def initialize(options = {})
     options = {
       speed: 0.5,
       favor: 10,
@@ -23,12 +23,13 @@ class Player < Creature
 
     @carrying = nil
 
-    @sparkle = GameObject.new(image: SpriteSheet.new("objects.png", 8, 8, 4)[1, 2])
+    @sparkle_frames = Animation.new(file: "sparkle_8x8.png")
+    @sparkle = GameObject.new(image: @sparkle_frames[1])
     @sparkle.alpha = 150
 
     @font = Font[8]
 
-    super(options[:image_row], options)
+    super(options)
   end
 
   def draw

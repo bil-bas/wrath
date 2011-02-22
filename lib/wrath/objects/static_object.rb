@@ -8,14 +8,10 @@ class StaticObject < WrathObject
   IMAGE_LIE = 2
   IMAGE_SLEEP = 3
 
-  def initialize(image_pos, options = {})
+  def initialize(options = {})
     options = {
     }.merge! options
 
-    @@sprites ||= SpriteSheet.new("objects.png", 8, 8, 4)
-
-    options[:image] = @@sprites[*image_pos]
-
-    super 0, options
+    super options
   end
 end

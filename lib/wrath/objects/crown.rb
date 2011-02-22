@@ -5,15 +5,13 @@ class Crown < StaticObject
 
   include Carriable
 
-  IMAGE_POS = [0, 4]
-
   def initialize(options = {})
     options = {
       encumbrance: 0,
       elasticity: 0.2,
-      shadow_width: 6,
+      animation: "crown_6x2.png",
     }.merge! options
 
-    super IMAGE_POS, options
+    super options
   end
 end

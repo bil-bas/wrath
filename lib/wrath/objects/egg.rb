@@ -5,15 +5,13 @@ class Egg < StaticObject
 
   trait :timer
 
-  IMAGE_POS = [0, 6]
-
   def initialize(options = {})
     options = {
       encumbrance: 0,
       elasticity: 0.4,
-      shadow_width: 4,
+      animation: "egg_4x5.png",
     }.merge! options
 
-    super IMAGE_POS, options
+    super options
   end
 end

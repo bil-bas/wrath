@@ -8,7 +8,7 @@ class Mob < Creature
 
   trait :timer
 
-  def initialize(image_row, options = {})
+  def initialize(options = {})
     options = {
     }.merge! options
 
@@ -17,7 +17,7 @@ class Mob < Creature
     @horizontal_jump = options[:horizontal_jump]
     @jump_delay = options[:jump_delay]
 
-    super(image_row, options)
+    super(options)
 
     after(@jump_delay + (rand(@jump_delay / 2) + rand(@jump_delay / 2))) { jump }
   end

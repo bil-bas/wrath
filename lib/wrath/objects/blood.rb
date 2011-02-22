@@ -3,14 +3,12 @@ require_relative 'static_object'
 class Blood < StaticObject
   trait :timer
 
-  IMAGE_POS = [2, 1]
-
   def initialize(options = {})
     options = {
-      shadow_width: 2,
-        elasticity: 0,
+      elasticity: 0,
+      animation: "blood_1x1.png",
     }.merge! options
 
-    super IMAGE_POS, options
+    super options
   end
 end

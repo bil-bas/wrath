@@ -5,7 +5,6 @@ require_relative 'player'
 class LocalPlayer < Player
   ACTION_DISTANCE = 10
   DIAGONAL_SPEED = Math.sqrt(2) / 2
-  IMAGE_ROW = 0
 
   def initialize(options = {})
     options = {
@@ -16,7 +15,7 @@ class LocalPlayer < Player
     @keys_left = options[:keys_left]
     @keys_right = options[:keys_right]
 
-    super(options[:image_row], options)
+    super(options)
 
     on_input(options[:keys_action], :action)
   end

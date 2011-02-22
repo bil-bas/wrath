@@ -3,13 +3,11 @@ require_relative 'static_object'
 class Pebble < StaticObject
   trait :timer
 
-  IMAGE_POS = [2, 0]
-
   def initialize(options = {})
     options = {
-      shadow_width: 2,
+      animation: "pebble_2x2.png",
     }.merge! options
 
-    super IMAGE_POS, options
+    super options
   end
 end

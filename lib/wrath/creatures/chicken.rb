@@ -3,8 +3,6 @@
 require_relative 'mob'
 
 class Chicken < Mob
-  IMAGE_ROW = 2
-
   def favor; 10; end
 
   def initialize(options = {})
@@ -13,10 +11,10 @@ class Chicken < Mob
       horizontal_jump: 0.2,
       jump_delay: 250,
       encumbrance: 0.2,
-      shadow_width: 6,
+      animation: "chicken_6x6.png",
     }.merge! options
 
-    super(IMAGE_ROW, options)
+    super(options)
   end
 
   def drop(player, x_velocity, y_velocity, z_velocity)

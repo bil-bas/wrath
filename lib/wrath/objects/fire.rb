@@ -5,7 +5,6 @@ class Fire < StaticObject
 
   include Carriable
 
-  SPRITE_POSITIONS = [[0, 3], [1, 3]]
   ANIMATION_DELAY = 300
   WEAR_HURT_DELAY = 300
   WEAR_BURN_DAMAGE = 1
@@ -18,18 +17,17 @@ class Fire < StaticObject
     options = {
       encumbrance: -0.5,
       elasticity: 0.2,
-      shadow_width: 0,
+      animation: "fire_8x8.png",
     }.merge! options
 
-    @frames = SPRITE_POSITIONS.map {|p| @@sprites[*p] }
-    @frame_index = 0
+    super options
 
-    super SPRITE_POSITIONS[0], options
+    @frames.delay = ANIMATION_DELAY
+  end
 
-    every(ANIMATION_DELAY) do
-      @frame_index = (@frame_index + 1) % @frames.size
-      self.image = @frames[@frame_index]
-    end
+  def update
+    super
+    self.image = @frames.next
   end
 
   def pick_up(player, offset)

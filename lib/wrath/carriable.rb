@@ -5,7 +5,7 @@ module Carriable
 
   attr_reader :encumbrance
 
-  def initialize(image_row, options = {})
+  def initialize(options = {})
     options = {
         encumbrance: 0.2,
     }.merge! options
@@ -14,7 +14,7 @@ module Carriable
 
     @carrier = nil
 
-    super image_row, options
+    super options
   end
 
   def pick_up(carrier, z)
