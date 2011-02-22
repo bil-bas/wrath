@@ -27,6 +27,8 @@ class LocalPlayer < Player
   def update
     old_pos = [x, y]
 
+     @state = :walking
+
     # Move the character.
     if holding_any? *@keys_left
       self.factor_x = -1
@@ -56,6 +58,8 @@ class LocalPlayer < Player
       self.y -= effective_speed
     elsif holding_any? *@keys_down
       self.y += effective_speed
+    else
+      @state = :standing
     end
 
     @carrying.factor_x = factor_x if @carrying
