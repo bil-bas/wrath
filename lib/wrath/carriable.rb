@@ -24,7 +24,7 @@ module Carriable
     nil
   end
 
-  def drop(x_velocity = 0, y_velocity = 0, z_velocity = 0)
+  def drop(player, x_velocity = 0, y_velocity = 0, z_velocity = 0)
     @x_velocity, @y_velocity, @z_velocity = x_velocity, y_velocity, z_velocity
     @carrier = nil
 

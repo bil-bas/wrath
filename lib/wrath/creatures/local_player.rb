@@ -76,18 +76,18 @@ class LocalPlayer < Player
     state = $window.current_game_state
 
     if @carrying
+      dropping = @carrying
+      @carrying = nil
       # Drop whatever we are carrying.
-      case @carrying
+      case dropping
         when Mob, StaticObject
           if state.altar.ready? and distance_to(state.altar) <= ACTION_DISTANCE
-            state.altar.sacrifice(self, @carrying)
+            state.altar.sacrifice(self, dropping)
           else
-            state.mobs.push @carrying
-            @carrying.drop(factor_x * 0.5, 0, 0.5)
+            state.mobs.push dropping
+            dropping.drop(self, factor_x * 0.5, 0, 0.5)
           end
       end
-
-      @carrying = nil
     else
       # Find the nearest object and activate it (generally, pick it up)
       nearest = state.mobs.min_by {|g| distance_to g }
@@ -96,12 +96,16 @@ class LocalPlayer < Player
         if nearest.is_a? Chest and nearest.closed?
           nearest.open
         else
-          @carrying = nearest
-          @carrying.pick_up(self, CARRY_OFFSET)
-          @carrying.factor_x = factor_x if @carrying
-          state.mobs.delete @carrying
+          pick_up(nearest)
+          state.mobs.delete nearest
         end
       end
     end
+  end
+
+  def pick_up(object)
+    @carrying = object
+    @carrying.pick_up(self, CARRY_OFFSET)
+    @carrying.factor_x = factor_x if @carrying
   end
 end

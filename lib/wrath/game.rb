@@ -23,6 +23,7 @@ require_relative 'objects/blood'
 require_relative 'objects/fire'
 require_relative 'objects/crown'
 require_relative 'objects/chest'
+require_relative 'objects/egg'
 
 # States
 require_relative 'states/server'

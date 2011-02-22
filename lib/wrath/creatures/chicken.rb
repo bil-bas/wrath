@@ -18,4 +18,9 @@ class Chicken < Mob
 
     super(IMAGE_ROW, options)
   end
+
+  def drop(player, x_velocity, y_velocity, z_velocity)
+    super(player, x_velocity, y_velocity, z_velocity)
+    player.pick_up Egg.create
+  end
 end
