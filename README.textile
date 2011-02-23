@@ -1,0 +1,30 @@
+h1. === Wrath! ===
+
+* "Project":https://github.com/Spooner/wrath
+
+h2. Description
+
+Wrath! is a 2.5D game in which both players must make sacrifices
+
+h2. Requirements
+
+h3. Windows
+
+If running the .exe, there are no other requirements. Otherwise the requirements are the same as for Linux or OS/X.
+
+h3. OS X and Linux
+
+* Ruby 1.9.2
+* Gosu gem 0.7.27
+* Chingu gem 0.9rc1 (use 'gem install chingu --pre')
+
+h2. Credits
+
+* Spiderspit, SiliconEidolon, Ippa and Banisterfiend for alpha play-testing, brainstorming and suggestions.
+
+h2. Third party assets used
+
+* Gosu game development library:http://libgosu.org/
+* Chingu game libary:http://ippa.se/chingu
+* Most sprites were made by Oryx (or adapted from his work) from his
+  "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
