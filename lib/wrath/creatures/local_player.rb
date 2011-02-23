@@ -75,40 +75,58 @@ class LocalPlayer < Player
     super
   end
 
+  def drop(object)
+    $window.current_game_state.objects.push object
+    object.drop(self, factor_x * 0.5, 0, 0.5)
+  end
+
   def action
-    state = $window.current_game_state
+    # Find the nearest object and activate it (generally, pick it up)
+    objects = $window.current_game_state.objects
+    p ["@carrying", @carrying]
+    nearest = objects.min_by {|g| distance_to(g) }
+    nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
+
+    p ["nearest", nearest]
 
     if @carrying
       dropping = @carrying
-      @carrying = nil
       # Drop whatever we are carrying.
-      case dropping
-        when Mob, StaticObject
-          if state.altar.ready? and distance_to(state.altar) <= ACTION_DISTANCE
-            state.altar.sacrifice(self, dropping)
-          else
-            state.mobs.push dropping
-            dropping.drop(self, factor_x * 0.5, 0, 0.5)
+      case nearest
+        when Altar
+          p ["nearest.ready?", nearest.ready?]
+          if nearest.ready?
+            @carrying = nil
+            nearest.sacrifice(self, dropping)
           end
-      end
-    else
-      # Find the nearest object and activate it (generally, pick it up)
-      nearest = state.mobs.min_by {|g| distance_to g }
 
-      if nearest and distance_to(nearest) <= ACTION_DISTANCE
-        if nearest.is_a? Chest and nearest.closed?
-          nearest.open
+        when Chest
+          @carrying = nil
+          p ["nearest.open?", nearest.open?]
+          if nearest.open?
+            nearest.close(dropping)
+          else
+            drop dropping
+          end
+
         else
-          pick_up(nearest)
-          state.mobs.delete nearest
-        end
+          @carrying = nil
+          drop dropping
+
+      end
+    elsif nearest
+      if nearest.is_a? Chest and nearest.closed?
+        nearest.open
+      else
+        pick_up(nearest)        
       end
     end
   end
 
   def pick_up(object)
+    $window.current_game_state.objects.delete object
     @carrying = object
     @carrying.pick_up(self, CARRY_OFFSET)
-    @carrying.factor_x = factor_x if @carrying
+    @carrying.factor_x = factor_x
   end
 end

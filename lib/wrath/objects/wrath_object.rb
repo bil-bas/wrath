@@ -3,7 +3,7 @@
 class WrathObject < GameObject
   VERTICAL_ACCELERATION = -0.1
 
-  attr_accessor :z
+  attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
 
   def carriable?; false; end
   def affected_by_gravity?; true; end

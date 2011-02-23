@@ -31,6 +31,12 @@ module Carriable
     nil
   end
 
+  def put_into(container)
+    @carrier = nil
+
+    nil
+  end
+
   def update
     if carried?
       self.x, self.y = @carrier.x, @carrier.y

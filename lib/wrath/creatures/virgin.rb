@@ -19,7 +19,7 @@ class Virgin < Mob
 
   def ghost_disappeared
     knight = Knight.create(spawn: true)
-    $window.current_game_state.mobs.push knight
-    $window.current_game_state.mobs.push Horse.create(x: knight.x, y: knight.y)
+    $window.current_game_state.objects.push knight
+    $window.current_game_state.objects.push Horse.create(x: knight.x, y: knight.y)
   end
 end

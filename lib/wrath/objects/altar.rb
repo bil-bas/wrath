@@ -3,7 +3,6 @@
 require_relative 'static_object'
 
 class Altar < StaticObject
-  include Carriable
   trait :timer
 
   CLEAR_DELAY = 25

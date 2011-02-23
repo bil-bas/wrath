@@ -4,7 +4,7 @@ class Play < GameState
   NUM_GOATS = 5
   NUM_CHICKENS = 2
 
-  attr_reader :mobs, :altar
+  attr_reader :objects
 
   def initialize(socket = nil)
     super
@@ -14,17 +14,15 @@ class Play < GameState
 
     @remote_player = LocalPlayer.create(x: 120, y: 60, animation: "player2_8x8.png", gui_pos: [100, 110],
       keys_up: [:up], keys_left: [:left], keys_right: [:right], keys_down: [:down], keys_action: [:right_control, :right_shift, :enter])
-
-    @altar = Altar.create
     @background_color = Color.rgb(0, 100, 0)
 
-    @mobs = []
-    @mobs.push Virgin.create(spawn: true)
-    @mobs += Array.new(NUM_GOATS) { Goat.create(spawn: true) }
-    @mobs += Array.new(NUM_CHICKENS) { Chicken.create(spawn: true) }
-    @mobs += Array.new(4) { Rock.create(spawn: true) }
-    @mobs += Array.new(3) { Chest.create(spawn: true, contains: [Crown, Chicken, Knight]) }
-    @mobs += [Fire.create(x: 20, y: 60), Fire.create(x: 140, y: 60)]
+    @objects = [Altar.create]
+    @objects.push Virgin.create(spawn: true)
+    @objects += Array.new(NUM_GOATS) { Goat.create(spawn: true) }
+    @objects += Array.new(NUM_CHICKENS) { Chicken.create(spawn: true) }
+    @objects += Array.new(4) { Rock.create(spawn: true) }
+    @objects += Array.new(3) { Chest.create(spawn: true, contains: [Crown, Chicken, Knight]) }
+    @objects += [Fire.create(x: 20, y: 60), Fire.create(x: 140, y: 60)]
 
 
     on_input(:escape) { switch_game_state self.class }
