@@ -5,6 +5,7 @@ class WrathObject < GameObject
 
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
 
+  def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
   def affected_by_gravity?; true; end
 
@@ -18,6 +19,7 @@ class WrathObject < GameObject
       y_velocity: 0,
       z_velocity: 0,
       z: 0,
+      casts_shadow: true,
     }.merge! options
 
     @frames = Animation.new(file: options[:animation])
@@ -30,6 +32,7 @@ class WrathObject < GameObject
     @y_velocity = options[:y_velocity]
     @z_velocity = options[:z_velocity]
     @elasticity = options[:elasticity]
+    @casts_shadow = options[:casts_shadow]
 
     super(options)
 
@@ -43,7 +46,7 @@ class WrathObject < GameObject
 
   def draw
     # Draw a shadow
-    unless @carrier # Dont' draw a shadow if carried, since the carrier will deal with it.
+    if casts_shadow? and not @carrier  # Don't draw a shadow if carried, since the carrier will deal with it.
       shadow_width = width
       shadow_width = [shadow_width, @carrying.width].max if @carrying
       $window.pixel.draw(x - (shadow_width / 2.0), y - 1, y, shadow_width, 1, Color.rgba(0, 0, 0, 50))
