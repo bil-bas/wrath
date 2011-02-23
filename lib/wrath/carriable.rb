@@ -13,13 +13,14 @@ module Carriable
     @encumbrance = options[:encumbrance]
 
     @carrier = nil
+    @z_offset = 0
 
     super options
   end
 
-  def pick_up(carrier, z)
+  def pick_up(carrier, z_offset)
     @carrier = carrier
-    @z = z
+    @z_offset = z_offset
 
     nil
   end
@@ -39,7 +40,7 @@ module Carriable
 
   def update
     if carried?
-      self.x, self.y = @carrier.x, @carrier.y
+      self.x, self.y, self.z = @carrier.x, @carrier.y, @carrier.z + @z_offset
     end
 
     super
