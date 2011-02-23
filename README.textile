@@ -4,7 +4,7 @@ h1. === Wrath! ===
 
 h2. Description
 
-Wrath! is a 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
+Wrath! is a retro 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
 
 h2. Requirements
 
@@ -26,5 +26,4 @@ h2. Third party assets used
 
 * "Gosu game development library":http://libgosu.org/
 * "Chingu game libary":http://ippa.se/chingu
-* Most sprites were made by Oryx (or adapted from his work) from his
-  "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
+* Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
