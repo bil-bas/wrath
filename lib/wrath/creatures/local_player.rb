@@ -83,18 +83,14 @@ class LocalPlayer < Player
   def action
     # Find the nearest object and activate it (generally, pick it up)
     objects = $window.current_game_state.objects
-    p ["@carrying", @carrying]
     nearest = objects.min_by {|g| distance_to(g) }
     nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
-
-    p ["nearest", nearest]
 
     if @carrying
       dropping = @carrying
       # Drop whatever we are carrying.
       case nearest
         when Altar
-          p ["nearest.ready?", nearest.ready?]
           if nearest.ready?
             @carrying = nil
             nearest.sacrifice(self, dropping)
@@ -102,7 +98,6 @@ class LocalPlayer < Player
 
         when Chest
           @carrying = nil
-          p ["nearest.open?", nearest.open?]
           if nearest.open?
             nearest.close(dropping)
           else
