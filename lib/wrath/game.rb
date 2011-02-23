@@ -72,7 +72,7 @@ class Game < Window
 
     @pixel = Image["pixel.png"]
 
-    push_game_state Play
+    push_game_state Menu
   end
 
 
