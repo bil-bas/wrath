@@ -1,1 +1,1 @@
-ocra lib\wrath.rbw
+ocra lib/wrath.rbw media/**/*.* config/**/*.* bin/**/*.*

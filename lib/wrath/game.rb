@@ -61,7 +61,7 @@ class Game < Window
 
   # To change
   def setup
-    media_dir = File.expand_path(File.join(ROOT_PATH, 'media'))
+    media_dir = File.expand_path(File.join(EXTRACT_PATH, 'media'))
     Image.autoload_dirs.unshift File.join(media_dir, 'images')
     Sample.autoload_dirs.unshift File.join(media_dir, 'sounds')
     Song.autoload_dirs.unshift File.join(media_dir, 'sounds')
