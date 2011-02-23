@@ -36,7 +36,7 @@ class Player < Creature
     super
 
     sparkle_factor = (favor / 200.0) - @sparkle.factor
-    @sparkle.draw_relative(x + 3.5 * factor_x, y - height, y, - milliseconds / 10.0, 0, 0, sparkle_factor, sparkle_factor)
+    @sparkle.draw_relative(x + 3.5 * factor_x, y - height - z, y, - milliseconds / 10.0, 0, 0, sparkle_factor, sparkle_factor)
 
     @font.draw "F: #{@favor} H: #{@health}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
