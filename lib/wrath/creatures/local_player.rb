@@ -118,7 +118,7 @@ class LocalPlayer < Player
       if nearest.is_a? Chest and nearest.closed?
         nearest.open
       else
-        pick_up(nearest)        
+        pick_up(nearest) if nearest.carriable?
       end
     end
   end
