@@ -1,10 +1,10 @@
 h1. === Wrath! ===
 
-* "Project":https://github.com/Spooner/wrath
+* "Github project (Spooner/wrath)":https://github.com/Spooner/wrath
 
 h2. Description
 
-Wrath! is a 2.5D game in which both players must make sacrifices
+Wrath! is a 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
 
 h2. Requirements
 
@@ -24,7 +24,7 @@ h2. Credits
 
 h2. Third party assets used
 
-* Gosu game development library:http://libgosu.org/
-* Chingu game libary:http://ippa.se/chingu
+* "Gosu game development library":http://libgosu.org/
+* "Chingu game libary":http://ippa.se/chingu
 * Most sprites were made by Oryx (or adapted from his work) from his
   "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
