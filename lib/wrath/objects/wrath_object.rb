@@ -43,7 +43,11 @@ class WrathObject < GameObject
 
   def draw
     # Draw a shadow
-    $window.pixel.draw(x - (width / 2.0), y - 1, y, width, 1, Color.rgba(0, 0, 0, 50))
+    unless @carrier # Dont' draw a shadow if carried, since the carrier will deal with it.
+      shadow_width = width
+      shadow_width = [shadow_width, @carrying.width].max if @carrying
+      $window.pixel.draw(x - (shadow_width / 2.0), y - 1, y, shadow_width, 1, Color.rgba(0, 0, 0, 50))
+    end
 
     draw_relative(0, -z, y)
   end
