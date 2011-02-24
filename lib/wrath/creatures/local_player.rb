@@ -22,7 +22,7 @@ class LocalPlayer < Player
 
     super(options)
 
-    on_input(options[:keys_action], :action)
+    on_input(options[:keys_action], :action) if local?
   end
 
   def effective_speed
@@ -30,9 +30,20 @@ class LocalPlayer < Player
   end
 
   def update
-    @state = :walking
+    move_by_keys if local?
 
-    # Move the character.
+    if x_velocity == 0 and y_velocity == 0
+      @state = :standing
+    else
+      @state = :walking
+    end
+
+    @carrying.factor_x = factor_x if @carrying
+
+    super
+  end
+
+  def move_by_keys
     if holding_any? *@keys_left
       if holding_any? *@keys_up
         # NW
@@ -71,12 +82,7 @@ class LocalPlayer < Player
       self.y_velocity = effective_speed
     else
       self.x_velocity = self.y_velocity = 0
-      @state = :standing
     end
-
-    @carrying.factor_x = factor_x if @carrying
-
-    super
   end
 
   def drop(object = @carrying)

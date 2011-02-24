@@ -12,6 +12,8 @@ class WrathObject < GameObject
   def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
   def affected_by_gravity?; true; end
+  def remote?; @remote; end
+  def local?; not @remote; end
 
   def initialize(options = {})
     options = {
@@ -124,9 +126,16 @@ class WrathObject < GameObject
 
     super
 
+    # If we have moved then we need to update for the client.
     position = [x, y, z]
     velocity = [x_velocity, y_velocity, z_velocity]
-    @needs_status_update = position != @previous_position or velocity != @previous_velocity
+
+    # If we haven't sent an update that needs sending, then doesn't matter if we are stationary.
+    # We still need to send it when we get the chance.
+    unless needs_status_update?
+      @needs_status_update = position != @previous_position or velocity != @previous_velocity
+    end
+
     @previous_position = position
     @previous_velocity = velocity
   end

@@ -36,11 +36,13 @@ class Client < GameStates::NetworkClient
   end
 
   def update
-    super
+    handle_incoming_data
 
     while not @receive_queue.empty?
       on_msg(@receive_queue.pop)
     end
+
+    super
   end
 
   def connect(ip, port = 7778)
