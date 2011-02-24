@@ -8,6 +8,11 @@ class LocalPlayer < Player
 
   def initialize(options = {})
     options = {
+      keys_up: :up,
+      keys_down: :down,
+      keys_left: :left,
+      keys_right: :right,
+      keys_action: :space,
     }.merge! options
 
     @keys_up = options[:keys_up]
@@ -82,7 +87,7 @@ class LocalPlayer < Player
 
   def action
     # Find the nearest object and activate it (generally, pick it up)
-    objects = $window.current_game_state.objects
+    objects = $window.current_game_state.objects - [self]
     nearest = objects.min_by {|g| distance_to(g) }
     nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
 

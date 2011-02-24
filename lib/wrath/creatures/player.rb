@@ -23,6 +23,8 @@ class Player < Creature
 
     @carrying = nil
 
+    @animation_file = options[:animation]
+
     @sparkle_frames = Animation.new(file: "sparkle_8x8.png")
     @sparkle = GameObject.new(image: @sparkle_frames[1])
     @sparkle.alpha = 150
@@ -30,6 +32,10 @@ class Player < Creature
     @font = Font[8]
 
     super(options)
+  end
+
+  def recreate_options
+    super.merge!(animation: @animation_file, gui_pos: @gui_pos)
   end
 
   def draw

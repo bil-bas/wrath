@@ -11,49 +11,54 @@ class Server < GameStates::NetworkServer
       port: 7778,
     }.merge! options
 
-    @address = options[:address]
-    @port = options[:port]
     @remote_socket = nil
 
     @font = Font[16]
 
     super options
 
-    start(@address, @port)
+    on_input(:escape) { pop_game_state }
+
+    start(options[:address], options[:port])
   end
 
   #
-  # Called for each new client connecting to out server
+  # Called for each new client connecting to our server
   #
   def on_connect(socket)
-    puts "* New player: #{socket.inspect}"
+    puts "* Player connected: #{socket.inspect}"
 
     @remote_socket = socket
-    $window.push_game_state Play
   end
 
   def on_disconnect(socket)
+    puts "* Player disconnected: #{socket.inspect}"
   end
 
-  def update
-    super # Let NetworkServer#update do it's thing, poll incoming connections and data
-
-    #@remote_player.socket.broadcast_msg(player_position: [@local_player.x, @local_player.y])
+  def send_msg(message)
+    super(@remote_socket, message)
   end
 
   def draw
     @font.draw("Waiting for client...", 0, 0, ZOrder::GUI)
   end
 
-  def restart
-    puts "* Restarting game ..."
+  def on_msg(socket, message)
+    case message[:type]
+      when :ready
+        puts "Client is ready"
+        push_game_state Play.new(:server)
+
+      else
+        raise "Unrecognised message: #{message.inspect}"
+    end
   end
 
-  def on_msg(socket, data)
-    case data[:type]
-      when :position
-        @remote_player.x = data[:x]
-        @remote_player.y = data[:y]
+  def update
+    if current_game_state.is_a? Play
+      current_game_state.objects.each {|o| send_msg(type: :status, id: o.id, status: o.status) }
     end
+
+    super
   end
 end

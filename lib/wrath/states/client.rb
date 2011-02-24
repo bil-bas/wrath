@@ -1,65 +1,51 @@
 class Client < GameStates::NetworkClient
+  trait :timer
+
   def initialize(options = {})
     options = {
-      address: "127.0.0.1",
+      ip: "127.0.0.1",
       port: 7778,
     }.merge! options
-
-    connect(options[:address], options[:port])
 
     @font = Font[16]
 
     super options
+
+    on_input(:escape) { disconnect; pop_game_state }
+
+    after(0.1) { connect(options[:ip], options[:port]) }
   end
 
   def on_connect
     puts "Connected to server"
-    $window.push_game_state Play
-    #send_start
-    #after(2000) { send_ping }
-    #every(6000, name: :ping) { send_ping }
+    push_game_state Play.new(:client)
+    send_msg(type: :ready)
+  end
+
+  def on_disconnect
+    puts "* Disconnected from server"
   end
 
   def draw
     @font.draw("Connecting...", 0, 0, ZOrder::GUI)
   end
 
-  #
-  # We override NetworkClient#on_msg and put our game logic there
-  #
-  def on_msg(msg)
-    @packet_counter += 1
+  def on_msg(message)
+    case message[:type]
+      # Create an object on the client to mirror one here.
+      when :create
+        object = Kernel::const_get(message[:class]).create(message[:options])
+        current_game_state.objects.push object
+        puts "Created a #{message[:class]}"
 
-    case msg[:type]
-      when :winner
-        if @player.uuid == msg[:uuid]
-          PuffText.create("YOU WON!")
-        else
-          PuffText.create("You LOST! #{msg[:alias]||msg[:uuid]} won.")
-        end
+      # Update the status (position, velocity, etc) of an object.
+      when :status
+        status = message[:status]
+        object = current_game_state.objects.find {|o| o.id == message[:id] }
+        object.update_status(status)
 
-      when :position
-        player.x, player.y = msg[:x], msg[:y]
-        player.previous_x, player.previous_y = msg[:previous_x], msg[:previous_y]
-        player.alive = true
-
-      when :destroy
-        puts "Destroy: #{player.uuid}"
-        player.destroy
-
-      when :kill
-        puts "* Kill: #{player.uuid} died @ #{msg[:x]}/#{msg[:y]}"
-        player.alive = false
-
-      when :restart
-        player.alive = false
-        restart
-
-      when :ping
-        send_msg(:type => :pong, :uuid => player.uuid, :milliseconds => msg[:milliseconds])
-
-      when :pong
-        @latency = (Gosu::milliseconds - msg[:milliseconds])
-      end
+      else
+        raise "Unrecognised message: #{message.inspect}"
+    end
   end
 end

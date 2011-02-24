@@ -19,7 +19,9 @@ class Mob < Creature
 
     super(options)
 
-    after(@jump_delay + (rand(@jump_delay / 2) + rand(@jump_delay / 2))) { jump }
+    unless @remote
+      after(@jump_delay + (rand(@jump_delay / 2) + rand(@jump_delay / 2))) { jump }
+    end
   end
 
   def jump

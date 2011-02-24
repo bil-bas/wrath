@@ -3,7 +3,9 @@
 class WrathObject < GameObject
   VERTICAL_ACCELERATION = -0.1
 
-  attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
+  @@next_object_id = 0
+
+  attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
   def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
@@ -37,8 +39,36 @@ class WrathObject < GameObject
     super(options)
 
     spawn if options[:spawn]
+
+    if options[:id]
+      @id = options[:id]
+      @remote = true
+    else
+      @id = @@next_object_id
+      @@next_object_id += 1
+      @remote = false
+
+      # Todo: This is horrid!
+      if @parent.network == :server
+        @parent.previous_game_state.send_msg(type: :create, class: self.class.name,
+          options: recreate_options)
+      end
+    end
   end
 
+  def status
+    { position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
+  end
+
+  def update_status(status)
+    self.x, self.y, self.z = status[:position]
+
+    self.x_velocity, self.y_velocity, self.z_velocity = status[:velocity]
+  end
+
+  def recreate_options
+    { id: id, x: x, y: y, z: z, factor_x: factor_x }
+  end
 
   def spawn
     self.x, self.y = spawn_position

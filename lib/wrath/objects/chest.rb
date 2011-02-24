@@ -37,16 +37,18 @@ class Chest < StaticObject
   def open
     self.image = @frames[OPEN_SPRITE_FRAME]
 
-    $window.current_game_state.objects.push @contains
-    @contains.x = x
-    @contains.y = y
-    @contains.z = z + 6
-    @contains.z_velocity =  1
-    @contains.y_velocity = 0.1
+    if @contains
+      $window.current_game_state.objects.push @contains
+      @contains.x = x
+      @contains.y = y
+      @contains.z = z + 6
+      @contains.z_velocity =  1
+      @contains.y_velocity = 0.1
 
-    @contains.unpause!
+      @contains.unpause!
 
-    stop_timer :bounce
+      stop_timer :bounce
+    end
 
     @contains = nil
   end
