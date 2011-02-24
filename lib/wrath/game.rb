@@ -32,6 +32,8 @@ require_relative 'states/menu'
 require_relative 'states/play'
 require_relative 'states/transition'
 
+require_relative 'messages/message'
+
 module ZOrder
   BACKGROUND = -Float::INFINITY
   OBJECTS = 0..640

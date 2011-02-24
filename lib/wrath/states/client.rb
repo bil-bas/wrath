@@ -1,3 +1,5 @@
+Thread.abort_on_exception = true
+
 class Client < GameStates::NetworkClient
   trait :timer
 
@@ -9,6 +11,9 @@ class Client < GameStates::NetworkClient
 
     @font = Font[16]
 
+    @receive_queue = Queue.new
+    @receive_thread = nil
+
     super options
 
     on_input(:escape) { disconnect; pop_game_state }
@@ -19,7 +24,7 @@ class Client < GameStates::NetworkClient
   def on_connect
     puts "Connected to server"
     push_game_state Play.new(:client)
-    send_msg(type: :ready)
+    send_msg(Message::Ready.new)
   end
 
   def on_disconnect
@@ -30,22 +35,59 @@ class Client < GameStates::NetworkClient
     @font.draw("Connecting...", 0, 0, ZOrder::GUI)
   end
 
-  def on_msg(message)
-    case message[:type]
-      # Create an object on the client to mirror one here.
-      when :create
-        object = Kernel::const_get(message[:class]).create(message[:options])
-        current_game_state.objects.push object
-        puts "Created a #{message[:class]}"
+  def update
+    super
 
-      # Update the status (position, velocity, etc) of an object.
-      when :status
-        status = message[:status]
-        object = current_game_state.objects.find {|o| o.id == message[:id] }
-        object.update_status(status)
-
-      else
-        raise "Unrecognised message: #{message.inspect}"
+    while not @receive_queue.empty?
+      on_msg(@receive_queue.pop)
     end
+  end
+
+  def connect(ip, port = 7778)
+    return if @socket
+    @ip = ip
+    @port = port
+
+    begin
+      status = Timeout::timeout(@timeout) do
+        @socket = TCPSocket.new(ip, port)
+        on_connect
+        @receive_thread = Thread.new(@socket) do |socket|
+          loop do
+            json = socket.gets
+            #puts "received #{json}"
+            @receive_queue.push JSON.parse(json)
+          end
+        end
+      end
+    rescue Errno::ECONNREFUSED
+      on_connection_refused
+    rescue Timeout
+      on_timeout
+    end
+  end
+
+  def send_msg(msg)
+    data = msg.to_json
+    send_data(data)
+  end
+
+  # Send whatever raw data to the server
+  #
+  def send_data(data)
+    #puts "sending #{data}"
+    @socket.puts(data)
+    @socket.flush
+  end
+
+  def handle_incoming_data
+    # Ensure we've cleared the buffer before we process.
+    if @receive_thread and @receive_thread.status == "run"
+      @receive_thread.wakeup
+    end
+  end
+
+  def on_msg(message)
+    message.process
   end
 end

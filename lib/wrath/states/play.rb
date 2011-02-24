@@ -52,8 +52,8 @@ class Play < GameState
   end
 
   def update
-    previous_game_state.update unless @network == :local
     super
+    previous_game_state.update unless @network == :local
   end
 
   def draw

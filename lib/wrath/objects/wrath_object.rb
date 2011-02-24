@@ -7,6 +7,8 @@ class WrathObject < GameObject
 
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
+  def needs_status_update?; @needs_status_update; end
+
   def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
   def affected_by_gravity?; true; end
@@ -50,20 +52,23 @@ class WrathObject < GameObject
 
       # Todo: This is horrid!
       if @parent.network == :server
-        @parent.previous_game_state.broadcast_msg(type: :create, class: self.class.name,
-          options: recreate_options)
+        @parent.previous_game_state.broadcast_msg(Message::Create.new(object_class: self.class, options: recreate_options))
       end
     end
+
+    @needs_status_update = false
+    @previous_position = [x, y, z]
+    @previous_velocity = [x_velocity, y_velocity, z_velocity]
   end
 
   def status
-    { position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
+    { id: id, time: milliseconds, position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
   end
 
   def update_status(status)
-    self.x, self.y, self.z = status[:position]
+    self.x, self.y, self.z = status.position
 
-    self.x_velocity, self.y_velocity, self.z_velocity = status[:velocity]
+    self.x_velocity, self.y_velocity, self.z_velocity = status.velocity
   end
 
   def recreate_options
@@ -111,6 +116,11 @@ class WrathObject < GameObject
     end
 
     super
+    position = [x, y, z]
+    velocity = [x_velocity, y_velocity, z_velocity]
+    @needs_status_update = position != @previous_position or velocity != @previous_velocity
+    @previous_position = position
+    @previous_velocity = velocity
   end
 
   def spawn_position
