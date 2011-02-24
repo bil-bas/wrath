@@ -30,52 +30,51 @@ class LocalPlayer < Player
   end
 
   def update
-    old_pos = [x, y]
-
-     @state = :walking
+    @state = :walking
 
     # Move the character.
     if holding_any? *@keys_left
-      self.factor_x = -1
-
       if holding_any? *@keys_up
-        self.x -= effective_speed * DIAGONAL_SPEED
-        self.y -= effective_speed * DIAGONAL_SPEED
+        # NW
+        self.x_velocity = -effective_speed * DIAGONAL_SPEED
+        self.y_velocity = -effective_speed * DIAGONAL_SPEED
       elsif holding_any? *@keys_down
-        self.x -= effective_speed * DIAGONAL_SPEED
-        self.y += effective_speed * DIAGONAL_SPEED
+        # SW
+        self.x_velocity = -effective_speed * DIAGONAL_SPEED
+        self.y_velocity = effective_speed * DIAGONAL_SPEED
       else
-        self.x -= effective_speed
+        # W
+        self.y_velocity = 0
+        self.x_velocity = -effective_speed
       end
     elsif holding_any? *@keys_right
-      self.factor_x = 1
-
       if holding_any? *@keys_up
-        self.x += effective_speed * DIAGONAL_SPEED
-        self.y -= effective_speed * DIAGONAL_SPEED
+        # NE
+        self.x_velocity = effective_speed * DIAGONAL_SPEED
+        self.y_velocity = -effective_speed * DIAGONAL_SPEED
       elsif holding_any? *@keys_down
-        self.x += effective_speed * DIAGONAL_SPEED
-        self.y += effective_speed * DIAGONAL_SPEED
+        # SE
+        self.x_velocity = effective_speed * DIAGONAL_SPEED
+        self.y_velocity = effective_speed * DIAGONAL_SPEED
       else
-        self.x += effective_speed
+        # E
+        self.y_velocity = 0
+        self.x_velocity = effective_speed
       end
     elsif holding_any? *@keys_up
-      self.y -= effective_speed
+      # N
+      self.x_velocity = 0
+      self.y_velocity = -effective_speed
     elsif holding_any? *@keys_down
-      self.y += effective_speed
+      # S
+      self.x_velocity = 0
+      self.y_velocity = effective_speed
     else
+      self.x_velocity = self.y_velocity = 0
       @state = :standing
     end
 
     @carrying.factor_x = factor_x if @carrying
-
-    # Keep co-ordinates inside the screen.
-    self.x = [[x, $window.retro_width - (width / (2 * factor))].min, width / (2 * factor)].max
-    self.y = [[y, $window.retro_height].min, height / factor].max
-
-    if [x, y] != old_pos
-      # broadcast our new position.
-    end
 
     super
   end

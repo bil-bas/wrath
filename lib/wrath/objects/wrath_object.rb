@@ -72,7 +72,12 @@ class WrathObject < GameObject
   end
 
   def recreate_options
-    { id: id, x: x, y: y, z: z, factor_x: factor_x }
+    {
+      id: id,
+      x: x, y: y, z: z,
+      x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity,
+      factor_x: factor_x
+    }
   end
 
   def spawn
@@ -105,15 +110,15 @@ class WrathObject < GameObject
           @y_velocity = 0
         end
       end
-
-      self.factor_x = 1 if @x_velocity > 0
-      self.factor_x = -1 if @x_velocity < 0
-
-      self.x += @x_velocity
-      self.x = [[x, width / 2].max, $window.retro_width - width / 2].min
-      self.y += @y_velocity
-      self.y = [[y, height].max, $window.retro_height].min
     end
+
+    self.factor_x = 1 if @x_velocity > 0
+    self.factor_x = -1 if @x_velocity < 0
+
+    self.x += @x_velocity
+    self.x = [[x, width / 2].max, $window.retro_width - width / 2].min
+    self.y += @y_velocity
+    self.y = [[y, height].max, $window.retro_height].min
 
     super
     position = [x, y, z]
