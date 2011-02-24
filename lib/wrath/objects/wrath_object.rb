@@ -50,7 +50,7 @@ class WrathObject < GameObject
 
       # Todo: This is horrid!
       if @parent.network == :server
-        @parent.previous_game_state.send_msg(type: :create, class: self.class.name,
+        @parent.previous_game_state.broadcast_msg(type: :create, class: self.class.name,
           options: recreate_options)
       end
     end

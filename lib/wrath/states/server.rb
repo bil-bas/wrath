@@ -35,10 +35,6 @@ class Server < GameStates::NetworkServer
     puts "* Player disconnected: #{socket.inspect}"
   end
 
-  def send_msg(message)
-    super(@remote_socket, message)
-  end
-
   def draw
     @font.draw("Waiting for client...", 0, 0, ZOrder::GUI)
   end
@@ -56,7 +52,7 @@ class Server < GameStates::NetworkServer
 
   def update
     if current_game_state.is_a? Play
-      current_game_state.objects.each {|o| send_msg(type: :status, id: o.id, status: o.status) }
+      current_game_state.objects.each {|o| broadcast_msg(type: :status, id: o.id, status: o.status) }
     end
 
     super
