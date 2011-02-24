@@ -81,13 +81,17 @@ class LocalPlayer < Player
       self.x_velocity = 0
       self.y_velocity = effective_speed
     else
+      # Standing entirely still.
       self.x_velocity = self.y_velocity = 0
     end
   end
 
   def drop(object = @carrying)
     $window.current_game_state.objects.push object
-    object.drop(self, factor_x * 0.5, 0, 0.5)
+
+    # Give a little push if you are stationary, so that it doesn't just land at their feet.
+    extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
+    object.drop(self, x_velocity * 2 + extra_x_velocity, y_velocity * 2, z_velocity + 0.5)
 
     if @parent.network.is_a? Server
       @parent.network.broadcast_msg(Message::Drop.new(actor: id))
