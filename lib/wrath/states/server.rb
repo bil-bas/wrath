@@ -32,7 +32,6 @@ class Server < GameStates::NetworkServer
   #
   def on_connect(socket)
     puts "* Player connected: #{socket.inspect}"
-
     @remote_socket = socket
   end
 
@@ -112,7 +111,7 @@ class Server < GameStates::NetworkServer
     if current_game_state.is_a? Play
       @@counter ||= 0
       @@counter += 1
-      if @@counter % 2 == 0
+      if @@counter % 4 == 0
         updates = 0
         current_game_state.objects.each do |object|
           if object.needs_status_update?

@@ -83,8 +83,8 @@ class LocalPlayer < Player
     $window.current_game_state.objects.push object
     object.drop(self, factor_x * 0.5, 0, 0.5)
 
-    if @parent.network == :server
-      @parent.previous_game_state.broadcast_msg(Message::Drop.new(actor: id))
+    if @parent.network.is_a? Server
+      @parent.network.broadcast_msg(Message::Drop.new(actor: id))
     end
   end
 
@@ -132,8 +132,8 @@ class LocalPlayer < Player
     @carrying.pick_up(self, CARRY_OFFSET)
     @carrying.factor_x = factor_x
 
-    if @parent.network == :server
-      @parent.previous_game_state.broadcast_msg(Message::PickUp.new(actor: id, object: @carrying.id))
+    if @parent.network.is_a? Server
+      @parent.network.broadcast_msg(Message::PickUp.new(actor: id, object: @carrying.id))
     end
   end
 end

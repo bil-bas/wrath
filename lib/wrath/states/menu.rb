@@ -3,14 +3,14 @@ class Menu < Chingu::GameState
     super
 
     menu_items = {
-      "Local Game" => Play.new(:local),
+      "Local Game" => Play,
       "Join Game" => Client,
       "Host Game" => Server,
       "Exit" => :exit,
     }
 
     add_inputs(
-        l: Play.new(:local),
+        l: Play,
         j: Client,
         h: Server,
         escape: :exit

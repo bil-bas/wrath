@@ -8,8 +8,8 @@ class Play < GameState
 
   attr_reader :objects, :network
 
-  # network :server, :client, :local
-  def initialize(network)
+  # network: Server, Client, nil
+  def initialize(network = nil)
     @network = network
 
     super()
@@ -21,14 +21,14 @@ class Play < GameState
     @objects = []
 
     # Create objects, but only if we are the host or playing a local game.
-    unless @network == :client
+    unless @network.is_a? Client
       # Player 1.
       @objects.push LocalPlayer.create(x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png", gui_pos: [10, 110],
         keys_up: [:w], keys_left: [:a], keys_right: [:d], keys_down: [:s], keys_action: [:space, :left_control, :left_shift])
 
       # Player 2.
       # Keys will be ignored if this is a remote player.
-      player2_class = @network == :server ? RemotePlayer : LocalPlayer
+      player2_class = @network.is_a?(Server) ? RemotePlayer : LocalPlayer
       @objects.push player2_class.create(x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], animation: "player2_8x8.png", gui_pos: [100, 110],
         keys_up: [:up], keys_left: [:left], keys_right: [:right], keys_down: [:down], keys_action: [:right_control, :right_shift, :enter])
 
@@ -53,7 +53,7 @@ class Play < GameState
 
   def update
     super
-    previous_game_state.update unless @network == :local
+    @network.update if @network
   end
 
   def draw

@@ -40,6 +40,7 @@ class Altar < StaticObject
     end
 
     sacrifice.sacrificed(player, self)
+
   end
 
   def draw

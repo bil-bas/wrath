@@ -51,8 +51,8 @@ class WrathObject < GameObject
       @remote = false
 
       # Todo: This is horrid!
-      if @parent.network == :server
-        @parent.previous_game_state.broadcast_msg(Message::Create.new(object_class: self.class, options: recreate_options))
+      if @parent.network.is_a? Server
+        @parent.network.broadcast_msg(Message::Create.new(object_class: self.class, options: recreate_options))
       end
     end
 
@@ -62,6 +62,8 @@ class WrathObject < GameObject
   end
 
   def status
+    @needs_status_update = false
+
     { id: id, time: milliseconds, position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
   end
 
@@ -121,6 +123,7 @@ class WrathObject < GameObject
     self.y = [[y, height].max, $window.retro_height].min
 
     super
+
     position = [x, y, z]
     velocity = [x_velocity, y_velocity, z_velocity]
     @needs_status_update = position != @previous_position or velocity != @previous_velocity
@@ -140,8 +143,8 @@ class WrathObject < GameObject
   def destroy
     super
 
-    if @parent.network == :server
-      @parent.previous_game_state.broadcast_msg(Message::Destroy.new(id: id))
+    if @parent.network.is_a? Server
+      @parent.network.broadcast_msg(Message::Destroy.new(id: id))
     end
   end
 end

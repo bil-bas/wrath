@@ -93,11 +93,13 @@ require 'time'
     class Ready < Message
       def process
         puts "Client is ready"
-        $window.push_game_state Play.new(:server)
+        $window.push_game_state Play.new($window.current_game_state)
       end
     end
 
     # Messages sent by server to the client
+
+    # Update status: position and velocity.
     class Status < Message
       value :id, nil
       value :time, nil
@@ -105,10 +107,16 @@ require 'time'
       value :velocity, nil
 
       def process
-        find_object_by_id(id).update_status(self)
+        object = find_object_by_id(id)
+        if object
+          find_object_by_id(id).update_status(self)
+        else
+          puts "Could not update status of object ##{id}"
+        end
       end
     end
 
+    # Destroy an object.
     class Destroy < Message
       value :id, nil
 
@@ -117,6 +125,7 @@ require 'time'
       end
     end
 
+    # Pick up the object from teh ground.
     class PickUp < Message
       value :actor, nil
       value :object, nil
@@ -126,6 +135,7 @@ require 'time'
       end
     end
 
+    # Drop the object carried by a creature.
     class Drop < Message
       value :actor, nil
 
@@ -134,6 +144,7 @@ require 'time'
       end
     end
 
+    # Create a newly spawned object.
     class Create < Message
       value :object_class, "Object"
       value :options, {}
