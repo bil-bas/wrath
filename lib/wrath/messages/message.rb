@@ -83,6 +83,12 @@ require 'time'
       (other.class == self.class) and (other.instance_eval { @values } == @values)
     end
 
+    public
+    def find_object_by_id(id)
+      $window.current_game_state.objects.find {|o| o.id == id }
+    end
+
+
     # Sent by client in response to making a connection.
     class Ready < Message
       def process
@@ -99,8 +105,15 @@ require 'time'
       value :velocity, nil
 
       def process
-        object = $window.current_game_state.objects.find {|o| o.id == id }
-        object.update_status(self)
+        find_object_by_id(id).update_status(self)
+      end
+    end
+
+    class Destroy < Message
+      value :id, nil
+
+      def process
+        find_object_by_id(id).destroy
       end
     end
 

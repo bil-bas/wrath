@@ -136,4 +136,12 @@ class WrathObject < GameObject
   def sacrificed(player, altar)
     destroy
   end
+
+  def destroy
+    super
+
+    if @parent.network == :server
+      @parent.previous_game_state.broadcast_msg(Message::Destroy.new(id: id))
+    end
+  end
 end
