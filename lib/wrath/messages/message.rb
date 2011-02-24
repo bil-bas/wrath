@@ -117,6 +117,23 @@ require 'time'
       end
     end
 
+    class PickUp < Message
+      value :actor, nil
+      value :object, nil
+
+      def process
+        find_object_by_id(actor).pick_up(find_object_by_id(object))
+      end
+    end
+
+    class Drop < Message
+      value :actor, nil
+
+      def process
+        find_object_by_id(actor).drop
+      end
+    end
+
     class Create < Message
       value :object_class, "Object"
       value :options, {}

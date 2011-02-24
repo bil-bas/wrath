@@ -79,9 +79,13 @@ class LocalPlayer < Player
     super
   end
 
-  def drop(object)
+  def drop(object = @carrying)
     $window.current_game_state.objects.push object
     object.drop(self, factor_x * 0.5, 0, 0.5)
+
+    if @parent.network == :server
+      @parent.previous_game_state.broadcast_msg(Message::Drop.new(actor: id))
+    end
   end
 
   def action
@@ -127,5 +131,9 @@ class LocalPlayer < Player
     @carrying = object
     @carrying.pick_up(self, CARRY_OFFSET)
     @carrying.factor_x = factor_x
+
+    if @parent.network == :server
+      @parent.previous_game_state.broadcast_msg(Message::PickUp.new(actor: id, object: @carrying.id))
+    end
   end
 end
