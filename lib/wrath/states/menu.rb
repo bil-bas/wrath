@@ -13,16 +13,10 @@ class Menu < Chingu::GameState
         l: Play,
         j: Client,
         h: Server,
+        e: :exit,
         escape: :exit
     )
 
-    SimpleMenu.create(spacing: 0, y: 0, menu_items: menu_items, size: 16)
-    @font = Font[10]
-  end
-
-  def draw
-    super
-
-    @font.draw("(L)ocal, (J)oin or (H)ost", 0, 0, 0)
+    SimpleMenu.create(spacing: 15, x: 80, y: 60, menu_items: menu_items, size: 14)
   end
 end
