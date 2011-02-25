@@ -20,7 +20,8 @@ h3. OS X and Linux
 
 h2. Credits
 
-* Spiderspit, SiliconEidolon, Ippa and Banisterfiend for alpha play-testing, brainstorming and suggestions.
+* Spiderspit, SiliconEidolon, Ippa, Myx and Banisterfiend for alpha play-testing, brainstorming and suggestions.
+* Ippa for code snippets I stole, I mean, was given :)
 
 h2. Third party assets used
 
