@@ -4,38 +4,12 @@ require 'chingu'
 include Gosu
 include Chingu
 
-require_relative 'chingu_ext'
-
-# Creatures
-require_relative 'creatures/local_player'
-require_relative 'creatures/remote_player'
-require_relative 'creatures/goat'
-require_relative 'creatures/virgin'
-require_relative 'creatures/knight'
-require_relative 'creatures/chicken'
-require_relative 'creatures/horse'
-
-# Objects
-require_relative 'objects/altar'
-require_relative 'objects/rock'
-require_relative 'objects/pebble'
-require_relative 'objects/blood'
-require_relative 'objects/fire'
-require_relative 'objects/crown'
-require_relative 'objects/chest'
-require_relative 'objects/egg'
-
-# States
-require_relative 'states/server'
-require_relative 'states/client'
-require_relative 'states/menu'
-require_relative 'states/play'
-require_relative 'states/transition'
-
-require_relative 'messages/message'
+RequireAll.require_all File.join(__FILE__, '..', '/**/*.rb')
 
 module ZOrder
   BACKGROUND = -Float::INFINITY
+  TILES = -2
+  SHADOWS = -1
   OBJECTS = 0..640
   GUI = 10000
 end

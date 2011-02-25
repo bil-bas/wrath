@@ -99,9 +99,9 @@ class WrathObject < GameObject
       bottom_right = [x + (width + z) * 0.5, y - z * 0.5, color]
 
       if factor_x > 0
-        image.draw_as_quad(*top_left, *top_right, *bottom_left, *bottom_right, 0)
+        image.draw_as_quad(*top_left, *top_right, *bottom_left, *bottom_right, ZOrder::SHADOWS)
       else
-        image.draw_as_quad(*top_right, *top_left, *bottom_right, *bottom_left, 0)
+        image.draw_as_quad(*top_right, *top_left, *bottom_right, *bottom_left, ZOrder::SHADOWS)
       end
     end
 
