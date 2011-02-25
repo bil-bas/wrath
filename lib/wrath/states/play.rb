@@ -52,8 +52,9 @@ class Play < GameState
   end
 
   def update
+    @network.pre_update if @network
     super
-    @network.update if @network
+    @network.post_update if @network
   end
 
   def draw
