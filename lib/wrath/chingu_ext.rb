@@ -1,1 +1,0 @@
-require_relative 'chingu_ext/game_object'
