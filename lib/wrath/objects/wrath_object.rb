@@ -90,10 +90,19 @@ class WrathObject < GameObject
 
   def draw
     # Draw a shadow
-    if casts_shadow? and not @carrier  # Don't draw a shadow if carried, since the carrier will deal with it.
-      shadow_width = width
-      shadow_width = [shadow_width, @carrying.width].max if @carrying
-      $window.pixel.draw(x - (shadow_width / 2.0), y - 1, y, shadow_width, 1, Color.rgba(0, 0, 0, 50))
+    if casts_shadow?
+      color = Color.rgba(0, 0, 0, 255)
+
+      top_left = [x + (z * 0.5), y - (height + z) * 0.5, color]
+      top_right = [x + width + (z * 0.5), y - (height + z) * 0.5, color]
+      bottom_left = [x - (width - z) * 0.5, y - z * 0.5, color]
+      bottom_right = [x + (width + z) * 0.5, y - z * 0.5, color]
+
+      if factor_x > 0
+        image.draw_as_quad(*top_left, *top_right, *bottom_left, *bottom_right, 0)
+      else
+        image.draw_as_quad(*top_right, *top_left, *bottom_right, *bottom_left, 0)
+      end
     end
 
     draw_relative(0, -z, y)
