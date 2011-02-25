@@ -70,7 +70,7 @@ class Server < GameStates::NetworkServer
         current_game_state.objects.each do |object|
           if object.needs_status_update?
             updates += 1
-            broadcast_msg(Message::Status.new(object.status))
+            broadcast_msg(Message::Sync.new(object.status))
           end
         end
 
