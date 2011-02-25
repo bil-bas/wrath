@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'mob'
-
 class Virgin < Mob
   def favor; 40; end
 

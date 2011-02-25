@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative '../objects/wrath_object'
-
 class Creature < WrathObject
   WALK_ANIMATION_DELAY = 200
 

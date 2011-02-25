@@ -1,5 +1,3 @@
-require_relative 'static_object'
-
 class Fire < StaticObject
   trait :timer
 

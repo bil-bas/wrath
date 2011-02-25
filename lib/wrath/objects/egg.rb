@@ -1,5 +1,3 @@
-require_relative 'static_object'
-
 class Egg < StaticObject
   include Carriable
 

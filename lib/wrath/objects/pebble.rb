@@ -1,5 +1,3 @@
-require_relative 'static_object'
-
 class Pebble < StaticObject
   trait :timer
 

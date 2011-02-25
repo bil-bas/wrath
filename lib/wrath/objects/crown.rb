@@ -1,6 +1,3 @@
-require_relative 'static_object'
-require_relative '../carriable'
-
 # Crown of levitation.
 class Crown < StaticObject
   LEVITATE_HEIGHT = 12.0

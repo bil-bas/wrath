@@ -1,8 +1,5 @@
 # encoding: utf-8
 
-require_relative 'creature'
-require_relative '../carriable'
-
 class Mob < Creature
   include Carriable
 

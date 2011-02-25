@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'wrath_object'
-
 class StaticObject < WrathObject
   IMAGE_WALK1 = 0
   IMAGE_WALK2 = 1

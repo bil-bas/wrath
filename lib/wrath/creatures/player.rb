@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'creature'
-
 class Player < Creature
   CARRY_OFFSET = 6
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)

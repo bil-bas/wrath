@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'mob'
-
 class Horse < Mob
   def favor; 20; end
 

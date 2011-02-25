@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'static_object'
-
 class Altar < StaticObject
   trait :timer
 

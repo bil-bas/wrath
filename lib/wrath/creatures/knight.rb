@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'mob'
-
 class Knight < Mob
   def favor; 30; end
 

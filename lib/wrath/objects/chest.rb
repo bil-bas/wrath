@@ -1,6 +1,3 @@
-require_relative 'static_object'
-require_relative '../carriable'
-
 class Chest < StaticObject
   trait :timer
 

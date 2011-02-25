@@ -4,7 +4,7 @@ require 'chingu'
 include Gosu
 include Chingu
 
-RequireAll.require_all File.join(__FILE__, '..', '/**/*.rb')
+RequireAll.require_all File.join(File.dirname(__FILE__), '**', '*.rb')
 
 module ZOrder
   BACKGROUND = -Float::INFINITY

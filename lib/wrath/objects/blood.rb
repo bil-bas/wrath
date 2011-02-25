@@ -1,5 +1,3 @@
-require_relative 'static_object'
-
 class Blood < StaticObject
   trait :timer
 

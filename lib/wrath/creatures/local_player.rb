@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require_relative 'player'
-
 class LocalPlayer < Player
   ACTION_DISTANCE = 10
   DIAGONAL_SPEED = Math.sqrt(2) / 2

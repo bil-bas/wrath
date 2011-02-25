@@ -1,6 +1,3 @@
-require_relative 'static_object'
-require_relative '../carriable'
-
 class Rock < StaticObject
   NUM_PEBBLES = 9
 
