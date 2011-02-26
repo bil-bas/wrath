@@ -17,6 +17,7 @@ class Menu < Chingu::GameState
         escape: :exit
     )
 
-    SimpleMenu.create(spacing: 15, x: 80, y: 60, menu_items: menu_items, size: 14)
+    SimpleMenu.create(spacing: 3, x: 80, y: 43, menu_items: menu_items, size: 14)
+    Text.create("Wrath!", x: 80, y: 5, rotation_center: :top_center, size: 20, factor: 2, color: Color.rgb(0, 100, 0))
   end
 end
