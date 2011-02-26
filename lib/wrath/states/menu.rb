@@ -4,14 +4,14 @@ class Menu < Chingu::GameState
 
     menu_items = {
       "Local Game" => Play,
-      "Join Game" => Client,
+      "Join Game" => EnterServerIP,
       "Host Game" => Server,
       "Exit" => :exit,
     }
 
     add_inputs(
         l: Play,
-        j: Client,
+        j: EnterServerIP,
         h: Server,
         e: :exit,
         escape: :exit

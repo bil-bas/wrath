@@ -1,10 +1,11 @@
 class Client < GameStates::NetworkClient
+
   trait :timer
 
   def initialize(options = {})
     options = {
-      ip: "127.0.0.1",
-      port: 7778,
+      address: "127.0.0.1",
+      port: Server::DEFAULT_PORT,
     }.merge! options
 
     @font = Font[16]
@@ -13,7 +14,7 @@ class Client < GameStates::NetworkClient
 
     on_input(:escape) { disconnect; pop_game_state }
 
-    after(0.1) { connect(options[:ip], options[:port]) }
+    after(0.1) { connect(options[:address], options[:port]) }
   end
 
   def pre_update

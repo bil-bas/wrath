@@ -2,6 +2,7 @@
 
 class Server < GameStates::NetworkServer
   SYNC_DELAY = 1.0 / 15.0 # 1 fps
+  DEFAULT_PORT = 60000
 
   trait :timer
 
@@ -10,7 +11,7 @@ class Server < GameStates::NetworkServer
   def initialize(options = {})
     options = {
       address: "0.0.0.0",
-      port: 7778,
+      port: DEFAULT_PORT,
     }.merge! options
 
     @remote_socket = nil
