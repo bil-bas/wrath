@@ -26,14 +26,10 @@ class Play < GameState
 
   def create_objects
     # Player 1.
-    @objects.push LocalPlayer.create(x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png", gui_pos: [10, 110],
-      keys_up: [:w], keys_left: [:a], keys_right: [:d], keys_down: [:s], keys_action: [:space, :left_control, :left_shift])
+    @objects.push LocalPlayer.create(number: 0, local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
 
     # Player 2.
-    # Keys will be ignored if this is a remote player.
-    player2_class = @network.is_a?(Server) ? RemotePlayer : LocalPlayer
-    @objects.push player2_class.create(x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], animation: "player2_8x8.png", gui_pos: [100, 110],
-      keys_up: [:up], keys_left: [:left], keys_right: [:right], keys_down: [:down], keys_action: [:right_control, :right_shift, :enter])
+    @objects.push LocalPlayer.create(number: 1, local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], animation: "player2_8x8.png")
 
     # The altar is all-important!
     @objects.push Altar.create

@@ -33,7 +33,12 @@ class Player < Creature
   end
 
   def recreate_options
-    super.merge!(animation: @animation_file, gui_pos: @gui_pos)
+    {
+        animation: @animation_file,
+        gui_pos: @gui_pos,
+        local: remote?, # Invert locality of player created on client.
+        number: number
+    }.merge! super
   end
 
   def draw

@@ -12,8 +12,8 @@ class WrathObject < GameObject
   def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
   def affected_by_gravity?; true; end
-  def remote?; @remote; end
-  def local?; not @remote; end
+  def remote?; not @local; end
+  def local?; @local; end
 
   def initialize(options = {})
     options = {
@@ -46,12 +46,11 @@ class WrathObject < GameObject
 
     if options[:id]
       @id = options[:id]
-      @remote = true
+      @local = options[:local] || false
     else
       @id = @@next_object_id
       @@next_object_id += 1
-      @remote = false
-
+      @local = options.has_key?(:local) ? options[:local] : true
       # Todo: This is horrid!
       if @parent.network.is_a? Server
         @parent.network.broadcast_msg(Message::Create.new(object_class: self.class, options: recreate_options))

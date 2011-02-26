@@ -1,26 +1,32 @@
 # encoding: utf-8
 
 class LocalPlayer < Player
+  KEYS_CONFIG_FILE = File.join(ROOT_PATH, 'config', 'keys.yml')
   ACTION_DISTANCE = 10
   DIAGONAL_SPEED = Math.sqrt(2) / 2
 
-  def initialize(options = {})
+  attr_reader :number
+
+  def initialize( options = {})
     options = {
-      keys_up: :up,
-      keys_down: :down,
-      keys_left: :left,
-      keys_right: :right,
-      keys_action: :space,
     }.merge! options
 
-    @keys_up = options[:keys_up]
-    @keys_down = options[:keys_down]
-    @keys_left = options[:keys_left]
-    @keys_right = options[:keys_right]
+    @number = options[:number]
+
+    keys_config = YAML.load(File.open(KEYS_CONFIG_FILE) {|f| f.read })
+
+    keys = keys_config[:players][@number + 1]
+    @keys_left = keys[:left]
+    @keys_right = keys[:right]
+    @keys_up = keys[:up]
+    @keys_down = keys[:down]
+    @keys_action = keys[:action]
+
+    options[:gui_pos] = [[10, 110], [80, 110]][@number]
 
     super(options)
 
-    on_input(options[:keys_action], :action) if local?
+    on_input(@keys_action, :action) if local?
   end
 
   def effective_speed

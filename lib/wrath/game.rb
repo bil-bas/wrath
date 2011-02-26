@@ -1,8 +1,16 @@
 # encoding: utf-8
 
-require 'chingu'
+begin
+  # Run my local version, otherwise use the gem.
+  require_relative '../../../chingu/lib/chingu'
+rescue
+  require 'chingu'
+end
+
 include Gosu
 include Chingu
+
+require 'yaml'
 
 RequireAll.require_all File.join(File.dirname(__FILE__), '**', '*.rb')
 
