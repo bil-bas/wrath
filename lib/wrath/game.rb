@@ -1,11 +1,6 @@
 # encoding: utf-8
 
-begin
-  # Run my local version, otherwise use the gem.
-  require_relative '../../../chingu/lib/chingu'
-rescue
-  require 'chingu'
-end
+require 'chingu'
 
 include Gosu
 include Chingu
