@@ -8,6 +8,7 @@ class Altar < StaticObject
   BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
 
   def ready?; @blood == 0; end
+  def can_be_activated?(actor); actor.carrying; end
 
   def initialize(options = {})
     options = {
@@ -25,6 +26,12 @@ class Altar < StaticObject
     @blood_drip_animation = @frames[BLOOD_DRIP_FRAME_RANGE]
     @blood_drip_animation.delay = BLOOD_DRIP_DELAY
     @blood_drip_animation.loop = false
+  end
+
+  def activate(actor)
+    lamb = actor.carrying
+    actor.carrying = nil
+    sacrifice(actor, lamb)
   end
 
   def sacrifice(player, sacrifice)

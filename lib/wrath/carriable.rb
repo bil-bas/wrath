@@ -3,6 +3,14 @@ module Carriable
   def carried?; not @carrier.nil?; end
   def affected_by_gravity?; @carrier.nil?; end
 
+  def can_be_activated?(actor)
+    carriable? and actor.empty_handed?
+  end
+
+  def activate(actor)
+    actor.pick_up(self)
+  end
+
   attr_reader :encumbrance
 
   def initialize(options = {})

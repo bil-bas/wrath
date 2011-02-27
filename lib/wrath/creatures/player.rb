@@ -4,8 +4,11 @@ class Player < Creature
   CARRY_OFFSET = 6
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
 
-  attr_reader :speed, :favor, :health
-  attr_writer :favor, :health # TODO: hook into these values changing.
+  attr_reader :speed, :favor, :health, :carrying
+  attr_writer :favor, :health, :carrying # TODO: hook into these values changing.
+
+  def empty_handed?; not carrying; end
+  def can_be_activated?(actor); false; end
 
   def initialize(options = {})
     options = {

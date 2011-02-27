@@ -108,34 +108,19 @@ class LocalPlayer < Player
     nearest = objects.min_by {|g| distance_to(g) }
     nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
 
-    if @carrying
-      dropping = @carrying
-      # Drop whatever we are carrying.
-      case nearest
-        when Altar
-          if nearest.ready?
-            @carrying = nil
-            nearest.sacrifice(self, dropping)
-          end
-
-        when Chest
-          @carrying = nil
-          if nearest.open?
-            nearest.close(dropping)
-          else
-            drop dropping
-          end
-
-        else
-          @carrying = nil
-          drop dropping
-
-      end
-    elsif nearest
-      if nearest.is_a? Chest and nearest.closed?
-        nearest.open
+    if nearest and nearest.can_be_activated?(self)
+      if nearest.local?
+        nearest.activate(self)
       else
-        pick_up(nearest) if nearest.carriable?
+        # TODO: Request activation from server.
+      end
+    elsif @carrying
+      if @carrying.local?
+        dropping = @carrying
+        @carrying = nil
+        drop(dropping)
+      else
+        # TODO: Request drop.
       end
     end
   end

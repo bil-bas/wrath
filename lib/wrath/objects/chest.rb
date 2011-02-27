@@ -31,6 +31,24 @@ class Chest < StaticObject
     end
   end
 
+  def can_be_activated?(actor)
+    (closed? and actor.empty_handed?) or open?
+  end
+
+  def activate(actor)
+    if closed?
+      open
+    else
+      item = actor.carrying
+      if item
+        actor.carrying = nil
+        close(item)
+      else
+        actor.pick_up(self)
+      end
+    end
+  end
+
   def open
     self.image = @frames[OPEN_SPRITE_FRAME]
 
