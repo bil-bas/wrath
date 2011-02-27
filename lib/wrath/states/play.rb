@@ -14,7 +14,11 @@ class Play < GameState
 
     super()
 
-    on_input(:escape) { switch_game_state self.class.new(@network) }
+    on_input(:escape) do
+      switch_game_state self.class.new(@network)
+    end
+
+    @network.broadcast_msg Message::Start.new if @network.is_a? Server
 
     @tiles = []
     @objects = []

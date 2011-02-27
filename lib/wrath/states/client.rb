@@ -26,7 +26,6 @@ class Client < GameStates::NetworkClient
 
   def on_connect
     puts "Connected to server"
-    push_game_state Play.new(self)
     send_msg(Message::Ready.new)
   end
 
