@@ -28,6 +28,10 @@ class Play < GameState
     end
   end
 
+  def finalize
+    game_objects.each(&:destroy)
+  end
+
   def create_objects
     # Player 1.
     @objects.push LocalPlayer.create(number: 0, local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
