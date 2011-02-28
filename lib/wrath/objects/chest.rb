@@ -24,7 +24,7 @@ class Chest < StaticObject
     if options[:contains]
       possible_objects = Array(options[:contains])
       object = possible_objects[rand(possible_objects.size)]
-      object = object.create if object.is_a? Class
+      object = object.create(x: -1000) if object.is_a? Class
       close(object)
     else
       open
