@@ -69,9 +69,9 @@ class Server < GameStates::NetworkServer
       if (milliseconds - @last_sync) > SYNC_DELAY
         updates = 0
         current_game_state.objects.each do |object|
-          if object.needs_status_update?
+          if object.local? # object.needs_sync?
             updates += 1
-            broadcast_msg(Message::Sync.new(object.status))
+            broadcast_msg(Message::Sync.new(object.sync_data))
           end
         end
 

@@ -9,7 +9,7 @@ class WrathObject < GameObject
 
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
-  def needs_status_update?; @needs_status_update; end
+  def needs_sync?; @needs_sync; end
 
   def casts_shadow?; @casts_shadow; end
   def carriable?; false; end
@@ -59,21 +59,21 @@ class WrathObject < GameObject
       end
     end
 
-    @needs_status_update = false
+    @needs_sync = false
     @previous_position = [x, y, z]
     @previous_velocity = [x_velocity, y_velocity, z_velocity]
   end
 
-  def status
-    @needs_status_update = false
+  def sync_data
+    @needs_sync = false
 
     { id: id, time: milliseconds, position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
   end
 
-  def update_status(status)
-    self.x, self.y, self.z = status.position
+  def sync(data)
+    self.x, self.y, self.z = data.position
 
-    self.x_velocity, self.y_velocity, self.z_velocity = status.velocity
+    self.x_velocity, self.y_velocity, self.z_velocity = data.velocity
   end
 
   def recreate_options
@@ -142,8 +142,8 @@ class WrathObject < GameObject
 
     # If we haven't sent an update that needs sending, then doesn't matter if we are stationary.
     # We still need to send it when we get the chance.
-    unless needs_status_update?
-      @needs_status_update = position != @previous_position or velocity != @previous_velocity
+    unless needs_sync?
+      @needs_sync = position != @previous_position or velocity != @previous_velocity
     end
 
     @previous_position = position
