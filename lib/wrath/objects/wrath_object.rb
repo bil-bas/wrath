@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class WrathObject < GameObject
-  VERTICAL_ACCELERATION = -0.1
+  GRAVITY = -0.1
 
   TOP_MARGIN = 16 # Unenterable region at the top of the screen.
 
@@ -111,7 +111,7 @@ class WrathObject < GameObject
 
   def update
     if affected_by_gravity? and (@z_velocity != 0 or @z > 0)
-      @z_velocity += VERTICAL_ACCELERATION
+      @z_velocity += GRAVITY
       @z += @z_velocity
 
       if @z <= 0
