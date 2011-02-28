@@ -46,6 +46,7 @@ class Play < GameState
     @objects.push Virgin.create(spawn: true)
     @objects += Array.new(NUM_GOATS) { Goat.create(spawn: true) }
     @objects += Array.new(NUM_CHICKENS) { Chicken.create(spawn: true) }
+    @objects += Array.new(1) { Bard.create(spawn: true) }
 
     # Inanimate objects.
     @objects += Array.new(4) { Rock.create(spawn: true) }
