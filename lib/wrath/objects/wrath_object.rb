@@ -3,6 +3,8 @@
 class WrathObject < GameObject
   VERTICAL_ACCELERATION = -0.1
 
+  TOP_MARGIN = 16 # Unenterable region at the top of the screen.
+
   @@next_object_id = 0
 
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
@@ -130,7 +132,7 @@ class WrathObject < GameObject
     self.x += @x_velocity
     self.x = [[x, width / 2].max, $window.retro_width - width / 2].min
     self.y += @y_velocity
-    self.y = [[y, height].max, $window.retro_height].min
+    self.y = [[y, TOP_MARGIN].max, $window.retro_height].min
 
     super
 

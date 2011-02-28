@@ -1,7 +1,5 @@
-
-/.idea/.gitignore
-/.idea/.name
-/.idea/wrath.iml
-/game.log
-/wrath.exe
-/wrath.log
+/.yardoc
+/.idea
+/doc
+/*.log
+/*.exe
