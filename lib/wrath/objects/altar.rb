@@ -6,6 +6,7 @@ class Altar < StaticObject
   CLEAR_DELAY = 25
   BLOOD_DRIP_DELAY = 300
   BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
+  GHOST_COLOR = Color.rgb(150, 150, 255)
 
   def ready?; @blood == 0; end
   def can_be_activated?(actor); actor.carrying; end
@@ -41,6 +42,7 @@ class Altar < StaticObject
         @player = player
         @sacrifice = sacrifice
         @blood_drip_animation.reset
+        @facing = sacrifice.factor_x
         after(CLEAR_DELAY) { clear_blood }
     end
 
@@ -52,7 +54,10 @@ class Altar < StaticObject
     super
 
     unless ready?
-      @sacrifice.image.draw(x - @sacrifice.image.width / 2, y - (height * 1.5) + (@blood - 100) / 10.0, zorder + y, 1, 1, Color.rgba(230, 230, 255, @blood + 25))
+      color = GHOST_COLOR.dup
+      color.alpha = @blood + 50
+      @sacrifice.image.draw_rot(x, y - (height * 1.5) + (@blood - 100) / 10.0, zorder + y,
+                                0, 0.5, 0, @facing, 1, color)
     end
   end
 
