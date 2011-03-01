@@ -5,6 +5,11 @@ require 'chingu'
 include Gosu
 include Chingu
 
+begin
+  require 'pry'
+rescue LoadError
+end
+
 require 'yaml'
 
 RequireAll.require_all File.join(File.dirname(__FILE__), '**', '*.rb')

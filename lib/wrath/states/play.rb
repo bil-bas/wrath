@@ -94,6 +94,7 @@ class Play < GameState
   end
 
   def setup
+    super
     puts "Started Playing"
   end
 
