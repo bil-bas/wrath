@@ -92,7 +92,7 @@ class WrathObject < GameObject
   def draw
     # Draw a shadow
     if casts_shadow?
-      color = Color.rgba(0, 0, 0, 255)
+      color = Color.rgba(0, 0, 0, alpha)
 
       top_left = [x + (z * 0.5), y - (height + z) * 0.5, color]
       top_right = [x + width + (z * 0.5), y - (height + z) * 0.5, color]
@@ -166,7 +166,7 @@ class WrathObject < GameObject
   def destroy
     super
 
-    if @parent.network.is_a? Server
+    if @parent.network and local?
       @parent.network.broadcast_msg(Message::Destroy.new(id: id))
     end
   end
