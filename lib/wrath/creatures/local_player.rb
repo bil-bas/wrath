@@ -42,7 +42,13 @@ class LocalPlayer < Player
       @state = :walking
     end
 
-    @carrying.factor_x = factor_x if @carrying
+    # Ensure any carried object faces in the same direction as the player.
+    if @carrying
+      if (factor_x > 0 and @carrying.factor_x < 0) or
+          (factor_x < 0 and @carrying.factor_x > 0)
+        @carrying.factor_x *= -1
+      end
+    end
 
     super
   end

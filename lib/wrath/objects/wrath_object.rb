@@ -20,7 +20,6 @@ class WrathObject < GameObject
   def initialize(options = {})
     options = {
       rotation_center: :bottom_center,
-      factor_x: [1, -1][rand(2)],
       spawn: false,
       elasticity: 0.6,
       x_velocity: 0,
@@ -81,7 +80,8 @@ class WrathObject < GameObject
       id: id,
       x: x, y: y, z: z,
       x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity,
-      factor_x: factor_x
+      factor_x: factor_x,
+      paused: paused?,
     }
   end
 

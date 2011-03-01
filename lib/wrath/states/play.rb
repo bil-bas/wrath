@@ -52,15 +52,23 @@ class Play < GameState
     @objects += Array.new(4) { Rock.create(spawn: true) }
     @objects += Array.new(3) { Chest.create(spawn: true, contains: [Crown, Chicken, Knight]) }
     @objects += Array.new(2) { Fire.create(spawn: true) }
+    @objects += Array.new(4) { Tree.create(spawn: true) }
+    @objects += Array.new(5) { Mushroom.create(spawn: true) }
+
+    # Top "blockers", not really tangible, so don't update/sync them.
+    40.times { Tree.create(x: rand(160), y: rand(10) + 5, paused: true) }
   end
 
   def random_tiles
     # Fill the grid with grass to start with.
     grid = Array.new(20) { Array.new(20, Grass) }
 
+    # Add forest floor.
+    20.times {|i| grid[0][i] = grid[1][i] = Forest }
+
     # Add water-features.
     (rand(3) + 2).times do
-      pos = [rand(18) + 1, rand(18) + 1]
+      pos = [rand(16) + 3, rand(18) + 1]
       grid[pos[0]][pos[1]] = Water
       (rand(5) + 2).times do
         grid[pos[0] - 1 + rand(3)][pos[1] - 1 + rand(3)] = [Water, Water, Sand][rand(3)]
