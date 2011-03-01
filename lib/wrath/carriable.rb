@@ -29,6 +29,7 @@ module Carriable
   def pick_up(carrier, z_offset)
     @carrier = carrier
     @z_offset = z_offset
+    @x_velocity = @y_velocity = @z_velocity = 0
 
     nil
   end
@@ -48,7 +49,7 @@ module Carriable
 
   def update
     if carried?
-      self.x, self.y, self.z = @carrier.x, @carrier.y, @carrier.z + @z_offset
+      self.x, self.y, self.z = @carrier.x, @carrier.y + 0.001, @carrier.z + @z_offset
     end
 
     super
