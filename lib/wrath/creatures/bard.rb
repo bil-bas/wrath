@@ -1,4 +1,4 @@
-class Bard < Chicken
+class Bard < Knight
   def initialize(options = {})
     options = {
         animation: "bard_8x8.png",
