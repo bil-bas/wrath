@@ -135,7 +135,11 @@ class LocalPlayer < Player
     $window.current_game_state.objects.delete object
     @carrying = object
     @carrying.pick_up(self, CARRY_OFFSET)
-    @carrying.factor_x = factor_x
+
+    if (factor_x > 0 and @carrying.factor_x < 0) or
+        (factor_x < 0 and @carrying.factor_x > 0)
+      @carrying.factor_x *= -1
+    end
 
     if @parent.network.is_a? Server
       @parent.network.broadcast_msg(Message::PickUp.new(actor: id, object: @carrying.id))

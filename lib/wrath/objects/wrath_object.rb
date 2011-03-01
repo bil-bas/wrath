@@ -126,8 +126,10 @@ class WrathObject < GameObject
       end
     end
 
-    self.factor_x = 1 if @x_velocity > 0
-    self.factor_x = -1 if @x_velocity < 0
+    if (factor_x > 0 and x_velocity < 0) or
+        (factor_x < 0 and x_velocity > 0)
+      self.factor_x *= -1
+    end
 
     self.x += @x_velocity
     self.x = [[x, width / 2].max, $window.retro_width - width / 2].min
