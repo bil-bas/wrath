@@ -1,18 +1,14 @@
 class Message
   class Create < Message
-    value :object_class, "Object"
+    value :object_class, nil
     value :options, {}
 
-    def initialize(*args)
-      super(*args)
-
-      # Convert options into symbolic hash.
-      options = @values["options"]
-      symbolised_options = Hash.new
-      options.each_pair do |key, value|
-        symbolised_options[key.to_sym] = value
+    def initialize(options = {})
+      if options[:object_class].is_a? Class
+        options[:object_class] = options[:object_class].name.to_sym
       end
-      @values["options"] = symbolised_options
+
+      super(options)
     end
 
     def process

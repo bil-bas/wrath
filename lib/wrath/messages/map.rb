@@ -4,8 +4,15 @@ class Message
 
     value :tiles, nil
 
-    def initialize(*args)
-      super(*args)
+    def initialize(options = {})
+      # Convert class matrix to symbols.
+      if options[:tiles][0][0].is_a? Class
+        options[:tiles] = options[:tiles].map do |row|
+          row.map {|klass| klass.name.to_sym }
+        end
+      end
+
+      super(options)
     end
 
     def process

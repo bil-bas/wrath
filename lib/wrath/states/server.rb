@@ -52,12 +52,7 @@ class Server < GameStates::NetworkServer
   end
 
   def on_msg(socket, message)
-    JSON.parse(message).process
-  end
-
-  def send_msg(socket, message)
-    data = message.to_json
-    super(socket, data)
+    Message.const_get(message[:type]).new(message[:values]).process
   end
 
   def broadcast_msg(message)

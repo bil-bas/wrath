@@ -40,13 +40,8 @@ class Client < GameStates::NetworkClient
     @font.draw("Connecting...", 0, 0, ZOrder::GUI)
   end
 
-  def send_msg(message)
-    data = message.to_json
-    super(data)
-  end
-
   def on_msg(message)
-    JSON.parse(message).process
+    Message.const_get(message[:type]).new(message[:values]).process
   end
 
   def handle_outgoing_data
