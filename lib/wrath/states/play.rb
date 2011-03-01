@@ -4,7 +4,7 @@ class Play < GameState
   NUM_GOATS = 5
   NUM_CHICKENS = 2
 
-  PLAYER_SPAWNS = [[40, 60], [120, 60]]
+  PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
   attr_reader :objects, :network, :tiles
 
@@ -37,7 +37,7 @@ class Play < GameState
     @objects.push LocalPlayer.create(number: 0, local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
 
     # Player 2.
-    @objects.push LocalPlayer.create(number: 1, local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], animation: "player2_8x8.png")
+    @objects.push LocalPlayer.create(number: 1, local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], factor_x: -1, animation: "player2_8x8.png")
 
     # The altar is all-important!
     @objects.push Altar.create

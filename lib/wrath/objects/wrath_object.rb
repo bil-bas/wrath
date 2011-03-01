@@ -151,8 +151,12 @@ class WrathObject < GameObject
   end
 
   def spawn_position
-    [rand(($window.width / $window.sprite_scale) - width) + width / 2,
-     rand(($window.height / $window.sprite_scale) - height) + height / 2]
+    loop do
+      pos = [rand(($window.width / $window.sprite_scale) - width) + width / 2,
+             rand(($window.height / $window.sprite_scale) - height) + height / 2]
+
+      return pos if distance(*pos, $window.retro_width / 2, $window.retro_width / 2) > 40
+    end
   end
 
   def sacrificed(player, altar)
