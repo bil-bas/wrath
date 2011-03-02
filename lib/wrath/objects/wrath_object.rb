@@ -162,6 +162,7 @@ class WrathObject < GameObject
   end
 
   def sacrificed(player, altar)
+    @sacrificial_explosion.blast(altar.x, altar.y, altar.z + altar.height) if @sacrificial_explosion
     destroy
   end
 

@@ -1,6 +1,10 @@
 # encoding: utf-8
 
 class Mob < Creature
+
+  EXPLOSION_H_SPEED = 0.02..0.07
+  EXPLOSION_Z_VELOCITY = -0.1..0.3
+
   include Carriable
 
   trait :timer
@@ -15,6 +19,9 @@ class Mob < Creature
     @jump_delay = options[:jump_delay]
 
     super(options)
+
+    @sacrificial_explosion = Explosion.new(type: Blood, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
+                                            z_velocity: EXPLOSION_Z_VELOCITY)
 
     if local?
       after(@jump_delay + (rand(@jump_delay / 2) + rand(@jump_delay / 2))) { jump }
@@ -33,16 +40,6 @@ class Mob < Creature
   end
 
   def sacrificed(player, altar)
-    ((favor / 10) + 4).times do
-      angle = rand(360)
-      speed = 0.02 + rand(0.05)
-      y_velocity = Math::sin(angle) * speed
-      x_velocity = Math::cos(angle) * speed
-      z_velocity = -0.1 + rand(0.2)
-      Blood.create(x: altar.x, y: altar.y, z: altar.z + altar.height,
-        x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity)
-    end
-
     super
   end
 

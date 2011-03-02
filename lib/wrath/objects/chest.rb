@@ -10,6 +10,10 @@ class Chest < StaticObject
   CLOSED_SPRITE_FRAME = 0
   OPEN_SPRITE_FRAME = 1
 
+  EXPLOSION_H_SPEED = 0.3..0.5
+  EXPLOSION_Z_VELOCITY = 0.5..0.9
+  EXPLOSION_NUMBER = 6..8
+
   def initialize(options = {})
     options = {
       encumbrance: 0.6,
@@ -19,6 +23,9 @@ class Chest < StaticObject
     }.merge! options
 
     super options
+
+    @sacrificial_explosion = Explosion.new(type: Splinter, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+                                           z_velocity: EXPLOSION_Z_VELOCITY)
 
     # Pick one of the contents objects, creating if it is a class rather than an object.
     if options[:contains]
@@ -68,6 +75,11 @@ class Chest < StaticObject
     end
 
     @contains = nil
+  end
+
+  def sacrificed(player, altar)
+    Sample["rock_sacrifice.wav"]
+    super
   end
 
   def close(object)

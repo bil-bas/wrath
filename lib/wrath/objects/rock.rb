@@ -1,8 +1,10 @@
 class Rock < StaticObject
-  NUM_PEBBLES = 9
-
   EXPLOSION_HEALTH = -40
   EXPLOSION_FAVOR = -10
+
+  EXPLOSION_H_SPEED = 0.4..1.2
+  EXPLOSION_Z_VELOCITY = 0.5..1.4
+  EXPLOSION_NUMBER = 8..12
 
   include Carriable
 
@@ -13,6 +15,9 @@ class Rock < StaticObject
       animation: "rock_6x6.png",
     }.merge! options
 
+    @sacrificial_explosion = Explosion.new(type: Pebble, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+                                           z_velocity: EXPLOSION_Z_VELOCITY)
+
     super  options
   end
 
@@ -21,16 +26,6 @@ class Rock < StaticObject
 
     player.health += EXPLOSION_HEALTH
     player.favor += EXPLOSION_FAVOR
-
-    NUM_PEBBLES.times do
-      angle = rand(360)
-      speed = 0.4 + rand(0.8)
-      y_velocity = Math::sin(angle) * speed
-      x_velocity = Math::cos(angle) * speed
-      z_velocity = 0.5 + rand(0.9)
-      Pebble.create(x: altar.x, y: altar.y, z: altar.z + altar.height,
-        x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity)
-    end
 
     super
   end
