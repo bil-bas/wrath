@@ -1,6 +1,4 @@
-class Blood < StaticObject
-  trait :timer
-
+class Blood < WrathParticle
   def initialize(options = {})
     options = {
       elasticity: 0,
@@ -8,5 +6,10 @@ class Blood < StaticObject
     }.merge! options
 
     super options
+  end
+
+  def on_stopped
+    @casts_shadow = false
+    pause!
   end
 end
