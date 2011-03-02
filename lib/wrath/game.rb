@@ -33,6 +33,8 @@ class SpriteSheet
   end
 end
 
+Gosu::Sample.volume = 0.5
+
 class Game < Window
   SIZE = [640, 480]
 

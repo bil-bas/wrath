@@ -17,6 +17,8 @@ class Rock < StaticObject
   end
 
   def sacrificed(player, altar)
+    Sample["rock_sacrifice.wav"].play
+
     player.health += EXPLOSION_HEALTH
     player.favor += EXPLOSION_FAVOR
 

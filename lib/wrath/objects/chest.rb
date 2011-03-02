@@ -50,6 +50,8 @@ class Chest < StaticObject
   end
 
   def open
+    Sample["chest_close.wav"].play
+
     self.image = @frames[OPEN_SPRITE_FRAME]
 
     if @contains
@@ -69,6 +71,8 @@ class Chest < StaticObject
   end
 
   def close(object)
+    Sample["chest_close.wav"].play
+
     object.put_into(self)
 
     if object.is_a? Creature

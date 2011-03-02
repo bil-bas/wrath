@@ -15,7 +15,7 @@ class Bard < Mob
 
     super options
 
-    after(1) { play }
+    after(2) { play }
   end
 
   def play
@@ -24,6 +24,6 @@ class Bard < Mob
       Note.create(local: false, id: -1, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)
     end
 
-    after(400 + rand(300)) { play }
+    after(400 + rand(3) * 200) { play }
   end
 end
