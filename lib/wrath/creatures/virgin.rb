@@ -16,8 +16,8 @@ class Virgin < Mob
   end
 
   def ghost_disappeared
-    knight = Paladin.create(spawn: true)
-    $window.current_game_state.objects.push knight
-    $window.current_game_state.objects.push Horse.create(x: knight.x, y: knight.y - 4)
+    horse = Horse.create(spawn: true)
+    $window.current_game_state.objects.push horse
+    $window.current_game_state.objects.push Paladin.create(x: horse.x, y: horse.y - 6, y_velocity: 0.5, z_velocity: 0.5)
   end
 end
