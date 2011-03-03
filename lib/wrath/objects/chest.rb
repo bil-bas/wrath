@@ -78,7 +78,7 @@ class Chest < StaticObject
   end
 
   def sacrificed(player, altar)
-    Sample["rock_sacrifice.wav"]
+    Sample["rock_sacrifice.wav"].play
     super
   end
 
