@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class Play < GameState
+  SYNC_DELAY = 1.0 / 15.0 # 15 fps
   NUM_GOATS = 5
   NUM_CHICKENS = 2
 
@@ -19,6 +20,8 @@ class Play < GameState
     end
 
     @network.broadcast_msg Message::Start.new if @network.is_a? Server
+
+    @last_sync = milliseconds
 
     @tiles = []
     @objects = []
@@ -79,7 +82,7 @@ class Play < GameState
     grid[9][9] = grid[9][10] = grid[10][9] = grid[10][10] = Gravel
 
     if @network.is_a? Server
-      @network.broadcast_msg(Message::Map.new(tiles: grid))
+      @network.broadcast_msg(Message::Map.new(grid))
     end
 
     grid
@@ -99,8 +102,29 @@ class Play < GameState
   end
 
   def update
-    @network.pre_update if @network
+    @network.update if @network
     super
-    @network.post_update if @network
+    sync if @network
+  end
+
+  def sync
+    if (milliseconds - @last_sync) > SYNC_DELAY
+      updates = 0
+      objects.each do |object|
+        if object.local? # object.needs_sync?
+          updates += 1
+          message = Message::Sync.new(object)
+          if @network.is_a? Server
+            @network.broadcast_msg(message)
+          else
+            @network.send_msg(message)
+          end
+        end
+      end
+
+      puts "Sent updates for #{updates} objects"
+
+      @last_sync = milliseconds
+    end
   end
 end

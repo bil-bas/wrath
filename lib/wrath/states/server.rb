@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class Server < GameStates::NetworkServer
-  SYNC_DELAY = 1.0 / 15.0 # 1 fps
   DEFAULT_PORT = 60000
 
   trait :timer
@@ -15,7 +14,6 @@ class Server < GameStates::NetworkServer
     }.merge! options
 
     @remote_socket = nil
-    @last_sync = milliseconds
 
     @font = Font[16]
 
@@ -24,15 +22,6 @@ class Server < GameStates::NetworkServer
     on_input(:escape) { pop_game_state }
 
     start(options[:address], options[:port])
-  end
-
-  def pre_update
-    handle_incoming_connections
-    handle_incoming_data
-  end
-
-  def post_update
-    handle_outgoing_data
   end
 
   #
@@ -45,6 +34,7 @@ class Server < GameStates::NetworkServer
 
   def on_disconnect(socket)
     puts "* Player disconnected: #{socket.inspect}"
+    game_state_manager.pop_until_game_state previous_game_state
   end
 
   def draw
@@ -52,30 +42,10 @@ class Server < GameStates::NetworkServer
   end
 
   def on_msg(socket, message)
-    Message.const_get(message[:type]).new(message[:values]).process
+    message.process
   end
 
   def broadcast_msg(message)
     send_msg(@remote_socket, message)
-  end
-
-  def handle_outgoing_data
-    if current_game_state.is_a? Play
-      if (milliseconds - @last_sync) > SYNC_DELAY
-        updates = 0
-        current_game_state.objects.each do |object|
-          if object.local? # object.needs_sync?
-            updates += 1
-            broadcast_msg(Message::Sync.new(object.sync_data))
-          end
-        end
-
-        puts "Sent updates for #{updates} objects"
-
-        @last_sync = milliseconds
-      end
-    end
-
-    super
   end
 end

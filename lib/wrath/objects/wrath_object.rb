@@ -54,25 +54,21 @@ class WrathObject < GameObject
       @local = options.has_key?(:local) ? options[:local] : true
       # Todo: This is horrid!
       if @parent.network.is_a? Server
-        @parent.network.broadcast_msg(Message::Create.new(object_class: self.class, options: recreate_options))
+        @parent.network.broadcast_msg(Message::Create.new(self.class, recreate_options))
       end
     end
 
     @needs_sync = false
-    @previous_position = [x, y, z]
-    @previous_velocity = [x_velocity, y_velocity, z_velocity]
+    @previous_position = position
+    @previous_velocity = velocity
   end
 
-  def sync_data
-    @needs_sync = false
+  def position; [x, y, z]; end
+  def velocity; [x_velocity, y_velocity, z_velocity]; end
 
-    { id: id, time: milliseconds, position: [x, y, z], velocity: [x_velocity, y_velocity, z_velocity] }
-  end
-
-  def sync(data)
-    self.x, self.y, self.z = data.position
-
-    self.x_velocity, self.y_velocity, self.z_velocity = data.velocity
+  def sync(position, velocity)
+    self.x, self.y, self.z = position
+    self.x_velocity, self.y_velocity, self.z_velocity = velocity
   end
 
   def recreate_options
@@ -139,17 +135,17 @@ class WrathObject < GameObject
     super
 
     # If we have moved then we need to update for the client.
-    position = [x, y, z]
-    velocity = [x_velocity, y_velocity, z_velocity]
+    current_position = position
+    current_velocity = velocity
 
     # If we haven't sent an update that needs sending, then doesn't matter if we are stationary.
     # We still need to send it when we get the chance.
     unless needs_sync?
-      @needs_sync = position != @previous_position or velocity != @previous_velocity
+      @needs_sync = current_position != @previous_position or current_velocity != @previous_velocity
     end
 
-    @previous_position = position
-    @previous_velocity = velocity
+    @previous_position = current_position
+    @previous_velocity = current_velocity
   end
 
   def spawn_position
@@ -170,7 +166,7 @@ class WrathObject < GameObject
     super
 
     if @parent.network and local?
-      @parent.network.broadcast_msg(Message::Destroy.new(id: id))
+      @parent.network.broadcast_msg(Message::Destroy.new(self))
     end
   end
 end

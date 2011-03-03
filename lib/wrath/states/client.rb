@@ -8,8 +8,6 @@ class Client < GameStates::NetworkClient
       port: Server::DEFAULT_PORT,
     }.merge! options
 
-    @last_sync = 0
-
     @font = Font[16]
 
     super options
@@ -19,14 +17,6 @@ class Client < GameStates::NetworkClient
     after(0.1) { connect(options[:address], options[:port]) }
   end
 
-  def pre_update
-    handle_incoming_data
-  end
-
-  def post_update
-    handle_outgoing_data
-  end
-
   def on_connect
     puts "Connected to server"
     send_msg(Message::Ready.new)
@@ -34,6 +24,7 @@ class Client < GameStates::NetworkClient
 
   def on_disconnect
     puts "* Disconnected from server"
+    game_state_manager.pop_until_game_state previous_game_state
   end
 
   def draw
@@ -41,24 +32,6 @@ class Client < GameStates::NetworkClient
   end
 
   def on_msg(message)
-    Message.const_get(message[:type]).new(message[:values]).process
-  end
-
-  def handle_outgoing_data
-    if current_game_state.is_a? Play
-      if (milliseconds - @last_sync) > Server::SYNC_DELAY
-        updates = 0
-        current_game_state.objects.each do |object|
-          if object.local? # and object.needs_sync?
-            updates += 1
-            send_msg(Message::Sync.new(object.sync_data))
-          end
-        end
-
-        puts "Sent updates for #{updates} objects"
-
-        @last_sync = milliseconds
-      end
-    end
+    message.process
   end
 end

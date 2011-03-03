@@ -104,7 +104,7 @@ class LocalPlayer < Player
     object.drop(self, x_velocity * 2 + extra_x_velocity, y_velocity * 2, z_velocity + 0.5)
 
     if @parent.network.is_a? Server
-      @parent.network.broadcast_msg(Message::Drop.new(actor: id))
+      @parent.network.broadcast_msg(Message::Drop.new(self))
     end
   end
 
@@ -142,7 +142,7 @@ class LocalPlayer < Player
     end
 
     if @parent.network.is_a? Server
-      @parent.network.broadcast_msg(Message::PickUp.new(actor: id, object: @carrying.id))
+      @parent.network.broadcast_msg(Message::PickUp.new(self, @carrying))
     end
   end
 end

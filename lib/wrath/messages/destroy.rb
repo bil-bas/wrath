@@ -1,9 +1,11 @@
 class Message
   class Destroy < Message
-    value :id, nil
+    def initialize(object)
+      @id = object.id
+    end
 
     def process
-      find_object_by_id(id).destroy
+      find_object_by_id(@id).destroy
     end
   end
 end
