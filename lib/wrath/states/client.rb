@@ -14,7 +14,7 @@ class Client < GameStates::NetworkClient
 
     on_input(:escape) { disconnect; pop_game_state }
 
-    after(0.1) { connect(options[:address], options[:port]) }
+    connect(options[:address], options[:port])
   end
 
   def on_connect
@@ -24,7 +24,7 @@ class Client < GameStates::NetworkClient
 
   def on_disconnect
     puts "* Disconnected from server"
-    game_state_manager.pop_until_game_state previous_game_state
+    game_state_manager.pop_until_game_state Menu
   end
 
   def draw

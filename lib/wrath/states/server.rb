@@ -34,7 +34,7 @@ class Server < GameStates::NetworkServer
 
   def on_disconnect(socket)
     puts "* Player disconnected: #{socket.inspect}"
-    game_state_manager.pop_until_game_state previous_game_state
+    game_state_manager.pop_until_game_state Menu
   end
 
   def draw
