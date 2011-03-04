@@ -1,4 +1,5 @@
 class Note < StaticObject
+  VOLUME = 0.6
   INITIAL_ALPHA = 200
 
   # Possible colours of notes.
@@ -19,7 +20,7 @@ class Note < StaticObject
       animation: "note_5x4.png",
     }.merge! options
 
-    Sample["note_#{index + 1}.wav"].play
+    Sample["note_#{index + 1}.wav"].play(VOLUME)
 
     super options
   end
