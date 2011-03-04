@@ -6,7 +6,10 @@ include Gosu
 include Chingu
 
 begin
-  require 'pry'
+  unless defined? Ocra
+    require 'win32console'
+    require 'pry'
+  end
 rescue LoadError
 end
 
