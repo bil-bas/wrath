@@ -103,8 +103,13 @@ class Play < GameState
 
   def update
     @network.update if @network
+
     super
-    sync if @network
+
+    if @network
+      sync
+      @network.flush
+    end
   end
 
   def sync
@@ -122,7 +127,7 @@ class Play < GameState
         end
       end
 
-      puts "Sent updates for #{updates} objects"
+      #puts "Sent updates for #{updates} objects"
 
       @last_sync = milliseconds
     end

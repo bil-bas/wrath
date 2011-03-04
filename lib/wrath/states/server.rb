@@ -38,7 +38,7 @@ class Server < GameStates::NetworkServer
   end
 
   def draw
-    @font.draw("Waiting for client...", 0, 0, ZOrder::GUI)
+    @font.draw("Waiting for player...", 0, 0, ZOrder::GUI)
   end
 
   def on_msg(socket, message)

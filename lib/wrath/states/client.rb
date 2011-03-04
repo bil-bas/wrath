@@ -14,7 +14,7 @@ class Client < GameStates::NetworkClient
 
     on_input(:escape) { disconnect; pop_game_state }
 
-    connect(options[:address], options[:port])
+    after(1) { connect(options[:address], options[:port]) }
   end
 
   def on_connect
@@ -28,7 +28,7 @@ class Client < GameStates::NetworkClient
   end
 
   def draw
-    @font.draw("Connecting...", 0, 0, ZOrder::GUI)
+    @font.draw("Connecting to host...", 0, 0, ZOrder::GUI)
   end
 
   def on_msg(message)
