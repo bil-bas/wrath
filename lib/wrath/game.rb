@@ -15,7 +15,7 @@ end
 
 require 'yaml'
 
-RequireAll.require_all File.join(File.dirname(__FILE__), '**', '*.rb')
+RequireAll.require_all File.dirname(__FILE__)
 
 module ZOrder
   BACKGROUND = -Float::INFINITY
