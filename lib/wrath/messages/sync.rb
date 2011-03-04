@@ -15,5 +15,14 @@ class Message
         puts "Could not sync object ##{@id}"
       end
     end
+
+    # Optimise dump to produce little data, since this data is sent very often.
+    def marshal_dump
+      [@id, @position, @velocity]
+    end
+
+    def marshal_load(attributes)
+      @id, @position, @velocity = attributes
+    end
   end
 end
