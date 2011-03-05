@@ -32,9 +32,9 @@ class Chest < StaticObject
       possible_objects = Array(options[:contains])
       object = possible_objects[rand(possible_objects.size)]
       object = object.create(x: -1000) if object.is_a? Class
-      close(object)
+      close(object, sound: false)
     else
-      open
+      open(sound: false)
     end
   end
 
@@ -56,8 +56,8 @@ class Chest < StaticObject
     end
   end
 
-  def open
-    Sample["chest_close.wav"].play
+  def open(options = {})
+    Sample["chest_close.wav"].play if options[:sound]
 
     self.image = @frames[OPEN_SPRITE_FRAME]
 
@@ -82,8 +82,8 @@ class Chest < StaticObject
     super
   end
 
-  def close(object)
-    Sample["chest_close.wav"].play
+  def close(object, options = {})
+    Sample["chest_close.wav"].play if options[:sound]
 
     object.put_into(self)
 
