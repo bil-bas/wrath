@@ -1,7 +1,8 @@
 # encoding: utf-8
 
 class Play < GameState
-  SYNC_DELAY = 1.0 / 15.0 # 15 fps
+  SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
+  SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   NUM_GOATS = 5
   NUM_CHICKENS = 2
 
