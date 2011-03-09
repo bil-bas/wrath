@@ -18,6 +18,7 @@ class Note < StaticObject
       factor: 0.7,
       color: Color.rgba(*COLORS[index], INITIAL_ALPHA),
       animation: "note_5x4.png",
+      collision_type: :scenery,
     }.merge! options
 
     Sample["note_#{index + 1}.wav"].play(VOLUME)

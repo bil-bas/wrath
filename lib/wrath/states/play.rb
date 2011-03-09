@@ -110,7 +110,7 @@ class Play < GameState
     1.times { @objects << Virgin.create(spawn: true) }
     NUM_GOATS.times { @objects << Goat.create(spawn: true) }
     NUM_CHICKENS.times { @objects << Chicken.create(spawn: true) }
-    #1.times { @objects << Bard.create(spawn: true) }
+    1.times { @objects << Bard.create(spawn: true) }
 
     # Inanimate objects.
     4.times { @objects << Rock.create(spawn: true) }
@@ -120,7 +120,6 @@ class Play < GameState
     5.times { @objects << Mushroom.create(spawn: true) }
 
     # Top "blockers", not really tangible, so don't update/sync them.
-
     [10, 16].each do |y|
       x = -14
       while x < 180
