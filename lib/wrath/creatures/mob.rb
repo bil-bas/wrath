@@ -32,8 +32,8 @@ class Mob < Creature
     if @z == 0 and not carried?
       @z_velocity = @vertical_jump + rand(@vertical_jump / 2.0)
       angle = rand(360)
-      @y_velocity = Math::sin(angle) * @horizontal_jump
-      @x_velocity = Math::cos(angle) * @horizontal_jump
+      @y_velocity = Math::sin(angle) * @horizontal_jump * 2
+      @x_velocity = Math::cos(angle) * @horizontal_jump * 2
     end
 
     after(@jump_delay + (rand(@jump_delay / 2.0) + rand(@jump_delay / 2.0))) { jump }

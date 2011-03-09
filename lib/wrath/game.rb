@@ -1,19 +1,22 @@
 # encoding: utf-8
 
 require 'chingu'
-
-include Gosu
-include Chingu
+require 'texplay'
+require 'chipmunk'
+require 'forwardable'
+require 'yaml'
 
 begin
+  # If this isn't the exe, allow dropping into a pry session.
   unless defined? Ocra
-    require 'win32console'
     require 'pry'
+    require 'win32console'
   end
 rescue LoadError
 end
 
-require 'yaml'
+include Gosu
+include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 

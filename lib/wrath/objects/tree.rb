@@ -3,8 +3,12 @@ class Tree < StaticObject
     options = {
       factor: 1.5,
       animation: "tree_8x8.png",
+      collision_type: :static
     }.merge! options
 
     super options
+
+    @body.mass = Float::INFINITY
+    parent.space.remove_body @body
   end
 end

@@ -4,8 +4,7 @@ class Fire < StaticObject
   include Carriable
 
   ANIMATION_DELAY = 300
-  WEAR_HURT_DELAY = 300
-  WEAR_BURN_DAMAGE = 1
+  BURN_DAMAGE = 5  / 1000.0 # 5/second
 
   trait :timer
 
@@ -25,18 +24,10 @@ class Fire < StaticObject
 
   def update
     super
+
     self.image = @frames.next
-  end
-
-  def pick_up(player, offset)
-    every(WEAR_HURT_DELAY, name: :burn) { player.health -= WEAR_BURN_DAMAGE }
-
-    super(player, offset)
-  end
-
-  def drop(*args)
-    stop_timer(:burn)
-
-    super(*args)
+    if @carrier
+      @carrier.health -= BURN_DAMAGE * $window.dt
+    end
   end
 end

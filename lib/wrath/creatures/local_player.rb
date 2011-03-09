@@ -3,7 +3,6 @@
 class LocalPlayer < Player
   KEYS_CONFIG_FILE = File.join(ROOT_PATH, 'config', 'keys.yml')
   ACTION_DISTANCE = 10
-  DIAGONAL_SPEED = Math.sqrt(2) / 2
 
   attr_reader :number
 
@@ -22,7 +21,7 @@ class LocalPlayer < Player
     @keys_down = keys[:down]
     @keys_action = keys[:action]
 
-    options[:gui_pos] = [[10, 110], [80, 110]][@number]
+    options[:gui_pos] = [[10, 0], [115, 0]][@number]
 
     super(options)
 
@@ -57,47 +56,43 @@ class LocalPlayer < Player
     if holding_any? *@keys_left
       if holding_any? *@keys_up
         # NW
-        self.x_velocity = -effective_speed * DIAGONAL_SPEED
-        self.y_velocity = -effective_speed * DIAGONAL_SPEED
+        move(315)
       elsif holding_any? *@keys_down
         # SW
-        self.x_velocity = -effective_speed * DIAGONAL_SPEED
-        self.y_velocity = effective_speed * DIAGONAL_SPEED
+        move(225)
       else
         # W
-        self.y_velocity = 0
-        self.x_velocity = -effective_speed
+        move(270)
       end
     elsif holding_any? *@keys_right
       if holding_any? *@keys_up
         # NE
-        self.x_velocity = effective_speed * DIAGONAL_SPEED
-        self.y_velocity = -effective_speed * DIAGONAL_SPEED
+        move(45)
       elsif holding_any? *@keys_down
         # SE
-        self.x_velocity = effective_speed * DIAGONAL_SPEED
-        self.y_velocity = effective_speed * DIAGONAL_SPEED
+        move(135)
       else
         # E
-        self.y_velocity = 0
-        self.x_velocity = effective_speed
+        move(90)
       end
     elsif holding_any? *@keys_up
       # N
-      self.x_velocity = 0
-      self.y_velocity = -effective_speed
+      move(0)
     elsif holding_any? *@keys_down
       # S
-      self.x_velocity = 0
-      self.y_velocity = effective_speed
+      move(180)
     else
+      set_body_velocity(0, 0)
       # Standing entirely still.
-      self.x_velocity = self.y_velocity = 0
     end
   end
 
+  def move(angle)
+    set_body_velocity(angle, effective_speed)
+  end
+
   def drop(object = @carrying)
-    $window.current_game_state.objects.push object
+    @parent.objects.push object
 
     # Give a little push if you are stationary, so that it doesn't just land at their feet.
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
@@ -110,7 +105,7 @@ class LocalPlayer < Player
 
   def action
     # Find the nearest object and activate it (generally, pick it up)
-    objects = $window.current_game_state.objects - [self]
+    objects = @parent.objects - [self]
     nearest = objects.min_by {|g| distance_to(g) }
     nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
 

@@ -7,12 +7,13 @@ class Player < Creature
   attr_reader :speed, :favor, :health, :carrying
   attr_writer :favor, :health, :carrying # TODO: hook into these values changing.
 
-  def empty_handed?; not carrying; end
+  def carrying?; not @carrying.nil?; end
+  def empty_handed?; @carrying.nil?; end
   def can_be_activated?(actor); false; end
 
   def initialize(options = {})
     options = {
-      speed: 0.5,
+      speed: 2,
       favor: 10,
       health: 100,
     }.merge! options
@@ -50,8 +51,6 @@ class Player < Creature
     sparkle_factor = (favor / 200.0) - @sparkle.factor
     @sparkle.draw_relative(x + 3.5 * factor_x, y - height - z, y, - milliseconds / 10.0, 0, 0, sparkle_factor, sparkle_factor)
 
-    @font.draw "F: #{@favor} H: #{@health}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+    @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
-
-
 end

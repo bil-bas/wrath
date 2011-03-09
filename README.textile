@@ -15,16 +15,19 @@ If running the .exe, there are no other requirements. Otherwise the requirements
 h3. OS X and Linux
 
 * Ruby 1.9.2
-* Gosu gem 0.7.27
-* Chingu gem 0.9rc1 (use 'gem install chingu --pre')
+** Gosu gem 0.7.27
+** Chingu gem 0.9rc4 (use 'gem install chingu --pre')
+** Chipmunk gem 5.2.2
 
 h2. Credits
 
-* Spiderspit, SiliconEidolon, Ippa, Myx and Banisterfiend for alpha play-testing, brainstorming and suggestions.
+* SiliconEidolon for the initial brainstorming session that gave birth to the game.
+* Spiderspit, SiliconEidolon, Ippa, Myx, Spaz and Banisterfiend for alpha play-testing and suggestions.
 * Ippa for code snippets I stole, I mean, was given :)
 
 h2. Third party assets used
 
+* Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
 * "Gosu game development library":http://libgosu.org/
 * "Chingu game libary":http://ippa.se/chingu
-* Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
+* Chipmunk 2D physics libary

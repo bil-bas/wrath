@@ -1,6 +1,10 @@
 # encoding: utf-8
 
+require 'forwardable'
+
 class WrathObject < GameObject
+  extend Forwardable
+
   GRAVITY = -0.1
 
   TOP_MARGIN = 16 # Unenterable region at the top of the screen.
@@ -17,6 +21,17 @@ class WrathObject < GameObject
   def remote?; not @local; end
   def local?; @local; end
 
+  def_delegators :@body_position, :x, :y, :x=, :y=
+
+  def_delegators :@body, :reset_forces
+  def_delegator :@body, :e, :elasticity
+  def_delegator :@body, :u, :friction
+
+  def position; [x, y, @z]; end
+  def position=(coordinates); @body_position.x, @body_position.y, @z = coordinates; end
+  def velocity; [@x_velocity, @y_velocity, @z_velocity]; end
+  def velocity=(vector); @x_velocity, @y_velocity, @z_velocity = vector; end
+
   def initialize(options = {})
     options = {
       rotation_center: :bottom_center,
@@ -25,8 +40,11 @@ class WrathObject < GameObject
       x_velocity: 0,
       y_velocity: 0,
       z_velocity: 0,
+      x: 0,
+      y: 0,
       z: 0,
       casts_shadow: true,
+      collision_type: :object,
     }.merge! options
 
     @frames = Animation.new(file: options[:animation])
@@ -34,14 +52,18 @@ class WrathObject < GameObject
 
     options[:image] = @frames[0]
 
+    options[:animation] =~ /(\d+)x(\d+)/
+    width, height = $1.to_i, $2.to_i
+    init_physics(options[:x], options[:y], width, height, options[:collision_type])
+
     @z = options[:z]
-    @x_velocity = options[:x_velocity]
-    @y_velocity = options[:y_velocity]
-    @z_velocity = options[:z_velocity]
     @elasticity = options[:elasticity]
     @casts_shadow = options[:casts_shadow]
 
     super(options)
+
+    self.velocity = options[:velocity] || [options[:x_velocity], options[:y_velocity], options[:z_velocity]]
+    self.position = options[:position] || [options[:x], options[:y], options[:z]]
 
     spawn if options[:spawn]
 
@@ -61,28 +83,43 @@ class WrathObject < GameObject
     @needs_sync = false
     @previous_position = position
     @previous_velocity = velocity
+
+    @parent.space.add_body @body
+    @parent.space.add_shape @shape
   end
 
-  def position; [x, y, z]; end
-  def velocity; [x_velocity, y_velocity, z_velocity]; end
+  def init_physics(x, y, width, height, collision_type)
+    @body = CP::Body.new(1, Float::INFINITY)
+    @body.p = CP::Vec2.new(x, y)
+    @body_position = @body.p
+
+    depth = width / 4.0
+    vertices = [CP::Vec2.new(-width / 2, -depth), CP::Vec2.new(-width / 2, depth),
+                CP::Vec2.new(width / 2, depth), CP::Vec2.new(width / 2, -depth)]
+    @shape = CP::Shape::Poly.new(@body, vertices, CP::Vec2.new(0,0))
+    @shape.e = 0
+    @shape.u = 0
+    @shape.collision_type = collision_type
+    @shape.owner = self
+  end
 
   def sync(position, velocity)
-    self.x, self.y, self.z = position
-    self.x_velocity, self.y_velocity, self.z_velocity = velocity
+    self.position = position
+    self.velocity = velocity
   end
 
   def recreate_options
     {
       id: id,
-      x: x, y: y, z: z,
-      x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: z_velocity,
+      position: position,
+      velocity: velocity,
       factor_x: factor_x,
       paused: paused?,
     }
   end
 
   def spawn
-    self.x, self.y = spawn_position
+    self.position = spawn_position
   end
 
   def draw
@@ -102,10 +139,17 @@ class WrathObject < GameObject
       end
     end
 
-    draw_relative(0, -z, y)
+    @image.draw_rot(x, y - z, y, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
   end
 
   def update
+    @body.reset_forces
+
+    if [@x_velocity, @y_velocity] != [0, 0]
+      @body.apply_force(CP::Vec2.new(@x_velocity * 75 * $window.dt, @y_velocity * 75 * $window.dt),
+                        CP::Vec2.new(0, 0))
+    end
+
     if affected_by_gravity? and (@z_velocity != 0 or @z > 0)
       @z_velocity += GRAVITY
       @z += @z_velocity
@@ -115,9 +159,7 @@ class WrathObject < GameObject
         @z_velocity = - @z_velocity * @elasticity
 
         if @z_velocity < 0.2
-          @z_velocity = 0
-          @x_velocity = 0
-          @y_velocity = 0
+          self.velocity = [0, 0, 0]
         end
       end
     end
@@ -127,33 +169,25 @@ class WrathObject < GameObject
       self.factor_x *= -1
     end
 
-    self.x += @x_velocity
-    self.x = [[x, width / 2].max, $window.retro_width - width / 2].min
-    self.y += @y_velocity
-    self.y = [[y, TOP_MARGIN].max, $window.retro_height].min
-
     super
-
-    # If we have moved then we need to update for the client.
-    current_position = position
-    current_velocity = velocity
-
-    # If we haven't sent an update that needs sending, then doesn't matter if we are stationary.
-    # We still need to send it when we get the chance.
-    unless needs_sync?
-      @needs_sync = current_position != @previous_position or current_velocity != @previous_velocity
-    end
-
-    @previous_position = current_position
-    @previous_velocity = current_velocity
   end
+
+  def set_body_velocity(angle, force)
+    @x_velocity = offset_x(angle, 1) * force
+    @y_velocity = offset_y(angle, 1) * force
+ end
+
 
   def spawn_position
     loop do
-      pos = [rand(($window.width / $window.sprite_scale) - width) + width / 2,
-             rand(($window.height / $window.sprite_scale) - height) + height / 2]
+      pos = [rand($window.retro_width - width * 2) + width,
+             rand($window.retro_height - width * 2 - 16) + width + 16,
+             0]
 
-      return pos if distance(*pos, $window.retro_width / 2, $window.retro_width / 2) > 40
+      if distance(*pos[0..1], @parent.altar.x, @parent.altar.y) > 32 and
+          parent.objects.map {|other| distance(*pos[0..1], other.x, other.y) }.min > 16
+        return pos
+      end
     end
   end
 
@@ -164,6 +198,9 @@ class WrathObject < GameObject
 
   def destroy
     super
+
+    @parent.space.remove_shape @shape
+    @parent.space.remove_body @shape.body
 
     if @parent.network and local?
       @parent.network.broadcast_msg(Message::Destroy.new(self))

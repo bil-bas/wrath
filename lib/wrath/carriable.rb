@@ -29,13 +29,13 @@ module Carriable
   def pick_up(carrier, z_offset)
     @carrier = carrier
     @z_offset = z_offset
-    @x_velocity = @y_velocity = @z_velocity = 0
+    self.velocity = [0, 0, 0]
 
     nil
   end
 
   def drop(player, x_velocity = 0, y_velocity = 0, z_velocity = 0)
-    @x_velocity, @y_velocity, @z_velocity = x_velocity, y_velocity, z_velocity
+    self.velocity = [x_velocity, y_velocity, z_velocity]
     @carrier = nil
 
     nil
@@ -49,7 +49,7 @@ module Carriable
 
   def update
     if carried?
-      self.x, self.y, self.z = @carrier.x, @carrier.y + 0.001, @carrier.z + @z_offset
+      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @z_offset]
     end
 
     super
