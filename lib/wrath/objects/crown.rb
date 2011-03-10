@@ -10,7 +10,7 @@ class Crown < StaticObject
 
   # Speeds the user up while flying, but not on the ground.
   def encumbrance
-    (empowered? and carrier.z > carrier.ground_level) ? 0 : -0.25
+    (empowered? and @carrier.z > @carrier.ground_level) ? -0.25 : 0
   end
 
   def empowered?
