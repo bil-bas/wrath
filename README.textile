@@ -18,16 +18,18 @@ h3. OS X and Linux
 ** Gosu gem 0.7.27
 ** Chingu gem 0.9rc4 (use 'gem install chingu --pre')
 ** Chipmunk gem 5.2.2
+** Texplay gem 0.3.5
 
 h2. Credits
 
 * SiliconEidolon for the initial brainstorming session that gave birth to the game.
 * Spiderspit, SiliconEidolon, Ippa, Myx, Spaz and Banisterfiend for alpha play-testing and suggestions.
-* Ippa for code snippets I stole, I mean, was given :)
+* Ippa for code snippets I stole; I mean, was given :)
 
 h2. Third party assets used
 
 * Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/.
 * "Gosu game development library":http://libgosu.org/
-* "Chingu game libary":http://ippa.se/chingu
-* Chipmunk 2D physics libary
+* "Chingu game library":http://ippa.se/chingu
+* Texplay image manipulation library for Gosu.
+* Chipmunk 2D physics library
