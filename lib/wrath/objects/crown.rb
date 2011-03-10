@@ -8,9 +8,17 @@ class Crown < StaticObject
 
   include Carriable
 
+  # Speeds the user up while flying, but not on the ground.
+  def encumbrance
+    (empowered? and carrier.z > carrier.ground_level) ? 0 : -0.25
+  end
+
+  def empowered?
+    @carrier and @carrier.favor > 0
+  end
+
   def initialize(options = {})
     options = {
-      encumbrance: -0.2, # Slightly faster than walking.
       elasticity: 0.2,
       animation: "crown_6x2.png",
     }.merge! options
@@ -19,7 +27,7 @@ class Crown < StaticObject
   end
 
   def update
-    if @carrier and @carrier.favor > 0
+    if empowered?
       @carrier.favor -= FAVOUR_COST * $window.dt
       @carrier.z_velocity = [LEVITATE_HEIGHT - @carrier.z, 0].max * LEVITATE_SPEED
     end
