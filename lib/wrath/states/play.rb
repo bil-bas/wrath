@@ -38,7 +38,6 @@ class Play < GameState
   def init_physics
     @space = CP::Space.new
     @space.damping = 0
-    @space.iterations = 1
 
     # Wall around the play-field.
     y_margin = 16

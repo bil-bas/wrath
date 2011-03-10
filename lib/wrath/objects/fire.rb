@@ -26,8 +26,5 @@ class Fire < StaticObject
     super
 
     self.image = @frames.next
-    if @carrier
-      @carrier.health -= BURN_DAMAGE * $window.dt
-    end
   end
 end

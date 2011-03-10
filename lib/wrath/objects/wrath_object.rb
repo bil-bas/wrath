@@ -200,7 +200,7 @@ class WrathObject < GameObject
     super
 
     @parent.space.remove_shape @shape
-    @parent.space.remove_body @shape.body
+    @parent.space.remove_body @body
 
     if @parent.network and local?
       @parent.network.broadcast_msg(Message::Destroy.new(self))

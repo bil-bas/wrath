@@ -96,7 +96,7 @@ class LocalPlayer < Player
 
     # Give a little push if you are stationary, so that it doesn't just land at their feet.
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
-    object.drop(self, x_velocity * 2 + extra_x_velocity, y_velocity * 2, z_velocity + 0.5)
+    object.drop(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
 
     if @parent.network.is_a? Server
       @parent.network.broadcast_msg(Message::Drop.new(self))
