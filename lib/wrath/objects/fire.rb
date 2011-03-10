@@ -26,5 +26,8 @@ class Fire < StaticObject
     super
 
     self.image = @frames.next
+    if rand(100) < 10
+      Smoke.create(local: false, id: -1, x: x - 3 + rand(4) + rand(4), y: y - z - 3 - rand(3), zorder: y)
+    end
   end
 end
