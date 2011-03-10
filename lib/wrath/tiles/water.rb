@@ -25,16 +25,21 @@ class Water < AnimatedTile
   end
 
   def add(object)
-    if object.is_a? Fire and object.z <= 0
-      object.destroy
-    elsif object.is_a? Rock and not filled?
-      object.destroy
-      @filled = true
-      @filled_image
-      @ground_level = FULL_LEVEL
-      @speed = 1
-    else
-      super(object)
+    case object
+      when Fire, Particle
+        p "destroying"
+        object.destroy
+        return
+      when Rock
+        unless filled?
+          object.destroy
+          @filled = true
+          @ground_level = FULL_LEVEL
+          @speed = 1
+          return
+        end
     end
+
+    super(object)
   end
 end

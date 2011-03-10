@@ -12,7 +12,7 @@ class WrathParticle < WrathObject
     super
 
     if velocity == [0, 0, 0]
-      @z = 0
+      @z = ground_level
       @body.reset_forces
       on_stopped
     end

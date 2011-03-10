@@ -58,6 +58,7 @@ class Play < GameState
     @space.on_collision(:static, [:static, :wall]) { false }
     @space.on_collision(:scenery, [:static, :object, :decal, :particle, :wall]) { false }
 
+    @space.on_collision(:particle, :particle) { false }
     @space.on_collision(:particle, [:static, :object, :wall]) do |particle, other|
       unless other.is_a? Altar
         particle.x_velocity = particle.y_velocity = 0
