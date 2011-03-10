@@ -169,7 +169,7 @@ class WrathObject < GameObject
       @old_tile.remove(self) if @old_tile
     end
 
-    @tile.add(self) unless z > ground_level
+    @tile.add(self) unless @tile.nil? or z > ground_level
 
     @z = ground_level if z <= ground_level
 
