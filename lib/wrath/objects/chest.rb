@@ -62,7 +62,7 @@ class Chest < StaticObject
     self.image = @frames[OPEN_SPRITE_FRAME]
 
     if @contains
-      $window.current_game_state.objects.push @contains
+      parent.objects.push @contains
       @contains.x = x
       @contains.y = y
       @contains.z = z + 6

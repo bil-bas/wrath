@@ -8,7 +8,7 @@ class Play < GameState
 
   PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
-  attr_reader :objects, :players, :network, :tiles, :space, :altar
+  attr_reader :objects, :players, :network, :tiles, :space, :altar, :winner
 
   # network: Server, Client, nil
   def initialize(network = nil)
@@ -17,6 +17,10 @@ class Play < GameState
     super()
 
     on_input(:escape) do
+      game_state_manager.pop_until_game_state Menu
+    end
+
+    on_input(:f5) do
       switch_game_state self.class.new(@network)
     end
 
@@ -26,6 +30,7 @@ class Play < GameState
 
     init_physics
 
+    @winner = nil
     @tiles = []
     @objects = []
     @players = []
@@ -87,10 +92,6 @@ class Play < GameState
 
       false
     end
-  end
-
-  def finalize
-    game_objects.each(&:destroy)
   end
 
   def create_objects
@@ -191,6 +192,17 @@ class Play < GameState
     if @network
       sync
       @network.flush
+    end
+  end
+
+  # A player has declared themselves the winner.
+  def win!(winner)
+    @winner = winner
+    push_game_state Won.new(winner)
+
+    @players.each do |player|
+      player.pause!
+      player.die! unless player == @winner
     end
   end
 

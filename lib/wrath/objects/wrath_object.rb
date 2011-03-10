@@ -217,7 +217,7 @@ class WrathObject < GameObject
              rand($window.retro_height - width * 2 - 16) + width + 16,
              0]
 
-      if distance(*pos[0..1], @parent.altar.x, @parent.altar.y) > 32 and
+      if distance(*pos[0..1], parent.altar.x, parent.altar.y) > 32 and
           parent.objects.map {|other| distance(*pos[0..1], other.x, other.y) }.min > 16
         return pos
       end
@@ -227,6 +227,11 @@ class WrathObject < GameObject
   def sacrificed(player, altar)
     @sacrificial_explosion.blast(altar.x, altar.y, altar.z + altar.height) if @sacrificial_explosion
     destroy
+  end
+
+  def pause!
+    reset_forces
+    super
   end
 
   def destroy

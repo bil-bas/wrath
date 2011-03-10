@@ -32,8 +32,18 @@ class LocalPlayer < Player
     @carrying ? (@speed * (1 - @carrying.encumbrance)) : @speed
   end
 
+  def opponent
+    (parent.players - [self]).first
+  end
+
+  def die!
+    parent.win!(opponent) unless parent.winner
+    drop unless empty_handed?
+    super
+  end
+
   def update
-    move_by_keys if local?
+    move_by_keys if local? and alive?
 
     if x_velocity == 0 and y_velocity == 0
       @state = :standing
@@ -104,6 +114,8 @@ class LocalPlayer < Player
   end
 
   def action
+    return if dead?
+
     # Find the nearest object and activate it (generally, pick it up)
     objects = @parent.objects - [self]
     nearest = objects.min_by {|g| distance_to(g) }
@@ -127,7 +139,7 @@ class LocalPlayer < Player
   end
 
   def pick_up(object)
-    $window.current_game_state.objects.delete object
+    parent.objects.delete object
     @carrying = object
     @carrying.pick_up(self, CARRY_OFFSET)
 

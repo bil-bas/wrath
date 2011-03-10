@@ -3,9 +3,11 @@
 class Player < Creature
   CARRY_OFFSET = 6
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
+  FAVOR_TO_WIN = 100
+  MAX_HEALTH = 100
 
   attr_reader :speed, :favor, :health, :carrying
-  attr_writer :favor, :health, :carrying # TODO: hook into these values changing.
+  attr_writer :carrying # TODO: hook into these values changing.
 
   def carrying?; not @carrying.nil?; end
   def empty_handed?; @carrying.nil?; end
@@ -14,7 +16,7 @@ class Player < Creature
   def initialize(options = {})
     options = {
       speed: 2,
-      favor: 10,
+      favor: 0,
       health: 100,
     }.merge! options
 
@@ -27,13 +29,33 @@ class Player < Creature
 
     @animation_file = options[:animation]
 
-    @sparkle_frames = Animation.new(file: "sparkle_8x8.png")
-    @sparkle = GameObject.new(image: @sparkle_frames[1])
-    @sparkle.alpha = 150
-
     @font = Font[8]
 
     super(options)
+  end
+
+  def alive?; health > 0; end
+  def dead?; health <= 0; end
+
+  def die!
+    self.health = 0
+    super
+  end
+
+  def favor=(value)
+    original_favor = @favor
+    @favor = [[value, 0].max, FAVOR_TO_WIN].min
+    parent.win!(self) if @favor == FAVOR_TO_WIN and original_favor > 0
+
+    @favor
+  end
+
+  def health=(value)
+    original_health = @health
+    @health = [[value, 0].max, MAX_HEALTH].min
+    die! if @health == 0 and original_health > 0
+
+    @health
   end
 
   def recreate_options
@@ -47,9 +69,6 @@ class Player < Creature
 
   def draw
     super
-
-    sparkle_factor = (favor / 200.0) - @sparkle.factor
-    @sparkle.draw_relative(x + 3.5 * factor_x, y - height - z, y, - milliseconds / 10.0, 0, 0, sparkle_factor, sparkle_factor)
 
     @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end

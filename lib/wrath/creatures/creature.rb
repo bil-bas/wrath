@@ -9,6 +9,7 @@ class Creature < WrathObject
   FRAME_WALK2 = 1
   FRAME_LIE = 2
   FRAME_SLEEP = 3
+  FRAME_DEAD = 3
 
   def initialize(options = {})
     options = {
@@ -20,6 +21,10 @@ class Creature < WrathObject
 
     @walking_animation = @frames[FRAME_WALK1..FRAME_WALK2]
     @walking_animation.delay = WALK_ANIMATION_DELAY
+  end
+
+  def die!
+    self.image = @frames[FRAME_DEAD]
   end
 
   def update
