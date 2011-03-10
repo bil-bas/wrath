@@ -1,14 +1,20 @@
 class Tile < GameObject
   WIDTH = HEIGHT = 8
   VERTICAL_SCALE = 0.75
+  SPEED = 1
+  GROUND_LEVEL = 0
 
+  def speed; self.class.const_get :SPEED; end
+  def ground_level; self.class.const_get :GROUND_LEVEL; end
   def sprite_position; self.class.const_get(:SPRITE_POSITION); end
 
   def initialize(options = {})
     options = {
       zorder: ZOrder::TILES,
       factor_y: VERTICAL_SCALE,
+
     }.merge! options
+
 
     @@sprites ||= SpriteSheet.new("tiles_8x8.png", WIDTH, HEIGHT, 8)
 

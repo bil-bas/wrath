@@ -27,7 +27,7 @@ class Creature < WrathObject
 
     self.image = case state
                    when :walking
-                     z == 0 ? @walking_animation.next : @frames[FRAME_WALK1]
+                     z <= @tile.ground_level ? @walking_animation.next : @frames[FRAME_WALK1]
                    when :standing
                      @frames[FRAME_WALK1]
                    when :lying, :flying

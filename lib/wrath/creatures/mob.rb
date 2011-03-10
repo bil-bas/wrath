@@ -29,7 +29,7 @@ class Mob < Creature
   end
 
   def jump
-    if @z == 0 and not carried?
+    if @z <= ground_level and not carried?
       @z_velocity = @vertical_jump + rand(@vertical_jump / 2.0)
       angle = rand(360)
       @y_velocity = Math::sin(angle) * @horizontal_jump * 2

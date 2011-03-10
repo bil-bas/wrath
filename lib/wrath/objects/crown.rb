@@ -19,11 +19,11 @@ class Crown < StaticObject
   end
 
   def update
-    super
-
     if @carrier and @carrier.favor > 0
       @carrier.favor -= FAVOUR_COST * $window.dt
       @carrier.z_velocity = [LEVITATE_HEIGHT - @carrier.z, 0].max * LEVITATE_SPEED
     end
+
+    super
   end
 end

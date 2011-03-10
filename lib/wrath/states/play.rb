@@ -155,11 +155,18 @@ class Play < GameState
   end
 
   def create_tiles(tile_classes)
-    tile_classes.each_with_index do |row, y|
-      row.each_with_index do |type, x|
-        type.create(grid: [x, y])
+    @tiles = []
+    tile_classes.each_with_index do |class_row, y|
+      tile_row = []
+      @tiles << tile_row
+      class_row.each_with_index do |type, x|
+        tile_row << type.create(grid: [x, y])
       end
     end
+  end
+
+  def tile_at_coordinate(x, y)
+    @tiles[y / 6.0][x / 8.0]
   end
 
   def setup

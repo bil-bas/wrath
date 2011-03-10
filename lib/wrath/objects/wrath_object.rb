@@ -5,7 +5,7 @@ require 'forwardable'
 class WrathObject < GameObject
   extend Forwardable
 
-  GRAVITY = -0.1
+  GRAVITY = -5 / 1000.0 # Acceleration per second.
 
   TOP_MARGIN = 16 # Unenterable region at the top of the screen.
 
@@ -80,6 +80,8 @@ class WrathObject < GameObject
       end
     end
 
+    @tile = nil
+
     @needs_sync = false
     @previous_position = position
     @previous_velocity = velocity
@@ -123,6 +125,16 @@ class WrathObject < GameObject
   end
 
   def draw
+    if z <= 0
+      $window.clip_to(x - width / 2, y - height, width, height) do
+        draw_self
+      end
+    else
+      draw_self
+    end
+  end
+
+  def draw_self
     # Draw a shadow
     if casts_shadow?
       color = Color.rgba(0, 0, 0, alpha)
@@ -142,20 +154,35 @@ class WrathObject < GameObject
     @image.draw_rot(x, y - z, y, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
   end
 
+  def ground_level
+    @tile ? @tile.ground_level : 0
+  end
+
   def update
     @body.reset_forces
 
+    # Check which tile we start on.
+    @tile = parent.tile_at_coordinate(x, y)
+
+    # Some tiles will make the object move down (e.g. water).
+    @z = ground_level if z <= 0
+
+    # Apply a pushing force if the object is moving.
     if [@x_velocity, @y_velocity] != [0, 0]
-      @body.apply_force(CP::Vec2.new(@x_velocity * 75 * $window.dt, @y_velocity * 75 * $window.dt),
+      modifier = 75 * $window.dt
+      modifier *= @tile.speed if z <= 0 and @tile
+
+      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
                         CP::Vec2.new(0, 0))
     end
 
-    if affected_by_gravity? and (@z_velocity != 0 or @z > 0)
-      @z_velocity += GRAVITY
+    # Deal with vertical physics manually.
+    if affected_by_gravity? and (@z_velocity != 0 or @z > ground_level)
+      @z_velocity += GRAVITY * $window.dt
       @z += @z_velocity
 
-      if @z <= 0
-        @z = 0
+      if @z <= ground_level
+        @z = ground_level
         @z_velocity = - @z_velocity * @elasticity
 
         if @z_velocity < 0.2
