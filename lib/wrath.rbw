@@ -15,13 +15,13 @@ begin
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
 
-#  original_stderr = $stderr.dup
-#  $stderr.reopen LOG_FILE
-#  $stderr.sync = true
-#
-#  original_stdout = $stdout.dup
-#  $stdout.reopen LOG_FILE
-#  $stdout.sync = true
+  original_stderr = $stderr.dup
+  $stderr.reopen LOG_FILE
+  $stderr.sync = true
+
+  original_stdout = $stdout.dup
+  $stdout.reopen LOG_FILE
+  $stdout.sync = true
 
   $LOAD_PATH.unshift File.expand_path($0).chomp(File.extname($0))
   require 'game'
