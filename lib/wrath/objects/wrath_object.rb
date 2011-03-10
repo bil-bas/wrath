@@ -162,10 +162,16 @@ class WrathObject < GameObject
     @body.reset_forces
 
     # Check which tile we start on.
+    @old_tile = @tile
     @tile = parent.tile_at_coordinate(x, y)
 
-    # Some tiles will make the object move down (e.g. water).
-    @z = ground_level if z <= 0
+    if @tile != @old_tile
+      @old_tile.remove(self) if @old_tile
+    end
+
+    @tile.add(self) unless z > ground_level
+
+    @z = ground_level if z <= ground_level
 
     # Apply a pushing force if the object is moving.
     if [@x_velocity, @y_velocity] != [0, 0]
@@ -225,6 +231,8 @@ class WrathObject < GameObject
 
   def destroy
     super
+
+    @tile.remove(self) if @tile
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
