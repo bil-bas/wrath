@@ -1,5 +1,6 @@
 /.yardoc
 /.idea
 /doc
+/config
 /*.log
 /*.exe
