@@ -31,9 +31,9 @@ class Chest < Carriable
       possible_objects = Array(options[:contains])
       object = possible_objects[rand(possible_objects.size)]
       object = object.create(x: -1000 * id) if object.is_a? Class
-      close(object, sound: false)
+      close(object, quiet: true)
     else
-      open(sound: false)
+      open(quiet: true)
     end
   end
 
@@ -56,7 +56,7 @@ class Chest < Carriable
   end
 
   def open(options = {})
-    Sample["chest_close.wav"].play if options[:sound]
+    Sample["chest_close.wav"].play unless options[:quiet]
 
     self.image = @frames[OPEN_SPRITE_FRAME]
 
@@ -82,7 +82,7 @@ class Chest < Carriable
   end
 
   def close(object, options = {})
-    Sample["chest_close.wav"].play if options[:sound]
+    Sample["chest_close.wav"].play unless options[:quiet]
 
     object.put_into(self)
 
