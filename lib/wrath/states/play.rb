@@ -83,17 +83,19 @@ class Play < GameState
       collides = (not (object.carriable? and object.carried?))
       
       # Bounce back from the edge of the screen
-      case wall.side
-        when :right
-          object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity > 0
-        when :left
-          object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity < 0
-        when :top
-          object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity < 0
-        when :bottom
-          object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity > 0
-        else
-          raise "bad side"
+      unless object.is_a? Player
+        case wall.side
+          when :right
+            object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity > 0
+          when :left
+            object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity < 0
+          when :top
+            object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity < 0
+          when :bottom
+            object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity > 0
+          else
+            raise "bad side"
+        end
       end
 
       collides

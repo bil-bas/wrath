@@ -44,6 +44,7 @@ class WrathObject < GameObject
       z: 0,
       casts_shadow: true,
       collision_type: :object,
+      shape: :rectangle,
     }.merge! options
 
     @frames = Animation.new(file: options[:animation])
@@ -53,7 +54,7 @@ class WrathObject < GameObject
 
     options[:animation] =~ /(\d+)x(\d+)/
     width, height = $1.to_i, $2.to_i
-    init_physics(options[:x], options[:y], width, height, options[:collision_type])
+    init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape])
 
     @z = options[:z]
     @elasticity = options[:elasticity]
@@ -89,17 +90,25 @@ class WrathObject < GameObject
     @parent.space.add_shape @shape
   end
 
-  def init_physics(x, y, width, height, collision_type)
+  def init_physics(x, y, width, height, collision_type, shape)
     @body = CP::Body.new(1, Float::INFINITY)
     @body.p = CP::Vec2.new(x, y)
     @body_position = @body.p
 
-    depth = width / 4.0
-    vertices = [CP::Vec2.new(-width / 2, -depth), CP::Vec2.new(-width / 2, depth),
-                CP::Vec2.new(width / 2, depth), CP::Vec2.new(width / 2, -depth)]
-    @shape = CP::Shape::Poly.new(@body, vertices, CP::Vec2.new(0,0))
+    @shape = case shape
+      when :rectangle
+        depth = width / 4.0
+        vertices = [CP::Vec2.new(-width / 2, -depth), CP::Vec2.new(-width / 2, depth),
+                    CP::Vec2.new(width / 2, depth), CP::Vec2.new(width / 2, -depth)]
+        CP::Shape::Poly.new(@body, vertices, CP::Vec2.new(0,0))
+      when :circle
+        CP::Shape::Circle.new(@body, width / 2, CP::Vec2.new(0,0))
+      else
+        raise "Bad shape"
+    end
+
     @shape.e = 0
-    @shape.u = 1
+    @shape.u = 0.5
     @shape.collision_type = collision_type
     @shape.owner = self
   end
