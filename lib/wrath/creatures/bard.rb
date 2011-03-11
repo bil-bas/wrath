@@ -10,6 +10,7 @@ class Bard < Mob
       elasticity: 0.4,
       jump_delay: 1500,
       encumbrance: 0.4,
+      z_offset: -2,
       animation: "bard_8x8.png",
     }.merge! options
 

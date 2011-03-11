@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class Player < Creature
-  CARRY_OFFSET = 6
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
   FAVOR_TO_WIN = 100
   MAX_HEALTH = 100

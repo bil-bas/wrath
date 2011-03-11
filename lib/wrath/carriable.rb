@@ -16,19 +16,19 @@ module Carriable
   def initialize(options = {})
     options = {
         encumbrance: 0.2,
+        z_offset: 0,
     }.merge! options
 
     @encumbrance = options[:encumbrance]
+    @z_offset = options[:z_offset]
 
     @carrier = nil
-    @z_offset = 0
 
     super options
   end
 
-  def pick_up(carrier, z_offset)
+  def pick_up(carrier)
     @carrier = carrier
-    @z_offset = z_offset
     self.velocity = [0, 0, 0]
 
     nil
@@ -49,7 +49,7 @@ module Carriable
 
   def update
     if carried?
-      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @z_offset]
+      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + @z_offset]
     end
 
     super

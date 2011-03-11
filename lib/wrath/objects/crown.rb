@@ -20,6 +20,7 @@ class Crown < StaticObject
   def initialize(options = {})
     options = {
       elasticity: 0.2,
+      z_offset: -2,
       animation: "crown_6x2.png",
     }.merge! options
 

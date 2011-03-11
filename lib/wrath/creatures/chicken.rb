@@ -9,6 +9,7 @@ class Chicken < Mob
       horizontal_jump: 0.2,
       jump_delay: 250,
       encumbrance: 0.2,
+      z_offset: -1,
       animation: "chicken_6x6.png",
     }.merge! options
 

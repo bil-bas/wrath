@@ -12,6 +12,7 @@ class Rock < StaticObject
     options = {
       encumbrance: 0.6,
       elasticity: 0.4,
+      z_offset: -2,
       animation: "rock_6x6.png",
     }.merge! options
 

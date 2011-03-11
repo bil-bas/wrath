@@ -141,7 +141,7 @@ class LocalPlayer < Player
   def pick_up(object)
     parent.objects.delete object
     @carrying = object
-    @carrying.pick_up(self, CARRY_OFFSET)
+    @carrying.pick_up(self)
 
     if (factor_x > 0 and @carrying.factor_x < 0) or
         (factor_x < 0 and @carrying.factor_x > 0)

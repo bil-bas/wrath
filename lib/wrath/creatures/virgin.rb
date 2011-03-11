@@ -9,6 +9,7 @@ class Virgin < Mob
       horizontal_jump: 0.5,
       jump_delay: 500,
       encumbrance: 0.4,
+      z_offset: -2,
       animation: "virgin_8x8.png",
     }.merge! options
 

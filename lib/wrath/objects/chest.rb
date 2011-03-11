@@ -18,6 +18,7 @@ class Chest < StaticObject
     options = {
       encumbrance: 0.6,
       elasticity: 0.6,
+      z_offset: -2,
       animation: "chest_8x8.png",
       open: false,
     }.merge! options

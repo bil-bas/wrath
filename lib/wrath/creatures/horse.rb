@@ -10,6 +10,7 @@ class Horse < Mob
       elasticity: 0.6,
       jump_delay: 2000,
       encumbrance: 0.4,
+      z_offset: -3,
       animation: "horse_12x11.png",
     }.merge! options
 

@@ -14,6 +14,7 @@ class Fire < StaticObject
     options = {
       encumbrance: -0.5,
       elasticity: 0.2,
+      z_offset: -2,
       animation: "fire_8x8.png",
     }.merge! options
 

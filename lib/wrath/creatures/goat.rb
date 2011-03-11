@@ -10,6 +10,7 @@ class Goat < Mob
       elasticity: 0.8,
       jump_delay: 1000,
       encumbrance: 0.2,
+      z_offset: -2,
       animation: "goat_8x8.png",
     }.merge! options
 
