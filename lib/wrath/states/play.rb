@@ -214,7 +214,7 @@ class Play < GameState
   # A player has declared themselves the winner.
   def win!(winner)
     @winner = winner
-    push_game_state Won.new(winner)
+    push_game_state GameOver.new(winner)
 
     @players.each do |player|
       player.pause!

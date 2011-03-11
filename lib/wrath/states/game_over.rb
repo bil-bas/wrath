@@ -1,4 +1,4 @@
-class Won < GameState
+class GameOver < GameState
   def initialize(winner)
     @winner = winner
     super
