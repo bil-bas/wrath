@@ -101,16 +101,21 @@ class LocalPlayer < Player
     set_body_velocity(angle, effective_speed)
   end
 
-  def drop(object = @carrying)
-    @parent.objects.push object
+  def drop
+    dropping = @carrying
+    @carrying = nil
+
+    @parent.objects.push dropping
 
     # Give a little push if you are stationary, so that it doesn't just land at their feet.
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
-    object.drop(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
+    dropping.drop(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
 
     if @parent.network.is_a? Server
       @parent.network.broadcast_msg(Message::Drop.new(self))
     end
+
+    dropping
   end
 
   def action
@@ -129,9 +134,7 @@ class LocalPlayer < Player
       end
     elsif @carrying
       if @carrying.local?
-        dropping = @carrying
-        @carrying = nil
-        drop(dropping)
+        drop
       else
         # TODO: Request drop.
       end
