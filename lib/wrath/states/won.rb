@@ -11,7 +11,7 @@ class Won < GameState
 
     sparkle_frames = Animation.new(file: "sparkle_8x8.png")
     @sparkle = GameObject.create(image: sparkle_frames[winner.number],
-                                 x: @winner.x, y: @winner.y - @winner.height / 2.0, zorder: @winner.y - 0.01, alpha: 150, mode: :additive)
+                                 x: @winner.x, y: @winner.y - @winner.height / 2.0, zorder: @winner.y - 0.1, alpha: 150, mode: :additive)
   end
 
   def space
@@ -28,10 +28,10 @@ class Won < GameState
     super
 
     # Make the player and sparkle behind move upwards.
-    rise = $window.dt * 0.005
+    rise = frame_time * 0.005
     @winner.z += rise
     @sparkle.y -= rise
-    @sparkle.angle -= $window.dt * 0.1
+    @sparkle.angle -= frame_time * 0.1
     @sparkle.factor = 1.5 + Math::sin(milliseconds / 1000.0) * 0.3
   end
 

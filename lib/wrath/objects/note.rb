@@ -24,11 +24,14 @@ class Note < StaticObject
     Sample["note_#{index + 1}.wav"].play(VOLUME)
 
     super options
+
+    @alpha_float = alpha
   end
 
   def update
-    self.z += 0.1
-    self.alpha -= 1
+    self.z += frame_time / 170.0
+    @alpha_float -= frame_time / 17.0
+    self.alpha = @alpha_float.to_i
     if alpha == 0
       destroy
     end

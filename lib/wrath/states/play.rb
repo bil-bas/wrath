@@ -5,6 +5,7 @@ class Play < GameState
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   NUM_GOATS = 5
   NUM_CHICKENS = 2
+  IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics framerate.
 
   PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
@@ -86,7 +87,7 @@ class Play < GameState
       # Fire burns the player.
       [[a, b], [b, a]].each do |a, b|
         if a.is_a? Player and (b.is_a? Fire or b.is_a? Knight or b.is_a? Paladin)
-          a.health -= Fire::BURN_DAMAGE * $window.dt
+          a.health -= Fire::BURN_DAMAGE * frame_time
         end
       end
 
@@ -177,22 +178,37 @@ class Play < GameState
   end
 
   def update
+    # Read any incoming messages which will alter our start state.
     @network.update if @network
 
     super
 
-    @space.step $window.dt / 1000.0
+    # Ensure that we have one or more physics steps that run at around the same interval.
+    total_time = frame_time / 1000.0
+    num_steps = total_time.div IDEAL_PHYSICS_STEP
+    step = total_time / num_steps
+    num_steps.times do
+      objects.each {|o| o.update_forces }
+      @space.step step
+    end
 
+    # Move carried objects to appropriate positions to prevent desync in movement.
     @players.each do |player|
       unless player.empty_handed?
         player.carrying.x, player.carrying.y = player.x, player.y
       end
     end
 
+    # Ensure that any network objects are synced over the network.
     if @network
       sync
       @network.flush
     end
+  end
+
+  # A player has declared themselves the loser, so the other player wins.
+  def lose!(loser)
+    win!((@players - [loser]).first)
   end
 
   # A player has declared themselves the winner.

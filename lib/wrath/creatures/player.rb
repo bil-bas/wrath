@@ -17,7 +17,7 @@ class Player < Creature
     options = {
       speed: 2,
       favor: 0,
-      health: 100,
+      health: MAX_HEALTH,
     }.merge! options
 
     @speed = options[:speed]
@@ -43,9 +43,8 @@ class Player < Creature
   end
 
   def favor=(value)
-    original_favor = @favor
     @favor = [[value, 0].max, FAVOR_TO_WIN].min
-    parent.win!(self) if @favor == FAVOR_TO_WIN and original_favor > 0
+    parent.win!(self) if @favor == FAVOR_TO_WIN and not parent.winner
 
     @favor
   end
@@ -53,7 +52,9 @@ class Player < Creature
   def health=(value)
     original_health = @health
     @health = [[value, 0].max, MAX_HEALTH].min
-    die! if @health == 0 and original_health > 0
+    if @health == 0 and original_health > 0 and not parent.winner
+      parent.lose!(self)
+    end
 
     @health
   end

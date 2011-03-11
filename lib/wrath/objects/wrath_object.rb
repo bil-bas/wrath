@@ -11,6 +11,7 @@ class WrathObject < GameObject
 
   @@next_object_id = 0
 
+  attr_reader :frames
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
   def needs_sync?; @needs_sync; end
@@ -125,8 +126,9 @@ class WrathObject < GameObject
   end
 
   def draw
-    if z <= 0
-      $window.clip_to(x - width / 2, y - height, width, height) do
+    if z < 0
+      # Clip bottom of sprite, but allow shadow to still be seem (sticks out horizontally)
+      $window.clip_to(x - width * 1.5, y - height, width * 3, height) do
         draw_self
       end
     else
@@ -159,8 +161,6 @@ class WrathObject < GameObject
   end
 
   def update
-    @body.reset_forces
-
     # Check which tile we start on.
     @old_tile = @tile
     @tile = parent.tile_at_coordinate(x, y)
@@ -175,29 +175,21 @@ class WrathObject < GameObject
 
     # Deal with vertical physics manually.
     if affected_by_gravity? and (@z_velocity > 0 or @z > ground_level)
-      @z_velocity += GRAVITY * $window.dt
+      @z_velocity += GRAVITY * frame_time
       @z += @z_velocity
 
       if @z <= ground_level
-        @z = ground_level
         @z_velocity = - @z_velocity * @elasticity
 
         if @z_velocity < 0.2
+          @z = ground_level
           self.velocity = [0, 0, 0]
           on_stopped
         else
+          @z = ground_level + (ground_level - @z) * @elasticity
           on_bounced
         end
       end
-    end
-
-    # Apply a pushing force if the object is moving.
-    if [@x_velocity, @y_velocity] != [0, 0]
-      modifier = 75 * $window.dt
-      modifier *= @tile.speed if z <= 0 and @tile
-
-      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
-                        CP::Vec2.new(0, 0))
     end
 
     # Set facing based on direction of movement.
@@ -207,6 +199,24 @@ class WrathObject < GameObject
     end
 
     super
+  end
+
+  def frame_time
+    parent.frame_time
+  end
+
+  def update_forces
+    @body.reset_forces
+
+    return if paused?
+    # Apply a pushing force if the object is moving.
+    if [@x_velocity, @y_velocity] != [0, 0]
+      modifier = 2000
+      modifier *= @tile.speed if z <= 0 and @tile
+
+      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
+                        CP::Vec2.new(0, 0))
+    end
   end
 
   def set_body_velocity(angle, force)

@@ -27,7 +27,7 @@ class Crown < Carriable
 
   def update
     if empowered?
-      @carrier.favor -= FAVOUR_COST * $window.dt
+      @carrier.favor -= FAVOUR_COST * frame_time
       @carrier.z_velocity = [LEVITATE_HEIGHT - @carrier.z, 0].max * LEVITATE_SPEED
     end
 

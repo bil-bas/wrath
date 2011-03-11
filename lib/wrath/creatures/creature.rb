@@ -29,6 +29,7 @@ class Creature < Carriable
   end
 
   def die!
+    reset_forces
     self.image = @frames[FRAME_DEAD]
   end
 

@@ -3,7 +3,6 @@
 class Altar < StaticObject
   trait :timer
 
-  CLEAR_DELAY = 25
   BLOOD_DRIP_DELAY = 300
   BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
   GHOST_COLOR = Color.rgb(200, 200, 255)
@@ -46,11 +45,9 @@ class Altar < StaticObject
         @sacrifice = sacrifice
         @blood_drip_animation.reset
         @facing = sacrifice.factor_x
-        after(CLEAR_DELAY) { clear_blood }
     end
 
     sacrifice.sacrificed(player, self)
-
   end
 
   def draw
@@ -59,24 +56,26 @@ class Altar < StaticObject
     if @sacrifice
       color = GHOST_COLOR.dup
       color.alpha = (@blood * 1.5).to_i
-      @sacrifice.image.draw_rot(x, y - height + (@blood - 100) / 10.0, zorder + y,
+      @sacrifice.frames[0].draw_rot(x, y - height + (@blood - 100) / 10.0, zorder + y,
                                 0, 0.5, 1, @facing, 1, color, :additive)
     end
   end
 
-  def clear_blood
-    if @blood > 0
-      @blood -= 1
-      @player.favor += @sacrifice.favor / 10 if @blood % 10 == 0
-    end
+  def update
+    super
 
-    if @blood <= 0
-      self.image = @frames[0]
-      @sacrifice.ghost_disappeared
-      @sacrifice = nil
-    else
-      self.image = @blood_drip_animation.next
-      after(CLEAR_DELAY) { clear_blood }
+    if @blood > 0
+      change = frame_time / 20.0
+      @blood -= change
+      @player.favor += @sacrifice.favor * change / 100
+
+      if @blood <= 0
+        self.image = @frames[0]
+        @sacrifice.ghost_disappeared
+        @sacrifice = nil
+      else
+        self.image = @blood_drip_animation.next
+      end
     end
   end
 end
