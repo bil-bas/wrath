@@ -16,14 +16,6 @@ class BrokenEgg < Carriable
     @can_drop = false
 
     super options
-
-    @frames.delay = ANIMATION_DELAY
-  end
-
-  def update
-    super
-
-    self.image = @frames.next
   end
 
   def picked_up(*args)
