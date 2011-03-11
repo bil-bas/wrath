@@ -1,12 +1,10 @@
 # Crown of levitation. It makes the player float, but costs favour.
-class Crown < StaticObject
+class Crown < Carriable
   LEVITATE_HEIGHT = 15
   LEVITATE_SPEED = 0.05
   FAVOUR_COST = 1 / 1000.0 # Per second
 
   trait :timer
-
-  include Carriable
 
   # Speeds the user up while flying, but not on the ground.
   def encumbrance

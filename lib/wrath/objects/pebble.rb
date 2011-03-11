@@ -6,8 +6,4 @@ class Pebble < WrathParticle
 
     super options
   end
-
-  def on_stopped
-    pause!
-  end
 end

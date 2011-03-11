@@ -1,7 +1,5 @@
-class Chest < StaticObject
+class Chest < Carriable
   trait :timer
-
-  include Carriable
 
   def open?; not @contains; end
   def closed?; @contains; end

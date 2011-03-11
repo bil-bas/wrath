@@ -1,11 +1,8 @@
 # encoding: utf-8
 
 class Mob < Creature
-
   EXPLOSION_H_SPEED = 0.02..0.07
   EXPLOSION_Z_VELOCITY = -0.1..0.3
-
-  include Carriable
 
   trait :timer
 
@@ -23,20 +20,32 @@ class Mob < Creature
     @sacrificial_explosion = Explosion.new(type: Blood, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
-    if local?
-      after(@jump_delay + (rand(@jump_delay / 2) + rand(@jump_delay / 2))) { jump }
-    end
+    schedule_jump if local?
   end
 
   def jump
-    if @z <= ground_level and not carried?
+    if @z <= ground_level and @state == :standing
       @z_velocity = @vertical_jump + rand(@vertical_jump / 2.0)
       angle = rand(360)
       @y_velocity = Math::sin(angle) * @horizontal_jump * 2
       @x_velocity = Math::cos(angle) * @horizontal_jump * 2
+    else
+      schedule_jump
     end
+  end
 
-    after(@jump_delay + (rand(@jump_delay / 2.0) + rand(@jump_delay / 2.0))) { jump }
+  def schedule_jump
+    after(@jump_delay + (rand(@jump_delay / 2.0) + rand(@jump_delay / 2.0)), name: :jump) { jump }
+  end
+
+  def on_stopped
+    schedule_jump
+    super
+  end
+
+  def pick_up(by)
+    stop_timer(:jump)
+    super(by)
   end
 
   def sacrificed(player, altar)

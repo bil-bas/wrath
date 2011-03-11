@@ -1,7 +1,5 @@
-class Fire < StaticObject
+class Fire < Carriable
   trait :timer
-
-  include Carriable
 
   ANIMATION_DELAY = 300
   BURN_DAMAGE = 5  / 1000.0 # 5/second

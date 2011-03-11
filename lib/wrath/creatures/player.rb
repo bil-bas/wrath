@@ -8,6 +8,7 @@ class Player < Creature
   attr_reader :speed, :favor, :health, :carrying
   attr_writer :carrying # TODO: hook into these values changing.
 
+  def carriable?; false; end
   def carrying?; not @carrying.nil?; end
   def empty_handed?; @carrying.nil?; end
   def can_be_activated?(actor); false; end

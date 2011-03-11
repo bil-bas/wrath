@@ -1,6 +1,4 @@
-class Egg < StaticObject
-  include Carriable
-
+class Egg < Carriable
   trait :timer
 
   def initialize(options = {})

@@ -10,6 +10,6 @@ class Blood < WrathParticle
 
   def on_stopped
     @casts_shadow = false
-    pause!
+    super
   end
 end

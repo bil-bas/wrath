@@ -1,4 +1,4 @@
-module Carriable
+class Carriable < WrathObject
   def carriable?; true; end
   def carried?; not @carrier.nil?; end
   def affected_by_gravity?; @carrier.nil?; end

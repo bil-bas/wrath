@@ -173,17 +173,8 @@ class WrathObject < GameObject
 
     @z = ground_level if z <= ground_level
 
-    # Apply a pushing force if the object is moving.
-    if [@x_velocity, @y_velocity] != [0, 0]
-      modifier = 75 * $window.dt
-      modifier *= @tile.speed if z <= 0 and @tile
-
-      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
-                        CP::Vec2.new(0, 0))
-    end
-
     # Deal with vertical physics manually.
-    if affected_by_gravity? and (@z_velocity != 0 or @z > ground_level)
+    if affected_by_gravity? and (@z_velocity > 0 or @z > ground_level)
       @z_velocity += GRAVITY * $window.dt
       @z += @z_velocity
 
@@ -193,10 +184,23 @@ class WrathObject < GameObject
 
         if @z_velocity < 0.2
           self.velocity = [0, 0, 0]
+          on_stopped
+        else
+          on_bounced
         end
       end
     end
 
+    # Apply a pushing force if the object is moving.
+    if [@x_velocity, @y_velocity] != [0, 0]
+      modifier = 75 * $window.dt
+      modifier *= @tile.speed if z <= 0 and @tile
+
+      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
+                        CP::Vec2.new(0, 0))
+    end
+
+    # Set facing based on direction of movement.
     if (factor_x > 0 and x_velocity < 0) or
         (factor_x < 0 and x_velocity > 0)
       self.factor_x *= -1
@@ -232,6 +236,16 @@ class WrathObject < GameObject
   def pause!
     reset_forces
     super
+  end
+
+  # Object has come to a halt.
+  def on_stopped
+
+  end
+
+  # Object has bounced off the ground.
+  def on_bounced
+
   end
 
   def destroy

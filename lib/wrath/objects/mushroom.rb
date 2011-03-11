@@ -1,6 +1,4 @@
-class Mushroom < StaticObject
-  include Carriable
-
+class Mushroom < Carriable
   def initialize(options = {})
     options = {
       factor: 0.7,

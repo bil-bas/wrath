@@ -8,13 +8,9 @@ class WrathParticle < WrathObject
     super(options)
   end
 
-  def update
-    super
-
-    if velocity == [0, 0, 0]
-      @z = ground_level
-      @body.reset_forces
-      on_stopped
-    end
+  def on_stopped
+    @z = ground_level
+    @body.reset_forces
+    pause!
   end
 end

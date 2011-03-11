@@ -1,12 +1,10 @@
-class Rock < StaticObject
+class Rock < Carriable
   EXPLOSION_HEALTH = -40
   EXPLOSION_FAVOR = -10
 
   EXPLOSION_H_SPEED = 0.4..1.2
   EXPLOSION_Z_VELOCITY = 0.5..1.4
   EXPLOSION_NUMBER = 8..12
-
-  include Carriable
 
   def initialize(options = {})
     options = {
