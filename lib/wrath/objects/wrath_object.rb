@@ -11,7 +11,7 @@ class WrathObject < GameObject
 
   @@next_object_id = 0
 
-  attr_reader :frames
+  attr_reader :frames, :elasticity
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
   def needs_sync?; @needs_sync; end
@@ -25,8 +25,6 @@ class WrathObject < GameObject
   def_delegators :@body_position, :x, :y, :x=, :y=
 
   def_delegators :@body, :reset_forces
-  def_delegator :@body, :e, :elasticity
-  def_delegator :@body, :u, :friction
 
   def position; [x, y, @z]; end
   def position=(coordinates); @body_position.x, @body_position.y, @z = coordinates; end
