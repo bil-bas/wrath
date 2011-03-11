@@ -99,7 +99,7 @@ class WrathObject < GameObject
                 CP::Vec2.new(width / 2, depth), CP::Vec2.new(width / 2, -depth)]
     @shape = CP::Shape::Poly.new(@body, vertices, CP::Vec2.new(0,0))
     @shape.e = 0
-    @shape.u = 0
+    @shape.u = 1
     @shape.collision_type = collision_type
     @shape.owner = self
   end
