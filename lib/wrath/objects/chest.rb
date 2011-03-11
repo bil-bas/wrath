@@ -3,7 +3,7 @@ class Chest < Carriable
 
   def open?; not @contains; end
   def closed?; @contains; end
-  def carriable?; not @contains; end
+  def can_pick_up?; not @contains; end
 
   CLOSED_SPRITE_FRAME = 0
   OPEN_SPRITE_FRAME = 1

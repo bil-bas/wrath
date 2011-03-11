@@ -102,6 +102,8 @@ class LocalPlayer < Player
   end
 
   def drop
+    return unless @carrying and @carrying.can_drop?
+
     dropping = @carrying
     @carrying = nil
 
@@ -109,7 +111,7 @@ class LocalPlayer < Player
 
     # Give a little push if you are stationary, so that it doesn't just land at their feet.
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
-    dropping.drop(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
+    dropping.dropped(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
 
     if @parent.network.is_a? Server
       @parent.network.broadcast_msg(Message::Drop.new(self))
@@ -142,9 +144,13 @@ class LocalPlayer < Player
   end
 
   def pick_up(object)
+    return unless object.can_pick_up?
+
+    drop if carrying?
+
     parent.objects.delete object
     @carrying = object
-    @carrying.pick_up(self)
+    @carrying.picked_up(self)
 
     if (factor_x > 0 and @carrying.factor_x < 0) or
         (factor_x < 0 and @carrying.factor_x > 0)

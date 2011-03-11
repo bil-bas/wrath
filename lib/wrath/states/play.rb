@@ -75,12 +75,12 @@ class Play < GameState
 
     # Objects collide with static objects, unless they are being carried or heights are different.
     @space.on_collision(:object, :static) do |a, b|
-      not ((a.carriable? and a.carried?) or (a.z > b.z + b.height) or (b.z > a.z + a.height))
+      not ((a.can_pick_up? and a.carried?) or (a.z > b.z + b.height) or (b.z > a.z + a.height))
     end
 
     # Objects collide with the wall, unless they are being carried.
     @space.on_collision(:object, :wall) do |object, wall|
-      collides = (not (object.carriable? and object.carried?))
+      collides = (not (object.can_pick_up? and object.carried?))
       
       # Bounce back from the edge of the screen
       unless object.is_a? Player
@@ -104,8 +104,15 @@ class Play < GameState
     @space.on_collision(:object, :object) do |a, b|
       # Fire burns the player.
       [[a, b], [b, a]].each do |a, b|
-        if a.is_a? Player and (b.is_a? Fire or b.is_a? Knight or b.is_a? Paladin)
-          a.health -= Fire::BURN_DAMAGE * frame_time
+        if a.is_a? Player
+          case b
+            when Fire, Knight, Paladin
+              a.health -= Fire::BURN_DAMAGE * frame_time
+            when Egg
+              if b.thrown_by != a and (not b.carried?) and b.z > b.ground_level
+                b.hit(a)
+              end
+          end
         end
       end
 

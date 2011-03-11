@@ -17,7 +17,7 @@ class WrathObject < GameObject
   def needs_sync?; @needs_sync; end
 
   def casts_shadow?; @casts_shadow; end
-  def carriable?; false; end
+  def can_pick_up?; false; end
   def affected_by_gravity?; true; end
   def remote?; not @local; end
   def local?; @local; end

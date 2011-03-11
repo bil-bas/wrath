@@ -16,16 +16,24 @@ class Egg < Carriable
   end
 
   def on_stopped
+    super
     after(GESTATION_DELAY, name: :gestation) { hatch }
   end
 
-  def pick_up(*args)
+  def picked_up(*args)
     super(*args)
     stop_timer(:gestation)
   end
 
   def hatch
     parent.objects << Chicken.create(position: position, parent: parent)
+    destroy
+  end
+
+  # Forces the player to drop whatever he is carrying and get covered with a broken egg.
+  def hit(player)
+    player.drop
+    player.pick_up(BrokenEgg.create(parent: parent))
     destroy
   end
 end

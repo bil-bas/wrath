@@ -56,12 +56,12 @@ class Creature < Carriable
                  end
   end
 
-  def pick_up(by)
+  def picked_up(by)
     @state = :carried
     super(by)
   end
 
-  def drop(*args)
+  def dropped(*args)
     @state = :thrown
     super(*args)
   end
