@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class Chicken < Mob
+  PERCENTAGE_LAYING_AN_EGG = 33
+
   def favor; 10; end
 
   def initialize(options = {})
@@ -18,6 +20,6 @@ class Chicken < Mob
 
   def drop(player, x_velocity, y_velocity, z_velocity)
     super(player, x_velocity, y_velocity, z_velocity)
-    player.pick_up Egg.create
+    player.pick_up(Egg.create) if rand(100) < PERCENTAGE_LAYING_AN_EGG
   end
 end

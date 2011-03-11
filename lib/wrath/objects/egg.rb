@@ -1,6 +1,8 @@
 class Egg < Carriable
   trait :timer
 
+  GESTATION_DELAY = 3 * 1000
+
   def initialize(options = {})
     options = {
       encumbrance: 0,
@@ -11,5 +13,19 @@ class Egg < Carriable
     }.merge! options
 
     super options
+  end
+
+  def on_stopped
+    after(GESTATION_DELAY, name: :gestation) { hatch }
+  end
+
+  def pick_up(*args)
+    super(*args)
+    stop_timer(:gestation)
+  end
+
+  def hatch
+    parent.objects << Chicken.create(position: position, parent: parent)
+    destroy
   end
 end
