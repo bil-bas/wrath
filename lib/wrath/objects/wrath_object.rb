@@ -181,19 +181,18 @@ class WrathObject < GameObject
     @z = ground_level if z <= ground_level
 
     # Deal with vertical physics manually.
-    if affected_by_gravity? and (@z_velocity > 0 or @z > ground_level)
+    if affected_by_gravity? and (@z_velocity != 0 or @z > ground_level)
       @z_velocity += GRAVITY * frame_time
       @z += @z_velocity
 
       if @z <= ground_level
-        @z_velocity = - @z_velocity * @elasticity
+        @z = ground_level
+        @z_velocity = - @z_velocity * @elasticity if @z_velocity < 0
 
         if @z_velocity < 0.2
-          @z = ground_level
           self.velocity = [0, 0, 0]
           on_stopped
         else
-          @z = ground_level + (ground_level - @z) * @elasticity
           on_bounced
         end
       end
