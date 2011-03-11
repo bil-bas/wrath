@@ -27,7 +27,6 @@ class Water < AnimatedTile
   def add(object)
     case object
       when Fire, Particle
-        p "destroying"
         object.destroy
         return
       when Rock
