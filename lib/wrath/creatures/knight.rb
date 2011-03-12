@@ -9,7 +9,7 @@ class Knight < Mob
       horizontal_jump: 1.2,
       elasticity: 0.4,
       jump_delay: 800,
-      encumbrance: 0.4,
+      encumbrance: 0.5,
       z_offset: -2,
       animation: "knight_8x8.png",
     }.merge! options

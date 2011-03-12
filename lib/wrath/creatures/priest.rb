@@ -7,7 +7,7 @@ class Priest < Creature
     options = {
       speed: 2,
       favor: 10,
-      encumbrance: 0.6,
+      encumbrance: 0.4,
       z_offset: -2,
       health: MAX_HEALTH,
     }.merge! options
