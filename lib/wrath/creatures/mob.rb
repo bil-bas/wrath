@@ -38,20 +38,8 @@ class Mob < Creature
   end
 
   def on_stopped
+    stop_timer(:jump)
     schedule_jump
     super
-  end
-
-  def pick_up(by)
-    stop_timer(:jump)
-    super(by)
-  end
-
-  def sacrificed(player, altar)
-    super
-  end
-
-  def ghost_disappeared
-
   end
 end

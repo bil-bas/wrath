@@ -57,11 +57,8 @@ class Carriable < WrathObject
     nil
   end
 
-  def update
-    if carried?
-      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + z_offset]
-    end
-
-    super
+  # Called from teh game-state, once all updates are complete, to ensure syncing between carried objects.
+  def update_carried_position
+    self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + z_offset]
   end
 end

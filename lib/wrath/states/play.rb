@@ -221,10 +221,9 @@ class Play < GameState
     end
 
     # Move carried objects to appropriate positions to prevent desync in movement.
-    @players.each do |player|
-      avatar = player.avatar
-      unless avatar.empty_handed?
-        avatar.carrying.x, avatar.carrying.y = avatar.x, avatar.y + 0.01
+    @objects.each do |object|
+      if object.respond_to?(:carrying?) and object.carrying?
+        object.carrying.update_carried_position
       end
     end
 

@@ -111,6 +111,15 @@ class Creature < Carriable
     dropping
   end
 
+  def mount(mount)
+    mount.activate(self)
+  end
+
+  # The creature's ghost has ascended, after sacrifice.
+  def ghost_disappeared
+
+  end
+
   def pick_up(object)
     return unless object.can_pick_up?
 

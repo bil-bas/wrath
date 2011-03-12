@@ -7,7 +7,7 @@ class Altar < StaticObject
   BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
   GHOST_COLOR = Color.rgb(200, 200, 255)
 
-  def can_be_activated?(actor); actor.carrying and not actor.carrying.player and not @sacrifice; end
+  def can_be_activated?(actor); actor.carrying and not actor.mount? and not actor.carrying.player and not @sacrifice; end
 
   def initialize(options = {})
     options = {

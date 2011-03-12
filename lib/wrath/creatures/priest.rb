@@ -5,8 +5,9 @@ class Priest < Creature
 
   def initialize(options = {})
     options = {
-      speed: 2,      favor: 10,
+      speed: 2,
       encumbrance: 0.4,
+      elasticity: 0.1,
       z_offset: -2,
       health: MAX_HEALTH,
     }.merge! options

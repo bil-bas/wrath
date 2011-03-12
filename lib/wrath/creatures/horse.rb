@@ -6,10 +6,10 @@ class Horse < Mob
 
   def initialize(options = {})
     options = {
-      vertical_jump: 0.1,
-      horizontal_jump: 0.1,
+      vertical_jump: 0.2,
+      horizontal_jump: 1.2,
       elasticity: 0.6,
-      jump_delay: 2000,
+      jump_delay: 600,
       encumbrance: 0.4,
       z_offset: -3,
       speed: 4,
@@ -19,20 +19,33 @@ class Horse < Mob
     super(options)
   end
 
-  # Mount the horsie.
+  # Mount the horsie or push off whoever is riding on it.
   def activate(actor)
-    stop_timer(:jump)
-    actor.drop
-    actor.player.avatar = self
-    pick_up(actor)
+    if carrying?
+      drop
+    else
+      pick_up(actor)
+    end
   end
 
   # Dismount the horsie.
   def drop
-    rider = carrying
-    super
-    player.avatar = rider
+    if controlled_by_player?
+      player.avatar = carrying
+      schedule_jump
+    end
+
     self.z_velocity = 0.8
-    schedule_jump
+
+    super
+  end
+
+  def pick_up(object)
+    if object.controlled_by_player?
+      stop_timer(:jump)
+      object.player.avatar = self
+    end
+
+    super
   end
 end
