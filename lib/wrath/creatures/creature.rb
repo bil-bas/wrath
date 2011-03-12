@@ -190,6 +190,7 @@ class Creature < Carriable
 
   def picked_up(by)
     @state = :carried
+    stop_timer :stand_up
     super(by)
   end
 
@@ -244,10 +245,7 @@ class Creature < Carriable
     case @state
       when :thrown
         # Stand up if we were thrown.
-        after(STAND_UP_DELAY) { @state = :standing if @state == :thrown }
-
-      when :walking
-        @state = :standing
+        after(STAND_UP_DELAY, name: :stand_up) { @state = :standing if @state == :thrown }
     end
 
     super
