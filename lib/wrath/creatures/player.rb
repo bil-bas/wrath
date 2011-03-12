@@ -4,6 +4,8 @@ class Player < Creature
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
   FAVOR_TO_WIN = 100
   MAX_HEALTH = 100
+  WOUND_FLASH_PERIOD = 200
+  AFTER_WOUND_FLASH_DURATION = 100
 
   attr_reader :speed, :favor, :health, :carrying
   attr_writer :carrying # TODO: hook into these values changing.
@@ -31,6 +33,8 @@ class Player < Creature
 
     @font = Font[8]
 
+    @first_wounded_at = @last_wounded_at = nil
+
     super(options)
   end
 
@@ -38,6 +42,7 @@ class Player < Creature
   def dead?; health <= 0; end
 
   def die!
+    self.color.blue = self.color.green = 255
     self.health = 0
     super
   end
@@ -56,6 +61,11 @@ class Player < Creature
       parent.lose!(self)
     end
 
+    if @health < original_health
+      @last_wounded_at = milliseconds
+      @first_wounded_at = @last_wounded_at unless @first_wounded_at
+    end
+
     @health
   end
 
@@ -72,5 +82,23 @@ class Player < Creature
     super
 
     @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+  end
+
+  def update
+    super
+
+    # Reset colour if it was a while since we were wounded.
+    if @first_wounded_at
+      if milliseconds - @last_wounded_at > AFTER_WOUND_FLASH_DURATION
+        self.color.blue = self.color.green = 255
+        @first_wounded_at = @last_wounded_at = nil
+      else
+        if (milliseconds - @first_wounded_at).div(WOUND_FLASH_PERIOD) % 2 == 0
+          self.color.blue = self.color.green = 100
+        else
+          self.color.blue = self.color.green = 255
+        end
+      end
+    end
   end
 end
