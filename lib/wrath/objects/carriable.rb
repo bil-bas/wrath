@@ -1,6 +1,6 @@
 class Carriable < WrathObject
+  attr_reader :carrier, :thrown_by, :z_offset
 
-  attr_reader :carrier, :thrown_by
   def can_drop?; true; end
   def can_pick_up?; true; end
   def carried?; not @carrier.nil?; end
@@ -59,7 +59,7 @@ class Carriable < WrathObject
 
   def update
     if carried?
-      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + @z_offset]
+      self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + z_offset]
     end
 
     super

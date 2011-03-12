@@ -16,6 +16,7 @@ class Creature < Carriable
   FRAME_WALK2 = 1
   FRAME_LIE = 2
   FRAME_THROWN = 2
+  FRAME_MOUNTED = 0
   FRAME_CARRIED = 2
   FRAME_SLEEP = 3
   FRAME_DEAD = 3
@@ -24,6 +25,8 @@ class Creature < Carriable
 
   attr_writer :player
 
+  def z_offset; super + (carrier.mount? ? -4 : 0); end
+  def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
   def carrying?; not @carrying.nil?; end
@@ -177,6 +180,8 @@ class Creature < Carriable
                      @frames[FRAME_WALK1]
                    when :carried
                      @frames[FRAME_CARRIED]
+                   when :mounted
+                     @frames[FRAME_MOUNTED]
                    when :lying
                      @frames[FRAME_LIE]
                    when :thrown
@@ -191,7 +196,7 @@ class Creature < Carriable
   end
 
   def picked_up(by)
-    @state = :carried
+    @state = by.mount? ? :mounted : :carried
     drop
     stop_timer :stand_up
     super(by)

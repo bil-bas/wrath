@@ -22,6 +22,7 @@ class WrathObject < GameObject
   def affected_by_gravity?; true; end
   def remote?; not @local; end
   def local?; @local; end
+  def controlled_by_player?; false; end
 
   def_delegators :@body_position, :x, :y, :x=, :y=
 

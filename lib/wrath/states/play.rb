@@ -17,6 +17,8 @@ class Play < GameState
 
     super()
 
+    require 'profile'
+
     on_input(:escape) do
       game_state_manager.pop_until_game_state Menu
     end

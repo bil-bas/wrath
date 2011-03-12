@@ -10,7 +10,6 @@ class Mob < Creature
     options = {
     }.merge! options
 
-    @speed = options[:speed]
     @vertical_jump = options[:vertical_jump]
     @horizontal_jump = options[:horizontal_jump]
     @jump_delay = options[:jump_delay]
