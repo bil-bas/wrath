@@ -242,12 +242,9 @@ class Play < GameState
   # A player has declared themselves the winner.
   def win!(winner)
     @winner = winner
+    @winner.win!
+    @winner.opponent.lose!
     push_game_state GameOver.new(winner)
-
-    @players.each do |player|
-      player.avatar.pause!
-      player.avatar.die! unless player == @winner
-    end
   end
 
   def sync

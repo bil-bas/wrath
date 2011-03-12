@@ -44,6 +44,15 @@ class Player < BasicGameObject
     on_input(@keys_action, :action) if local?
   end
 
+  def win!
+    @avatar.drop
+    @avatar.pause!
+  end
+
+  def lose!
+    @avatar.die!
+  end
+
   def avatar=(creature)
     @avatar.player = nil if @avatar
     @avatar = creature
@@ -106,8 +115,7 @@ class Player < BasicGameObject
           @avatar.move(0)
         elsif holding_any? *@keys_down
           # S
-          @avatar.
-              move(180)
+          @avatar.move(180)
         else
           @avatar.set_body_velocity(0, 0)
           # Standing entirely still.

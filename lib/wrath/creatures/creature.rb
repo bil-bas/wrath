@@ -56,6 +56,7 @@ class Creature < Carriable
     reset_color
     reset_forces
     drop
+    @state = :dead
     self.image = @frames[FRAME_DEAD]
     parent.lose!(player) if player and not parent.winner
   end
