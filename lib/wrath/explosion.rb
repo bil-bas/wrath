@@ -8,7 +8,8 @@ class Explosion
     end
   end
 
-  def initialize(options = {})
+  def initialize(parent, options = {})
+    @parent = parent
     @type = options[:type]
     @number = options[:number]
     @h_speed = options[:h_speed]
@@ -21,8 +22,8 @@ class Explosion
       speed = random(@h_speed)
       y_velocity = Math::sin(angle) * speed
       x_velocity = Math::cos(angle) * speed
-      @type.create(x: x, y: y, z: z,
-        x_velocity: x_velocity, y_velocity: y_velocity, z_velocity: random(@z_velocity))
+      @type.create(parent: @parent, position: [x, y, z],
+        velocity: [x_velocity, y_velocity, random(@z_velocity)])
     end
   end
 end

@@ -17,7 +17,7 @@ class Mob < Creature
 
     super(options)
 
-    @sacrificial_explosion = Explosion.new(type: Blood, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
+    @sacrificial_explosion = Explosion.new(parent, type: Blood, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
     schedule_jump if local?
