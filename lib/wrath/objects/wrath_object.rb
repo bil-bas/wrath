@@ -7,11 +7,9 @@ class WrathObject < GameObject
 
   GRAVITY = -5 / 1000.0 # Acceleration per second.
 
-  TOP_MARGIN = 16 # Unenterable region at the top of the screen.
-
   @@next_object_id = 0
 
-  attr_reader :frames, :elasticity
+  attr_reader :frames, :elasticity, :favor
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
   def needs_sync?; @needs_sync; end
@@ -44,11 +42,14 @@ class WrathObject < GameObject
       x: 0,
       y: 0,
       z: 0,
+      favor: 0,
       mass: 1,
       casts_shadow: true,
       collision_type: :object,
       shape: :rectangle,
     }.merge! options
+
+    @favor = options[:favor]
 
     @frames = Animation.new(file: options[:animation])
     @frames.delay = 0 # Don't animate by default.

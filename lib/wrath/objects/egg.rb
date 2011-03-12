@@ -5,6 +5,7 @@ class Egg < Carriable
 
   def initialize(options = {})
     options = {
+      favor: 1,
       encumbrance: 0,
       elasticity: 0.4,
       factor: 0.7,

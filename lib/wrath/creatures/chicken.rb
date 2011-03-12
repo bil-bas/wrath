@@ -3,10 +3,9 @@
 class Chicken < Mob
   PERCENTAGE_LAYING_AN_EGG = 33
 
-  def favor; 10; end
-
   def initialize(options = {})
     options = {
+      favor: 10,
       vertical_jump: 0.1,
       horizontal_jump: 0.2,
       jump_delay: 250,

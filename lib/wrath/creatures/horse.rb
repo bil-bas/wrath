@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 class Horse < Mob
-  def favor; 20; end
   def mount?; true; end
 
   def initialize(options = {})
     options = {
+      favor: 20,
       vertical_jump: 0.2,
       horizontal_jump: 1.2,
       elasticity: 0.6,

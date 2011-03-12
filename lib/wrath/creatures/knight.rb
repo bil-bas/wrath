@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 class Knight < Mob
-  def favor; 30; end
-
   def initialize(options = {})
     options = {
+      favor: 30,
       vertical_jump: 0.2,
       horizontal_jump: 1.2,
       elasticity: 0.4,

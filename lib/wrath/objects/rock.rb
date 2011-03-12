@@ -1,6 +1,5 @@
 class Rock < Carriable
   EXPLOSION_HEALTH = -40
-  EXPLOSION_FAVOR = -10
 
   EXPLOSION_H_SPEED = 0.4..1.2
   EXPLOSION_Z_VELOCITY = 0.5..1.4
@@ -8,6 +7,7 @@ class Rock < Carriable
 
   def initialize(options = {})
     options = {
+      favor: -10,
       encumbrance: 0.6,
       elasticity: 0.4,
       z_offset: -2,
@@ -24,7 +24,6 @@ class Rock < Carriable
     Sample["rock_sacrifice.wav"].play
 
     actor.health += EXPLOSION_HEALTH
-    actor.player.favor += EXPLOSION_FAVOR
 
     super
   end

@@ -14,6 +14,7 @@ class Chest < Carriable
 
   def initialize(options = {})
     options = {
+      favor: -10,
       encumbrance: 0.5,
       elasticity: 0.6,
       z_offset: -2,

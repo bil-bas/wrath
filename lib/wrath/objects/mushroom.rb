@@ -3,6 +3,7 @@ class Mushroom < Carriable
 
   def initialize(options = {})
     options = {
+      favor: 1,
       factor: 0.7,
       encumbrance: 0.1,
       elasticity: 0,

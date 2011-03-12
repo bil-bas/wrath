@@ -17,6 +17,7 @@ class Crown < Carriable
 
   def initialize(options = {})
     options = {
+      favor: 5,
       elasticity: 0.2,
       z_offset: -2,
       animation: "crown_6x2.png",

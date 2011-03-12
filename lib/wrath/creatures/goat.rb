@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 class Goat < Mob
-  def favor; 20; end
-
   def initialize(options = {})
     options = {
+      favor: 20,
       vertical_jump: 0.3,
       horizontal_jump: 0.6,
       elasticity: 0.8,

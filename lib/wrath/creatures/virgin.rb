@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 class Virgin < Mob
-  def favor; 40; end
-
   def initialize(options = {})
     options = {
+      favor: 40,
       vertical_jump: 0.05,
       horizontal_jump: 0.5,
       jump_delay: 500,

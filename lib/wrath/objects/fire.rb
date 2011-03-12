@@ -10,6 +10,7 @@ class Fire < Carriable
 
   def initialize(options = {})
     options = {
+      favor: 1,
       encumbrance: -0.5,
       elasticity: 0.2,
       z_offset: -2,

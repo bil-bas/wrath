@@ -40,12 +40,16 @@ class Altar < StaticObject
 
   def sacrifice(actor, sacrifice)
     case sacrifice
-      when Mob
+      when Creature
         @blood = 100
         @player = actor.player
         @sacrifice = sacrifice
         @blood_drip_animation.reset
         @facing = sacrifice.factor_x
+
+      else
+        # Instant gratification for inanimate objects.
+        actor.player.favor += sacrifice.favor
     end
 
     sacrifice.sacrificed(actor, self)
