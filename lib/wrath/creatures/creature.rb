@@ -64,9 +64,7 @@ class Creature < Carriable
     super
 
     if @overlay_color
-      img = image.dup
-      img.clear(dest_ignore: :transparent, color: @overlay_color)
-      img.draw_rot(x, y - z, y - z, 0, center_x, center_y, factor_x, factor_y)
+      image.silhouette.draw_rot(x, y - z, y - z, 0, center_x, center_y, factor_x, factor_y, @overlay_color)
     end
   end
 

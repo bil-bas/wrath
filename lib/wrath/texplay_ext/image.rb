@@ -9,5 +9,15 @@ module Gosu
 
       prepare_image(obj, args.first, options)
     end
+
+    # A white silhouette of the image.
+    def silhouette
+      unless @silhouette
+        @silhouette = self.dup
+        @silhouette.clear(dest_ignore: :transparent, color: :white)
+      end
+
+      @silhouette
+    end
   end
 end
