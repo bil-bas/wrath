@@ -18,7 +18,7 @@ class Altar < StaticObject
     }.merge! options
 
     @blood = 0
-    @player = nil
+    @actor = nil
     @sacrifice = nil
 
     super(options)
@@ -33,21 +33,21 @@ class Altar < StaticObject
 
   def activate(actor)
     lamb = actor.carrying
-    actor.carrying = nil
+    actor.drop
     sacrifice(actor, lamb)
   end
 
-  def sacrifice(player, sacrifice)
+  def sacrifice(actor, sacrifice)
     case sacrifice
       when Mob
         @blood = 100
-        @player = player
+        @player = actor.player
         @sacrifice = sacrifice
         @blood_drip_animation.reset
         @facing = sacrifice.factor_x
     end
 
-    sacrifice.sacrificed(player, self)
+    sacrifice.sacrificed(actor, self)
   end
 
   def draw
@@ -67,7 +67,7 @@ class Altar < StaticObject
     if @blood > 0
       change = frame_time / 20.0
       @blood -= change
-      @player.favor += @sacrifice.favor * change / 100
+      @player.favor += @sacrifice.favor * change / 100.0
 
       if @blood <= 0
         self.image = @frames[0]

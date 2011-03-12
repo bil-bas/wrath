@@ -20,11 +20,11 @@ class Rock < Carriable
     super  options
   end
 
-  def sacrificed(player, altar)
+  def sacrificed(actor, altar)
     Sample["rock_sacrifice.wav"].play
 
-    player.health += EXPLOSION_HEALTH
-    player.favor += EXPLOSION_FAVOR
+    actor.health += EXPLOSION_HEALTH
+    actor.player.favor += EXPLOSION_FAVOR
 
     super
   end

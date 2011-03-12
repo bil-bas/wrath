@@ -47,7 +47,7 @@ class Chest < Carriable
     else
       item = actor.carrying
       if item
-        actor.carrying = nil
+        actor.drop
         close(item)
       else
         actor.pick_up(self)
@@ -76,7 +76,7 @@ class Chest < Carriable
     @contains = nil
   end
 
-  def sacrificed(player, altar)
+  def sacrificed(actor, altar)
     Sample["rock_sacrifice.wav"].play
     super
   end

@@ -12,7 +12,7 @@ class Crown < Carriable
   end
 
   def empowered?
-    @carrier and @carrier.favor > 0
+    @carrier and @carrier.player and @carrier.player.favor > 0
   end
 
   def initialize(options = {})
@@ -27,7 +27,7 @@ class Crown < Carriable
 
   def update
     if empowered?
-      @carrier.favor -= FAVOUR_COST * frame_time
+      @carrier.player.favor -= FAVOUR_COST * frame_time
       @carrier.z_velocity = [LEVITATE_HEIGHT - @carrier.z, 0].max * LEVITATE_SPEED
     end
 

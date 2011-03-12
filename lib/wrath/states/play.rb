@@ -104,7 +104,7 @@ class Play < GameState
     @space.on_collision(:object, :object) do |a, b|
       # Fire burns the player.
       [[a, b], [b, a]].each do |a, b|
-        if a.is_a? Player
+        if a.is_a? Creature
           case b
             when Fire, Knight, Paladin
               a.health -= Fire::BURN_DAMAGE * frame_time
@@ -122,12 +122,14 @@ class Play < GameState
 
   def create_objects
     # Player 1.
-    @players << LocalPlayer.create(number: 0, local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
+    player1 = Priest.create(local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
+    @objects << player1
+    @players << Player.create(0, player1)
 
     # Player 2.
-    @players << LocalPlayer.create(number: 1, local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], factor_x: -1, animation: "player2_8x8.png")
-
-    @objects = @players.dup
+    player2 = Priest.create(local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], factor_x: -1, animation: "player2_8x8.png")
+    @objects << player2
+    @players << Player.create(1, player2)
 
     # The altar is all-important!
     @altar = Altar.create
@@ -219,8 +221,9 @@ class Play < GameState
 
     # Move carried objects to appropriate positions to prevent desync in movement.
     @players.each do |player|
-      unless player.empty_handed?
-        player.carrying.x, player.carrying.y = player.x, player.y
+      avatar = player.avatar
+      unless avatar.empty_handed?
+        avatar.carrying.x, avatar.carrying.y = avatar.x, avatar.y
       end
     end
 
@@ -233,7 +236,7 @@ class Play < GameState
 
   # A player has declared themselves the loser, so the other player wins.
   def lose!(loser)
-    win!((@players - [loser]).first)
+    win!(loser.opponent)
   end
 
   # A player has declared themselves the winner.
@@ -242,8 +245,8 @@ class Play < GameState
     push_game_state GameOver.new(winner)
 
     @players.each do |player|
-      player.pause!
-      player.die! unless player == @winner
+      player.avatar.pause!
+      player.avatar.die! unless player == @winner
     end
   end
 
