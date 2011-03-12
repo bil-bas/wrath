@@ -220,7 +220,7 @@ class WrathObject < GameObject
     return if paused?
     # Apply a pushing force if the object is moving.
     if [@x_velocity, @y_velocity] != [0, 0]
-      modifier = 3000
+      modifier = 2000
       modifier *= @tile.speed if z <= 0 and @tile
 
       @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),

@@ -5,7 +5,7 @@ class Play < GameState
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   NUM_GOATS = 5
   NUM_CHICKENS = 2
-  IDEAL_PHYSICS_STEP = 1.0 / 180.0 # Physics frame-rate.
+  IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
 
   PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
@@ -16,8 +16,6 @@ class Play < GameState
     @network = network
 
     super()
-
-    require 'profile'
 
     on_input(:escape) do
       game_state_manager.pop_until_game_state Menu
