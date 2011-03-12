@@ -28,6 +28,7 @@ class Creature < Carriable
   def dead?; @health <= 0; end
   def carrying?; not @carrying.nil?; end
   def empty_handed?; @carrying.nil?; end
+  def controlled_by_player?; not @player.nil?; end
   def poisoned?; @poisoned; end
 
   def initialize(options = {})

@@ -16,6 +16,7 @@ class WrathObject < GameObject
 
   def needs_sync?; @needs_sync; end
 
+  def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
   def can_pick_up?; false; end
   def affected_by_gravity?; true; end
@@ -42,6 +43,7 @@ class WrathObject < GameObject
       x: 0,
       y: 0,
       z: 0,
+      mass: 1,
       casts_shadow: true,
       collision_type: :object,
       shape: :rectangle,
@@ -54,7 +56,7 @@ class WrathObject < GameObject
 
     options[:animation] =~ /(\d+)x(\d+)/
     width, height = $1.to_i, $2.to_i
-    init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape])
+    init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape], options[:mass])
 
     @z = options[:z]
     @elasticity = options[:elasticity]
@@ -86,12 +88,12 @@ class WrathObject < GameObject
     @previous_position = position
     @previous_velocity = velocity
 
-    @parent.space.add_body @body
+    @parent.space.add_body @body unless @body.mass == Float::INFINITY
     @parent.space.add_shape @shape
   end
 
-  def init_physics(x, y, width, height, collision_type, shape)
-    @body = CP::Body.new(1, Float::INFINITY)
+  def init_physics(x, y, width, height, collision_type, shape, mass)
+    @body = CP::Body.new(mass, Float::INFINITY)
     @body.p = CP::Vec2.new(x, y)
     @body_position = @body.p
 
@@ -217,7 +219,7 @@ class WrathObject < GameObject
     return if paused?
     # Apply a pushing force if the object is moving.
     if [@x_velocity, @y_velocity] != [0, 0]
-      modifier = 2000
+      modifier = 3000
       modifier *= @tile.speed if z <= 0 and @tile
 
       @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
@@ -229,7 +231,6 @@ class WrathObject < GameObject
     @x_velocity = offset_x(angle, 1) * force
     @y_velocity = offset_y(angle, 1) * force
  end
-
 
   def spawn_position
     loop do

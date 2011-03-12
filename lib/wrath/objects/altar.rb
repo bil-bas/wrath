@@ -14,7 +14,6 @@ class Altar < StaticObject
       x: 80,
       y: 60,
       animation: "altar_8x5.png",
-      collision_type: :static
     }.merge! options
 
     @blood = 0
@@ -26,9 +25,6 @@ class Altar < StaticObject
     @blood_drip_animation = @frames[BLOOD_DRIP_FRAME_RANGE]
     @blood_drip_animation.delay = BLOOD_DRIP_DELAY
     @blood_drip_animation.loop = false
-
-    @body.mass = Float::INFINITY
-    parent.space.remove_body @body
   end
 
   def activate(actor)

@@ -5,7 +5,7 @@ class Play < GameState
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   NUM_GOATS = 5
   NUM_CHICKENS = 2
-  IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics framerate.
+  IDEAL_PHYSICS_STEP = 1.0 / 180.0 # Physics frame-rate.
 
   PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
@@ -83,7 +83,7 @@ class Play < GameState
       collides = (not (object.can_pick_up? and object.carried?))
       
       # Bounce back from the edge of the screen
-      unless object.is_a? Player
+      unless object.controlled_by_player?
         case wall.side
           when :right
             object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity > 0
@@ -210,12 +210,13 @@ class Play < GameState
 
     super
 
+    objects.each {|o| o.update_forces }
+
     # Ensure that we have one or more physics steps that run at around the same interval.
     total_time = frame_time / 1000.0
     num_steps = total_time.div IDEAL_PHYSICS_STEP
     step = total_time / num_steps
     num_steps.times do
-      objects.each {|o| o.update_forces }
       @space.step step
     end
 
