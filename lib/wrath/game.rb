@@ -73,7 +73,7 @@ class Game < Window
     retrofy
     @sprite_scale = 4 # 160x120
 
-    @pixel = Image["pixel.png"]
+    @pixel = Image["pixel_1x1.png"]
 
     push_game_state Menu
   end

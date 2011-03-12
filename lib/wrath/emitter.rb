@@ -2,8 +2,8 @@
 class Emitter
   def initialize(type, parent, options = {})
     options = {
-        h_speed: 1..2,
-        z_velocity: 0.5..1,
+        h_speed: 0.3..0.5,
+        z_velocity: 0.5..0.9,
         number: 1,
     }.merge! options
 

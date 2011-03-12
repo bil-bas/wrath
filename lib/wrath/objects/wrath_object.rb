@@ -176,11 +176,7 @@ class WrathObject < GameObject
     @old_tile = @tile
     @tile = parent.tile_at_coordinate(x, y)
 
-    if @tile != @old_tile
-      @old_tile.remove(self) if @old_tile
-    end
-
-    @tile.add(self) unless @tile.nil? or z > ground_level
+    @tile.touched_by(self) unless @tile.nil? or z > 0
 
     @z = ground_level if z <= ground_level
 
@@ -270,8 +266,6 @@ class WrathObject < GameObject
 
   def destroy
     super
-
-    @tile.remove(self) if @tile
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body

@@ -25,20 +25,12 @@ class Tile < GameObject
 
     @type = options[:position]
 
-    @contents = []
-
     self.image = @@sprites[*sprite_position]
     self.x = (options[:grid][0] + 0.5) * WIDTH
     self.y = (options[:grid][1] + 0.5) * HEIGHT * VERTICAL_SCALE
   end
 
-  def add(object)
-    @contents << object unless @contents.include? object
+  def touched_by(object)
     self
-  end
-
-  def remove(object)
-    @contents.delete(object)
-    object
   end
 end

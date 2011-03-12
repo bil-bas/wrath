@@ -1,11 +1,9 @@
 class Smoke < GameObject
-  INITIAL_ALPHA = 100
-
   def initialize(options = {})
     options = {
-      alpha: INITIAL_ALPHA,
+      color: Color.rgba(50, 50, 50, 100),
       factor: 1.5,
-      image: Image["smoke_1x1.png"],
+      image: Image["pixel_1x1.png"],
     }.merge! options
 
     super options

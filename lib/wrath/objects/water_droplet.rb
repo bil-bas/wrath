@@ -1,15 +1,15 @@
-class Blood < WrathParticle
+class WaterDroplet < Droplet
+  COLOR = Color.rgba(0, 50, 200, 150)
+
   def initialize(options = {})
     options = {
-      elasticity: 0,
-      animation: "blood_1x1.png",
+      color: COLOR,
     }.merge! options
 
     super options
   end
 
   def on_stopped
-    @casts_shadow = false
-    super
+    destroy
   end
 end
