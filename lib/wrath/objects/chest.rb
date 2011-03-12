@@ -24,7 +24,7 @@ class Chest < Carriable
 
     super options
 
-    @sacrificial_explosion = Explosion.new(parent, type: Splinter, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+    @sacrificial_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
                                            z_velocity: EXPLOSION_Z_VELOCITY)
 
     # Pick one of the contents objects, creating if it is a class rather than an object.
