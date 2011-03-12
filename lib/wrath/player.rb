@@ -41,7 +41,7 @@ class Player < BasicGameObject
 
     super(options)
 
-    on_input(@keys_action) { @avatar.action } if local?
+    on_input(@keys_action, :action) if local?
   end
 
   def avatar=(creature)
@@ -66,39 +66,52 @@ class Player < BasicGameObject
     super
   end
 
+  def action
+    case avatar.state
+      when :carried
+        @avatar.carrier.drop
+
+      when :standing, :walking
+        @avatar.action
+    end
+  end
+
   def move_by_keys
-    if holding_any? *@keys_left
-      if holding_any? *@keys_up
-        # NW
-        @avatar.move(315)
-      elsif holding_any? *@keys_down
-        # SW
-        @avatar.move(225)
-      else
-        # W
-        @avatar.move(270)
-      end
-    elsif holding_any? *@keys_right
-      if holding_any? *@keys_up
-        # NE
-        @avatar.move(45)
-      elsif holding_any? *@keys_down
-        # SE
-        @avatar.move(135)
-      else
-        # E
-        @avatar.move(90)
-      end
-    elsif holding_any? *@keys_up
-      # N
-      @avatar.move(0)
-    elsif holding_any? *@keys_down
-      # S
-      @avatar.
-          move(180)
-    else
-      @avatar.set_body_velocity(0, 0)
-      # Standing entirely still.
+    case avatar.state
+      when :standing, :walking
+        if holding_any? *@keys_left
+          if holding_any? *@keys_up
+            # NW
+            @avatar.move(315)
+          elsif holding_any? *@keys_down
+            # SW
+            @avatar.move(225)
+          else
+            # W
+            @avatar.move(270)
+          end
+        elsif holding_any? *@keys_right
+          if holding_any? *@keys_up
+            # NE
+            @avatar.move(45)
+          elsif holding_any? *@keys_down
+            # SE
+            @avatar.move(135)
+          else
+            # E
+            @avatar.move(90)
+          end
+        elsif holding_any? *@keys_up
+          # N
+          @avatar.move(0)
+        elsif holding_any? *@keys_down
+          # S
+          @avatar.
+              move(180)
+        else
+          @avatar.set_body_velocity(0, 0)
+          # Standing entirely still.
+        end
     end
   end
 

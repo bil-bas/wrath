@@ -190,6 +190,7 @@ class Creature < Carriable
 
   def picked_up(by)
     @state = :carried
+    drop
     stop_timer :stand_up
     super(by)
   end

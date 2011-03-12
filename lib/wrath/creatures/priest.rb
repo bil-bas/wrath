@@ -3,13 +3,12 @@
 class Priest < Creature
   MAX_HEALTH = 100
 
-  def can_pick_up?; false; end
-  def can_be_activated?(actor); false; end
-
   def initialize(options = {})
     options = {
       speed: 2,
       favor: 10,
+      encumbrance: 0.6,
+      z_offset: -2,
       health: MAX_HEALTH,
     }.merge! options
 

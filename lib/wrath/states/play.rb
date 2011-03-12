@@ -223,7 +223,7 @@ class Play < GameState
     @players.each do |player|
       avatar = player.avatar
       unless avatar.empty_handed?
-        avatar.carrying.x, avatar.carrying.y = avatar.x, avatar.y
+        avatar.carrying.x, avatar.carrying.y = avatar.x, avatar.y + 0.01
       end
     end
 
