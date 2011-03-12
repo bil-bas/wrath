@@ -108,7 +108,7 @@ class Play < GameState
           case b
             when Fire, Knight, Paladin
               a.health -= Fire::BURN_DAMAGE * frame_time
-            when Egg
+            when Egg, Mushroom
               if b.thrown_by != a and (not b.carried?) and b.z > b.ground_level
                 b.hit(a)
               end

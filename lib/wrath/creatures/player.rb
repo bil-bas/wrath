@@ -6,14 +6,18 @@ class Player < Creature
   MAX_HEALTH = 100
   WOUND_FLASH_PERIOD = 200
   AFTER_WOUND_FLASH_DURATION = 100
+  POISON_COLOR = Color.rgba(0, 200, 0, 150)
+  HURT_COLOR = Color.rgba(255, 0, 0, 150)
 
   attr_reader :speed, :favor, :health, :carrying
+
   attr_writer :carrying # TODO: hook into these values changing.
 
   def can_pick_up?; false; end
   def carrying?; not @carrying.nil?; end
   def empty_handed?; @carrying.nil?; end
   def can_be_activated?(actor); false; end
+  def poisoned?; @poisoned; end
 
   def initialize(options = {})
     options = {
@@ -31,6 +35,8 @@ class Player < Creature
 
     @animation_file = options[:animation]
 
+    @poisoned = false
+
     @font = Font[8]
 
     @first_wounded_at = @last_wounded_at = nil
@@ -41,10 +47,47 @@ class Player < Creature
   def alive?; health > 0; end
   def dead?; health <= 0; end
 
+  def reset_color
+    if poisoned?
+      @overlay_color = POISON_COLOR
+    else
+      @overlay_color = nil
+    end
+  end
+
   def die!
-    self.color.blue = self.color.green = 255
+    reset_color
     self.health = 0
     super
+  end
+
+  def poison(duration)
+    # TODO: play gulping noise.
+    @poisoned = true
+    reset_color
+    stop_timer(:cure_poison)
+    after(duration, name: :cure_poison) { cure_poison }
+  end
+
+  def cure_poison
+    @poisoned = false
+    reset_color
+  end
+
+  def update_color
+    # Reset colour if it was a while since we were wounded.
+    if @first_wounded_at
+      if milliseconds - @last_wounded_at > AFTER_WOUND_FLASH_DURATION
+        reset_color
+        @first_wounded_at = @last_wounded_at = nil
+      else
+        if (milliseconds - @first_wounded_at).div(WOUND_FLASH_PERIOD) % 2 == 0
+          @overlay_color = HURT_COLOR
+        else
+          reset_color
+        end
+      end
+    end
   end
 
   def favor=(value)
@@ -81,24 +124,18 @@ class Player < Creature
   def draw
     super
 
+    if @overlay_color
+      img = image.dup
+      img.clear(dest_ignore: :transparent, color: @overlay_color)
+      img.draw_rot(x, y, y - z, 0, center_x, center_y, factor_x, factor_y)
+    end
+
     @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
 
   def update
     super
 
-    # Reset colour if it was a while since we were wounded.
-    if @first_wounded_at
-      if milliseconds - @last_wounded_at > AFTER_WOUND_FLASH_DURATION
-        self.color.blue = self.color.green = 255
-        @first_wounded_at = @last_wounded_at = nil
-      else
-        if (milliseconds - @first_wounded_at).div(WOUND_FLASH_PERIOD) % 2 == 0
-          self.color.blue = self.color.green = 100
-        else
-          self.color.blue = self.color.green = 255
-        end
-      end
-    end
+    update_color
   end
 end

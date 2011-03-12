@@ -1,4 +1,6 @@
 class Mushroom < Carriable
+  POISON_DURATION = 4000
+
   def initialize(options = {})
     options = {
       factor: 0.7,
@@ -9,5 +11,11 @@ class Mushroom < Carriable
     }.merge! options
 
     super options
+  end
+
+  # Forces the player to drop whatever he is carrying and get covered with a broken egg.
+  def hit(player)
+    player.poison(POISON_DURATION)
+    destroy
   end
 end
