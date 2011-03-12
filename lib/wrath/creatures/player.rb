@@ -124,13 +124,17 @@ class Player < Creature
   def draw
     super
 
+    @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+  end
+
+  def draw_self
+    super
+
     if @overlay_color
       img = image.dup
       img.clear(dest_ignore: :transparent, color: @overlay_color)
-      img.draw_rot(x, y, y - z, 0, center_x, center_y, factor_x, factor_y)
+      img.draw_rot(x, y - z, y - z, 0, center_x, center_y, factor_x, factor_y)
     end
-
-    @font.draw "F: #{@favor.to_i} H: #{@health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
 
   def update

@@ -98,7 +98,7 @@ class LocalPlayer < Player
   end
 
   def move(angle)
-    angle += 135 if poisoned?
+    angle += (Math::sin(milliseconds / 150) * 45) if poisoned?
     set_body_velocity(angle, effective_speed)
   end
 
