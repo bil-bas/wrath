@@ -21,7 +21,7 @@ class WrathParticle < WrathObject
   end
 
   def on_collision(other)
-    self.x_velocity, self.y_velocity = 0, 0
+    self.x_velocity, self.y_velocity = 0, 0 unless other.is_a? Altar
 
     false
   end

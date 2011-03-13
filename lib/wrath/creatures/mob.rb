@@ -1,9 +1,6 @@
 # encoding: utf-8
 
 class Mob < Creature
-  EXPLOSION_H_SPEED = 0.02..0.07
-  EXPLOSION_Z_VELOCITY = -0.1..0.3
-
   trait :timer
 
   def initialize(options = {})
@@ -15,9 +12,6 @@ class Mob < Creature
     @jump_delay = options[:jump_delay]
 
     super(options)
-
-    @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
-                                            z_velocity: EXPLOSION_Z_VELOCITY)
 
     schedule_jump if local?
   end

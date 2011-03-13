@@ -5,6 +5,9 @@ class Creature < Carriable
 
   ACTION_DISTANCE = 10
 
+  EXPLOSION_H_SPEED = 0.02..0.07
+  EXPLOSION_Z_VELOCITY = -0.1..0.3
+
   WOUND_FLASH_PERIOD = 200
   AFTER_WOUND_FLASH_DURATION = 100
   POISON_COLOR = Color.rgba(0, 200, 0, 150)
@@ -25,8 +28,7 @@ class Creature < Carriable
 
   attr_writer :player
 
-  def can_be_picked_up?; alive?; end
-  def z_offset; super + (carrier.mount? ? -4 : 0); end
+  def z_offset; super + ((carried? and carrier.mount?) ? -4 : 0); end
   def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
@@ -47,6 +49,9 @@ class Creature < Carriable
     @speed = options[:speed]
     @poisoned = options[:poisoned]
 
+    @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
+                                            z_velocity: EXPLOSION_Z_VELOCITY)
+
     @carrying = nil
     @state = :standing
     @player = nil
@@ -58,12 +63,10 @@ class Creature < Carriable
   end
 
   def die!
-    reset_forces
     drop
-    @poisoned = false
-    @state = :dead
-    reset_color
-    self.image = @frames[FRAME_DEAD]
+    destroy
+    parent.objects << Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
+                                 encumbrance: encumbrance, position: position, velocity: velocity, emitter: @sacrificial_explosion)
     parent.lose!(player) if player and not parent.winner
   end
 
@@ -145,8 +148,6 @@ class Creature < Carriable
   end
 
   def action
-    return if dead?
-
     # Find the nearest object and activate it (generally, pick it up)
     objects = parent.objects - [self]
     nearest = objects.min_by {|g| distance_to(g) }
@@ -202,8 +203,6 @@ class Creature < Carriable
                      @frames[FRAME_THROWN]
                    when :sleeping
                      @frames[FRAME_SLEEP]
-                   when :dead
-                     @frames[FRAME_DEAD]
                    else
                      raise "unknown state: #{state}"
                  end

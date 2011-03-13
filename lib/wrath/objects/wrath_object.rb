@@ -51,13 +51,19 @@ class WrathObject < GameObject
 
     @favor = options[:favor]
 
-    @frames = Animation.new(file: options[:animation])
+    if options[:animation].is_a? Animation
+      @frames = options[:animation]
+      width, height = @frames[0].width, @frames[0].height
+    else
+      @frames = Animation.new(file: options[:animation])
+      options[:animation] =~ /(\d+)x(\d+)/
+      width, height = $1.to_i, $2.to_i
+    end
+
     @frames.delay = 0 # Don't animate by default.
 
     options[:image] = @frames[0]
 
-    options[:animation] =~ /(\d+)x(\d+)/
-    width, height = $1.to_i, $2.to_i
     init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape], options[:mass])
 
     @z = options[:z]
@@ -298,6 +304,7 @@ class WrathObject < GameObject
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
+    @parent.objects.delete self # Probably not there, but lets not worry.
 
     if @parent.network and local?
       @parent.network.broadcast_msg(Message::Destroy.new(self))

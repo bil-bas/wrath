@@ -3,10 +3,7 @@ class AnimatedTile < Tile
   def animation_positions; self.class.const_get(:ANIMATION_POSITIONS); end
 
   def initialize(options = {})
-    @@junk_anims ||= Animation.new(file: "tiles_8x8.png", delay: 500)
-
-    @animation = @@junk_anims[0..1]
-    @animation.frames = animation_positions.map {|pos| @@sprites[*pos]}
+    @animation = Animation.new(delay: 500, frames: animation_positions.map {|pos| @@sprites[*pos] })
 
     super(options)
   end
