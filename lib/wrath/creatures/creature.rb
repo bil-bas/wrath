@@ -69,7 +69,7 @@ class Creature < Carriable
     super
 
     if @overlay_color
-      image.silhouette.draw_rot(x, y - z, y - z, 0, center_x, center_y, factor_x, factor_y, @overlay_color)
+      image.silhouette.draw_rot(x, y - z, y, 0, center_x, center_y, factor_x, factor_y, @overlay_color)
     end
   end
 

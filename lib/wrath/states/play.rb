@@ -62,15 +62,10 @@ class Play < GameState
     # :scenery - Doesn't collide with anything at all.
 
     @space.on_collision(:static, [:static, :wall]) { false }
-    @space.on_collision(:scenery, [:static, :object, :decal, :particle, :wall]) { false }
-
+    @space.on_collision(:scenery, [:particle, :static, :object, :wall, :scenery]) { false }
     @space.on_collision(:particle, :particle) { false }
     @space.on_collision(:particle, [:static, :object, :wall]) do |particle, other|
-      unless other.is_a? Altar
-        particle.x_velocity = particle.y_velocity = 0
-      end
-
-      false
+      particle.on_collision(other)
     end
 
     # Objects collide with static objects, unless they are being carried or heights are different.
@@ -80,43 +75,14 @@ class Play < GameState
 
     # Objects collide with the wall, unless they are being carried.
     @space.on_collision(:object, :wall) do |object, wall|
-      collides = (not (object.can_pick_up? and object.carried?))
-      
-      # Bounce back from the edge of the screen
-      unless object.controlled_by_player?
-        case wall.side
-          when :right
-            object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity > 0
-          when :left
-            object.x_velocity = - object.x_velocity * object.elasticity * 0.5 if object.x_velocity < 0
-          when :top
-            object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity < 0
-          when :bottom
-            object.y_velocity = - object.y_velocity * object.elasticity * 0.5 if object.y_velocity > 0
-          else
-            raise "bad side"
-        end
-      end
-
-      collides
+      object.on_collision(wall)
     end
 
     @space.on_collision(:object, :object) do |a, b|
-      # Fire burns the player.
-      [[a, b], [b, a]].each do |a, b|
-        if a.is_a? Creature
-          case b
-            when Fire, Knight, Paladin
-              a.health -= Fire::BURN_DAMAGE * frame_time
-            when Egg, Mushroom
-              if b.thrown_by != a and (not b.carried?) and b.z > b.ground_level
-                b.hit(a)
-              end
-          end
-        end
-      end
+      collides = a.on_collision(b)
+      collides ||= b.on_collision(a)
 
-      false
+      collides
     end
   end
 

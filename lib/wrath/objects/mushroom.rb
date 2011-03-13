@@ -14,9 +14,15 @@ class Mushroom < Carriable
     super options
   end
 
-  # Forces the player to drop whatever he is carrying and get covered with a broken egg.
-  def hit(player)
-    player.poison(POISON_DURATION)
-    destroy
+  def on_collision(other)
+    case other
+      when Creature
+        if thrown_by != other and (not carried?) and z > ground_level
+          other.poison(POISON_DURATION)
+          destroy
+        end
+    end
+
+    super(other)
   end
 end

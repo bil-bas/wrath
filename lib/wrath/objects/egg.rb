@@ -31,10 +31,16 @@ class Egg < Carriable
     destroy
   end
 
-  # Forces the player to drop whatever he is carrying and get covered with a broken egg.
-  def hit(player)
-    player.drop
-    player.pick_up(BrokenEgg.create(parent: parent))
-    destroy
+  def on_collision(other)
+    case other
+      when Priest, Virgin, Knight, Paladin, Bard # TODO: Humanoid?
+        if thrown_by != other and (not carried?) and z > ground_level
+          other.drop
+          other.pick_up(BrokenEgg.create(parent: parent))
+          destroy
+        end
+    end
+
+    super(other)
   end
 end

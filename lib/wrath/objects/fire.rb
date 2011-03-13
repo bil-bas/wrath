@@ -2,7 +2,7 @@ class Fire < Carriable
   trait :timer
 
   ANIMATION_DELAY = 300
-  BURN_DAMAGE = 5  / 1000.0 # 5/second
+  DAMAGE = 5  / 1000.0 # 5/second
 
   trait :timer
 
@@ -29,5 +29,14 @@ class Fire < Carriable
     if rand(100) < 10
       Smoke.create(local: false, id: -1, x: x - 3 + rand(4) + rand(4), y: y - z - 3 - rand(3), zorder: y - 0.01 + rand(0.02))
     end
+  end
+
+  def on_collision(other)
+    case other
+      when Creature
+        other.health -= DAMAGE * frame_time
+    end
+
+    super(other)
   end
 end
