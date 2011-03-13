@@ -25,6 +25,7 @@ class Creature < Carriable
 
   attr_writer :player
 
+  def can_be_picked_up?; alive?; end
   def z_offset; super + (carrier.mount? ? -4 : 0); end
   def mount?; false; end
   def alive?; @health > 0; end
@@ -57,10 +58,11 @@ class Creature < Carriable
   end
 
   def die!
-    reset_color
     reset_forces
     drop
+    @poisoned = false
     @state = :dead
+    reset_color
     self.image = @frames[FRAME_DEAD]
     parent.lose!(player) if player and not parent.winner
   end
@@ -76,8 +78,11 @@ class Creature < Carriable
   def health=(value)
     original_health = @health
     @health = [[value, 0].max, max_health].min
-    if @health == 0 and original_health > 0 and player and not parent.winner
-      parent.lose!(player)
+    if @health == 0 and original_health > 0
+      if controlled_by_player? and not parent.winner
+        parent.lose!(player)
+      end
+      die!
     end
 
     if @health < original_health

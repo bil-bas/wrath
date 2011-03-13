@@ -1,4 +1,5 @@
 class Rock < Carriable
+  DAMAGE = 10 # Damage from dropping a rock on someone.
   EXPLOSION_HEALTH = -40
 
   EXPLOSION_H_SPEED = 0.4..1.2
@@ -26,5 +27,22 @@ class Rock < Carriable
     actor.health += EXPLOSION_HEALTH
 
     super
+  end
+
+  def on_collision(other)
+    case other
+      when Mushroom, Egg
+        if (not carried?) and z > ground_level
+          other.destroy
+        end
+
+      when Creature
+        if not thrown_by.include? other and (not carried?) and z > ground_level
+          other.health -= DAMAGE
+          @thrown_by << other
+        end
+    end
+
+    super(other)
   end
 end

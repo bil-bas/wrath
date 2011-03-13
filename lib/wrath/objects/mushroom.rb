@@ -17,7 +17,7 @@ class Mushroom < Carriable
   def on_collision(other)
     case other
       when Creature
-        if thrown_by != other and (not carried?) and z > ground_level
+        if not thrown_by.include? other and (not carried?) and z > ground_level
           other.poison(POISON_DURATION)
           destroy
         end

@@ -22,6 +22,11 @@ class Mob < Creature
     schedule_jump if local?
   end
 
+  def die!
+    stop_timer(:jump)
+    super
+  end
+
   def jump
     if @z <= ground_level and @state == :standing
       @z_velocity = @vertical_jump + rand(@vertical_jump / 2.0)
@@ -39,7 +44,7 @@ class Mob < Creature
 
   def on_stopped
     stop_timer(:jump)
-    schedule_jump
+    schedule_jump unless dead?
     super
   end
 end

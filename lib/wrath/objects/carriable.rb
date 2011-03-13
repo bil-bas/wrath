@@ -26,7 +26,7 @@ class Carriable < WrathObject
     @z_offset = options[:z_offset]
 
     @carrier = nil
-    @thrown_by = nil
+    @thrown_by = [] # These will be immune from colliding with the object.
 
     super options
   end
@@ -40,12 +40,12 @@ class Carriable < WrathObject
 
   def on_stopped
     super
-    @thrown_by = nil
+    @thrown_by.clear
   end
 
   def dropped(player, x_velocity = 0, y_velocity = 0, z_velocity = 0)
     self.velocity = [x_velocity, y_velocity, z_velocity]
-    @thrown_by = @carrier
+    @thrown_by = [@carrier]
     @carrier = nil
 
     nil

@@ -34,7 +34,7 @@ class Egg < Carriable
   def on_collision(other)
     case other
       when Priest, Virgin, Knight, Paladin, Bard # TODO: Humanoid?
-        if thrown_by != other and (not carried?) and z > ground_level
+        if not thrown_by.include? other and (not carried?) and z > ground_level
           other.drop
           other.pick_up(BrokenEgg.create(parent: parent))
           destroy

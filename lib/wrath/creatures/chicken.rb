@@ -6,6 +6,7 @@ class Chicken < Mob
   def initialize(options = {})
     options = {
       favor: 10,
+      health: 10,
       vertical_jump: 0.1,
       horizontal_jump: 0.2,
       jump_delay: 250,
