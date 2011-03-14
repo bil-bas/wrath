@@ -20,9 +20,9 @@ class WrathObject < GameObject
   def local?; @local; end
   def controlled_by_player?; false; end
 
-  def network_destroy?; parent.networked? and local?; end
-  def network_create?; parent.host?; end
-  def network_sync?; parent.networked? and local?; end
+  def network_destroy?; @id and parent.host?; end
+  def network_create?; @id and parent.host?; end
+  def network_sync?; @id and @local and parent.networked?; end
 
   def_delegators :@body_position, :x, :y, :x=, :y=
 
@@ -79,7 +79,7 @@ class WrathObject < GameObject
 
     spawn if options[:spawn]
 
-    if options[:id]
+    if options.has_key? :id
       @id = options[:id]
       @local = options[:local] || false
     else

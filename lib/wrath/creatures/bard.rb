@@ -21,8 +21,7 @@ class Bard < Mob
 
   def play
     if [x_velocity, y_velocity, z_velocity] == [0, 0, 0]
-      # local=false, id = -1 is hack to stop updates.
-      Note.create(parent: parent, local: false, id: -1, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)
+      Note.create(parent: parent, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)
     end
 
     after(400 + rand(3) * 200) { play }

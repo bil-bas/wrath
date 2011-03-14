@@ -8,13 +8,13 @@ module Chingu
 
     alias_method :original_add_game_object, :add_game_object
     def add_game_object(object)
-      @objects_by_id[object.id] = object if object.respond_to?(:id) and object.id >= 0
+      @objects_by_id[object.id] = object if object.respond_to?(:id) and object.id
       original_add_game_object(object)
     end
 
     alias_method :original_remove_game_object, :remove_game_object
     def remove_game_object(object)
-      @objects_by_id.delete object.id if object.respond_to?(:id)
+      @objects_by_id.delete object.id if object.respond_to?(:id) and object.id
       original_remove_game_object(object)
     end
 

@@ -14,6 +14,7 @@ class Note < StaticObject
     index = rand(COLORS.size)
 
     options = {
+      id: nil,
       encumbrance: 0,
       elasticity: 1,
       factor: 0.7,

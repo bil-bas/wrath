@@ -21,7 +21,7 @@ class Message
           state.players[1].avatar = object
       end
 
-      log.debug { "Created a #{@object_class}" }
+      log.debug { "Created #{@object_class}##{object.id}" }
     end
   end
 end

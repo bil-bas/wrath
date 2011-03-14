@@ -101,10 +101,15 @@ class Play < GameState
     end
 
     @space.on_collision(:object, :object) do |a, b|
-      collides = a.on_collision(b)
-      collides ||= b.on_collision(a)
+      # Objects only affect one another on the host machine.
+      if host?
+        collides = a.on_collision(b)
+        collides ||= b.on_collision(a)
 
-      collides
+        collides
+      else
+        false
+      end
     end
   end
 

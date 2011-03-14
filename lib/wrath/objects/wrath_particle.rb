@@ -8,7 +8,7 @@ class WrathParticle < WrathObject
   def initialize(options = {})
     options = {
       collision_type: :particle,
-      id: -1,
+      id: nil,
     }.merge! options
 
     super(options)
