@@ -31,6 +31,7 @@ class Horse < Mob
   # Dismount the horsie.
   def drop
     if controlled_by_player?
+      self.local = (not parent.client?) # Revert to owned by host.
       player.avatar = carrying
       schedule_jump
     end
@@ -42,6 +43,7 @@ class Horse < Mob
 
   def pick_up(object)
     if object.controlled_by_player?
+      self.local = object.local? # If you pick up a player, change to its locality.
       stop_timer(:jump)
       object.player.avatar = self
     end

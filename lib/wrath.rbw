@@ -11,7 +11,7 @@ begin
   end
 
   APP_NAME = File.basename($0).chomp(File.extname($0))
-  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}.log")
+  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}.log")
 
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"

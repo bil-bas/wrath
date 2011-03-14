@@ -103,6 +103,12 @@ class Creature < Carriable
   def drop
     return unless @carrying and @carrying.can_drop?
 
+    # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
+    @parent.send_message Message::PerformAction.new(self) if local? or (remote? and @carrying.controlled_by_player?)
+
+    # Dropped objects revert to being owned by the host.
+    @carrying.local = (not parent.client?)
+
     dropping = @carrying
     @carrying = nil
 
@@ -112,11 +118,12 @@ class Creature < Carriable
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
     dropping.dropped(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
 
-    if @parent.host?
-      @parent.send Message::Drop.new(self)
-    end
-
     dropping
+  end
+
+  def local=(value)
+    # Player avatar never change locality.
+    super(value) unless controlled_by_player?
   end
 
   def mount(mount)
@@ -133,6 +140,11 @@ class Creature < Carriable
 
     drop if carrying?
 
+    @parent.send_message(Message::PerformAction.new(self, object)) if @parent.host?
+
+    # Picking up objects, except the other player, changes their locality to that of the carrier.
+    object.local = local?
+
     parent.objects.delete object
     @carrying = object
     @carrying.picked_up(self)
@@ -141,12 +153,9 @@ class Creature < Carriable
         (factor_x < 0 and @carrying.factor_x > 0)
       @carrying.factor_x *= -1
     end
-
-    if @parent.host?
-      @parent.send(Message::PickUp.new(self, @carrying))
-    end
   end
 
+  # The player performs an action.
   def action
     # Find the nearest object and activate it (generally, pick it up)
     objects = parent.objects - [self]
@@ -154,17 +163,13 @@ class Creature < Carriable
     nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
 
     if nearest and nearest.can_be_activated?(self)
-      if nearest.local?
-        nearest.activate(self)
+      if parent.client?
+        parent.send_message(Message::RequestAction.new(self, nearest))
       else
-        # ODO: Request activation from server.
+        nearest.activate(self)
       end
     elsif @carrying
-      if @carrying.local?
-        drop
-      else
-        # TODO: Request drop.
-      end
+      drop
     end
   end
 

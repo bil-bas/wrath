@@ -17,6 +17,7 @@ class Player < BasicGameObject
   attr_reader :number, :avatar, :favor, :visible
 
   def local?; @local; end
+  def remote?; not @local; end
 
   def initialize(number, local, options = {})
     options = {

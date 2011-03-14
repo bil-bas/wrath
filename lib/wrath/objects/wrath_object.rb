@@ -10,6 +10,7 @@ class WrathObject < GameObject
   @@next_object_id = 0
 
   attr_reader :frames, :elasticity, :favor
+  attr_writer :local
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
   def controlled_by_player?; false; end
@@ -88,7 +89,7 @@ class WrathObject < GameObject
       @local = options.has_key?(:local) ? options[:local] : true
       # Todo: This is horrid!
       if network_create?
-        @parent.send(Message::Create.new(self.class, recreate_options))
+        @parent.send_message(Message::Create.new(self.class, recreate_options))
       end
     end
 
@@ -135,8 +136,7 @@ class WrathObject < GameObject
       id: id,
       position: position,
       velocity: velocity,
-      factor_x: factor_x,
-      paused: paused?,
+      factor_x: factor_x
     }
   end
 
@@ -309,7 +309,7 @@ class WrathObject < GameObject
     @parent.objects.delete self # Probably not there, but lets not worry.
 
     if network_destroy?
-      @parent.send(Message::Destroy.new(self))
+      @parent.send_message(Message::Destroy.new(self))
     end
   end
 end

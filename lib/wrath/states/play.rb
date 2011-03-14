@@ -29,7 +29,7 @@ class Play < GameState
       switch_game_state self.class.new(@network)
     end
 
-    send Message::Start.new if host?
+    send_message Message::Start.new if host?
 
     @last_sync = milliseconds
 
@@ -50,7 +50,7 @@ class Play < GameState
     end
   end
 
-  def send(message)
+  def send_message(message)
     if client?
       @network.send_msg(message)
     else
@@ -170,7 +170,7 @@ class Play < GameState
     # Put gravel under the altar.
     grid[9][9] = grid[9][10] = grid[10][9] = grid[10][10] = Gravel
 
-    send(Message::Map.new(grid)) if host?
+    send_message(Message::Map.new(grid)) if host?
 
     grid
   end
@@ -247,7 +247,7 @@ class Play < GameState
       objects.each do |object|
         if object.network_sync?
           updates += 1
-          send(Message::Sync.new(object))
+          send_message(Message::Sync.new(object))
         end
       end
 
