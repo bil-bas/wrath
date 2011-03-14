@@ -12,8 +12,6 @@ class WrathObject < GameObject
   attr_reader :frames, :elasticity, :favor
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
 
-  def needs_sync?; @needs_sync; end
-
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
   def can_pick_up?; false; end

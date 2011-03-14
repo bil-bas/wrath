@@ -2,6 +2,7 @@ module Wrath
 
 # An object that is immobile and blocks other objects from moving through it.
 class StaticObject < WrathObject
+  def network_sync?; false; end
   def can_be_activated?(object); false; end
 
   def initialize(options = {})
