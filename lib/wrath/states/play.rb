@@ -10,6 +10,11 @@ class Play < GameState
 
   attr_reader :objects, :players, :network, :tiles, :space, :altar, :winner
 
+  def networked?; not @network.nil?; end
+  def host?; @network.is_a? Server; end
+  def client?; @network.is_a? Client; end
+  def local?; @network.nil?; end
+
   # network: Server, Client, nil
   def initialize(network = nil)
     @network = network
@@ -24,7 +29,7 @@ class Play < GameState
       switch_game_state self.class.new(@network)
     end
 
-    @network.broadcast_msg Message::Start.new if @network.is_a? Server
+    send Message::Start.new if host?
 
     @last_sync = milliseconds
 
@@ -34,10 +39,28 @@ class Play < GameState
     @tiles = []
     @objects = []
     @players = []
-    unless @network.is_a? Client
+
+    create_players
+
+    unless client?
       create_tiles(random_tiles)
       create_objects
+    else
+
     end
+  end
+
+  def send(message)
+    if client?
+      @network.send_msg(message)
+    else
+      @network.broadcast_msg(message)
+    end
+  end
+
+  def create_players
+    @players << Player.create(0, (not client?))
+    @players << Player.create(1, (not host?))
   end
 
   def init_physics
@@ -89,12 +112,12 @@ class Play < GameState
     # Player 1.
     player1 = Priest.create(local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
     @objects << player1
-    @players << Player.create(0, player1)
+    players[0].avatar = player1
 
     # Player 2.
     player2 = Priest.create(local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], factor_x: -1, animation: "player2_8x8.png")
     @objects << player2
-    @players << Player.create(1, player2)
+    players[1].avatar = player2
 
     # The altar is all-important!
     @altar = Altar.create
@@ -142,15 +165,12 @@ class Play < GameState
     # Put gravel under the altar.
     grid[9][9] = grid[9][10] = grid[10][9] = grid[10][10] = Gravel
 
-    if @network.is_a? Server
-      @network.broadcast_msg(Message::Map.new(grid))
-    end
+    send(Message::Map.new(grid)) if host?
 
     grid
   end
 
   def create_tiles(tile_classes)
-    @tiles = []
     tile_classes.each_with_index do |class_row, y|
       tile_row = []
       @tiles << tile_row
@@ -222,7 +242,7 @@ class Play < GameState
       objects.each do |object|
         if object.network_sync?
           updates += 1
-          @network.broadcast_msg(Message::Sync.new(object))
+          send(Message::Sync.new(object))
         end
       end
 

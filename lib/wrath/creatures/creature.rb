@@ -112,8 +112,8 @@ class Creature < Carriable
     extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
     dropping.dropped(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
 
-    if @parent.network.is_a? Server
-      @parent.network.broadcast_msg(Message::Drop.new(self))
+    if @parent.host?
+      @parent.send Message::Drop.new(self)
     end
 
     dropping
@@ -142,8 +142,8 @@ class Creature < Carriable
       @carrying.factor_x *= -1
     end
 
-    if @parent.network.is_a? Server
-      @parent.network.broadcast_msg(Message::PickUp.new(self, @carrying))
+    if @parent.host?
+      @parent.send(Message::PickUp.new(self, @carrying))
     end
   end
 

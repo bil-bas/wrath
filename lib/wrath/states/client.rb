@@ -1,9 +1,6 @@
 module Wrath
 class Client < GameStates::NetworkClient
-
   trait :timer
-
-  alias_method :broadcast_msg, :send_msg
 
   def initialize(options = {})
     options = {

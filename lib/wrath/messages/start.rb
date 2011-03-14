@@ -1,6 +1,6 @@
 module Wrath
 class Message
-  # Sent by the server to clear the game.
+  # Sent by the server to clear the game and be ready for new objects creation.
   class Start < Message
     def process
       state = $window.current_game_state
@@ -11,8 +11,6 @@ class Message
         # Restart.
         $window.switch_game_state Play.new($window.current_game_state.network)
       end
-
-      log.info "Game restarted"
     end
   end
 end

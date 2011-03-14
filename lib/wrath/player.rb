@@ -16,15 +16,16 @@ class Player < BasicGameObject
 
   attr_reader :number, :avatar, :favor, :visible
 
-  def local?; true; end # TODO: fix.
+  def local?; @local; end
 
-  def initialize(number, avatar, options = {})
+  def initialize(number, local, options = {})
     options = {
+        favor: INITIAL_FAVOR,
     }.merge! options
 
-    @number = number
-    self.avatar = avatar
-    @favor = INITIAL_FAVOR
+    @favor = options[:favor]
+
+    @number, @local = number, local
 
     keys_config = YAML.load(File.open(KEYS_CONFIG_FILE) {|f| f.read })
 
@@ -71,11 +72,15 @@ class Player < BasicGameObject
   end
 
   def update
+    return unless avatar
+
     move_by_keys if local? and alive?
     super
   end
 
   def action
+    return unless avatar
+
     case avatar.state
       when :carried
         @avatar.carrier.drop
@@ -124,6 +129,8 @@ class Player < BasicGameObject
   end
 
   def draw
+    return unless avatar
+
     @font.draw "F: #{favor.to_i} H: #{@avatar.health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
 end
