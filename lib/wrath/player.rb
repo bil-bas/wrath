@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 # A player that controls a creature in the game.
 class Player < BasicGameObject
@@ -126,4 +126,5 @@ class Player < BasicGameObject
   def draw
     @font.draw "F: #{favor.to_i} H: #{@avatar.health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
   end
+end
 end

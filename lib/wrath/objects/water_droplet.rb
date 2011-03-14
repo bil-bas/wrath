@@ -1,3 +1,4 @@
+module Wrath
 class WaterDroplet < Droplet
   COLOR = Color.rgba(0, 50, 200, 150)
 
@@ -12,4 +13,5 @@ class WaterDroplet < Droplet
   def on_stopped
     destroy
   end
+end
 end

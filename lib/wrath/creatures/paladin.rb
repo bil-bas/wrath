@@ -1,3 +1,4 @@
+module Wrath
 class Paladin < Knight
   DAMAGE = 10 / 1000.0 # 10/second
 
@@ -9,4 +10,5 @@ class Paladin < Knight
 
     super options
   end
+end
 end

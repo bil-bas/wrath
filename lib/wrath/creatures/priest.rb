@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Priest < Creature
   MAX_HEALTH = 100
@@ -21,7 +21,7 @@ class Priest < Creature
     {
         animation: @animation_file,
         local: remote?, # Invert locality of player created on client.
-        number: number
     }.merge! super
   end
+end
 end

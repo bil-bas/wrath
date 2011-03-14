@@ -1,5 +1,4 @@
-# encoding: utf-8
-
+module Wrath
 class Play < GameState
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
@@ -167,7 +166,11 @@ class Play < GameState
 
   def setup
     super
-    puts "Started Playing"
+    log.info "Started playing"
+  end
+
+  def finalize
+    log.info "Stopped playing"
   end
 
   def update
@@ -217,20 +220,16 @@ class Play < GameState
     if (milliseconds - @last_sync) > SYNC_DELAY
       updates = 0
       objects.each do |object|
-        if object.local? # object.needs_sync?
+        if object.network_sync?
           updates += 1
-          message = Message::Sync.new(object)
-          if @network.is_a? Server
-            @network.broadcast_msg(message)
-          else
-            @network.send_msg(message)
-          end
+          @network.broadcast_msg(Message::Sync.new(object))
         end
       end
 
-      #puts "Sent updates for #{updates} objects"
+      log.debug { "Sent updates for #{updates} objects" }
 
       @last_sync = milliseconds
     end
   end
+end
 end

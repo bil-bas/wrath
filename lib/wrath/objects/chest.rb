@@ -1,3 +1,4 @@
+module Wrath
 class Chest < Carriable
   trait :timer
 
@@ -96,4 +97,5 @@ class Chest < Carriable
     @contains.x = -1000 * id
     @contains.pause!
   end
+end
 end

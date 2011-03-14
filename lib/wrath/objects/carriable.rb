@@ -1,3 +1,4 @@
+module Wrath
 class Carriable < WrathObject
   attr_reader :carrier, :thrown_by, :z_offset
 
@@ -61,4 +62,5 @@ class Carriable < WrathObject
   def update_carried_position
     self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + z_offset]
   end
+end
 end

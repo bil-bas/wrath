@@ -1,3 +1,4 @@
+module Wrath
 class Corpse < Carriable
   def initialize(options = {})
     options = {
@@ -9,4 +10,5 @@ class Corpse < Carriable
 
     super(options)
   end
+end
 end

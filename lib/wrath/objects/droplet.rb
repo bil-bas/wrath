@@ -1,4 +1,5 @@
 # A droplet of fluid, defaulting to being white.
+module Wrath
 class Droplet < WrathParticle
   def initialize(options = {})
     options = {
@@ -13,4 +14,5 @@ class Droplet < WrathParticle
     @casts_shadow = false
     super
   end
+end
 end

@@ -1,3 +1,4 @@
+module Wrath
 class EnterServerIP < GameState
   def initialize
     super
@@ -19,4 +20,5 @@ class EnterServerIP < GameState
   def done
     push_game_state Client.new(address: @ip.text)
   end
+end
 end

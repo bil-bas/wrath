@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'chingu'
 require 'texplay'
 require 'chipmunk'
@@ -21,6 +19,9 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
+Gosu::Sample.volume = 0.5
+
+module Wrath
 module ZOrder
   BACKGROUND = -Float::INFINITY
   TILES = -2
@@ -40,14 +41,12 @@ class SpriteSheet
   end
 end
 
-Gosu::Sample.volume = 0.5
-
 # Copy default config files, if they are not already available.
 config_dir = File.join(ROOT_PATH, 'config')
 FileUtils.mkdir_p config_dir
 Dir[File.join(File.dirname(__FILE__), 'default_config', '*.yml')].each do |config_file|
   unless File.exists?(File.join(config_dir, File.basename(config_file)))
-    puts "Creating default config file: #{File.basename(config_file)}"
+    log.info { "Creating default config file: #{File.basename(config_file)}" }
     FileUtils.cp(config_file, config_dir)
   end
 end
@@ -95,4 +94,6 @@ class Game < Window
   def self.run
     new(*SIZE, false).show
   end
+end
+
 end

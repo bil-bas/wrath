@@ -1,3 +1,4 @@
+module Wrath
 class BrokenEgg < Carriable
   trait :timer
 
@@ -27,4 +28,5 @@ class BrokenEgg < Carriable
       destroy
     end
   end
+end
 end

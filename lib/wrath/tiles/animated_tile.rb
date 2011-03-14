@@ -1,3 +1,4 @@
+module Wrath
 class AnimatedTile < Tile
   def sprite_position; animation_positions[0]; end
   def animation_positions; self.class.const_get(:ANIMATION_POSITIONS); end
@@ -12,4 +13,5 @@ class AnimatedTile < Tile
     self.image = @animation.next
     super
   end
+end
 end

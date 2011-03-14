@@ -1,3 +1,4 @@
+module Wrath
 class Pebble < WrathParticle
   def initialize(options = {})
     options = {
@@ -6,4 +7,5 @@ class Pebble < WrathParticle
 
     super options
   end
+end
 end

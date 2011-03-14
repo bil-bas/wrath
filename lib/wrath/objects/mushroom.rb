@@ -1,3 +1,4 @@
+module Wrath
 class Mushroom < Carriable
   POISON_DURATION = 4000
 
@@ -25,4 +26,5 @@ class Mushroom < Carriable
 
     super(other)
   end
+end
 end

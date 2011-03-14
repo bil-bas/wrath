@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Virgin < Mob
   def initialize(options = {})
@@ -22,4 +22,5 @@ class Virgin < Mob
     paladin.mount(horse)
     super
   end
+end
 end

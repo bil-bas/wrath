@@ -1,3 +1,4 @@
+module Wrath
 class Bard < Mob
   trait :timer
 
@@ -26,4 +27,5 @@ class Bard < Mob
 
     after(400 + rand(3) * 200) { play }
   end
+end
 end

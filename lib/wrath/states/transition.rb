@@ -1,5 +1,4 @@
-# encoding: utf-8
-
+module Wrath
 class Transition < GameStates::FadeTo
   def initialize(state)
     super(state, speed: 3)
@@ -16,4 +15,5 @@ class Transition < GameStates::FadeTo
     super
     previous_game_state.draw if previous_game_state
   end
+end
 end

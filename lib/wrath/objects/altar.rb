@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Altar < StaticObject
   trait :timer
@@ -83,4 +83,5 @@ class Altar < StaticObject
       end
     end
   end
+end
 end

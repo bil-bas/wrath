@@ -1,3 +1,4 @@
+module Wrath
 class Smoke < GameObject
   def initialize(options = {})
     options = {
@@ -19,4 +20,5 @@ class Smoke < GameObject
       destroy
     end
   end
+end
 end

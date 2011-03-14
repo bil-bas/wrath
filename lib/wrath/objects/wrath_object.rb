@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 require 'forwardable'
 
@@ -21,6 +21,10 @@ class WrathObject < GameObject
   def remote?; not @local; end
   def local?; @local; end
   def controlled_by_player?; false; end
+
+  def network_destroy?; parent.network and local?; end
+  def network_create?; parent.network.is_a? Server; end
+  def network_sync?; parent.network and local?; end
 
   def_delegators :@body_position, :x, :y, :x=, :y=
 
@@ -85,7 +89,7 @@ class WrathObject < GameObject
       @@next_object_id += 1
       @local = options.has_key?(:local) ? options[:local] : true
       # Todo: This is horrid!
-      if @parent.network.is_a? Server
+      if network_create?
         @parent.network.broadcast_msg(Message::Create.new(self.class, recreate_options))
       end
     end
@@ -306,8 +310,9 @@ class WrathObject < GameObject
     @parent.space.remove_body @body
     @parent.objects.delete self # Probably not there, but lets not worry.
 
-    if @parent.network and local?
+    if network_destroy?
       @parent.network.broadcast_msg(Message::Destroy.new(self))
     end
   end
+end
 end

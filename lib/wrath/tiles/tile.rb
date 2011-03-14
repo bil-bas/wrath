@@ -1,3 +1,4 @@
+module Wrath
 class Tile < GameObject
   WIDTH = HEIGHT = 8
   VERTICAL_SCALE = 0.75
@@ -33,4 +34,5 @@ class Tile < GameObject
   def touched_by(object)
     self
   end
+end
 end

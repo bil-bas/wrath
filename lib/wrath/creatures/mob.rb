@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Mob < Creature
   trait :timer
@@ -41,4 +41,5 @@ class Mob < Creature
     schedule_jump unless dead?
     super
   end
+end
 end

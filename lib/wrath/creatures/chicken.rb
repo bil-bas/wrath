@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Chicken < Mob
   PERCENTAGE_LAYING_AN_EGG = 33
@@ -22,4 +22,5 @@ class Chicken < Mob
     super(player, x_velocity, y_velocity, z_velocity)
     player.pick_up(Egg.create) if rand(100) < PERCENTAGE_LAYING_AN_EGG
   end
+end
 end

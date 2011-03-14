@@ -1,3 +1,4 @@
+module Wrath
 class GameOver < GameState
   def initialize(winner)
     @winner = winner
@@ -9,7 +10,7 @@ class GameOver < GameState
       game_state_manager.pop_until_game_state Menu
     end
 
-    puts "Player ##{winner.number + 1} won"
+    log.info { "Player ##{winner.number + 1} won" }
 
     sparkle_frames = Animation.new(file: "sparkle_8x8.png")
     @sparkle = GameObject.create(image: sparkle_frames[winner.number],
@@ -42,4 +43,5 @@ class GameOver < GameState
     previous_game_state.draw
     super
   end
+end
 end

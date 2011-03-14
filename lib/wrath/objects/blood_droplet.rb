@@ -1,3 +1,4 @@
+module Wrath
 class BloodDroplet < Droplet
   COLOR = Color.rgb(255, 0, 0)
 
@@ -8,4 +9,5 @@ class BloodDroplet < Droplet
 
     super options
   end
+end
 end

@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 # An object that is immobile and blocks other objects from moving through it.
 class StaticObject < WrathObject
@@ -12,4 +12,5 @@ class StaticObject < WrathObject
 
     super options
   end
+end
 end

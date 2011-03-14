@@ -1,6 +1,9 @@
+module Wrath
 class Client < GameStates::NetworkClient
 
   trait :timer
+
+  alias_method :broadcast_msg, :send_msg
 
   def initialize(options = {})
     options = {
@@ -18,12 +21,12 @@ class Client < GameStates::NetworkClient
   end
 
   def on_connect
-    puts "Connected to server"
+    log.info "Connected to server"
     send_msg(Message::Ready.new)
   end
 
   def on_disconnect
-    puts "* Disconnected from server"
+    log.info "Disconnected from server"
     game_state_manager.pop_until_game_state Menu
   end
 
@@ -34,4 +37,5 @@ class Client < GameStates::NetworkClient
   def on_msg(message)
     message.process
   end
+end
 end

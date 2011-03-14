@@ -1,3 +1,4 @@
+module Wrath
 # Emits particles.
 class Emitter
   def initialize(type, parent, options = {})
@@ -40,4 +41,5 @@ class Emitter
         value
     end
   end
+end
 end

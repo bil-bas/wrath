@@ -1,4 +1,5 @@
 # Crown of levitation. It makes the player float, but costs favour.
+module Wrath
 class Crown < Carriable
   LEVITATE_HEIGHT = 15
   LEVITATE_SPEED = 0.05
@@ -34,4 +35,5 @@ class Crown < Carriable
 
     super
   end
+end
 end

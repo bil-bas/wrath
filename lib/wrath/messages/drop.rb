@@ -1,3 +1,4 @@
+module Wrath
 class Message
   # Drop the object carried by a creature.
   class Drop < Message
@@ -9,4 +10,5 @@ class Message
       find_object_by_id(@actor_id).drop
     end
   end
+end
 end

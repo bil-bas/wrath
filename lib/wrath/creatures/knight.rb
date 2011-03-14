@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Knight < Mob
   DAMAGE = 5  / 1000.0 # 5/second
@@ -29,4 +29,6 @@ class Knight < Mob
 
     super(other)
   end
+end
+
 end

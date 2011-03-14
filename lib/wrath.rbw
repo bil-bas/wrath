@@ -10,7 +10,8 @@ begin
     EXTRACT_PATH
   end
 
-  LOG_FILE = File.join(ROOT_PATH, "#{File.basename($0).chomp(File.extname($0))}.log")
+  APP_NAME = File.basename($0).chomp(File.extname($0))
+  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}.log")
 
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
@@ -26,14 +27,13 @@ begin
   $LOAD_PATH.unshift File.expand_path($0).chomp(File.extname($0))
   require 'game'
 
-  exit_message = Game.run unless defined? Ocra
+  exit_message = Wrath::Game.run unless defined? Ocra
 
-rescue Exception => ex
+rescue => ex
   $stderr.puts "FATAL ERROR - #{ex.class}: #{ex.message}\n#{ex.backtrace.join("\n")}"
   raise ex # Just to make sure that the user sees the error in the CLI/IDE too.
 ensure
-  $stderr.puts exit_message if exit_message
   $stderr.reopen(original_stderr) if defined? original_stderr
-  $stdout.puts exit_message if exit_message
+  $stderr.puts exit_message if exit_message
   $stdout.reopen(original_stdout) if defined? original_stdout
 end

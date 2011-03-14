@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Creature < Carriable
   trait :timer
@@ -271,4 +271,5 @@ class Creature < Carriable
 
     super
   end
+end
 end

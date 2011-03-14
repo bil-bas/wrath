@@ -1,3 +1,4 @@
+module Wrath
 class Message
   class Create < Message
     protected
@@ -9,7 +10,8 @@ class Message
     def process
       object = @object_class.create(@options)
       $window.current_game_state.objects.push object
-      puts "Created a #{@object_class}"
+      log.debug { "Created a #{@object_class}" }
     end
   end
+end
 end

@@ -1,3 +1,4 @@
+module Wrath
 class Water < AnimatedTile
   ANIMATION_POSITIONS = [[0, 3], [1, 3]]
   IMAGE_POSITION_FILLED = [2, 3]
@@ -56,4 +57,5 @@ class Water < AnimatedTile
     num_droplets = (object.x_velocity ** 2 + object.y_velocity ** 2 + object.z_velocity ** 2).to_i
     @splasher.emit([object.x, object.y, 0.1], number: num_droplets) if num_droplets > 0
   end
+end
 end

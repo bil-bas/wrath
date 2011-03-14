@@ -1,3 +1,4 @@
+module Wrath
 class Egg < Carriable
   trait :timer
 
@@ -43,4 +44,5 @@ class Egg < Carriable
 
     super(other)
   end
+end
 end

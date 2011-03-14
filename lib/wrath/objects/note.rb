@@ -1,3 +1,4 @@
+module Wrath
 class Note < StaticObject
   VOLUME = 0.6
   INITIAL_ALPHA = 200
@@ -36,4 +37,5 @@ class Note < StaticObject
       destroy
     end
   end
+end
 end

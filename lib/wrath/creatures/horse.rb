@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Horse < Mob
   def mount?; true; end
@@ -48,4 +48,6 @@ class Horse < Mob
 
     super
   end
+end
+
 end

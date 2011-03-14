@@ -1,3 +1,4 @@
+module Wrath
 class Splinter < WrathParticle
   def initialize(options = {})
     options = {
@@ -12,4 +13,5 @@ class Splinter < WrathParticle
     @casts_shadow = false
     super
   end
+end
 end

@@ -1,3 +1,4 @@
+module Wrath
 class Message
   class Map < Message
     def initialize(tiles)
@@ -7,7 +8,8 @@ class Message
     def process
       $window.current_game_state.create_tiles(@tiles)
 
-      puts "Created map of tiles"
+      log.info "Created map of tiles"
     end
   end
+end
 end

@@ -1,3 +1,4 @@
+module Wrath
 class Wall < BasicGameObject
   ELASTICITY = 0
   FRICTION = 0
@@ -23,4 +24,5 @@ class Wall < BasicGameObject
 
     @parent.space.add_shape @shape # Body not needed, since we don't want to be affected by gravity et al.
   end
+end
 end

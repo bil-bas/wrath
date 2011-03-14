@@ -1,3 +1,4 @@
+module Wrath
 class Tree < StaticObject
   def initialize(options = {})
     options = {
@@ -8,4 +9,5 @@ class Tree < StaticObject
 
     super options
   end
+end
 end

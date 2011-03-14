@@ -1,4 +1,4 @@
-# encoding: utf-8
+module Wrath
 
 class Goat < Mob
   def initialize(options = {})
@@ -15,4 +15,5 @@ class Goat < Mob
 
     super(options)
   end
+end
 end

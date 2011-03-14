@@ -1,8 +1,14 @@
+module Wrath
 class WrathParticle < WrathObject
+
+  def network_destroy?; false; end
+  def network_create?; false; end
+  def network_sync?; false; end
 
   def initialize(options = {})
     options = {
-      collision_type: :particle
+      collision_type: :particle,
+      id: -1,
     }.merge! options
 
     super(options)
@@ -25,4 +31,5 @@ class WrathParticle < WrathObject
 
     false
   end
+end
 end

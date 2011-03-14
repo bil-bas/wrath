@@ -1,3 +1,4 @@
+module Wrath
 class Fire < Carriable
   trait :timer
 
@@ -39,4 +40,5 @@ class Fire < Carriable
 
     super(other)
   end
+end
 end

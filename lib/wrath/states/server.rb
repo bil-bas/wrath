@@ -1,5 +1,4 @@
-# encoding: utf-8
-
+module Wrath
 class Server < GameStates::NetworkServer
   DEFAULT_PORT = 60000
 
@@ -28,12 +27,12 @@ class Server < GameStates::NetworkServer
   # Called for each new client connecting to our server
   #
   def on_connect(socket)
-    puts "* Player connected: #{socket.inspect}"
+    puts "Player connected: #{socket.inspect}"
     @remote_socket = socket
   end
 
   def on_disconnect(socket)
-    puts "* Player disconnected: #{socket.inspect}"
+    puts "Player disconnected: #{socket.inspect}"
     game_state_manager.pop_until_game_state Menu
   end
 
@@ -48,4 +47,5 @@ class Server < GameStates::NetworkServer
   def broadcast_msg(message)
     send_msg(@remote_socket, message)
   end
+end
 end

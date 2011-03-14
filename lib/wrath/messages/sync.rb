@@ -1,3 +1,4 @@
+module Wrath
 class Message
   # Synchronise state: position and velocity.
   class Sync < Message
@@ -12,7 +13,7 @@ class Message
       if object
         object.sync(@position, @velocity)
       else
-        puts "Could not sync object ##{@id}"
+        log.error { "Could not sync object ##{@id}" }
       end
     end
 
@@ -25,4 +26,5 @@ class Message
       @id, @position, @velocity = attributes
     end
   end
+end
 end
