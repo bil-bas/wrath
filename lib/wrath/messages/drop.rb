@@ -7,7 +7,7 @@ class Message
     end
 
     def process
-      find_object_by_id(@actor_id).drop
+      object_by_id(@actor_id).drop
     end
   end
 end

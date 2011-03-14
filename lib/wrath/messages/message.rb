@@ -3,8 +3,8 @@ module Wrath
 class Message
 
   public
-  def find_object_by_id(id)
-    $window.current_game_state.objects.find {|o| o.id == id }
+  def object_by_id(id)
+    $window.current_game_state.object_by_id(id)
   end
 end
 end

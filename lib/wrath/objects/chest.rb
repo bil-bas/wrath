@@ -20,7 +20,6 @@ class Chest < Carriable
       elasticity: 0.6,
       z_offset: -2,
       animation: "chest_8x8.png",
-      open: false,
     }.merge! options
 
     super options

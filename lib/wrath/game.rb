@@ -1,9 +1,12 @@
-require 'chingu'
-require 'texplay'
-require 'chipmunk'
+# Standard libs
 require 'forwardable'
 require 'yaml'
 require 'fileutils'
+
+# Gems
+require 'chingu'
+require 'texplay'
+require 'chipmunk'
 
 begin
   # If this isn't the exe, allow dropping into a pry session.

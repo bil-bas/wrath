@@ -10,5 +10,9 @@ module Chingu
     def frame_time
       [$window.dt, MAX_FRAME_TIME].min
     end
+
+    def object_by_id(id)
+      game_objects.object_by_id(id)
+    end
   end
 end

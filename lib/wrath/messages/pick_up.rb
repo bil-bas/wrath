@@ -8,7 +8,7 @@ class Message
     end
 
     def process
-      find_object_by_id(@actor_id).pick_up(find_object_by_id(@object_id))
+      object_by_id(@actor_id).pick_up(object_by_id(@object_id))
     end
   end
 end

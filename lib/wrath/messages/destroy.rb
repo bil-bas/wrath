@@ -6,7 +6,7 @@ class Message
     end
 
     def process
-      object = find_object_by_id(@id)
+      object = object_by_id(@id)
       if object
         object.destroy
       else
