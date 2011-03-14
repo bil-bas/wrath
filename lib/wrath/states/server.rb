@@ -27,12 +27,12 @@ class Server < GameStates::NetworkServer
   # Called for each new client connecting to our server
   #
   def on_connect(socket)
-    puts "Player connected: #{socket.inspect}"
+    log.info { "Player connected: #{socket.inspect}" }
     @remote_socket = socket
   end
 
   def on_disconnect(socket)
-    puts "Player disconnected: #{socket.inspect}"
+    log.info { "Player disconnected: #{socket.inspect}" }
     game_state_manager.pop_until_game_state Menu
   end
 
