@@ -7,7 +7,10 @@ module Wrath
 
       public
       def process
-        $window.current_game_state.players[@player].favor = @favor
+        state = $window.current_game_state
+        if state.is_a? Play
+          state.players[@player].favor = @favor
+        end
       end
     end
   end
