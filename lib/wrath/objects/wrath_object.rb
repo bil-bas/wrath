@@ -3,6 +3,7 @@ module Wrath
 require 'forwardable'
 
 class WrathObject < GameObject
+  include Log
   extend Forwardable
 
   GRAVITY = -5 / 1000.0 # Acceleration per second.

@@ -1,15 +1,20 @@
 module Wrath
-  def self.log_formatter(type, time, progname, message)
-    $stderr.puts "[#{time} #{type[0..0]}] #{message}"
+  module Log
+    class << self
+      attr_accessor :log
+    end
+
+    def log; Log::log; end
+
+    self.log = Logger.new(STDERR)
+    log.level = Logger::DEBUG
+    log.formatter = lambda do |type, time, progname, message|
+      $stderr.puts "[#{time} #{type[0..0]}] #{progname ? "#{progname}: ": ''}#{message}"
+    end
+
+    log.info "Enabled logging at level #{log.level}"
   end
-
-  log.level = Logger::DEBUG
-  log.formatter = method :log_formatter
-
-  log.debug "Enabled debug messages"
-  log.info "Enabled info messages"
-  log.warn "Enabled warning messages"
-  log.error "Enabled error messages"
-  log.fatal "Enabled fatal messages"
 end
+
+
 

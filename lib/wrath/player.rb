@@ -2,6 +2,7 @@ module Wrath
 
 # A player that controls a creature in the game.
 class Player < BasicGameObject
+  include Log
   extend Forwardable
   include Helpers::InputClient
 

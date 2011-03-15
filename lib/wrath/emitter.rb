@@ -1,6 +1,8 @@
 module Wrath
 # Emits particles.
 class Emitter
+  include Log
+
   def initialize(type, parent, options = {})
     options = {
         h_speed: 0.3..0.5,

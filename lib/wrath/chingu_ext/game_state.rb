@@ -1,5 +1,7 @@
 module Chingu
   class GameState
+    include Wrath::Log
+
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
     def setup
