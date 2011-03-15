@@ -3,7 +3,7 @@ module Wrath
 class Creature < Carriable
   trait :timer
 
-  ACTION_DISTANCE = 10
+  ACTION_DISTANCE = 12
 
   EXPLOSION_H_SPEED = 0.02..0.07
   EXPLOSION_Z_VELOCITY = -0.1..0.3
@@ -166,20 +166,28 @@ class Creature < Carriable
 
   # The player performs an action.
   def action
-    # Find the nearest object and activate it (generally, pick it up)
-    objects = parent.objects - [self]
-    nearest = objects.min_by {|g| distance_to(g) }
-    nearest = nil unless distance_to(nearest) <= ACTION_DISTANCE
+    # Find all objects within range, then check them in order
+    # and activate the first on we can (generally, pick it up).
+    near_objects = parent.objects - [self]
+    near_objects.select! {|g| distance_to(g) <= ACTION_DISTANCE }
+    near_objects.sort_by! {|g| distance_to(g) }
 
-    if nearest and nearest.can_be_activated?(self)
-      if parent.client?
-        parent.send_message(Message::RequestAction.new(self, nearest))
-      else
-        nearest.activate(self)
+    near_objects.each do |object|
+      if object.can_be_activated?(self)
+        if parent.client?
+          # Client needs to ask permission first.
+          parent.send_message(Message::RequestAction.new(self, object))
+        else
+          # Host/local can do it immediately.
+          object.activate(self)
+        end
+
+        return
       end
-    elsif @carrying
-      drop
     end
+
+    # We couldn't activate anything, so drop what we are carrying, if anything.
+    drop if carrying?
   end
 
   def update
