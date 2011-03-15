@@ -34,25 +34,24 @@ class Altar < StaticObject
 
   def activate(actor)
     lamb = actor.carrying
-    actor.drop
-    sacrifice(actor, lamb)
-  end
-
-  def sacrifice(actor, sacrifice)
-    case sacrifice
+    case lamb
       when Creature
         @blood = 100
         @player = actor.player
-        @sacrifice = sacrifice
+        @sacrifice = lamb
         @blood_drip_animation.reset
-        @facing = sacrifice.factor_x
+        @facing = lamb.factor_x
 
       else
         # Instant gratification for inanimate objects.
-        actor.player.favor += sacrifice.favor
+        actor.player.favor += lamb.favor
     end
 
-    sacrifice.sacrificed(actor, self)
+    @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
+
+    lamb.sacrificed(actor, self)
+    actor.instance_variable_set(:@carrying, nil)
+    lamb.destroy unless parent.client?
   end
 
   def draw

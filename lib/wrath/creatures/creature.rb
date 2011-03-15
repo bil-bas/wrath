@@ -113,7 +113,7 @@ class Creature < Carriable
     return unless @carrying and @carrying.can_drop?
 
     # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
-    @parent.send_message Message::PerformAction.new(self) if parent.networked? and local? or (remote? and @carrying.controlled_by_player?)
+    @parent.send_message Message::PerformAction.new(self) if parent.networked? and (local? or (remote? and @carrying.controlled_by_player?))
 
     # Dropped objects revert to being owned by the host.
     @carrying.local = (not parent.client?)

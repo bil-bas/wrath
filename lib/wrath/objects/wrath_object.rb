@@ -269,7 +269,6 @@ class WrathObject < GameObject
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
     @sacrificial_explosion.emit([altar.x, altar.y, altar.z + altar.height]) if @sacrificial_explosion
-    destroy
   end
 
   def pause!

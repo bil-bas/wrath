@@ -25,7 +25,7 @@ class Rock < Carriable
   def sacrificed(actor, altar)
     Sample["rock_sacrifice.wav"].play
 
-    actor.health += EXPLOSION_HEALTH
+    actor.health += EXPLOSION_HEALTH unless parent.client?
 
     super
   end
