@@ -93,6 +93,7 @@ class Chest < Carriable
 
     self.image = @frames[CLOSED_SPRITE_FRAME]
     @contains = object
+    @contains.velocity = [0, 0, 0]
     @contains.x = -1000 * id
     @contains.pause!
   end
