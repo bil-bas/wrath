@@ -12,8 +12,6 @@ class Player < BasicGameObject
   INITIAL_FAVOR = 0
   FAVOR_TO_WIN = 100
 
-  def_delegators :@avatar, :alive?, :dead?
-
   attr_reader :number, :avatar, :favor, :visible
 
   def local?; @local; end
@@ -58,12 +56,19 @@ class Player < BasicGameObject
   def avatar=(creature)
     @avatar.player = nil if @avatar
     @avatar = creature
-    @avatar.player = self
+    @avatar.player = self if @avatar
   end
 
   def favor=(value)
+    original_favor = @favor
+
     @favor = [[value, 0].max, FAVOR_TO_WIN].min
     parent.win!(self) if @favor == FAVOR_TO_WIN and not parent.winner
+
+    # Synchronise favor from the host to the client.
+    if @favor != original_favor and parent.host?
+      parent.send_message(Message::SetFavor.new(self))
+    end
 
     @favor
   end
@@ -73,10 +78,9 @@ class Player < BasicGameObject
   end
 
   def update
-    return unless avatar
-
-    move_by_keys if local? and alive?
     super
+
+    move_by_keys if local? and avatar
   end
 
   def action

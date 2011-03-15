@@ -11,7 +11,10 @@ class WrathObject < GameObject
 
   attr_reader :frames, :elasticity, :favor
   attr_writer :local
-  attr_accessor :z, :x_velocity, :y_velocity, :z_velocity, :id
+  attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
+
+  # The unique identifier of the object (or nil if not a networked object). Networked objects have consistent id on all machines.
+  attr_reader :id
 
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
@@ -21,8 +24,13 @@ class WrathObject < GameObject
   def local?; @local; end
   def controlled_by_player?; false; end
 
+  # Should #destroy be propagated over the network?
   def network_destroy?; @id and parent.host?; end
+
+  # Should #create be propagated over the network?
   def network_create?; @id and parent.host?; end
+
+  # Should the object's location and velocity be propagated over the network?
   def network_sync?; @id and @local and parent.networked?; end
 
   def_delegators :@body_position, :x, :y, :x=, :y=
@@ -82,6 +90,7 @@ class WrathObject < GameObject
 
     if options.has_key? :id
       @id = options[:id]
+      @@next_object_id = @id + 1 if @id # Ready for creating the next simultaneous object.
       @local = options[:local] || false
     else
       @id = @@next_object_id
@@ -92,6 +101,8 @@ class WrathObject < GameObject
         @parent.send_message(Message::Create.new(self.class, recreate_options))
       end
     end
+
+    log.debug { "Created network object #{self.class}##{id}" } if @id
 
     @tile = nil
 
@@ -124,6 +135,10 @@ class WrathObject < GameObject
     @shape.u = 0.5
     @shape.collision_type = collision_type
     @shape.owner = self
+  end
+
+  def sync_data
+    [position, velocity]
   end
 
   def sync(position, velocity)
@@ -303,6 +318,8 @@ class WrathObject < GameObject
 
   def destroy
     super
+
+    log.debug { "Destroyed network object #{self.class}##{id}" } if @id
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body

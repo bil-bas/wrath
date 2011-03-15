@@ -1,5 +1,6 @@
 module Wrath
 class Message
+  # Create an object and ensure it is registered.
   class Create < Message
     protected
     def initialize(object_class, options = {})
@@ -20,8 +21,6 @@ class Message
         when 1
           state.players[1].avatar = object
       end
-
-      log.debug { "Created #{@object_class}##{object.id}" }
     end
   end
 end

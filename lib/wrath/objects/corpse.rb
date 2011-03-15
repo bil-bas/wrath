@@ -1,5 +1,8 @@
 module Wrath
 class Corpse < Carriable
+  # Corpses are created from the Creature#die! method, simultaneously on all machines.
+  def network_create?; false; end
+
   def initialize(options = {})
     options = {
         favor: 1,

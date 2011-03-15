@@ -59,11 +59,15 @@ class Play < GameState
   end
 
   def create_players
+    log.info "Creating players"
+
     @players << Player.create(0, (not client?))
     @players << Player.create(1, (not host?))
   end
 
   def init_physics
+    log.info "Initiating physics"
+
     @space = CP::Space.new
     @space.damping = 0
 
@@ -114,6 +118,8 @@ class Play < GameState
   end
 
   def create_objects
+    log.info "Creating objects"
+
     # Player 1.
     player1 = Priest.create(local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
     @objects << player1
@@ -176,6 +182,8 @@ class Play < GameState
   end
 
   def create_tiles(tile_classes)
+    log.info "Creating tiles"
+
     tile_classes.each_with_index do |class_row, y|
       tile_row = []
       @tiles << tile_row

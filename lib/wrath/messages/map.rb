@@ -7,8 +7,6 @@ class Message
 
     def process
       $window.current_game_state.create_tiles(@tiles)
-
-      log.info "Created map of tiles"
     end
   end
 end

@@ -20,7 +20,10 @@ class Chicken < Mob
 
   def dropped(player, x_velocity, y_velocity, z_velocity)
     super(player, x_velocity, y_velocity, z_velocity)
-    player.pick_up(Egg.create(parent: parent)) if rand(100) < PERCENTAGE_LAYING_AN_EGG
+
+    unless parent.client?
+      player.pick_up(Egg.create(parent: parent)) if rand(100) < PERCENTAGE_LAYING_AN_EGG
+    end
   end
 end
 end

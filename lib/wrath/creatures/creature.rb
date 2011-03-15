@@ -63,10 +63,18 @@ class Creature < Carriable
   end
 
   def die!
+    # Drop anything you are carrying.
     drop
-    destroy
+
+    # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
     parent.objects << Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
-                                 encumbrance: encumbrance, position: position, velocity: velocity, emitter: @sacrificial_explosion)
+                                    encumbrance: encumbrance, position: position, velocity: velocity,
+                                    emitter: @sacrificial_explosion, local: (not parent.client?))
+
+    # Drop off anything you are being carried on (do this after creating the corpse, so we don't get "thrown".
+    carrier.drop if carried?
+    destroy
+
     parent.lose!(player) if player and not parent.winner
   end
 
@@ -81,17 +89,18 @@ class Creature < Carriable
   def health=(value)
     original_health = @health
     @health = [[value, 0].max, max_health].min
-    if @health == 0 and original_health > 0
-      if controlled_by_player? and not parent.winner
-        parent.lose!(player)
-      end
-      die!
-    end
 
     if @health < original_health
       @last_wounded_at = milliseconds
       @first_wounded_at = @last_wounded_at unless @first_wounded_at
     end
+
+    # Synchronise health from the server to the client.
+    if @health != original_health and parent.host?
+      parent.send_message(Message::SetHealth.new(self))
+    end
+
+    die! if @health == 0
 
     @health
   end

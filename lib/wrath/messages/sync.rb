@@ -4,26 +4,25 @@ class Message
   class Sync < Message
     def initialize(object)
       @id = object.id
-      @position = object.position
-      @velocity = object.velocity
+      @data = object.sync_data
     end
 
     def process
       object = object_by_id(@id)
       if object
-        object.sync(@position, @velocity)
+        object.sync(*@data)
       else
-        log.error { "Could not sync object ##{@id}" }
+        log.error { "#{self.class} could not sync object ##{@id}" }
       end
     end
 
     # Optimise dump to produce little data, since this data is sent very often.
     def marshal_dump
-      [@id, @position, @velocity]
+      [@id, @data]
     end
 
     def marshal_load(attributes)
-      @id, @position, @velocity = attributes
+      @id, @data = attributes
     end
   end
 end
