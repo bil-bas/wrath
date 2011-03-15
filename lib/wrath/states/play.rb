@@ -8,6 +8,14 @@ class Play < GameState
 
   PLAYER_SPAWNS = [[65, 60], [95, 60]]
 
+  # Margin in which nothing should spawn.
+  module Margin
+    TOP = 20
+    BOTTOM = 0
+    LEFT = 0
+    RIGHT = 0
+  end
+
   attr_reader :objects, :players, :network, :tiles, :space, :altar, :winner
 
   def networked?; not @network.nil?; end

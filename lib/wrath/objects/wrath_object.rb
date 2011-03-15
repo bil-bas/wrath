@@ -255,9 +255,10 @@ class WrathObject < GameObject
  end
 
   def spawn_position
+    margin = parent.class::Margin
     loop do
-      pos = [rand($window.retro_width - width * 2) + width,
-             rand($window.retro_height - width * 2 - 16) + width + 16,
+      pos = [rand($window.retro_width - width * 2 - margin::LEFT - margin::RIGHT) + width + margin::LEFT,
+             rand($window.retro_height - width * 2 - margin::TOP - margin::BOTTOM) + width + margin::TOP,
              0]
 
       if distance(*pos[0..1], parent.altar.x, parent.altar.y) > 32 and
