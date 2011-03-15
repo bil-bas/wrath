@@ -27,13 +27,19 @@ class Server < GameStates::NetworkServer
   # Called for each new client connecting to our server
   #
   def on_connect(socket)
-    log.info { "Player connected: #{socket.inspect}" }
-    @remote_socket = socket
+    if @remote_socket
+      log.warn { "Another player tried to connect, but was refused: #{socket.inspect}" }
+      disconnect_client(socket)
+    else
+      log.info { "Player connected: #{socket.inspect}" }
+      @remote_socket = socket
+    end
   end
 
   def on_disconnect(socket)
     log.info { "Player disconnected: #{socket.inspect}" }
     game_state_manager.pop_until_game_state Menu
+    @remote_socket = nil
   end
 
   def draw
@@ -45,7 +51,7 @@ class Server < GameStates::NetworkServer
   end
 
   def broadcast_msg(message)
-    send_msg(@remote_socket, message)
+    send_msg(@remote_socket, message) if @remote_socket
   end
 end
 end
