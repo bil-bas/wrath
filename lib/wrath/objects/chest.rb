@@ -22,20 +22,35 @@ class Chest < Carriable
       animation: "chest_8x8.png",
     }.merge! options
 
+    # Pick one of the contents objects, creating if it is a class rather than an object.
+    @contains = if options[:contains]
+                  possible_objects = Array(options[:contains])
+                  object = possible_objects[rand(possible_objects.size)]
+                  object = object.create(x: -100 * rand(100), y: -100 * rand(100)) if object.is_a? Class
+                  object
+
+                elsif options[:contains_id]
+                  parent = options[:parent] || $window.current_game_state
+                  parent.object_by_id(options[:contains_id])
+
+                else
+                  nil
+                end
+
     super options
 
-    @sacrificial_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
-                                           z_velocity: EXPLOSION_Z_VELOCITY)
-
-    # Pick one of the contents objects, creating if it is a class rather than an object.
-    if options[:contains]
-      possible_objects = Array(options[:contains])
-      object = possible_objects[rand(possible_objects.size)]
-      object = object.create(x: -1000 * id) if object.is_a? Class
-      close(object, quiet: true)
+    if @contains
+      close(@contains, quiet: true)
     else
       open(quiet: true)
     end
+
+    @sacrificial_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+                                           z_velocity: EXPLOSION_Z_VELOCITY)
+  end
+
+  def recreate_options
+    super.merge! contains_id: @contains.id
   end
 
   def can_be_activated?(actor)
@@ -43,6 +58,8 @@ class Chest < Carriable
   end
 
   def activate(actor)
+    @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
+
     if closed?
       open
     else
@@ -87,7 +104,7 @@ class Chest < Carriable
 
     object.put_into(self)
 
-    if object.is_a? Creature
+    if object.is_a? Creature and local?
       every(2000 + rand(100), name: :bounce) { self.z_velocity = 0.8 }
     end
 
