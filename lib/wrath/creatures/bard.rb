@@ -5,6 +5,7 @@ class Bard < Mob
   def initialize(options = {})
     options = {
       favor: 35,
+      health: 30,
       vertical_jump: 0.2,
       horizontal_jump: 1.2,
       elasticity: 0.4,

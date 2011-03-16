@@ -4,6 +4,7 @@ class Virgin < Mob
   def initialize(options = {})
     options = {
       favor: 40,
+      health: 30,
       vertical_jump: 0.05,
       horizontal_jump: 0.5,
       jump_delay: 500,

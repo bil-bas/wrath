@@ -4,6 +4,7 @@ class Goat < Mob
   def initialize(options = {})
     options = {
       favor: 20,
+      health: 20,
       vertical_jump: 0.3,
       horizontal_jump: 0.6,
       elasticity: 0.8,

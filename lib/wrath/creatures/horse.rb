@@ -6,6 +6,7 @@ class Horse < Mob
   def initialize(options = {})
     options = {
       favor: 20,
+      health: 30,
       vertical_jump: 0.2,
       horizontal_jump: 1.2,
       elasticity: 0.6,
@@ -30,14 +31,17 @@ class Horse < Mob
 
   # Dismount the horsie.
   def drop
-    if controlled_by_player?
+    if carrying? and carrying.controlled_by_player?
       self.local = (not parent.client?) # Revert to owned by host.
       schedule_jump
     end
 
-    self.z_velocity = 0.8
+    # Buck if stationary.
+    will_buck = carrying? and self.z == ground_level
 
     super
+
+    self.z_velocity = 0.8 if will_buck
   end
 
   def pick_up(object)

@@ -6,6 +6,7 @@ class Knight < Mob
   def initialize(options = {})
     options = {
       favor: 30,
+      health: 40,
       vertical_jump: 0.2,
       horizontal_jump: 1.2,
       elasticity: 0.4,

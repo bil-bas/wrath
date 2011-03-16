@@ -2,7 +2,7 @@ module Wrath
 class GameOver < GameState
   extend Forwardable
 
-  def_delegators :@play, :space, :object_by_id, :objects, :network
+  def_delegators :@play, :space, :object_by_id, :objects, :network, :tile_at_coordinate
 
   def initialize(winner)
     @winner = winner
