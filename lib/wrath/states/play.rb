@@ -1,5 +1,7 @@
 module Wrath
 class Play < GameState
+  extend Forwardable
+
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   NUM_GOATS = 5
@@ -16,7 +18,9 @@ class Play < GameState
     RIGHT = 0
   end
 
-  attr_reader :objects, :players, :network, :tiles, :space, :altar, :winner
+  def_delegators :@map, :tile_at_coordinate
+
+  attr_reader :objects, :players, :network, :space, :altar, :winner
 
   def networked?; not @network.nil?; end
   def host?; @network.is_a? Server; end
@@ -45,7 +49,6 @@ class Play < GameState
     init_physics
 
     @winner = nil
-    @tiles = []
     @objects = []
     @players = []
     @started = false
@@ -55,13 +58,20 @@ class Play < GameState
     create_players
 
     unless client?
-      create_tiles(random_tiles)
+      tiles = random_tiles
+      create_map(tiles)
+      send_message(Message::Map.new(tiles)) if host?
+
       create_objects
 
       @started = true
     end
 
     send_message Message::StartGame.new if host?
+  end
+
+  def create_map(tiles)
+    @map = Map.create(tiles)
   end
 
   def restart
@@ -204,25 +214,7 @@ class Play < GameState
       end
     end
 
-    send_message(Message::Map.new(grid)) if host?
-
     grid
-  end
-
-  def create_tiles(tile_classes)
-    log.info "Creating tiles"
-
-    tile_classes.each_with_index do |class_row, y|
-      tile_row = []
-      @tiles << tile_row
-      class_row.each_with_index do |type, x|
-        tile_row << type.create(grid: [x, y])
-      end
-    end
-  end
-
-  def tile_at_coordinate(x, y)
-    @tiles[y / Tile::HEIGHT][x / Tile::WIDTH]
   end
 
   def setup

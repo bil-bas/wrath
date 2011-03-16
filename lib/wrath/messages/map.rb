@@ -6,7 +6,10 @@ class Message
     end
 
     def process
-      $window.current_game_state.create_tiles(@tiles)
+      state = $window.current_game_state
+      if state.is_a? Play
+        state.create_map(@tiles)
+      end
     end
   end
 end
