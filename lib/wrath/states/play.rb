@@ -11,6 +11,19 @@ class Play < GameState
   # This is relative to the altar.
   PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
+  # Messages accepted after the game has started.
+  GAME_STARTED_MESSAGES = [
+      Message::Create, Message::Destroy, Message::EndGame,
+      Message::PerformAction, Message::RequestAction, Message::Sync,
+      Message::SetFavor, Message::SetHealth
+  ]
+
+  # Messages accepted during the setup phase.
+  GAME_SETUP_MESSAGES = [
+      Message::Create, Message::EndGame, Message::Map,
+      Message::StartGame
+  ]
+
   # Margin in which nothing should spawn.
   module Margin
     TOP = 20
@@ -38,11 +51,11 @@ class Play < GameState
     super()
 
     on_input(:escape) do
-      send_message Message::EndGame.new if networked?
+      send_message(Message::EndGame.new) if networked?
       game_state_manager.pop_until_game_state (networked? ? Lobby : Menu)
     end
 
-    send_message Message::NewGame.new if host?
+    send_message(Message::NewGame.new) if host?
 
     @last_sync = milliseconds
 
@@ -71,11 +84,9 @@ class Play < GameState
   end
 
   def accept_message?(message)
-    if started?
-      [Message::Create, Message::Destroy, Message::EndGame, Message::PerformAction, Message::RequestAction, Message::Sync].find {|m| message.is_a? m }
-    else
-      [Message::Create, Message::EndGame, Message::Map, Message::StartGame].find {|m| message.is_a? m }
-    end
+    accepted_messages = started? ? GAME_STARTED_MESSAGES : GAME_SETUP_MESSAGES
+
+    accepted_messages.find {|m| message.is_a? m }
   end
 
   def create_map(tiles)
