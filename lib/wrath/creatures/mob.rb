@@ -22,7 +22,7 @@ class Mob < Creature
   end
 
   def jump
-    if @z <= ground_level and @state == :standing
+    if @z <= ground_level and @state == :standing and local?
       @z_velocity = @vertical_jump + rand(@vertical_jump / 2.0)
       angle = rand(360)
       @y_velocity = Math::sin(angle) * @horizontal_jump * 2
