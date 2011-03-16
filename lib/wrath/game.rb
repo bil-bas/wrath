@@ -66,6 +66,10 @@ class Game < Window
     retrofy
     @sprite_scale = 4 # 160x120
 
+    @used_time = 0
+    @last_time = milliseconds
+    @load = 0 # CPU/GPU load.
+
     @pixel = Image["pixel_1x1.png"]
 
     push_game_state Menu
@@ -73,16 +77,34 @@ class Game < Window
 
 
   def draw
+    draw_started = milliseconds
+
     # Draw sprites at the retrofied scale.
     scale(@sprite_scale, @sprite_scale) do
       super
     end
+
+    @used_time += milliseconds - draw_started
   end
 
   def update
+    update_started = milliseconds
+
     super
 
-    self.caption = "#{TITLE} [#{fps}fps]"
+    self.caption = "#{TITLE} [FPS: #{fps}; Load: #{@load}%]"
+
+    @used_time += milliseconds - update_started
+
+    recalculate_cpu_load
+  end
+
+  def recalculate_cpu_load
+    if (milliseconds - @last_time) >= 1000
+      @load = (@used_time * 100 / (milliseconds - @last_time)).round
+      @used_time = 0
+      @last_time = milliseconds
+    end
   end
 
   def self.run
