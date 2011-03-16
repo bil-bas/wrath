@@ -68,7 +68,7 @@ class Game < Window
 
     @used_time = 0
     @last_time = milliseconds
-    @load = 0 # CPU/GPU load.
+    @potential_fps = 0
 
     @pixel = Image["pixel_1x1.png"]
 
@@ -92,7 +92,7 @@ class Game < Window
 
     super
 
-    self.caption = "#{TITLE} [FPS: #{fps}; Load: #{@load}%]"
+    self.caption = "#{TITLE} [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
 
@@ -101,7 +101,7 @@ class Game < Window
 
   def recalculate_cpu_load
     if (milliseconds - @last_time) >= 1000
-      @load = (@used_time * 100 / (milliseconds - @last_time)).round
+      @potential_fps = (fps / [(@used_time.to_f / (milliseconds - @last_time)), 0.0001].max).floor
       @used_time = 0
       @last_time = milliseconds
     end
