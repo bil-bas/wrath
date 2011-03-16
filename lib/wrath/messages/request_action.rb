@@ -2,16 +2,18 @@ module Wrath
 class Message
   # Action request from the client to the host.
   class RequestAction < Message
+    protected
     def log_pre; "Failed to process #{self.class.name} -"; end
 
+    public
     def initialize(actor, target = nil)
       @actor_id = actor.id
       @target_id = target ? target.id : nil
       @carrying_id = actor.carrying ? actor.carrying.id : nil
     end
 
-    public
-    def process
+    protected
+    def action(state)
       actor = object_by_id(@actor_id)
       carrying = @carrying_id ? object_by_id(@carrying_id) : nil
       target = @target_id ? object_by_id(@target_id) : nil

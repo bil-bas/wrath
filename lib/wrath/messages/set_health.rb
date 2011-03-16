@@ -1,12 +1,13 @@
 module Wrath
   class Message
     class SetHealth < Message
+      public
       def initialize(creature)
         @creature_id, @health = creature.id, creature.health
       end
 
-      public
-      def process
+      protected
+      def action(state)
         creature = object_by_id(@creature_id)
         if creature
           creature.health = @health

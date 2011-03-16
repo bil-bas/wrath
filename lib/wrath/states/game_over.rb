@@ -2,7 +2,9 @@ module Wrath
 class GameOver < GameState
   extend Forwardable
 
-  def_delegators :@play, :space, :object_by_id, :objects, :network, :tile_at_coordinate
+  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :tile_at_coordinate, :send_message
+
+  def accept_message?(message); [Message::Create, Message::Destroy, Message::EndGame, Message::SetHealth, Message::Sync].find {|m| message.is_a? m }; end
 
   def initialize(winner)
     @winner = winner
@@ -11,13 +13,8 @@ class GameOver < GameState
     super
 
     on_input(:escape) do
-      if @play.client?
-        game_state_manager.pop_until_game_state Menu
-      else
-        # Remove this state and then restart the Play.
-        pop_game_state
-        @play.restart
-      end
+      send_message Message::EndGame.new if networked?
+      game_state_manager.pop_until_game_state (networked? ? Lobby : Menu)
     end
 
     log.info { "Player ##{winner.number + 1} won" }

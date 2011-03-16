@@ -2,15 +2,14 @@ module Wrath
 class Message
   # Create an object and ensure it is registered.
   class Create < Message
-    protected
+    public
     def initialize(object_class, options = {})
       @object_class, @options = object_class, options
     end
 
-    public
-    def process
+    protected
+    def action(state)
       object = @object_class.create(@options)
-      state = $window.current_game_state
       state.objects.push object
 
       # Ensure the objects are attached to the correct player.

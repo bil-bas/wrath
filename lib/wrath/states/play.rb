@@ -38,10 +38,9 @@ class Play < GameState
     super()
 
     on_input(:escape) do
-      game_state_manager.pop_until_game_state Menu
+      send_message Message::EndGame.new if networked?
+      game_state_manager.pop_until_game_state (networked? ? Lobby : Menu)
     end
-
-    on_input(:f5, :restart) unless client?
 
     send_message Message::NewGame.new if host?
 
@@ -69,6 +68,14 @@ class Play < GameState
     end
 
     send_message Message::StartGame.new if host?
+  end
+
+  def accept_message?(message)
+    if started?
+      [Message::Create, Message::Destroy, Message::EndGame, Message::PerformAction, Message::RequestAction, Message::Sync].find {|m| message.is_a? m }
+    else
+      [Message::Create, Message::EndGame, Message::Map, Message::StartGame].find {|m| message.is_a? m }
+    end
   end
 
   def create_map(tiles)

@@ -20,6 +20,7 @@ class Client < GameStates::NetworkClient
   def on_connect
     log.info "Connected to server"
     send_msg(Message::Ready.new)
+    push_game_state Lobby.new(self)
   end
 
   def on_disconnect

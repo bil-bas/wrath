@@ -5,7 +5,7 @@ require 'fileutils'
 require 'logger'
 
 # Gems
-require 'chingu'
+require 'C:\Users\Spooner\RubymineProjects\chingu\lib\chingu'
 require 'texplay'
 require 'chipmunk'
 

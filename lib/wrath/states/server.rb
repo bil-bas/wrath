@@ -6,6 +6,10 @@ class Server < GameStates::NetworkServer
 
   attr_reader :remote_socket
 
+  public
+  def accept_message?(message); [Message::Ready].find {|m| message.is_a? m }; end
+
+  public
   def initialize(options = {})
     options = {
       address: "0.0.0.0",

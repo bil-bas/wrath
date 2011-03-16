@@ -1,11 +1,13 @@
 module Wrath
 class Message
   class Destroy < Message
+    public
     def initialize(object)
       @id = object.id
     end
 
-    def process
+    protected
+    def action(state)
       object = object_by_id(@id)
       if object
         object.destroy

@@ -1,12 +1,12 @@
 module Wrath
 class Message
   # Sent by client in response to making a connection.
-
   class Ready < Message
-    def process
-      log.info "Client is ready; telling it the game has started"
+    protected
+    def action(state)
+      log.info "Client is ready; opening the lobby"
 
-      $window.push_game_state Play.new($window.current_game_state)
+      state.push_game_state Lobby.new(state)
     end
   end
 end

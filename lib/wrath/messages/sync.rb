@@ -5,6 +5,7 @@ class Message
     ACCURACY = 10.0 ** 3.0 # Accurate to 3 decimal places.
     SEPARATOR = ';'
 
+    public
     def initialize(objects)
       @data = objects.inject([]) do |data, object|
         # id=42, position=[1.9999999999, 1.12345, 1.9], velocity=[2.9999999999, 2.9999999, 2.0]]
@@ -19,7 +20,8 @@ class Message
       end
     end
 
-    def process
+    protected
+    def action(state)
       @data.each do |data|
         data = data.split(SEPARATOR)
         id, position, velocity = data[0].to_i, data[1..3].map {|n| n.to_f }, data[4..6].map {|n| n.to_f }
@@ -34,10 +36,12 @@ class Message
     end
 
     # Optimise dump to produce little data, since this data is sent very often.
+    public
     def marshal_dump
       @data
     end
 
+    public
     def marshal_load(data)
       @data = data
     end

@@ -16,5 +16,8 @@ module Chingu
     def object_by_id(id)
       game_objects.object_by_id(id)
     end
+
+    # Do we allow a specific network message to perform its action?
+    def accept_message?(message); false; end
   end
 end
