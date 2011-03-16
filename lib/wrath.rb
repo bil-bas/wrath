@@ -10,8 +10,8 @@ begin
     EXTRACT_PATH
   end
 
-  APP_NAME = File.basename($0).chomp(File.extname($0))
-  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}.log")
+  APP_NAME = File.basename(__FILE__).chomp(File.extname(__FILE__))
+  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}.log")
 
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
@@ -24,7 +24,7 @@ begin
   $stdout.reopen LOG_FILE
   $stdout.sync = true
 
-  $LOAD_PATH.unshift File.expand_path($0).chomp(File.extname($0))
+  $LOAD_PATH.unshift File.expand_path(__FILE__).chomp(File.extname(__FILE__))
   require 'game'
 
   exit_message = Wrath::Game.run unless defined? Ocra
