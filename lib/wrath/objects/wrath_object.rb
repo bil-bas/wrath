@@ -140,10 +140,6 @@ class WrathObject < GameObject
     @shape.owner = self
   end
 
-  def sync_data
-    [position, velocity]
-  end
-
   def sync(position, velocity)
     self.position = position
     self.velocity = velocity

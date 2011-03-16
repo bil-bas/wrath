@@ -289,15 +289,10 @@ class Play < GameState
 
   def sync
     if (milliseconds - @last_sync) > SYNC_DELAY
-      updates, length = 0, 0
-      objects.each do |object|
-        if object.network_sync?
-          updates += 1
-          length += send_message(Message::Sync.new(object))
-        end
-      end
+      needs_sync = objects.select {|o| o.network_sync? }
+      length = send_message(Message::Sync.new(needs_sync))
 
-      log.debug { "Sent updates for #{updates} objects in #{length} bytes" }
+      log.debug { "Synchronised #{needs_sync.size} objects in #{length} bytes" }
 
       @last_sync = milliseconds
     end
