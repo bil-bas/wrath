@@ -12,7 +12,7 @@ class Client < GameStates::NetworkClient
 
     super options
 
-    on_input(:escape) { disconnect; pop_game_state }
+    on_input(:escape) { close; pop_game_state }
 
     after(1) { connect(options[:address], options[:port]) }
   end

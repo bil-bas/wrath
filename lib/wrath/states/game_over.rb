@@ -1,5 +1,9 @@
 module Wrath
 class GameOver < GameState
+  extend Forwardable
+
+  def_delegators :@play, :space, :object_by_id, :objects, :network
+
   def initialize(winner)
     @winner = winner
     @avatar = winner.avatar
@@ -7,7 +11,13 @@ class GameOver < GameState
     super
 
     on_input(:escape) do
-      game_state_manager.pop_until_game_state Menu
+      if @play.client?
+        game_state_manager.pop_until_game_state Menu
+      else
+        # Remove this state and then restart the Play.
+        pop_game_state
+        @play.restart
+      end
     end
 
     log.info { "Player ##{winner.number + 1} won" }
@@ -18,16 +28,12 @@ class GameOver < GameState
                                  zorder: @avatar.y - 0.1, alpha: 150, mode: :additive)
   end
 
-  def space
-    previous_game_state.space
-  end
-
-  def network
-    nil
+  def setup
+    @play = previous_game_state
   end
 
   def update
-    previous_game_state.update
+    @play.update
 
     super
 
@@ -40,7 +46,7 @@ class GameOver < GameState
   end
 
   def draw
-    previous_game_state.draw
+    @play.draw
     super
   end
 end

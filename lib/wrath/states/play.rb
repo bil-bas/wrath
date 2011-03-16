@@ -22,9 +22,12 @@ class Play < GameState
   def host?; @network.is_a? Server; end
   def client?; @network.is_a? Client; end
   def local?; @network.nil?; end
+  def started?; @started; end
 
   # network: Server, Client, nil
   def initialize(network = nil)
+    WrathObject.reset_object_ids
+
     @network = network
 
     super()
@@ -33,11 +36,9 @@ class Play < GameState
       game_state_manager.pop_until_game_state Menu
     end
 
-    on_input(:f5) do
-      switch_game_state self.class.new(@network)
-    end
+    on_input(:f5, :restart) unless client?
 
-    send_message Message::Start.new if host?
+    send_message Message::NewGame.new if host?
 
     @last_sync = milliseconds
 
@@ -47,15 +48,29 @@ class Play < GameState
     @tiles = []
     @objects = []
     @players = []
+    @started = false
+
+    @font = Font[20]
 
     create_players
 
     unless client?
       create_tiles(random_tiles)
       create_objects
-    else
 
+      @started = true
     end
+
+    send_message Message::StartGame.new if host?
+  end
+
+  def restart
+    switch_game_state self.class.new(@network)
+  end
+
+  # Start the game, after sending all the init data.
+  def start_game
+    @started = true
   end
 
   def send_message(message)
@@ -223,29 +238,39 @@ class Play < GameState
     # Read any incoming messages which will alter our start state.
     @network.update if @network
 
-    super
+    if started?
+      super
 
-    objects.each {|o| o.update_forces }
+      objects.each {|o| o.update_forces }
 
-    # Ensure that we have one or more physics steps that run at around the same interval.
-    total_time = frame_time / 1000.0
-    num_steps = total_time.div IDEAL_PHYSICS_STEP
-    step = total_time / num_steps
-    num_steps.times do
-      @space.step step
-    end
+      # Ensure that we have one or more physics steps that run at around the same interval.
+      total_time = frame_time / 1000.0
+      num_steps = total_time.div IDEAL_PHYSICS_STEP
+      step = total_time / num_steps
+      num_steps.times do
+        @space.step step
+      end
 
-    # Move carried objects to appropriate positions to prevent desync in movement.
-    @objects.each do |object|
-      if object.respond_to?(:carrying?) and object.carrying?
-        object.carrying.update_carried_position
+      # Move carried objects to appropriate positions to prevent desync in movement.
+      @objects.each do |object|
+        if object.respond_to?(:carrying?) and object.carrying?
+          object.carrying.update_carried_position
+        end
       end
     end
 
     # Ensure that any network objects are synced over the network.
     if @network
-      sync
+      sync if started?
       @network.flush
+    end
+  end
+
+  def draw
+    if started?
+      super
+    else
+      @font.draw("Loading...", 0, 0, ZOrder::GUI)
     end
   end
 

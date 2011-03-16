@@ -34,6 +34,8 @@ class WrathObject < GameObject
   # Should the object's location and velocity be propagated over the network?
   def network_sync?; @id and @local and parent.networked?; end
 
+  def self.reset_object_ids; @@next_object_id = 0; end
+
   def_delegators :@body_position, :x, :y, :x=, :y=
 
   def_delegators :@body, :reset_forces

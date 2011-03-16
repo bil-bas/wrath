@@ -8,6 +8,7 @@ class EnterServerIP < GameState
 
     $window.text_input = @textinput
     on_input([:enter, :return], :done)
+    on_input(:escape) { pop_game_state }
 
     @title = Text.create("Please enter server address:", size: 12)
     @ip = Text.create("", x: 0, y: 20, size: 20)

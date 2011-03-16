@@ -11,7 +11,7 @@ module Wrath
         if creature
           creature.health = @health
         else
-          log.warn { "Failed to set health for creature##{@creature_id} to #{value}" }
+          log.warn { "Failed to set health for creature##{@creature_id} to #{@health}" }
         end
       end
     end
