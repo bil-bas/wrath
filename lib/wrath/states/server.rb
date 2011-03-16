@@ -1,19 +1,17 @@
 module Wrath
 class Server < GameStates::NetworkServer
-  DEFAULT_PORT = 60000
-
   trait :timer
 
   attr_reader :remote_socket
 
   public
-  def accept_message?(message); [Message::Ready].find {|m| message.is_a? m }; end
+  def accept_message?(message); [Message::ClientReady].find {|m| message.is_a? m }; end
 
   public
   def initialize(options = {})
     options = {
       address: "0.0.0.0",
-      port: DEFAULT_PORT,
+      port: setting(:network_port),
     }.merge! options
 
     @remote_socket = nil
@@ -37,6 +35,7 @@ class Server < GameStates::NetworkServer
     else
       log.info { "Player connected: #{socket.inspect}" }
       @remote_socket = socket
+      send_msg(@remote_socket, Message::ServerReady.new(setting(:player_name)))
     end
   end
 

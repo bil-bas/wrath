@@ -4,10 +4,12 @@ class EnterServerIP < GameState
     super
 
     @textinput = TextInput.new
-    @textinput.text = "127.0.0.1"
+    @textinput.text = setting(:network_address)
 
     $window.text_input = @textinput
-    on_input([:enter, :return], :done)
+    on_input([:enter, :return]) do
+      push_game_state Client.new(address: @ip.text, port: setting(:network_port))
+    end
     on_input(:escape) { pop_game_state }
 
     @title = Text.create("Please enter server address:", size: 12)
@@ -16,10 +18,6 @@ class EnterServerIP < GameState
 
   def update
     @ip.text = @textinput.text
-  end
-
-  def done
-    push_game_state Client.new(address: @ip.text)
   end
 end
 end

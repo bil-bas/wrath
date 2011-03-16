@@ -2,10 +2,11 @@ module Wrath
 class Client < GameStates::NetworkClient
   trait :timer
 
+  public
+  def accept_message?(message); [Message::ServerReady].find {|m| message.is_a? m }; end
+
   def initialize(options = {})
     options = {
-      address: "127.0.0.1",
-      port: Server::DEFAULT_PORT,
     }.merge! options
 
     @font = Font[16]
@@ -19,8 +20,10 @@ class Client < GameStates::NetworkClient
 
   def on_connect
     log.info "Connected to server"
-    send_msg(Message::Ready.new)
-    push_game_state Lobby.new(self)
+
+    # Since we connected, accept the address/port used for future use.
+    set_setting(:network_address, address)
+    set_setting(:network_port, port)
   end
 
   def on_disconnect
