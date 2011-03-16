@@ -56,7 +56,9 @@ Dir[File.join(File.dirname(__FILE__), 'default_config', '*.yml')].each do |confi
 end
 
 class Game < Window
-  SIZE = [640, 480]
+  include Log
+
+  SIZE = [768, 480]
 
   TITLE = "=== Wrath! === Appease the gods or suffer the consequences..."
   attr_reader :pixel

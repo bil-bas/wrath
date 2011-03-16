@@ -16,8 +16,6 @@ class Altar < StaticObject
 
   def initialize(options = {})
     options = {
-      x: 80,
-      y: 60,
       animation: "altar_8x5.png",
     }.merge! options
 

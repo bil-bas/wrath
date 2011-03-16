@@ -139,7 +139,7 @@ class Play < GameState
     players[1].avatar = player2
 
     # The altar is all-important!
-    @altar = Altar.create
+    @altar = Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
     @objects << @altar
 
     # Mobs.
@@ -158,7 +158,7 @@ class Play < GameState
     # Top "blockers", not really tangible, so don't update/sync them.
     [10, 16].each do |y|
       x = -14
-      while x < 180
+      while x < $window.retro_width + 20
         Tree.create(x: x, y: rand(4) + y, paused: true)
         x += 6 + rand(6)
       end
@@ -167,22 +167,27 @@ class Play < GameState
 
   def random_tiles
     # Fill the grid with grass to start with.
-    grid = Array.new(20) { Array.new(20, Grass) }
+    num_columns, num_rows = ($window.retro_width / Tile::WIDTH).ceil, ($window.retro_height / Tile::HEIGHT).ceil
+    grid = Array.new(num_rows) { Array.new(num_columns, Grass) }
 
     # Add forest floor.
-    20.times {|i| grid[0][i] = grid[1][i] = Forest }
+    num_rows.times {|i| grid[0][i] = grid[1][i] = Forest }
 
     # Add water-features.
-    (rand(3) + 2).times do
-      pos = [rand(16) + 3, rand(18) + 1]
-      grid[pos[0]][pos[1]] = Water
+    (rand(5) + 1).times do
+      pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
+      grid[pos[1]][pos[0]] = Water
       (rand(5) + 2).times do
-        grid[pos[0] - 1 + rand(3)][pos[1] - 1 + rand(3)] = [Water, Water, Sand][rand(3)]
+        grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = [Water, Water, Sand][rand(3)]
       end
     end
 
     # Put gravel under the altar.
-    grid[9][9] = grid[9][10] = grid[10][9] = grid[10][10] = Gravel
+    ((num_rows / 2)..(num_rows / 2 + 2)).each do |y|
+      ((num_columns / 2 - 1)..(num_columns / 2)).each do |x|
+        grid[y][x] = Gravel
+      end
+    end
 
     send_message(Message::Map.new(grid)) if host?
 
@@ -202,7 +207,7 @@ class Play < GameState
   end
 
   def tile_at_coordinate(x, y)
-    @tiles[y / 6.0][x / 8.0]
+    @tiles[y / Tile::HEIGHT][x / Tile::WIDTH]
   end
 
   def setup
