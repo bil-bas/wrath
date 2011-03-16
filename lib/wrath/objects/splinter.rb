@@ -1,17 +1,13 @@
 module Wrath
-class Splinter < WrathParticle
+class Splinter < Droplet
+  COLOR = Color.rgb(73, 60, 43)
+
   def initialize(options = {})
     options = {
-      animation: "splinter_1x2.png",
-      angle: [0, 90][rand(2)],
+      color: COLOR,
     }.merge! options
 
     super options
-  end
-
-  def on_stopped
-    @casts_shadow = false
-    super
   end
 end
 end

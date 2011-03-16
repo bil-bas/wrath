@@ -1,5 +1,6 @@
 # A droplet of fluid, defaulting to being white.
 module Wrath
+# A particle that is just a single pixel which "stains" the ground it lands on.
 class Droplet < WrathParticle
   def initialize(options = {})
     options = {
@@ -11,8 +12,8 @@ class Droplet < WrathParticle
   end
 
   def on_stopped
-    @casts_shadow = false
-    super
+    parent.map.set_color(x, y, color)
+    destroy
   end
 end
 end

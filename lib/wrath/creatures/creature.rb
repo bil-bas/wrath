@@ -5,8 +5,8 @@ class Creature < Carriable
 
   ACTION_DISTANCE = 12
 
-  EXPLOSION_H_SPEED = 0.02..0.07
-  EXPLOSION_Z_VELOCITY = -0.1..0.3
+  EXPLOSION_H_SPEED = 0.04..0.1
+  EXPLOSION_Z_VELOCITY = 0.1..0.3
 
   WOUND_FLASH_PERIOD = 200
   AFTER_WOUND_FLASH_DURATION = 100
@@ -49,7 +49,7 @@ class Creature < Carriable
     @speed = options[:speed]
     @poisoned = options[:poisoned]
 
-    @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 10) + 4), h_speed: EXPLOSION_H_SPEED,
+    @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
     @carrying = nil

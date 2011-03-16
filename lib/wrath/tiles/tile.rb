@@ -1,13 +1,10 @@
 module Wrath
 class Tile < GameObject
-  SPRITE_WIDTH = SPRITE_HEIGHT = 8
+  include Log
 
+  HEIGHT = 8
+  WIDTH = 8
   SPRITE_SHEET_COLUMNS = 8
-
-  VERTICAL_SCALE = 0.75
-
-  HEIGHT = SPRITE_HEIGHT * VERTICAL_SCALE
-  WIDTH = SPRITE_WIDTH
 
   attr_reader :speed, :contents
 
@@ -18,7 +15,6 @@ class Tile < GameObject
   def initialize(options = {})
     options = {
       zorder: ZOrder::TILES,
-      factor_y: VERTICAL_SCALE,
       ground_level: 0,
       speed: 1,
     }.merge! options
@@ -26,19 +22,23 @@ class Tile < GameObject
     @ground_level = options[:ground_level]
     @speed = options[:speed]
 
-    @@sprites ||= SpriteSheet.new("tiles_8x8.png", SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_SHEET_COLUMNS)
+    @@sprites ||= SpriteSheet.new("tiles_8x8.png", HEIGHT, WIDTH, SPRITE_SHEET_COLUMNS)
 
     super
 
     @type = options[:position]
 
     self.image = @@sprites[*sprite_position]
-    self.x = (options[:grid][0] + 0.5) * WIDTH
-    self.y = (options[:grid][1] + 0.5) * HEIGHT
+    self.x = (options[:grid][0] + 0.5) * width
+    self.y = (options[:grid][1] + 0.5) * height
   end
 
   def touched_by(object)
     self
+  end
+
+  def draw
+    super
   end
 end
 end

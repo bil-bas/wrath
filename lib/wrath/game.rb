@@ -50,9 +50,8 @@ class Game < Window
   SIZE = [768, 480]
 
   TITLE = "=== Wrath! === Appease the gods or suffer the consequences..."
-  attr_reader :pixel
+  attr_reader :pixel, :sprite_scale
 
-  def sprite_scale; @sprite_scale; end
   def retro_width; width / @sprite_scale; end
   def retro_height; height / @sprite_scale; end
 

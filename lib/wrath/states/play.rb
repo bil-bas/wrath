@@ -20,7 +20,7 @@ class Play < GameState
 
   def_delegators :@map, :tile_at_coordinate
 
-  attr_reader :objects, :players, :network, :space, :altar, :winner
+  attr_reader :objects, :map, :players, :network, :space, :altar, :winner
 
   def networked?; not @network.nil?; end
   def host?; @network.is_a? Server; end
@@ -209,7 +209,7 @@ class Play < GameState
 
     # Put gravel under the altar.
     ((num_rows / 2)..(num_rows / 2 + 2)).each do |y|
-      ((num_columns / 2 - 1)..(num_columns / 2)).each do |x|
+      ((num_columns / 2 - 2)..(num_columns / 2 + 1)).each do |x|
         grid[y][x] = Gravel
       end
     end

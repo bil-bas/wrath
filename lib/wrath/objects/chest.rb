@@ -9,9 +9,9 @@ class Chest < Carriable
   CLOSED_SPRITE_FRAME = 0
   OPEN_SPRITE_FRAME = 1
 
-  EXPLOSION_H_SPEED = 0.3..0.5
+  EXPLOSION_H_SPEED = 0.5..1.0
   EXPLOSION_Z_VELOCITY = 0.5..0.9
-  EXPLOSION_NUMBER = 6..8
+  EXPLOSION_NUMBER = 15..20
 
   def initialize(options = {})
     options = {
