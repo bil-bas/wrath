@@ -46,12 +46,18 @@ class Player < BasicGameObject
   end
 
   def win!
-    @avatar.drop
+    if @state == :mounted
+      @avatar.carrier.drop
+    else
+      @avatar.drop
+    end
     @avatar.pause!
   end
 
   def lose!
+    @avatar.carrier.drop if @state == :mounted
     @avatar.die!
+    @avatar.pause!
   end
 
   def avatar=(creature)
@@ -81,14 +87,14 @@ class Player < BasicGameObject
   def update
     super
 
-    move_by_keys if local? and avatar
+    move_by_keys if local? and avatar and not parent.winner
   end
 
   def action
-    return unless avatar
+    return unless avatar and not parent.winner
 
     case avatar.state
-      when :carried
+      when :carried, :mounted
         @avatar.carrier.drop
 
       when :standing, :walking
@@ -97,47 +103,63 @@ class Player < BasicGameObject
   end
 
   def move_by_keys
+    moving = if avatar.state == :mounted
+               avatar.carrier
+             else
+               avatar
+             end
+
     case avatar.state
-      when :standing, :walking
+      when :standing, :walking, :mounted
         if holding_any? *@keys_left
           if holding_any? *@keys_up
             # NW
-            @avatar.move(315)
+            moving.move(315)
           elsif holding_any? *@keys_down
             # SW
-            @avatar.move(225)
+            moving.move(225)
           else
             # W
-            @avatar.move(270)
+            moving.move(270)
           end
         elsif holding_any? *@keys_right
           if holding_any? *@keys_up
             # NE
-            @avatar.move(45)
+            moving.move(45)
           elsif holding_any? *@keys_down
             # SE
-            @avatar.move(135)
+            moving.move(135)
           else
             # E
-            @avatar.move(90)
+            moving.move(90)
           end
         elsif holding_any? *@keys_up
           # N
-          @avatar.move(0)
+          moving.move(0)
         elsif holding_any? *@keys_down
           # S
-          @avatar.move(180)
+          moving.move(180)
         else
-          @avatar.set_body_velocity(0, 0)
+          moving.set_body_velocity(0, 0)
           # Standing entirely still.
         end
     end
   end
 
   def draw
-    return unless avatar
+    if avatar
+      message = if parent.winner
+                  if parent.winner == self
+                    "Ascended"
+                  else
+                    "Died"
+                  end
+                else
+                  "F: #{favor.to_i} H: #{@avatar.health.to_i}"
+                end
 
-    @font.draw "F: #{favor.to_i} H: #{@avatar.health.to_i}", *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+      @font.draw message, *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+    end
   end
 end
 end

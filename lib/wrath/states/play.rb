@@ -8,7 +8,8 @@ class Play < GameState
   NUM_CHICKENS = 2
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
 
-  PLAYER_SPAWNS = [[65, 60], [95, 60]]
+  # This is relative to the altar.
+  PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
   # Margin in which nothing should spawn.
   module Margin
@@ -153,19 +154,21 @@ class Play < GameState
   def create_objects
     log.info "Creating objects"
 
+    # The altar is all-important!
+    @altar = Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
+    @objects << @altar
+
     # Player 1.
-    player1 = Priest.create(local: true, x: PLAYER_SPAWNS[0][0], y: PLAYER_SPAWNS[0][1], animation: "player1_8x8.png")
+    player1 = Priest.create(local: true, x: altar.x + PLAYER_SPAWNS[0][0], y: altar.y + PLAYER_SPAWNS[0][1],
+                            animation: "player1_8x8.png")
     @objects << player1
     players[0].avatar = player1
 
     # Player 2.
-    player2 = Priest.create(local: @network.nil?, x: PLAYER_SPAWNS[1][0], y: PLAYER_SPAWNS[1][1], factor_x: -1, animation: "player2_8x8.png")
+    player2 = Priest.create(local: @network.nil?, x: altar.x + PLAYER_SPAWNS[1][0], y: altar.y + PLAYER_SPAWNS[1][1],
+                            factor_x: -1, animation: "player2_8x8.png")
     @objects << player2
     players[1].avatar = player2
-
-    # The altar is all-important!
-    @altar = Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
-    @objects << @altar
 
     # Mobs.
     1.times { @objects << Virgin.create(spawn: true) }
