@@ -34,17 +34,6 @@ module ZOrder
   GUI = 10000
 end
 
-class SpriteSheet
-  def initialize(file, width, height, tiles_wide)
-    @sprites = Image.load_tiles($window, File.join(Image.autoload_dirs[0], file), width, height, false)
-    @tiles_wide = tiles_wide
-  end
-
-  def [](x, y)
-    @sprites[y * @tiles_wide + x]
-  end
-end
-
 # Copy default config files, if they are not already available.
 config_dir = File.join(ROOT_PATH, 'config')
 FileUtils.mkdir_p config_dir
