@@ -92,7 +92,6 @@ class Game < Window
 
     super
 
-    sleep 0.02
     self.caption = "#{TITLE} [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
