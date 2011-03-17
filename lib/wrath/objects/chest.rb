@@ -13,6 +13,9 @@ class Chest < Carriable
   EXPLOSION_Z_VELOCITY = 0.5..0.9
   EXPLOSION_NUMBER = 15..20
 
+  # Minimum "size" of a creature so it bounces the chest it is in.
+  MIN_BOUNCE_ENCUMBRANCE = 0.4
+
   def initialize(options = {})
     options = {
       favor: -10,
@@ -104,7 +107,7 @@ class Chest < Carriable
 
     object.put_into(self)
 
-    if object.is_a? Creature and local?
+    if object.is_a? Creature and object.encumbrance >= MIN_BOUNCE_ENCUMBRANCE and local?
       every(2000 + rand(100), name: :bounce) { self.z_velocity = 0.8 }
     end
 
