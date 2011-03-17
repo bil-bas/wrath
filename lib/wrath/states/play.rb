@@ -4,12 +4,7 @@ class Play < GameState
 
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
-  NUM_GOATS = 5
-  NUM_CHICKENS = 2
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
-
-  # This is relative to the altar.
-  PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
@@ -169,7 +164,7 @@ class Play < GameState
     end
   end
 
-  def create_objects
+  def create_objects(player_spawns)
     log.info "Creating objects"
 
     # The altar is all-important!
@@ -177,65 +172,24 @@ class Play < GameState
     @objects << @altar
 
     # Player 1.
-    player1 = Priest.create(local: true, x: altar.x + PLAYER_SPAWNS[0][0], y: altar.y + PLAYER_SPAWNS[0][1],
+    player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
                             animation: "player1_8x8.png")
     @objects << player1
     players[0].avatar = player1
 
     # Player 2.
-    player2 = Priest.create(local: @network.nil?, x: altar.x + PLAYER_SPAWNS[1][0], y: altar.y + PLAYER_SPAWNS[1][1],
+    player2 = Priest.create(local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
                             factor_x: -1, animation: "player2_8x8.png")
     @objects << player2
     players[1].avatar = player2
-
-    # Mobs.
-    1.times { @objects << Virgin.create(spawn: true) }
-    NUM_GOATS.times { @objects << Goat.create(spawn: true) }
-    NUM_CHICKENS.times { @objects << Chicken.create(spawn: true) }
-    1.times { @objects << Bard.create(spawn: true) }
-
-    # Inanimate objects.
-    4.times { @objects << Rock.create(spawn: true) }
-    3.times { @objects << Chest.create(spawn: true, contains: [Crown, Chicken, Knight]) }
-    2.times { @objects << Fire.create(spawn: true) }
-    8.times { @objects << Tree.create(spawn: true) }
-    5.times { @objects << Mushroom.create(spawn: true) }
-
-    # Top "blockers", not really tangible, so don't update/sync them.
-    [10, 16].each do |y|
-      x = -14
-      while x < $window.retro_width + 20
-        Tree.create(x: x, y: rand(4) + y, paused: true)
-        x += 6 + rand(6)
-      end
-    end
   end
 
-  def random_tiles
+  def random_tiles(default_tile)
     # Fill the grid with grass to start with.
     num_columns, num_rows = ($window.retro_width / Tile::WIDTH).ceil, ($window.retro_height / Tile::HEIGHT).ceil
-    grid = Array.new(num_rows) { Array.new(num_columns, Grass) }
+    grid = Array.new(num_rows) { Array.new(num_columns, default_tile) }
 
-    # Add forest floor.
-    num_rows.times {|i| grid[0][i] = grid[1][i] = Forest }
-
-    # Add water-features.
-    (rand(5) + 1).times do
-      pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
-      grid[pos[1]][pos[0]] = Water
-      (rand(5) + 2).times do
-        grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = [Water, Water, Sand][rand(3)]
-      end
-    end
-
-    # Put gravel under the altar.
-    ((num_rows / 2)..(num_rows / 2 + 2)).each do |y|
-      ((num_columns / 2 - 2)..(num_columns / 2 + 1)).each do |x|
-        grid[y][x] = Gravel
-      end
-    end
-
-    grid
+    [num_columns, num_rows, grid]
   end
 
   def setup

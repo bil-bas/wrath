@@ -4,7 +4,7 @@ class Message
   class NewGame < Message
     protected
     def action(state)
-      state.push_game_state Play.new(state.network)
+      state.push_game_state ForestLevel.new(state.network)
     end
   end
 end

@@ -14,7 +14,7 @@ module Wrath
       on_input(:escape) { game_state_manager.pop_until_game_state Menu }
 
       if @network.is_a? Server
-        on_input(:space) { push_game_state Play.new(@network) }
+        on_input(:space) { push_game_state ForestLevel.new(@network) }
         Text.create(text: "Lobby - press space to play")
       else
         @network.send_msg(Message::ClientReady.new(setting(:player, :name)))

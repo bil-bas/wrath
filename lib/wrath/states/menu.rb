@@ -4,7 +4,7 @@ class Menu < Chingu::GameState
     super
 
     menu_items = {
-      "Local Game" => Play,
+      "Local Game" => ForestLevel,
       "Join Game" => EnterServerIP,
       "Host Game" => Server,
       "Exit" => :close,
