@@ -1,1 +1,1 @@
-ocra lib/wrath.rb --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*
+ocra bin/wrath.rbw --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*
