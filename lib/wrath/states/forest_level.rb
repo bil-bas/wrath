@@ -7,6 +7,8 @@ module Wrath
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
+    def self.to_s; "Forest of Even More Doom"; end
+
     def create_objects
       super(PLAYER_SPAWNS)
 

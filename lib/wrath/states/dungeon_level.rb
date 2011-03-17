@@ -1,0 +1,47 @@
+module Wrath
+  class DungeonLevel < Play
+    DEFAULT_TILE = Gravel
+
+    # This is relative to the altar.
+    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
+
+    def self.to_s; "Dungeon of Doom"; end
+
+    def create_objects
+      super(PLAYER_SPAWNS)
+
+      # Mobs.
+      3.times { @objects << Knight.create(spawn: true) }
+
+      # Inanimate objects.
+      8.times { @objects << Rock.create(spawn: true) }
+      6.times { @objects << Chest.create(spawn: true, contains: [Chicken, Goat, Knight]) }
+      4.times { @objects << Fire.create(spawn: true) }
+      8.times { @objects << Mushroom.create(spawn: true) }
+
+      # Top "blockers", not really tangible, so don't update/sync them.
+      [10, 16].each do |y|
+        x = -14
+        while x < $window.retro_width + 20
+          Rock.create(x: x, y: rand(4) + y, paused: true, factor: 2, collision_type: :static, mass: Float::INFINITY)
+          x += 6 + rand(6)
+        end
+      end
+    end
+
+    def random_tiles
+      num_columns, num_rows, grid = super(DEFAULT_TILE)
+
+      # Add water-features.
+      (rand(4)).times do
+        pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
+        grid[pos[1]][pos[0]] = Water
+        (rand(3) + 1).times do
+          grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = Water
+        end
+      end
+
+      grid
+    end
+  end
+end

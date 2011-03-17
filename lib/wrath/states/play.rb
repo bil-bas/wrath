@@ -50,7 +50,7 @@ class Play < GameState
       game_state_manager.pop_until_game_state (networked? ? Lobby : Menu)
     end
 
-    send_message(Message::NewGame.new) if host?
+    send_message(Message::NewGame.new(self.class)) if host?
 
     @last_sync = milliseconds
 
@@ -76,6 +76,23 @@ class Play < GameState
     end
 
     send_message Message::StartGame.new if host?
+  end
+
+  def self.levels
+    unless defined? @@levels
+      @@levels = []
+
+      Wrath::constants.each do |const_name|
+        const = Wrath.const_get const_name
+        if const != Play and const.ancestors.include? Play
+          @@levels << const
+        end
+      end
+
+      @@levels.sort_by {|level| level.to_s }
+    end
+
+    @@levels
   end
 
   def accept_message?(message)

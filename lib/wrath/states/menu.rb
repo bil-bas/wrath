@@ -4,7 +4,7 @@ class Menu < Chingu::GameState
     super
 
     menu_items = {
-      "Local Game" => ForestLevel,
+      "Local Game" => ->{ push_game_state(Lobby.new(nil, "Player2",  "Player1")) },
       "Join Game" => EnterServerIP,
       "Host Game" => Server,
       "Exit" => :close,
@@ -30,6 +30,7 @@ class Menu < Chingu::GameState
   def close
     log.info "Exited game"
     super
+    exit
   end
 end
 end
