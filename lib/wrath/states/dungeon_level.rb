@@ -12,6 +12,7 @@ module Wrath
 
       # Mobs.
       3.times { @objects << Knight.create(spawn: true) }
+      2.times { @objects << BlueMeanie.create(spawn: true) }
 
       # Inanimate objects.
       8.times { @objects << Rock.create(spawn: true) }
