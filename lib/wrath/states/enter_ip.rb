@@ -4,11 +4,11 @@ class EnterServerIP < GameState
     super
 
     @textinput = TextInput.new
-    @textinput.text = setting(:network, :address)
+    @textinput.text = settings[:network, :address]
 
     $window.text_input = @textinput
     on_input([:enter, :return]) do
-      push_game_state Client.new(address: @ip.text, port: setting(:network, :port))
+      push_game_state Client.new(address: @ip.text, port: settings[:network, :port])
     end
     on_input(:escape) { pop_game_state }
 

@@ -22,8 +22,8 @@ class Client < GameStates::NetworkClient
     log.info "Connected to server"
 
     # Since we connected, accept the address/port used for future use.
-    set_setting(:network, :address, address)
-    set_setting(:network, :port, port)
+    settings[:network, :address] = address
+    settings[:network, :port] = port
   end
 
   def on_disconnect

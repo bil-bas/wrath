@@ -6,8 +6,10 @@ module Chingu
 
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
-    alias_method :original_initialize, :initialize
+    # Settings object, containing general settings from config.
+    def settings; @@settings; end
 
+    alias_method :original_initialize, :initialize
     public
     def initialize(options = {})
       @@settings ||= Wrath::Settings.new(SETTINGS_CONFIG_FILE)
@@ -30,17 +32,5 @@ module Chingu
     public
     # Do we allow a specific network message to perform its action?
     def accept_message?(message); false; end
-
-    protected
-    # Read from the general settings file.
-    def setting(*keys)
-      @@settings[*keys]
-    end
-
-    protected
-    # Write access to the general settings file.
-    def set_setting(*keys, value)
-      @@settings[*keys] = value
-    end
   end
 end

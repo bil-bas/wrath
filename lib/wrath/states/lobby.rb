@@ -9,7 +9,7 @@ module Wrath
     def initialize(network, opponent_name, self_name = nil)
       super()
 
-      self_name = setting(:player, :name) unless self_name
+      self_name = settings[:player, :name] unless self_name
 
       @network, @self_name, @opponent_name = network, self_name, opponent_name
 
@@ -20,7 +20,7 @@ module Wrath
           Text.create(text: "Lobby - pick a level")
 
         when Client
-          @network.send_msg(Message::ClientReady.new(setting(:player, :name)))
+          @network.send_msg(Message::ClientReady.new(settings[:player, :name]))
           Text.create(text: "Lobby - wait for host to pick a level")
 
         else
