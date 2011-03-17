@@ -169,10 +169,10 @@ class Play < GameState
     end
 
     @space.on_collision(:object, :object) do |a, b|
-      # Objects only affect one another on the host/local machine.
+      # Objects only affect one another on the host/local machine and only if they touch vertically.
       if client?
         false
-      else
+      elsif not ((a.z > b.z + b.height) or (b.z > a.z + a.height))
         collides = a.on_collision(b)
         collides ||= b.on_collision(a)
 
