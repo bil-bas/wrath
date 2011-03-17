@@ -6,6 +6,17 @@ h2. Description
 
 Wrath! is a retro 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
 
+h3. User settings
+
+Wrath saves per-user-settings in the '~/.wrath' folder (This is probably 'C:\Users\<username>\.wrath\' on Windows).
+Until a proper way to edit settings is implemented, if you need to change network port or change keys, you should edit
+these YAML files manually.
+
+h3. Logs
+
+Wrath creates a log every time it runs. If you have problems or crashes, it will help to include a copy of the log
+in your report :)
+
 h2. Requirements
 
 h3. Windows
