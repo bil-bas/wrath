@@ -1,4 +1,6 @@
 ---
-:network_address: 127.0.0.1
-:network_port: 60000
-:player_name: Player
+:network:
+  :address: 127.0.0.1
+  :port: 60000
+:player:
+  :name: Player

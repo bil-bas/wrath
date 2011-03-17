@@ -34,16 +34,6 @@ module ZOrder
   GUI = 10000
 end
 
-# Copy default config files, if they are not already available.
-config_dir = File.join(ROOT_PATH, 'config')
-FileUtils.mkdir_p config_dir
-Dir[File.join(File.dirname(__FILE__), 'default_config', '*.yml')].each do |config_file|
-  unless File.exists?(File.join(config_dir, File.basename(config_file)))
-    Log.log.info { "Creating default config file: #{File.basename(config_file)}" }
-    FileUtils.cp(config_file, config_dir)
-  end
-end
-
 class Game < Window
   include Log
 

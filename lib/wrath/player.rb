@@ -8,7 +8,7 @@ class Player < BasicGameObject
 
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
 
-  KEYS_CONFIG_FILE = File.join(ROOT_PATH, 'config', 'keys.yml')
+  KEYS_CONFIG_FILE = 'keys.yml'
 
   INITIAL_FAVOR = 0
   FAVOR_TO_WIN = 100
@@ -27,14 +27,13 @@ class Player < BasicGameObject
 
     @number, @local = number, local
 
-    keys_config = YAML.load(File.open(KEYS_CONFIG_FILE) {|f| f.read })
+    @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
 
-    keys = keys_config[:players][@number + 1]
-    @keys_left = keys[:left]
-    @keys_right = keys[:right]
-    @keys_up = keys[:up]
-    @keys_down = keys[:down]
-    @keys_action = keys[:action]
+    @keys_left = @@keys_config[:players, @number + 1, :left]
+    @keys_right = @@keys_config[:players, @number + 1, :right]
+    @keys_up = @@keys_config[:players, @number + 1, :up]
+    @keys_down = @@keys_config[:players, @number + 1, :down]
+    @keys_action = @@keys_config[:players, @number + 1, :action]
 
     @gui_pos = [[10, 0], [115, 0]][@number]
     @font = Font[8]

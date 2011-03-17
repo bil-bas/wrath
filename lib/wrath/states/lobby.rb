@@ -17,7 +17,7 @@ module Wrath
         on_input(:space) { push_game_state Play.new(@network) }
         Text.create(text: "Lobby - press space to play")
       else
-        @network.send_msg(Message::ClientReady.new(setting(:player_name)))
+        @network.send_msg(Message::ClientReady.new(setting(:player, :name)))
         Text.create(text: "Lobby - wait for host to start game")
       end
 

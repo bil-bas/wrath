@@ -11,7 +11,7 @@ class Server < GameStates::NetworkServer
   def initialize(options = {})
     options = {
       address: "0.0.0.0",
-      port: setting(:network_port),
+      port: setting(:network, :port),
     }.merge! options
 
     @remote_socket = nil
@@ -35,7 +35,7 @@ class Server < GameStates::NetworkServer
     else
       log.info { "Player connected: #{socket.inspect}" }
       @remote_socket = socket
-      send_msg(@remote_socket, Message::ServerReady.new(setting(:player_name)))
+      send_msg(@remote_socket, Message::ServerReady.new(setting(:player, :name)))
     end
   end
 
