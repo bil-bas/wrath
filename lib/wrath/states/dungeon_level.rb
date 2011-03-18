@@ -22,6 +22,7 @@ module Wrath
       (1 + rand(3)).times { @objects << Mimic.create(spawn: true) }
       4.times { @objects << Fire.create(spawn: true) }
       8.times { @objects << Mushroom.create(spawn: true) }
+      1.times { @objects << OgreSkull.create(spawn: true) }
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|
