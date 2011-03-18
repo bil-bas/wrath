@@ -1,5 +1,5 @@
 module Wrath
-class Egg < Carriable
+class Egg < DynamicObject
   trait :timer
 
   GESTATION_DELAY = 3 * 1000

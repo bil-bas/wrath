@@ -2,7 +2,7 @@ module Wrath
 
 require 'forwardable'
 
-class WrathObject < GameObject
+class BaseObject < GameObject
   include Log
   extend Forwardable
 

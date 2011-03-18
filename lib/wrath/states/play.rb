@@ -39,7 +39,7 @@ class Play < GameState
 
   # network: Server, Client, nil
   def initialize(network = nil)
-    WrathObject.reset_object_ids
+    BaseObject.reset_object_ids
 
     @network = network
 

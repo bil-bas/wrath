@@ -1,5 +1,5 @@
 module Wrath
-class Pebble < WrathParticle
+class Pebble < Particle
   def initialize(options = {})
     options = {
       animation: "pebble_2x2.png",

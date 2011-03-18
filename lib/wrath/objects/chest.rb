@@ -1,5 +1,5 @@
 module Wrath
-class Chest < Carriable
+class Chest < Container
   trait :timer
 
   def open?; not @contains; end

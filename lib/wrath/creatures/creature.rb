@@ -1,6 +1,6 @@
 module Wrath
 
-class Creature < Carriable
+class Creature < Container
   trait :timer
 
   ACTION_DISTANCE = 12

@@ -1,5 +1,5 @@
 module Wrath
-class Rock < Carriable
+class Rock < DynamicObject
   DAMAGE = 10 # Damage from dropping a rock on someone.
   EXPLOSION_HEALTH = -40
 

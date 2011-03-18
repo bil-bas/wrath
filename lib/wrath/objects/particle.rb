@@ -1,5 +1,5 @@
 module Wrath
-class WrathParticle < WrathObject
+class Particle < BaseObject
 
   def network_destroy?; false; end
   def network_create?; false; end

@@ -1,5 +1,5 @@
 module Wrath
-class Fire < Carriable
+class Fire < DynamicObject
   trait :timer
 
   ANIMATION_DELAY = 300

@@ -1,6 +1,6 @@
 # Crown of levitation. It makes the player float, but costs favour.
 module Wrath
-class Crown < Carriable
+class Crown < DynamicObject
   LEVITATE_HEIGHT = 15
   LEVITATE_SPEED = 0.05
   FAVOUR_COST = 1 / 1000.0 # Per second

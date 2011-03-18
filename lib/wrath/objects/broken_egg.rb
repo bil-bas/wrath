@@ -1,5 +1,5 @@
 module Wrath
-class BrokenEgg < Carriable
+class BrokenEgg < DynamicObject
   trait :timer
 
   ANIMATION_DELAY = 300

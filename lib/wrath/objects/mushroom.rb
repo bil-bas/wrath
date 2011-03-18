@@ -1,5 +1,5 @@
 module Wrath
-class Mushroom < Carriable
+class Mushroom < DynamicObject
   POISON_DURATION = 4000
 
   def initialize(options = {})

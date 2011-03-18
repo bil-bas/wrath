@@ -1,5 +1,5 @@
 module Wrath
-class Carriable < WrathObject
+class DynamicObject < BaseObject
   attr_reader :carrier, :thrown_by, :z_offset
 
   def can_drop?; true; end

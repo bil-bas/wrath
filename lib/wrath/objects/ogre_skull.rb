@@ -1,5 +1,5 @@
 module Wrath
-  class OgreSkull < Carriable
+  class OgreSkull < DynamicObject
     FRAME_GROUND = 0
     FRAME_WORN = 1
 

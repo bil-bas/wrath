@@ -1,5 +1,5 @@
 module Wrath
-  class Potion < Carriable
+  class Potion < DynamicObject
     def can_be_activated?(actor); false; end
 
     def initialize(options = {})
