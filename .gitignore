@@ -2,5 +2,7 @@
 /.idea
 /doc
 /config
+/pkg
+/README.html
 /*.log
 /*.exe
