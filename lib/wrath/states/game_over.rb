@@ -10,6 +10,9 @@ class GameOver < GameState
     @winner = winner
     @avatar = winner.avatar
 
+    @avatar.reset_forces
+    @avatar.pause!
+
     super
 
     on_input(:escape) do

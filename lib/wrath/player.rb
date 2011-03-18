@@ -50,13 +50,11 @@ class Player < BasicGameObject
     else
       @avatar.drop
     end
-    @avatar.pause!
   end
 
   def lose!
     @avatar.carrier.drop if @state == :mounted
     @avatar.die!
-    @avatar.pause!
   end
 
   def avatar=(creature)
