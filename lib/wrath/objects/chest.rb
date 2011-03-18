@@ -6,6 +6,8 @@ class Chest < Carriable
   def closed?; @contains; end
   def can_pick_up?; not @contains; end
 
+  PLAYER_TRAPPED_DURATION = 2000
+
   CLOSED_SPRITE_FRAME = 0
   OPEN_SPRITE_FRAME = 1
 
@@ -107,15 +109,26 @@ class Chest < Carriable
 
     object.put_into(self)
 
-    if object.is_a? Creature and object.encumbrance >= MIN_BOUNCE_ENCUMBRANCE and local?
-      every(2000 + rand(100), name: :bounce) { self.z_velocity = 0.8 }
-    end
-
     self.image = @frames[CLOSED_SPRITE_FRAME]
     @contains = object
     @contains.velocity = [0, 0, 0]
     @contains.x = -1000 * id
     @contains.pause!
+
+    unless parent.client?
+      if object.is_a? Creature and object.encumbrance >= MIN_BOUNCE_ENCUMBRANCE
+        every(1500 + rand(500), name: :bounce) { self.z_velocity = 0.8 }
+      end
+
+      if @contains.controlled_by_player?
+        after(PLAYER_TRAPPED_DURATION) do
+          if @contains == object
+            open
+            parent.send_message(Message::PerformAction.new(object, self))
+          end
+        end
+      end
+    end
   end
 end
 end
