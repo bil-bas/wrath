@@ -2,6 +2,8 @@ module Wrath
   class DungeonLevel < Play
     DEFAULT_TILE = Gravel
 
+    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire]
+
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
@@ -16,7 +18,7 @@ module Wrath
 
       # Inanimate objects.
       8.times { @objects << Rock.create(spawn: true) }
-      (4 + rand(3)).times { @objects << Chest.create(spawn: true, contains: [Chicken, Mushroom, Crown, Fire]) }
+      (4 + rand(3)).times { @objects << Chest.create(spawn: true, contains: CHEST_CONTENTS) }
       (1 + rand(3)).times { @objects << Mimic.create(spawn: true) }
       4.times { @objects << Fire.create(spawn: true) }
       8.times { @objects << Mushroom.create(spawn: true) }

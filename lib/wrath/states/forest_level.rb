@@ -3,6 +3,7 @@ module Wrath
     DEFAULT_TILE = Grass
     NUM_GOATS = 5
     NUM_CHICKENS = 2
+    CHEST_CONTENTS = [Crown, Chicken]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -20,7 +21,7 @@ module Wrath
 
       # Inanimate objects.
       4.times { @objects << Rock.create(spawn: true) }
-      3.times { @objects << Chest.create(spawn: true, contains: [Crown, Chicken]) }
+      3.times { @objects << Chest.create(spawn: true, contains: CHEST_CONTENTS) }
       2.times { @objects << Fire.create(spawn: true) }
       8.times { @objects << Tree.create(spawn: true) }
       5.times { @objects << Mushroom.create(spawn: true) }
