@@ -30,7 +30,7 @@ module Wrath
 
       keys.each_with_index do |key, i|
         unless value.is_a? Hash and value.has_key? key
-          raise "Tried to read non-existent key, '#{keys[0...i].join('/')}', in settings file"
+          raise "Tried to read non-existent key, '#{keys[0..i].join('/')}', in settings file"
         end
 
         value = value[key]
@@ -51,7 +51,7 @@ module Wrath
 
       keys[0...-1].each_with_index do |key, i|
         unless hash.is_a? Hash and hash.has_key? key
-          raise "Tried to set non-existent key, '#{keys[0...i].join('/')}', in settings file"
+          raise "Tried to set non-existent key, '#{keys[0..i].join('/')}', in settings file"
         end
 
         hash = hash[key]
