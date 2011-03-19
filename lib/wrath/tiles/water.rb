@@ -30,7 +30,7 @@ class Water < AnimatedTile
 
   def touched_by(object)
     case object
-      when Fire, Particle
+      when Fire, Wrath::Particle
         object.destroy
         return
 

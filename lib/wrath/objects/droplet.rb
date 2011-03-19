@@ -1,7 +1,7 @@
 # A droplet of fluid, defaulting to being white.
 module Wrath
 # A particle that is just a single pixel which "stains" the ground it lands on.
-class Droplet < Particle
+class Droplet < Wrath::Particle
   def initialize(options = {})
     options = {
       elasticity: 0,

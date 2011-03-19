@@ -33,12 +33,12 @@ class Rock < DynamicObject
   def on_collision(other)
     case other
       when Mushroom, Egg
-        if (not carried?) and z > ground_level
+        if (not inside_container?) and z > ground_level
           other.destroy
         end
 
       when Creature
-        if not thrown_by.include? other and (not carried?) and z > ground_level
+        if not thrown_by.include? other and (not inside_container?) and z > ground_level
           other.health -= DAMAGE
           @thrown_by << other
         end

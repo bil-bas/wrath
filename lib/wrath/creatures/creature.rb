@@ -1,6 +1,8 @@
 module Wrath
 
 class Creature < Container
+  extend Forwardable
+
   trait :timer
 
   ACTION_DISTANCE = 12
@@ -24,19 +26,19 @@ class Creature < Container
   FRAME_SLEEP = 3
   FRAME_DEAD = 3
 
-  attr_reader :state, :speed, :favor, :health, :carrying, :player, :max_health
+  attr_reader :state, :speed, :favor, :health, :player, :max_health
 
   attr_writer :player
+  alias_method :carrying?, :full?
+  alias_method :empty_handed?, :empty?
 
-  def z_offset; super + ((carried? and carrier.mount?) ? -4 : 0); end
   def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
-  def carrying?; not @carrying.nil?; end
-  def empty_handed?; @carrying.nil?; end
   def controlled_by_player?; not @player.nil?; end
   def poisoned?; @poisoned; end
 
+  public
   def initialize(options = {})
     options = {
         health: 10000,
@@ -52,7 +54,6 @@ class Creature < Container
     @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
-    @carrying = nil
     @state = :standing
     @player = nil
 
@@ -62,22 +63,19 @@ class Creature < Container
     @walking_animation.delay = WALK_ANIMATION_DELAY
   end
 
+  public
   def die!
-    # Drop anything you are carrying.
-    drop
-
     # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
     parent.objects << Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
                                     encumbrance: encumbrance, position: position, velocity: velocity,
                                     emitter: @sacrificial_explosion, local: (not parent.client?))
 
-    # Drop off anything you are being carried on (do this after creating the corpse, so we don't get "thrown".
-    carrier.drop if carried?
     destroy
 
     parent.lose!(player) if player and not parent.winner
   end
 
+  protected
   def draw_self
     super
 
@@ -86,6 +84,7 @@ class Creature < Container
     end
   end
 
+  public
   def health=(value)
     original_health = @health
     @health = [[value, 0].max, max_health].min
@@ -105,65 +104,42 @@ class Creature < Container
     @health
   end
 
+  protected
   def effective_speed
-    @carrying ? (@speed * (1 - @carrying.encumbrance)) : @speed
+    contents ? (@speed * (1 - contents.encumbrance)) : @speed
   end
 
-  def drop
-    return unless @carrying and @carrying.can_drop?
+  public
+  def on_having_dropped(object)
+    if alive?
+      # Give a little push if you are stationary, so that it doesn't just land at their feet.
+      extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.5 : 0
+      object.x_velocity += x_velocity * 0.5 + extra_x_velocity
+      object.y_velocity += y_velocity * 0.5
+      object.z_velocity += 0.5
+    end
 
-    # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
-    @parent.send_message Message::PerformAction.new(self) if parent.networked? and (local? or (remote? and @carrying.controlled_by_player?))
-
-    # Dropped objects revert to being owned by the host.
-    @carrying.local = (not parent.client?)
-
-    dropping = @carrying
-    @carrying = nil
-
-    @parent.objects.push dropping
-
-    # Give a little push if you are stationary, so that it doesn't just land at their feet.
-    extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.2 : 0
-    dropping.dropped(self, x_velocity * 1.5 + extra_x_velocity, y_velocity * 1.5, z_velocity + 0.5)
-
-    dropping
+    nil
   end
 
+  public
   def local=(value)
     # Player avatar never change locality.
     super(value) unless controlled_by_player?
   end
 
+  public
   def mount(mount)
     mount.activate(self)
   end
 
+  public
   # The creature's ghost has ascended, after sacrifice.
   def ghost_disappeared
 
   end
 
-  def pick_up(object)
-    return unless object.can_pick_up?
-
-    drop if carrying?
-
-    @parent.send_message(Message::PerformAction.new(self, object)) if @parent.host?
-
-    # Picking up objects, except the other player, changes their locality to that of the carrier.
-    object.local = local?
-
-    parent.objects.delete object
-    @carrying = object
-    @carrying.picked_up(self)
-
-    if (factor_x > 0 and @carrying.factor_x < 0) or
-        (factor_x < 0 and @carrying.factor_x > 0)
-      @carrying.factor_x *= -1
-    end
-  end
-
+  public
   # The player performs an action.
   def action
     # Find all objects within range, then check them in order
@@ -187,9 +163,10 @@ class Creature < Container
     end
 
     # We couldn't activate anything, so drop what we are carrying, if anything.
-    drop if carrying?
+    drop
   end
 
+  public
   def update
     super
 
@@ -203,10 +180,10 @@ class Creature < Container
     end
 
     # Ensure any carried object faces in the same direction as the player.
-    if @carrying
-      if (factor_x > 0 and @carrying.factor_x < 0) or
-          (factor_x < 0 and @carrying.factor_x > 0)
-        @carrying.factor_x *= -1
+    if carrying?
+      if (factor_x > 0 and contents.factor_x < 0) or
+          (factor_x < 0 and contents.factor_x > 0)
+        contents.factor_x *= -1
       end
     end
 
@@ -230,18 +207,21 @@ class Creature < Container
                  end
   end
 
-  def picked_up(by)
-    @state = by.mount? ? :mounted : :carried
+  protected
+  def on_being_picked_up(container)
+    super(container)
+    @state = (container.is_a?(Creature) and container.mount?) ? :mounted : :carried
     drop
     stop_timer :stand_up
-    super(by)
   end
 
-  def dropped(*args)
+  protected
+  def on_being_dropped(container)
+    super(container)
     @state = :thrown
-    super(*args)
   end
 
+  protected
   def reset_color
     if poisoned?
       @overlay_color = POISON_COLOR
@@ -250,6 +230,7 @@ class Creature < Container
     end
   end
 
+  public
   def poison(duration)
     # TODO: play gulping noise.
     @poisoned = true
@@ -258,16 +239,19 @@ class Creature < Container
     after(duration, name: :cure_poison) { cure_poison }
   end
 
+  public
   def move(angle)
     angle += (Math::sin(milliseconds / 150) * 45) if poisoned?
     set_body_velocity(angle, effective_speed)
   end
 
+  protected
   def cure_poison
     @poisoned = false
     reset_color
   end
 
+  protected
   def update_color
     # Reset colour if it was a while since we were wounded.
     if @first_wounded_at
@@ -284,6 +268,7 @@ class Creature < Container
     end
   end
 
+  protected
   def on_stopped
     case @state
       when :thrown

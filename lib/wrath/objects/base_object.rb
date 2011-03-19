@@ -45,6 +45,7 @@ class BaseObject < GameObject
   def velocity; [@x_velocity, @y_velocity, @z_velocity]; end
   def velocity=(vector); @x_velocity, @y_velocity, @z_velocity = vector; end
 
+  public
   def initialize(options = {})
     options = {
       rotation_center: :bottom_center,
@@ -117,6 +118,7 @@ class BaseObject < GameObject
     @parent.space.add_shape @shape
   end
 
+  public
   def init_physics(x, y, width, height, collision_type, shape, mass)
     @body = CP::Body.new(mass, Float::INFINITY)
     @body.p = CP::Vec2.new(x, y)
@@ -140,11 +142,13 @@ class BaseObject < GameObject
     @shape.owner = self
   end
 
+  public
   def sync(position, velocity)
     self.position = position
     self.velocity = velocity
   end
 
+  protected
   def recreate_options
     {
       id: id,
@@ -154,10 +158,12 @@ class BaseObject < GameObject
     }
   end
 
+  public
   def spawn
     self.position = spawn_position
   end
 
+  public
   def draw
     if z < 0
       # Clip bottom of sprite, but allow shadow to still be seem (sticks out horizontally)
@@ -169,6 +175,7 @@ class BaseObject < GameObject
     end
   end
 
+  protected
   def draw_self
     # Draw a shadow
     if casts_shadow?
@@ -189,10 +196,12 @@ class BaseObject < GameObject
     @image.draw_rot(x, y - z, y, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
   end
 
+  protected
   def ground_level
     @tile ? @tile.ground_level : 0
   end
 
+  public
   def update
     # Check which tile we start on.
     @old_tile = @tile
@@ -229,10 +238,12 @@ class BaseObject < GameObject
     super
   end
 
+  protected
   def frame_time
     parent.frame_time
   end
 
+  public
   def update_forces
     @body.reset_forces
 
@@ -247,11 +258,13 @@ class BaseObject < GameObject
     end
   end
 
+  public
   def set_body_velocity(angle, force)
     @x_velocity = offset_x(angle, 1) * force
     @y_velocity = offset_y(angle, 1) * force
  end
 
+  protected
   def spawn_position
     margin = parent.class::Margin
     loop do
@@ -266,31 +279,36 @@ class BaseObject < GameObject
     end
   end
 
+  public
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
     @sacrificial_explosion.emit([altar.x, altar.y, altar.z + altar.height]) if @sacrificial_explosion
   end
 
+  public
   def pause!
     reset_forces
     super
   end
 
+  protected
   # Object has come to a halt.
   def on_stopped
 
   end
 
+  protected
   # Object has bounced off the ground.
   def on_bounced
 
   end
 
+  public
   def on_collision(other)
     case other
       when Wall
         # Everything, except carrued objects, hit walls.
-        collides = (not (can_pick_up? and carried?))
+        collides = (not (can_pick_up? and inside_container?))
 
         # Bounce back from the edge of the screen
         if collides and not controlled_by_player?
@@ -315,6 +333,7 @@ class BaseObject < GameObject
     end
   end
 
+  public
   def destroy
     super
 

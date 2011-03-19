@@ -3,6 +3,7 @@ module Wrath
 class Chicken < Mob
   PERCENTAGE_LAYING_AN_EGG = 33
 
+  public
   def initialize(options = {})
     options = {
       favor: 10,
@@ -18,11 +19,11 @@ class Chicken < Mob
     super(options)
   end
 
-  def dropped(player, x_velocity, y_velocity, z_velocity)
-    super(player, x_velocity, y_velocity, z_velocity)
-
-    unless parent.client?
-      player.pick_up(Egg.create(parent: parent)) if rand(100) < PERCENTAGE_LAYING_AN_EGG
+  public
+  def on_being_dropped(actor)
+    super(actor)
+    if actor.is_a? Creature and not parent.client?
+      actor.pick_up(Egg.create(parent: parent)) if rand(100) < PERCENTAGE_LAYING_AN_EGG
     end
   end
 end

@@ -2,6 +2,7 @@ module Wrath
 class Bard < Mob
   trait :timer
 
+  public
   def initialize(options = {})
     options = {
       favor: 35,
@@ -20,6 +21,7 @@ class Bard < Mob
     after(2) { play }
   end
 
+  protected
   def play
     if [x_velocity, y_velocity, z_velocity] == [0, 0, 0]
       Note.create(parent: parent, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)

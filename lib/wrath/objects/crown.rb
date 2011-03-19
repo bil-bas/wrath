@@ -9,11 +9,11 @@ class Crown < DynamicObject
 
   # Speeds the user up while flying, but not on the ground.
   def encumbrance
-    (empowered? and @carrier.z > @carrier.ground_level) ? -0.25 : 0
+    (empowered? and container.z > container.ground_level) ? -0.25 : 0
   end
 
   def empowered?
-    @carrier and @carrier.player and @carrier.player.favor > 0
+    inside_container? and container.player and container.player.favor > 0
   end
 
   def initialize(options = {})
@@ -29,8 +29,8 @@ class Crown < DynamicObject
 
   def update
     if empowered?
-      @carrier.player.favor -= FAVOUR_COST * frame_time
-      @carrier.z_velocity = [LEVITATE_HEIGHT - @carrier.z, 0].max * LEVITATE_SPEED
+      container.player.favor -= FAVOUR_COST * frame_time
+      container.z_velocity = [LEVITATE_HEIGHT - container.z, 0].max * LEVITATE_SPEED
     end
 
     super

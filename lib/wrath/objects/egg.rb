@@ -22,8 +22,8 @@ class Egg < DynamicObject
     after(GESTATION_DELAY, name: :gestation) { hatch }
   end
 
-  def picked_up(*args)
-    super(*args)
+  def on_being_picked_up(container)
+    super(container)
     stop_timer(:gestation)
   end
 
@@ -35,10 +35,9 @@ class Egg < DynamicObject
   def on_collision(other)
     case other
       when Priest, Virgin, Knight, Paladin, Bard # TODO: Humanoid?
-        if not thrown_by.include? other and (not carried?) and z > ground_level
-          other.drop
-          other.pick_up(BrokenEgg.create(parent: parent))
+        if not thrown_by.include? other and (not inside_container?) and z > ground_level
           destroy
+          other.pick_up(BrokenEgg.create(parent: parent))
         end
     end
 

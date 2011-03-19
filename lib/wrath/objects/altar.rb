@@ -7,13 +7,15 @@ class Altar < StaticObject
   BLOOD_DRIP_FRAME_RANGE = 1..4 # 4 frames of animation.
   GHOST_COLOR = Color.rgb(200, 200, 255)
 
+  public
   def can_be_activated?(actor)
-    actor.carrying and
+    actor.carrying? and
         not actor.mount? and
-        not actor.carrying.controlled_by_player? and
+        not actor.contents.controlled_by_player? and
         not @sacrifice
   end
 
+  public
   def initialize(options = {})
     options = {
       animation: "altar_8x5.png",
@@ -30,8 +32,9 @@ class Altar < StaticObject
     @blood_drip_animation.loop = false
   end
 
+  public
   def activate(actor)
-    lamb = actor.carrying
+    lamb = actor.contents
     case lamb
       when Creature
         @blood = 100
@@ -48,10 +51,10 @@ class Altar < StaticObject
     @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
 
     lamb.sacrificed(actor, self)
-    actor.instance_variable_set(:@carrying, nil)
     lamb.destroy unless parent.client?
   end
 
+  public
   def draw
     super
 
@@ -63,6 +66,7 @@ class Altar < StaticObject
     end
   end
 
+  public
   def update
     super
 

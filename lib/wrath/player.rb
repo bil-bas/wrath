@@ -46,14 +46,14 @@ class Player < BasicGameObject
 
   def win!
     if @state == :mounted
-      @avatar.carrier.drop
+      @avatar.container.drop
     else
       @avatar.drop
     end
   end
 
   def lose!
-    @avatar.carrier.drop if @state == :mounted
+    @avatar.container.drop if @state == :mounted
     @avatar.die!
   end
 
@@ -92,7 +92,7 @@ class Player < BasicGameObject
 
     case avatar.state
       when :carried, :mounted
-        @avatar.carrier.drop
+        @avatar.container.drop
 
       when :standing, :walking
         @avatar.action
@@ -101,7 +101,7 @@ class Player < BasicGameObject
 
   def move_by_keys
     moving = if avatar.state == :mounted
-               avatar.carrier
+               avatar.container
              else
                avatar
              end

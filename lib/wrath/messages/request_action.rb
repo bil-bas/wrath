@@ -9,19 +9,20 @@ class Message
     def initialize(actor, target = nil)
       @actor_id = actor.id
       @target_id = target ? target.id : nil
-      @carrying_id = actor.carrying ? actor.carrying.id : nil
+      @contents_id = actor.full? ? actor.contents.id : nil
     end
 
     protected
     def action(state)
+      log.debug self.inspect
       actor = object_by_id(@actor_id)
-      carrying = @carrying_id ? object_by_id(@carrying_id) : nil
+      contents = @contents_id ? object_by_id(@contents_id) : nil
       target = @target_id ? object_by_id(@target_id) : nil
 
       if actor
-        if @carrying_id.nil? or carrying
+        if @contents_id.nil? or contents
           # Ensure the actor is still carrying the same object on the host.
-          if actor.carrying == carrying
+          if actor.contents == contents
             if @target_id.nil? or target
               if target
                 target.activate(actor)
@@ -32,10 +33,10 @@ class Message
               log.warn { "#{log_pre} could not find target ##{@target_id}" }
             end
           else
-            log.warn { "#{log_pre} actor ##{@actor_id} no longer carrying #{@carrying_id ? "#{carrying.class}##{@carrying_id}" : "nothing"}" }
+            log.warn { "#{log_pre} actor ##{@actor_id} no longer carrying #{@contents_id ? "#{contents.class}##{@contents_id}" : "nothing"}" }
           end
         else
-          log.warn { "#{log_pre} could not find carried ##{@carrying_id}" }
+          log.warn { "#{log_pre} could not find carried ##{@contents_id}" }
         end
       else
         log.warn { "#{log_pre} could not find actor ##{@actor_id}" }

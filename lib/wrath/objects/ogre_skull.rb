@@ -15,13 +15,13 @@ module Wrath
       super  options
     end
 
-    def picked_up(actor)
-      super(actor)
+    def on_being_picked_up(container)
+      super(container)
       self.image = @frames[FRAME_WORN]
     end
 
-    def dropped(actor, *velocity)
-      super(actor, *velocity)
+    def on_being_dropped(container)
+      super(container)
       self.image = @frames[FRAME_GROUND]
     end
   end

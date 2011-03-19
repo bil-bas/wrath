@@ -160,7 +160,7 @@ class Play < GameState
 
     # Objects collide with static objects, unless they are being carried or heights are different.
     @space.on_collision(:object, :static) do |a, b|
-      not ((a.can_pick_up? and a.carried?) or (a.z > b.z + b.height) or (b.z > a.z + a.height))
+      not ((a.can_pick_up? and a.inside_container?) or (a.z > b.z + b.height) or (b.z > a.z + a.height))
     end
 
     # Objects collide with the wall, unless they are being carried.
@@ -237,8 +237,8 @@ class Play < GameState
 
       # Move carried objects to appropriate positions to prevent desync in movement.
       @objects.each do |object|
-        if object.respond_to?(:carrying?) and object.carrying?
-          object.carrying.update_carried_position
+        if object.is_a? Container and object.full?
+          object.update_contents_position
         end
       end
     end

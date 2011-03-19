@@ -2,10 +2,6 @@ module Wrath
 class Chest < Container
   trait :timer
 
-  def open?; not @contains; end
-  def closed?; @contains; end
-  def can_pick_up?; not @contains; end
-
   PLAYER_TRAPPED_DURATION = 2000
 
   CLOSED_SPRITE_FRAME = 0
@@ -18,6 +14,14 @@ class Chest < Container
   # Minimum "size" of a creature so it bounces the chest it is in.
   MIN_BOUNCE_ENCUMBRANCE = 0.4
 
+  CHEST_OPEN_SOUND = "chest_close.wav"
+  CHEST_CLOSED_SOUND = "chest_close.wav"
+  CHEST_SACRIFICED_SOUND = "rock_sacrifice.wav"
+
+  alias_method :open?, :empty?
+  alias_method :closed?, :full?
+
+  public
   def initialize(options = {})
     options = {
       favor: -10,
@@ -25,110 +29,90 @@ class Chest < Container
       elasticity: 0.6,
       z_offset: -2,
       animation: "chest_8x8.png",
+      hide_contents: true,
+      drop_velocity: [0, 0.15, 0.5],
     }.merge! options
-
-    # Pick one of the contents objects, creating if it is a class rather than an object.
-    @contains = if options[:contains]
-                  possible_objects = Array(options[:contains])
-                  object = possible_objects[rand(possible_objects.size)]
-                  object = object.create(x: -100 * rand(100), y: -100 * rand(100)) if object.is_a? Class
-                  object
-
-                elsif options[:contains_id]
-                  parent = options[:parent] || $window.current_game_state
-                  parent.object_by_id(options[:contains_id])
-
-                else
-                  nil
-                end
 
     super options
 
-    if @contains
-      close(@contains, quiet: true)
-    else
-      open(quiet: true)
-    end
-
     @sacrificial_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
                                            z_velocity: EXPLOSION_Z_VELOCITY)
+
+
+    # Ensure our initial state is correct.
+    open? ? open : close
   end
 
-  def recreate_options
-    super.merge! contains_id: @contains.id
-  end
-
+  public
   def can_be_activated?(actor)
     (closed? and actor.empty_handed?) or open?
   end
 
+  public
   def activate(actor)
     @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
 
     if closed?
-      open
+      # Open the chest and spit out its contents.
+      drop
     else
-      item = actor.carrying
+      item = actor.contents
       if item
+        # Put object into chest.
         actor.drop
-        close(item)
+        pick_up(item)
       else
+        # Pick up the empty chest.
         actor.pick_up(self)
       end
     end
   end
 
-  def open(options = {})
-    Sample["chest_close.wav"].play unless options[:quiet]
-
-    self.image = @frames[OPEN_SPRITE_FRAME]
-
-    if @contains
-      parent.objects.push @contains
-      @contains.x = x
-      @contains.y = y
-      @contains.z = z + 6
-      @contains.z_velocity =  1
-      @contains.y_velocity = 0.1
-
-      @contains.unpause!
-
-      stop_timer :bounce
-    end
-
-    @contains = nil
+  public
+  def on_having_dropped(object)
+    super(object)
+    open
+    Sample[CHEST_CLOSED_SOUND].play
+    stop_timer :bounce
+    object.position = [x, y, z + 6] # So the object pops out the top of the chest.
   end
 
+  public
   def sacrificed(actor, altar)
-    Sample["rock_sacrifice.wav"].play
-    super
+    Sample[CHEST_SACRIFICED_SOUND].play
+    super(actor, altar)
   end
 
-  def close(object, options = {})
-    Sample["chest_close.wav"].play unless options[:quiet]
+  def on_having_picked_up(object)
+    super(object)
+    close
 
-    object.put_into(self)
-
-    self.image = @frames[CLOSED_SPRITE_FRAME]
-    @contains = object
-    @contains.velocity = [0, 0, 0]
-    @contains.x = -1000 * id
-    @contains.pause!
+    Sample[CHEST_CLOSED_SOUND].play if parent.started? # Don't make noises before game starts!
 
     unless parent.client?
       if object.is_a? Creature and object.encumbrance >= MIN_BOUNCE_ENCUMBRANCE
         every(1500 + rand(500), name: :bounce) { self.z_velocity = 0.8 }
       end
 
-      if @contains.controlled_by_player?
+      if contents.controlled_by_player?
         after(PLAYER_TRAPPED_DURATION) do
-          if @contains == object
-            open
-            parent.send_message(Message::PerformAction.new(object, self))
+          if contents == object
+            drop
+            parent.send_message(Message::PerformAction.new(object, self)) if parent.host?
           end
         end
       end
     end
+  end
+
+  protected
+  def open
+    self.image = @frames[OPEN_SPRITE_FRAME]
+  end
+
+  protected
+  def close
+    self.image = @frames[CLOSED_SPRITE_FRAME]
   end
 end
 end

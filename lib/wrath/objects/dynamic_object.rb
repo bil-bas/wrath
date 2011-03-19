@@ -1,66 +1,68 @@
 module Wrath
-class DynamicObject < BaseObject
-  attr_reader :carrier, :thrown_by, :z_offset
+  # An object that can move around and be picked up and put into things.
+  class DynamicObject < BaseObject
+    attr_reader :container, :thrown_by, :z_offset
+    attr_reader :encumbrance
 
-  def can_drop?; true; end
-  def can_pick_up?; true; end
-  def carried?; not @carrier.nil?; end
-  def affected_by_gravity?; @carrier.nil?; end
+    def can_be_dropped?(container); true; end
+    def can_be_picked_up?(container); true; end
+    def inside_container?; not @container.nil?; end
+    def affected_by_gravity?; @container.nil?; end
+    def can_be_activated?(actor); can_be_picked_up?(actor) and actor.empty_handed?; end
 
-  def can_be_activated?(actor)
-    can_pick_up? and actor.empty_handed?
+    def on_being_picked_up(by); end
+    def on_being_dropped(by); end
+
+    public
+    def initialize(options = {})
+      options = {
+          encumbrance: 0.2,
+          z_offset: 0,
+      }.merge! options
+
+      @encumbrance = options[:encumbrance]
+      @z_offset = options[:z_offset]
+
+      @thrown_by = [] # These will be immune from colliding with the object.
+
+      super options
+    end
+
+    public
+    def activate(actor)
+      actor.pick_up(self)
+    end
+
+    protected
+    def on_stopped
+      super
+      @thrown_by.clear
+    end
+
+    public
+    def dropped
+      dropper = @container
+      @thrown_by = [dropper]
+      @container = nil
+      parent.objects << self
+
+      on_being_dropped(dropper)
+      nil
+    end
+
+    public
+    def picked_up_by(container)
+      @container = container
+      parent.objects.delete self
+
+      on_being_picked_up(container)
+      nil
+    end
+
+    public
+    def destroy
+      @container.drop if inside_container?
+      super
+    end
   end
-
-  def activate(actor)
-    actor.pick_up(self)
-  end
-
-  attr_reader :encumbrance
-
-  def initialize(options = {})
-    options = {
-        encumbrance: 0.2,
-        z_offset: 0,
-    }.merge! options
-
-    @encumbrance = options[:encumbrance]
-    @z_offset = options[:z_offset]
-
-    @carrier = nil
-    @thrown_by = [] # These will be immune from colliding with the object.
-
-    super options
-  end
-
-  def picked_up(carrier)
-    @carrier = carrier
-    self.velocity = [0, 0, 0]
-
-    nil
-  end
-
-  def on_stopped
-    super
-    @thrown_by.clear
-  end
-
-  def dropped(player, x_velocity = 0, y_velocity = 0, z_velocity = 0)
-    self.velocity = [x_velocity, y_velocity, z_velocity]
-    @thrown_by = [@carrier]
-    @carrier = nil
-
-    nil
-  end
-
-  def put_into(container)
-    @carrier = nil
-
-    nil
-  end
-
-  # Called from teh game-state, once all updates are complete, to ensure syncing between carried objects.
-  def update_carried_position
-    self.position = [@carrier.x, @carrier.y + 0.001, @carrier.z + @carrier.height + z_offset]
-  end
-end
 end

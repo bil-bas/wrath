@@ -21,7 +21,7 @@ module Wrath
 
       # Inanimate objects.
       4.times { @objects << Rock.create(spawn: true) }
-      3.times { @objects << Chest.create(spawn: true, contains: CHEST_CONTENTS) }
+      3.times { @objects << Chest.create(spawn: true, contents: CHEST_CONTENTS) }
       2.times { @objects << Fire.create(spawn: true) }
       8.times { @objects << Tree.create(spawn: true) }
       5.times { @objects << Mushroom.create(spawn: true) }
