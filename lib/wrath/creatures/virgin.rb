@@ -18,7 +18,7 @@ class Virgin < Mob
 
   def ghost_disappeared
     unless parent.client?
-      horse = Horse.create(spawn: true, parent: parent)
+      horse = Horse.create(parent: parent)
       parent.objects.push horse
       paladin = Paladin.create(parent: parent, x: horse.x, y: horse.y - 6, y_velocity: 0.5, z_velocity: 0.5)
       paladin.mount(horse)

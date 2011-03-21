@@ -13,19 +13,19 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      3.times { Knight.create(spawn: true) }
-      2.times { BlueMeanie.create(spawn: true) }
+      3.times { Knight.create }
+      2.times { BlueMeanie.create }
 
       # Inanimate objects.
-      8.times { Rock.create(spawn: true) }
-      (4 + rand(3)).times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
-      (1 + rand(3)).times { Mimic.create(spawn: true) }
-      4.times { Fire.create(spawn: true) }
-      8.times { Mushroom.create(spawn: true) }
-      1.times { OgreSkull.create(spawn: true) }
+      8.times { Rock.create }
+      (4 + rand(3)).times { Chest.create(contents: CHEST_CONTENTS) }
+      (1 + rand(3)).times { Mimic.create }
+      4.times { Fire.create }
+      8.times { Mushroom.create }
+      1.times { OgreSkull.create }
 
       # Static objects.
-      12.times { Boulder.create(spawn: true) }
+      12.times { Boulder.create }
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|

@@ -14,17 +14,17 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      4.times { Chicken.create(spawn: true) }
+      4.times { Chicken.create }
 
       # Inanimate objects.
-      7.times { Rock.create(spawn: true) }
-      3.times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
-      4.times { Barrel.create(spawn: true, contents: BARREL_CONTENTS) }
-      2.times { Fire.create(spawn: true) }
-      1.times { OgreSkull.create(spawn: true) }
+      7.times { Rock.create }
+      3.times { Chest.create(contents: CHEST_CONTENTS) }
+      4.times { Barrel.create(contents: BARREL_CONTENTS) }
+      2.times { Fire.create }
+      1.times { OgreSkull.create }
 
       # Static objects.
-      12.times { PalmTree.create(spawn: true) }
+      12.times { PalmTree.create }
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|

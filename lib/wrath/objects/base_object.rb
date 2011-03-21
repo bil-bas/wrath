@@ -50,7 +50,7 @@ class BaseObject < GameObject
   def initialize(options = {})
     options = {
       rotation_center: :bottom_center,
-      spawn: false,
+      spawn: (not (options.has_key?(:x) or options.has_key?(:y))),
       elasticity: 0.6,
       x_velocity: 0,
       y_velocity: 0,
