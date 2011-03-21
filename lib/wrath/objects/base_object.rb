@@ -208,9 +208,16 @@ class BaseObject < GameObject
   def update
     # Check which tile we start on.
     @old_tile = @tile
-    @tile = parent.tile_at_coordinate(x, y)
 
-    @tile.touched_by(self) unless @tile.nil? or z > 0
+    begin
+      @tile = parent.tile_at_coordinate(x, y)
+    rescue
+      log.warn { "#{self.class} at [#{x}, #{y}] - destroyed" }
+      destroy
+      return
+    end
+
+    @tile.touched_by(self) unless z > 0
 
     @z = ground_level if z <= ground_level
 
