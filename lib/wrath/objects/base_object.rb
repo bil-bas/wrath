@@ -80,6 +80,8 @@ class BaseObject < GameObject
 
     options[:image] = @frames[0]
 
+    width = options[:radius] ? options[:radius] * 2 : width
+
     init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape], options[:mass])
 
     @z = options[:z]
