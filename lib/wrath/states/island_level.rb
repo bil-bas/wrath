@@ -1,9 +1,9 @@
 module Wrath
   class IslandLevel < Play
     DEFAULT_TILE = Sand
-    NUM_GOATS = 5
-    NUM_CHICKENS = 2
-    CHEST_CONTENTS = [Crown, Chicken]
+
+    CHEST_CONTENTS = [Crown, Fire]
+    BARREL_CONTENTS = [Mushroom, Chicken]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -14,11 +14,12 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      NUM_CHICKENS.times { Chicken.create(spawn: true) }
+      4.times { Chicken.create(spawn: true) }
 
       # Inanimate objects.
       7.times { Rock.create(spawn: true) }
-      5.times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
+      3.times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
+      4.times { Barrel.create(spawn: true, contents: BARREL_CONTENTS) }
       2.times { Fire.create(spawn: true) }
       1.times { OgreSkull.create(spawn: true) }
 
