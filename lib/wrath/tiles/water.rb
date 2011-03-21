@@ -55,7 +55,7 @@ class Water < AnimatedTile
 
   def splash(object)
     num_droplets = (object.x_velocity ** 2 + object.y_velocity ** 2 + object.z_velocity ** 2).to_i
-    @splasher.emit([object.x, object.y, 0.1], number: num_droplets) if num_droplets > 0
+    @splasher.emit([object.x, object.y, 0.1], number: num_droplets, thrown_by: object) if num_droplets > 0
   end
 end
 end

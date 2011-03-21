@@ -154,8 +154,16 @@ class Play < GameState
     @space.on_collision(:static, [:static, :wall]) { false }
     @space.on_collision(:scenery, [:particle, :static, :object, :wall, :scenery]) { false }
     @space.on_collision(:particle, :particle) { false }
-    @space.on_collision(:particle, [:static, :object, :wall]) do |particle, other|
-      particle.on_collision(other)
+    @space.on_collision(:particle, :wall) do |particle, wall|
+      true
+    end
+
+    @space.on_collision(:particle, [:static, :object]) do |a, b|
+      if (a.z > b.z + b.height) or (b.z > a.z + a.height)
+        true
+      else
+        a.on_collision(b)
+      end
     end
 
     # Objects collide with static objects, unless they are being carried or heights are different.

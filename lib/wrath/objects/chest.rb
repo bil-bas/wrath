@@ -35,7 +35,7 @@ class Chest < Container
 
     super options
 
-    @sacrificial_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+    @death_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
                                            z_velocity: EXPLOSION_Z_VELOCITY)
 
 

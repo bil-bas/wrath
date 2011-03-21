@@ -9,7 +9,7 @@ class Corpse < DynamicObject
         elasticity: 0,
     }.merge! options
 
-    @sacrificial_explosion = options[:emitter]
+    @death_explosion = options[:emitter]
 
     super(options)
   end

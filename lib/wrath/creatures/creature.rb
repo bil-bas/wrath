@@ -51,7 +51,7 @@ class Creature < Container
     @speed = options[:speed]
     @poisoned = options[:poisoned]
 
-    @sacrificial_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
+    @death_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
     @state = :standing
@@ -66,9 +66,11 @@ class Creature < Container
   public
   def die!
     # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
-    Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
+    corpse = Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
                   encumbrance: encumbrance, position: position, velocity: velocity,
-                  emitter: @sacrificial_explosion, local: (not parent.client?))
+                  emitter: @death_explosion, local: (not parent.client?))
+
+    @death_explosion.emit([x, y, z + height / 2], thrown_by: [self, corpse]) if @death_explosion
 
     destroy
 

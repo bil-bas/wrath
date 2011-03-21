@@ -18,15 +18,22 @@ class Emitter
 
   public
   # Emit a number of particle.
+  # @option options [Array<BaseObject>] thrown_by ([]) Object or objects that will not collide with the particles generated
   def emit(position, options = {})
-    number = options[:number] || @number
+    options = {
+        number: @number,
+        thrown_by: [],
+    }.merge! options
+
+    number = options[:number]
+    thrown_by = Array(options[:thrown_by])
 
     random(number).times do
       angle = rand(360)
       speed = random(@h_speed)
       y_velocity = Math::sin(angle) * speed
       x_velocity = Math::cos(angle) * speed
-      @type.create(parent: @parent, position: position,
+      @type.create(parent: @parent, position: position, thrown_by: thrown_by,
         velocity: [x_velocity, y_velocity, random(@z_velocity)])
     end
 

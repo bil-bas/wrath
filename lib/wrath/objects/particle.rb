@@ -9,7 +9,10 @@ class Particle < BaseObject
     options = {
       collision_type: :particle,
       id: nil,
+      thrown_by: [],
     }.merge! options
+
+    @thrown_by = options[:thrown_by]
 
     super(options)
   end
@@ -27,7 +30,7 @@ class Particle < BaseObject
   end
 
   def on_collision(other)
-    self.x_velocity, self.y_velocity = 0, 0 unless other.is_a? Altar
+    self.x_velocity, self.y_velocity = 0, 0 unless @thrown_by.include? other
 
     false
   end

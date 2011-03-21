@@ -283,7 +283,7 @@ class BaseObject < GameObject
   public
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
-    @sacrificial_explosion.emit([altar.x, altar.y, altar.z + altar.height]) if @sacrificial_explosion
+    @death_explosion.emit([altar.x, altar.y, altar.z + altar.height + height / 2], thrown_by: self) if @death_explosion
   end
 
   public

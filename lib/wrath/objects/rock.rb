@@ -16,7 +16,7 @@ class Rock < DynamicObject
       animation: "rock_6x6.png",
     }.merge! options
 
-    @sacrificial_explosion = Emitter.new(Pebble, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
+    @death_explosion = Emitter.new(Pebble, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
                                            z_velocity: EXPLOSION_Z_VELOCITY)
 
     super  options
