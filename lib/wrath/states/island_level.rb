@@ -3,7 +3,7 @@ module Wrath
     DEFAULT_TILE = Sand
 
     CHEST_CONTENTS = [Crown, Fire]
-    BARREL_CONTENTS = [Mushroom, Chicken]
+    BARREL_CONTENTS = [Mushroom, Chicken, Pirate]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -14,13 +14,14 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      3.times { Chicken.create }
+      3.times { Pirate.create }
+      2.times { Chicken.create }
       3.times { Parrot.create }
       2.times { Monkey.create }
 
       # Inanimate objects.
       7.times { Rock.create }
-      3.times { Chest.create(contents: CHEST_CONTENTS) }
+      2.times { Chest.create(contents: CHEST_CONTENTS) }
       4.times { Barrel.create(contents: BARREL_CONTENTS) }
       2.times { Fire.create }
       1.times { OgreSkull.create }
