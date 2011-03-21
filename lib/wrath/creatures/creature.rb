@@ -7,7 +7,7 @@ class Creature < Container
 
   ACTION_DISTANCE = 12
 
-  EXPLOSION_H_SPEED = 0.04..0.1
+  EXPLOSION_H_SPEED = 0.04..0.5
   EXPLOSION_Z_VELOCITY = 0.1..0.3
 
   WOUND_FLASH_PERIOD = 200
@@ -68,7 +68,8 @@ class Creature < Container
     # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
     corpse = Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
                   encumbrance: encumbrance, position: position, velocity: velocity,
-                  emitter: @death_explosion, local: (not parent.client?))
+                  emitter: @death_explosion, local: (not parent.client?),
+                  factor_x: factor_x, factor_y: factor_y)
 
     @death_explosion.emit([x, y, z + height / 2], thrown_by: [self, corpse]) if @death_explosion
 

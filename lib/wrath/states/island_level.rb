@@ -14,7 +14,9 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      4.times { Chicken.create }
+      3.times { Chicken.create }
+      3.times { Parrot.create }
+      2.times { Monkey.create }
 
       # Inanimate objects.
       7.times { Rock.create }

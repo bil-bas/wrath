@@ -16,7 +16,7 @@ class Water < AnimatedTile
 
     super options
 
-    @splasher = Emitter.new(WaterDroplet, parent, h_speed: 0.2..0.4,
+    @splasher = Emitter.new(WaterDroplet, parent, h_speed: 0.05..0.1,
         z_velocity: 0.1..0.2)
 
     @filled_image = @@sprites[*IMAGE_POSITION_FILLED]

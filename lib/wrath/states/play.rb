@@ -160,7 +160,7 @@ class Play < GameState
 
     @space.on_collision(:particle, [:static, :object]) do |a, b|
       if (a.z > b.z + b.height) or (b.z > a.z + a.height)
-        true
+        false
       else
         a.on_collision(b)
       end

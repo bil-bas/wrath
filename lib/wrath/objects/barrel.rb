@@ -7,6 +7,7 @@ module Wrath
           animation: "barrel_6x8.png",
           elasticity: 0.9,
           encumbrance: 0.3,
+          z_offset: -1,
       }.merge! options
 
       super(options)
