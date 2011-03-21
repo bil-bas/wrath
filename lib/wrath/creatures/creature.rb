@@ -71,6 +71,8 @@ class Creature < Container
                   emitter: @death_explosion, local: (not parent.client?),
                   factor_x: factor_x, factor_y: factor_y)
 
+    drop unless empty_handed?
+
     @death_explosion.emit([x, y, z + height / 2], thrown_by: [self, corpse]) if @death_explosion
 
     destroy
