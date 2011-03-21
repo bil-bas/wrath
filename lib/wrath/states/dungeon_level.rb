@@ -13,22 +13,25 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      3.times { @objects << Knight.create(spawn: true) }
-      2.times { @objects << BlueMeanie.create(spawn: true) }
+      3.times { Knight.create(spawn: true) }
+      2.times { BlueMeanie.create(spawn: true) }
 
       # Inanimate objects.
-      8.times { @objects << Rock.create(spawn: true) }
-      (4 + rand(3)).times { @objects << Chest.create(spawn: true, contents: CHEST_CONTENTS) }
-      (1 + rand(3)).times { @objects << Mimic.create(spawn: true) }
-      4.times { @objects << Fire.create(spawn: true) }
-      8.times { @objects << Mushroom.create(spawn: true) }
-      1.times { @objects << OgreSkull.create(spawn: true) }
+      8.times { Rock.create(spawn: true) }
+      (4 + rand(3)).times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
+      (1 + rand(3)).times { Mimic.create(spawn: true) }
+      4.times { Fire.create(spawn: true) }
+      8.times { Mushroom.create(spawn: true) }
+      1.times { OgreSkull.create(spawn: true) }
+
+      # Static objects.
+      12.times { Boulder.create(spawn: true) }
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|
         x = -14
         while x < $window.retro_width + 20
-          Rock.create(x: x, y: rand(4) + y, paused: true, factor: 2, collision_type: :static, mass: Float::INFINITY)
+          Boulder.create(x: x, y: rand(4) + y)
           x += 6 + rand(6)
         end
       end

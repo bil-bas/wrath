@@ -26,10 +26,12 @@ module Wrath
       @thrown_by = [] # These will be immune from colliding with the object.
 
       super options
+
+      parent.objects << self if networked?
     end
 
     public
-    def activate(actor)
+    def activated_by(actor)
       actor.pick_up(self)
     end
 
@@ -62,6 +64,7 @@ module Wrath
     public
     def destroy
       @container.drop if inside_container?
+      parent.objects.delete self
       super
     end
   end

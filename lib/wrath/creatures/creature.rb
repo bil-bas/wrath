@@ -66,9 +66,9 @@ class Creature < Container
   public
   def die!
     # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
-    parent.objects << Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
-                                    encumbrance: encumbrance, position: position, velocity: velocity,
-                                    emitter: @sacrificial_explosion, local: (not parent.client?))
+    Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
+                  encumbrance: encumbrance, position: position, velocity: velocity,
+                  emitter: @sacrificial_explosion, local: (not parent.client?))
 
     destroy
 
@@ -130,7 +130,7 @@ class Creature < Container
 
   public
   def mount(mount)
-    mount.activate(self)
+    mount.activated_by(self)
   end
 
   public
@@ -140,7 +140,7 @@ class Creature < Container
   end
 
   public
-  # The player performs an action.
+  # The creature tries to perform an action, at the will of a Player.
   def action
     # Find all objects within range, then check them in order
     # and activate the first on we can (generally, pick it up).
@@ -148,22 +148,18 @@ class Creature < Container
     near_objects.select! {|g| distance_to(g) <= ACTION_DISTANCE }
     near_objects.sort_by! {|g| distance_to(g) }
 
-    near_objects.each do |object|
-      if object.can_be_activated?(self)
-        if parent.client?
-          # Client needs to ask permission first.
-          parent.send_message(Message::RequestAction.new(self, object))
-        else
-          # Host/local can do it immediately.
-          object.activate(self)
-        end
-
-        return
+    target = near_objects.find {|o| o.can_be_activated?(self) }
+    if target
+      if parent.client?
+        # Client needs to ask permission first.
+        parent.send_message(Message::RequestAction.new(self, target))
+      else
+        # Host/local can do it immediately.
+        target.activated_by(self)
       end
+    else
+      drop
     end
-
-    # We couldn't activate anything, so drop what we are carrying, if anything.
-    drop
   end
 
   public

@@ -33,7 +33,7 @@ class Altar < StaticObject
   end
 
   public
-  def activate(actor)
+  def activated_by(actor)
     lamb = actor.contents
     case lamb
       when Creature

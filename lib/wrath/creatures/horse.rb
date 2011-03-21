@@ -24,7 +24,7 @@ class Horse < Mob
 
   public
   # Mount the horsie or push off whoever is riding on it.
-  def activate(actor)
+  def activated_by(actor)
     if carrying?
       drop
     else

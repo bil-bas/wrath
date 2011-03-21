@@ -186,18 +186,16 @@ class Play < GameState
 
     # The altar is all-important!
     @altar = Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
-    @objects << @altar
+    @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
     player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
                             animation: "player1_8x8.png")
-    @objects << player1
     players[0].avatar = player1
 
     # Player 2.
     player2 = Priest.create(local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
                             factor_x: -1, animation: "player2_8x8.png")
-    @objects << player2
     players[1].avatar = player2
   end
 

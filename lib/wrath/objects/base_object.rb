@@ -24,6 +24,7 @@ class BaseObject < GameObject
   def remote?; not @local; end
   def local?; @local; end
   def controlled_by_player?; false; end
+  def networked?; not @id.nil?; end
 
   # Should #destroy be propagated over the network?
   def network_destroy?; @id and parent.host?; end
@@ -341,7 +342,6 @@ class BaseObject < GameObject
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
-    @parent.objects.delete self # Probably not there, but lets not worry.
 
     if network_destroy?
       @parent.send_message(Message::Destroy.new(self))

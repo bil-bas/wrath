@@ -49,7 +49,7 @@ class Chest < Container
   end
 
   public
-  def activate(actor)
+  def activated_by(actor)
     @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
 
     if closed?

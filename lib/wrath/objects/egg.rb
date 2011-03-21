@@ -28,7 +28,7 @@ class Egg < DynamicObject
   end
 
   def hatch
-    parent.objects << Chicken.create(position: position, parent: parent)
+    Chicken.create(position: position, parent: parent)
     destroy
   end
 

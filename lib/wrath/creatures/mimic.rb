@@ -38,9 +38,9 @@ module Wrath
       super.merge! discovered: @discovered
     end
 
-    def activate(actor)
+    def activated_by(actor)
       if discovered?
-        super(actor)
+        super(actor) # Just pick up.
       else
         wake_up
       end
@@ -53,6 +53,8 @@ module Wrath
 
     def wake_up
       Sample["chest_close.wav"].play
+
+      parent.send_message(Message::PerformAction.new(self, self)) if parent.host?
 
       self.z_velocity = 0.5
       self.image = @walking_animation[FRAME_DISCOVERED]

@@ -22,7 +22,7 @@ module Wrath
       # Pick one of the contents objects, creating if it is a class rather than an object.
       to_be_contents = if options[:contents]
                     possible_objects = Array(options[:contents])
-                    object = possible_objects[rand(possible_objects.size)]
+                    object = possible_objects.sample
                     object = object.create(x: -100 * rand(100), y: -100 * rand(100)) if object.is_a? Class
                     object
 
@@ -53,9 +53,28 @@ module Wrath
     end
 
     public
+    # This is called by Message::PerformAction
+    def perform_action(target)
+     if target
+        target.activated_by(self)
+      else
+        drop
+      end
+    end
+
+    public
+    # This is called by Message::RequestAction
+    def request_action(target)
+      # For now, this does the same thing.
+      perform_action(target)
+    end
+
+    public
     # Pick up an object.
     def pick_up(object)
       raise "Trying to pick up something when already encumbered" if @contents
+
+      parent.send_message(Message::PerformAction.new(self, object)) if parent.host?
 
       @contents = object
       if @hide_contents
@@ -75,13 +94,17 @@ module Wrath
     def drop
       return unless @contents and @contents.can_be_dropped?(self)
 
+      # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
+      if parent.networked?
+        if ((not local?) or (controlled_by_player? and contents.controlled_by_player?))
+          @parent.send_message Message::RequestAction.new(self)
+        else
+          @parent.send_message Message::PerformAction.new(self)
+        end
+      end
+
       to_drop = @contents
       @contents = nil
-
-      # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
-      if parent.networked? and (local? or (remote? and to_drop.controlled_by_player?))
-        @parent.send_message Message::PerformAction.new(self)
-      end
 
       to_drop.local = (not parent.client?) unless to_drop.controlled_by_player?
       to_drop.unpause!

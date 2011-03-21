@@ -14,17 +14,20 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      1.times { @objects << Virgin.create(spawn: true) }
-      NUM_GOATS.times { @objects << Goat.create(spawn: true) }
-      NUM_CHICKENS.times { @objects << Chicken.create(spawn: true) }
-      1.times { @objects << Bard.create(spawn: true) }
+      1.times { Virgin.create(spawn: true) }
+      NUM_GOATS.times { Goat.create(spawn: true) }
+      NUM_CHICKENS.times { Chicken.create(spawn: true) }
+      1.times { Bard.create(spawn: true) }
 
       # Inanimate objects.
-      4.times { @objects << Rock.create(spawn: true) }
-      3.times { @objects << Chest.create(spawn: true, contents: CHEST_CONTENTS) }
-      2.times { @objects << Fire.create(spawn: true) }
-      8.times { @objects << Tree.create(spawn: true) }
-      5.times { @objects << Mushroom.create(spawn: true) }
+      4.times { Rock.create(spawn: true) }
+      3.times { Chest.create(spawn: true, contents: CHEST_CONTENTS) }
+      2.times { Fire.create(spawn: true) }
+      
+      5.times { Mushroom.create(spawn: true) }
+
+      # Static objects.
+      8.times { Tree.create(spawn: true) }
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|
@@ -47,7 +50,7 @@ module Wrath
         pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
         grid[pos[1]][pos[0]] = Water
         (rand(5) + 2).times do
-          grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = [Water, Water, Sand][rand(3)]
+          grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = [Water, Water, Earth].sample
         end
       end
 
