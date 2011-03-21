@@ -10,15 +10,10 @@ class Message
       @actor_id = actor.id
       @target_id = target ? target.id : nil
       @contents_id = actor.full? ? actor.contents.id : nil
-      log.debug "Sending action"
-      log.debug self.inspect
     end
 
     protected
     def action(state)
-      log.debug "Running action"
-      log.debug self.inspect
-
       actor = object_by_id(@actor_id)
       contents = @contents_id ? object_by_id(@contents_id) : nil
       target = @target_id ? object_by_id(@target_id) : nil
