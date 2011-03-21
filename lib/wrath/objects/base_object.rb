@@ -217,7 +217,7 @@ class BaseObject < GameObject
       return
     end
 
-    @tile.touched_by(self) unless z > 0
+    @tile.touched_by(self) unless @tile.nil? or z > 0
 
     @z = ground_level if z <= ground_level
 
