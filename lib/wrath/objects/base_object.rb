@@ -17,6 +17,7 @@ class BaseObject < GameObject
   # The unique identifier of the object (or nil if not a networked object). Networked objects have consistent id on all machines.
   attr_reader :id
 
+  def zorder; y; end
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
   def can_pick_up?; false; end
@@ -196,7 +197,7 @@ class BaseObject < GameObject
       end
     end
 
-    @image.draw_rot(x, y - z, y, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
+    @image.draw_rot(x, y - z, zorder, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
   end
 
   protected

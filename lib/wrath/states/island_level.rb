@@ -21,10 +21,10 @@ module Wrath
 
       # Inanimate objects.
       7.times { Rock.create }
-      2.times { Chest.create(contents: CHEST_CONTENTS) }
-      4.times { Barrel.create(contents: BARREL_CONTENTS) }
+      3.times { Barrel.create(contents: BARREL_CONTENTS) }
       2.times { Fire.create }
       1.times { OgreSkull.create }
+      3.times { X.create(contents: Chest.create(contents: CHEST_CONTENTS))}
 
       # Static objects.
       12.times { PalmTree.create }
