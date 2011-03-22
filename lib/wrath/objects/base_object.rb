@@ -183,12 +183,17 @@ class BaseObject < GameObject
   def draw_self
     # Draw a shadow
     if casts_shadow?
-      color = Color.rgba(0, 0, 0, alpha)
+      color = Color.rgba(0, 0, 0, (alpha * 0.7).to_i)
 
-      top_left = [x + (z * 0.5), y - (height + z) * 0.5, color]
-      top_right = [x + width + (z * 0.5), y - (height + z) * 0.5, color]
-      bottom_left = [x - (width - z) * 0.5, y - z * 0.5, color]
-      bottom_right = [x + (width + z) * 0.5, y - z * 0.5, color]
+      shadow_scale = 0.5
+      shadow_height = height * shadow_scale
+      shadow_base = z * shadow_scale
+      skew = shadow_height * shadow_scale
+
+      top_left = [x + skew + (z * shadow_scale), y - shadow_height - shadow_base, color]
+      top_right = [x + skew + width + (z * shadow_scale), y - shadow_height - shadow_base, color]
+      bottom_left = [x - (width - z) * shadow_scale, y - shadow_base, color]
+      bottom_right = [x + (width + z) * shadow_scale, y - shadow_base, color]
 
       if factor_x > 0
         image.draw_as_quad(*top_left, *top_right, *bottom_left, *bottom_right, ZOrder::SHADOWS)
