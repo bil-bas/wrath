@@ -14,7 +14,8 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      3.times { Pirate.create }
+      2.times { Pirate.create }
+      3.times { Amazon.create }
       1.times { Chicken.create }
       3.times { Parrot.create }
       2.times { Monkey.create }
