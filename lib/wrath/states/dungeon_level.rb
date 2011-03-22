@@ -2,7 +2,7 @@ module Wrath
   class DungeonLevel < Play
     DEFAULT_TILE = Gravel
 
-    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire]
+    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet ]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
