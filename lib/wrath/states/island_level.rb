@@ -15,9 +15,10 @@ module Wrath
 
       # Mobs.
       3.times { Pirate.create }
-      2.times { Chicken.create }
+      1.times { Chicken.create }
       3.times { Parrot.create }
       2.times { Monkey.create }
+      2.times { Mosquito.create }
 
       # Inanimate objects.
       7.times { Rock.create }
