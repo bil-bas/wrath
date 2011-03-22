@@ -5,6 +5,7 @@ class Play < GameState
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
+  DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [

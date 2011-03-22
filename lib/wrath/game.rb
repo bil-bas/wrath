@@ -31,6 +31,7 @@ module ZOrder
   TILES = -2
   SHADOWS = -1
   OBJECTS = 0..640
+  FOREGROUND = 9999
   GUI = 10000
 end
 

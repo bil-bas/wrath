@@ -5,6 +5,7 @@ module Wrath
     CHEST_CONTENTS = [Crown, Fire]
     BARREL_CONTENTS = [Chicken, Grog]
 
+
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
@@ -46,6 +47,20 @@ module Wrath
       end
 
       grid
+    end
+
+    def update
+      super
+
+      2.times { WaterDroplet.create(parent: self, position: [rand($window.retro_width), rand($window.retro_height), 1],
+                                     velocity: [-0.5 + rand(0.99), 0, 0.2 + rand(0.3)], casts_shadow: false) }
+    end
+
+    def draw
+      # Draw overlay to make it look dark.
+      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+
+      super
     end
   end
 end

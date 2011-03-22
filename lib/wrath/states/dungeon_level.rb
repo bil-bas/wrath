@@ -67,5 +67,11 @@ module Wrath
 
       grid
     end
+
+    def draw
+      # Draw overlay to make it look dark.
+      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+      super
+    end
   end
 end
