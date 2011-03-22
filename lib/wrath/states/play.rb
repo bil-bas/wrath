@@ -90,7 +90,7 @@ class Play < GameState
         end
       end
 
-      @@levels.sort_by {|level| level.to_s }
+      @@levels.sort_by! {|level| level.to_s }
     end
 
     @@levels
