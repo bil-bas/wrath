@@ -6,9 +6,9 @@ class AnimatedTile < Tile
   def animation_positions; self.class.const_get(:ANIMATION_POSITIONS); end
 
   def initialize(options = {})
-    @animation = Animation.new(delay: 0, frames: animation_positions.map {|pos| @@sprites[*pos] })
-
     super(options)
+
+    @animation = Animation.new(delay: 0, frames: animation_positions.map {|pos| @@sprites[*pos] })
   end
 
   # The map will animate all tiles at once.

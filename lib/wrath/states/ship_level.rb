@@ -28,10 +28,21 @@ module Wrath
       MAST_SPAWNS.each do |pos|
         Mast.create(x: altar.x + pos[0], y: altar.y + pos[1])
       end
+
+      (0...$window.retro_width).step(8) do |x|
+        Bulwalk.create(x: x + 4, y: 16)
+        Bulwalk.create(x: x + 4, y: $window.retro_height - 1)
+      end
     end
 
     def random_tiles
       num_columns, num_rows, grid = super(DEFAULT_TILE)
+
+      num_columns.times do |x|
+        # Water at the top.
+        grid[0][x] = grid[1][x] = Water
+      end
+
       grid
     end
   end
