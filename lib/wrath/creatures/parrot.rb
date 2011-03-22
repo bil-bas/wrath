@@ -1,9 +1,11 @@
 module Wrath
-  class Parrot < Chicken
+  class Parrot < Mob
     def ground_level; super + ((@state == :thrown) ? 0 : 6); end
 
     def initialize(options = {})
       options = {
+        health: 10,
+        favor: 10,
         vertical_jump: 0.1,
         horizontal_jump: 0.4,
         elasticity: 0.5,
