@@ -25,7 +25,7 @@ module Wrath
       3.times { Barrel.create(contents: BARREL_CONTENTS) }
       2.times { Fire.create }
       1.times { OgreSkull.create }
-      3.times { X.create(contents: ChestOfGold) }
+      3.times { X.create(contents: TreasureChest) }
 
       # Static objects.
       12.times { PalmTree.create }

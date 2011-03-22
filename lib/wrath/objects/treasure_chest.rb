@@ -1,5 +1,5 @@
 module Wrath
-  class ChestOfGold < DynamicObject
+  class TreasureChest < DynamicObject
     OPEN_IMAGE = 1
 
     public

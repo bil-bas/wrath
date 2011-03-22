@@ -23,6 +23,7 @@ module Wrath
       4.times { Rock.create }
       3.times { Chest.create(contents: CHEST_CONTENTS) }
       2.times { Fire.create }
+      1.times { Cauldron.create }
       
       5.times { Mushroom.create }
 
