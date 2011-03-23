@@ -2,7 +2,7 @@ module Wrath
   class ShipLevel < Play
     DEFAULT_TILE = Planking
 
-    CHEST_CONTENTS = [Crown, Fire]
+    CHEST_CONTENTS = [Crown, Fire, Rope]
     BARREL_CONTENTS = [Chicken, Grog]
 
 
@@ -26,6 +26,7 @@ module Wrath
       2.times { TreasureChest.create }
       2.times { Chest.create(contents: CHEST_CONTENTS) }
       3.times { Grog.create }
+      2.times { Rope.create }
 
       # Static objects.
       MAST_SPAWNS.each do |pos|
