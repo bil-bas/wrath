@@ -115,6 +115,7 @@ class Play < GameState
 
   # Start the game, after sending all the init data.
   def start_game
+    @time_left = 300 * 1000
     @started = true
   end
 
@@ -229,6 +230,8 @@ class Play < GameState
   end
 
   def update
+    @time_left -= frame_time
+
     # Read any incoming messages which will alter our start state.
     @network.update if @network
 
@@ -262,6 +265,9 @@ class Play < GameState
 
   def draw
     if started?
+      # Write the timer out.
+      m, s = (@time_left / 1000.0).divmod 60
+      @font.draw_rel("%d:%02d" % [m, s], $window.retro_width / 2, 0, ZOrder::GUI, 0.5, 0, 0.4, 0.4)
       super
     else
       @font.draw("Loading...", 0, 0, ZOrder::GUI)
