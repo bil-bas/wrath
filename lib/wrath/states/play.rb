@@ -6,6 +6,7 @@ class Play < GameState
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
   DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
+  GLOW_WIDTH = 64
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
@@ -41,6 +42,8 @@ class Play < GameState
   # network: Server, Client, nil
   def initialize(network = nil)
     BaseObject.reset_object_ids
+
+    @@glow = make_glow
 
     @network = network
 
@@ -276,6 +279,25 @@ class Play < GameState
     @winner.win!
     @winner.opponent.lose!
     push_game_state GameOver.new(winner)
+  end
+
+  def make_glow
+    @@glow = TexPlay.create_image($window, GLOW_WIDTH, GLOW_WIDTH)
+
+    center = @@glow.width / 2.0
+    radius =  @@glow.width / 2.0
+
+    @@glow.circle center, center, radius, :filled => true,
+      :color_control => lambda {|source, dest, x, y|
+        # Glow starts at the edge of the pixel (well, its radius, since glow is circular, not rectangular)
+        distance = distance(center, center, x, y)
+        dest[3] = (1 - (distance / radius)) ** 2
+        dest
+      }
+  end
+
+  def draw_glow(x, y, color, scale)
+    @@glow.draw_rot(x, y, ZOrder::BACK_GLOW, 0, 0.5, 0.5, scale, scale, color, :additive)
   end
 
   def sync

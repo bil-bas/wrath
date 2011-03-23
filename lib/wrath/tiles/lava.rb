@@ -5,6 +5,8 @@ class Lava < Water
 
   DAMAGE = 20 / 1000.0 # 20/second
   FILLED_DAMAGE = 2 / 1000.0 # Still take some damage when standing on the rock.
+  GLOW_COLOR = Color.rgba(255, 100, 0, 20)
+  GLOW_SIZE = 0.65
 
   def touched_by(object)
     case object
@@ -23,6 +25,12 @@ class Lava < Water
       else
         object.destroy
     end
+  end
+
+  def draw
+    super
+
+    parent.draw_glow(x, y, GLOW_COLOR, GLOW_SIZE)
   end
 end
 end

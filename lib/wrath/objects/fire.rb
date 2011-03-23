@@ -4,6 +4,7 @@ class Fire < DynamicObject
 
   ANIMATION_DELAY = 300
   DAMAGE = 5  / 1000.0 # 5/second
+  GLOW_COLOR = Color.rgb(255, 255, 50)
 
   trait :timer
 
@@ -16,6 +17,7 @@ class Fire < DynamicObject
       elasticity: 0.2,
       z_offset: -2,
       animation: "fire_8x8.png",
+      casts_shadow: false,
     }.merge! options
 
     super options
@@ -39,6 +41,14 @@ class Fire < DynamicObject
     end
 
     super(other)
+  end
+
+  def draw
+    super
+
+    intensity = [1.5 - (z * 0.05), 0].max
+    GLOW_COLOR.alpha = (40 * intensity).to_i
+    parent.draw_glow(x, y, GLOW_COLOR, intensity)
   end
 end
 end

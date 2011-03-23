@@ -28,8 +28,9 @@ Gosu::Sample.volume = 0.5
 module Wrath
 module ZOrder
   BACKGROUND = -Float::INFINITY
-  TILES = -2
-  SHADOWS = -1
+  TILES = -3
+  SHADOWS = -2
+  BACK_GLOW = -1
   OBJECTS = 0..640
   FOREGROUND = 9999
   GUI = 10000
