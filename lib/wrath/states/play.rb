@@ -1,6 +1,7 @@
 module Wrath
 class Play < GameState
   extend Forwardable
+  trait :timer
 
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
@@ -10,7 +11,8 @@ class Play < GameState
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
-      Message::Create, Message::Destroy, Message::EndGame,
+      Message::Create, Message::Destroy,
+      Message::Disaster, Message::EndGame,
       Message::PerformAction, Message::RequestAction, Message::Sync,
       Message::SetFavor, Message::SetHealth
   ]
@@ -38,6 +40,8 @@ class Play < GameState
   def client?; @network.is_a? Client; end
   def local?; @network.nil?; end
   def started?; @started; end
+  def disaster_interval; 30000 - 1000 * @num_disasters; end
+  def level_duration; 300 * 1000; end
 
   # network: Server, Client, nil
   def initialize(network = nil)
@@ -115,8 +119,23 @@ class Play < GameState
 
   # Start the game, after sending all the init data.
   def start_game
-    @time_left = 300 * 1000
+    @time_left = level_duration
     @started = true
+    @num_disasters = 0
+    @disaster_duration = 0
+    after(disaster_interval, name: :disaster) { disaster } unless client?
+  end
+
+  def disaster
+    @num_disasters += 1
+    @disaster_duration = disaster_duration
+
+    unless client?
+      send_message Message::Disaster.new if host?
+      after(disaster_interval, name: :disaster) { disaster }
+    end
+
+    on_disaster
   end
 
   def send_message(message)
@@ -230,12 +249,13 @@ class Play < GameState
   end
 
   def update
-    @time_left -= frame_time
-
     # Read any incoming messages which will alter our start state.
     @network.update if @network
 
     if started?
+      @time_left -= frame_time
+      @disaster_duration -= frame_time
+
       super
 
       objects.each {|o| o.update_forces }

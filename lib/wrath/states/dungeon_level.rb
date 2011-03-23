@@ -1,7 +1,5 @@
 module Wrath
   class DungeonLevel < Play
-    trait :timer
-
     DEFAULT_TILE = Gravel
 
     CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet ]
@@ -10,6 +8,13 @@ module Wrath
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
     def self.to_s; "Dungeon of Doom"; end
+
+    def disaster_duration; 1000 + 100 * @num_disasters; end
+
+    def setup
+      @quake_offset = 0
+      super
+    end
 
     def create_objects
       super(PLAYER_SPAWNS)
@@ -70,53 +75,42 @@ module Wrath
       grid
     end
 
-    def setup
-      @num_quakes = 0
-      @quake_duration = 0
-
-      super
-    end
-
-    def start_game
-      after(30 * 1000, name: :disaster) { disaster }
-
-      super
-    end
-
-    def disaster
+    def on_disaster
       Sample["rock_sacrifice.wav"].play
-      @num_quakes += 1
-      @quake_duration = 1000 + 200 * @num_quakes
-      after(30 * 1000 - @num_quakes * 1000, name: :disaster) { disaster }
     end
 
     def update
-      if @quake_duration > 1
-        @quake_duration = [@quake_duration - frame_time, 1].max
-        intensity = Math::log(@quake_duration)
-        @quake_offset = intensity / 4
-        if not client? and rand(100) < intensity / 8
-          Rock.create(parent: self,
-                      position: [Margin::LEFT + rand($window.retro_width - Margin::LEFT - Margin::RIGHT),
-                                 Margin::TOP + rand($window.retro_height - Margin::TOP - Margin::BOTTOM), 150])
-        end
-      else
-        @quake_offset = 0
-      end
-
       super
+
+      if started?
+        if @disaster_duration > 0
+          intensity = Math::log(@num_disasters * 100)
+          @quake_offset = intensity / 4
+          if not client? and rand(100) < ((intensity * frame_time) / 8000)
+            Rock.create(parent: self,
+                        position: [Margin::LEFT + rand($window.retro_width - Margin::LEFT - Margin::RIGHT),
+                                   Margin::TOP + rand($window.retro_height - Margin::TOP - Margin::BOTTOM), 150])
+          end
+        else
+          @quake_offset = 0
+        end
+      end
     end
 
     def draw
-      # Draw overlay to make it look dark.
-      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+      if started?
+        # Draw overlay to make it look dark.
+        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
 
-      if @quake_offset == 0
-        super
-      else
-        $window.translate(0, Math::sin(milliseconds / 50.0) * @quake_offset) do
+        if @quake_offset == 0
           super
+        else
+          $window.translate(0, Math::sin(milliseconds / 50.0) * @quake_offset) do
+            super
+          end
         end
+      else
+        super
       end
     end
   end

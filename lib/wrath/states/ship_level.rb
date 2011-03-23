@@ -5,12 +5,16 @@ module Wrath
     CHEST_CONTENTS = [Crown, Fire, Rope]
     BARREL_CONTENTS = [Chicken, Grog]
 
+    LIGHTNING_COLOR = Color.rgba(255, 255, 255, 50)
+
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
 
     def self.to_s; "Ship of Doomed Fools"; end
+
+    def disaster_duration; 300 + 20 * @num_disasters; end
 
     def create_objects
       super(PLAYER_SPAWNS)
@@ -53,13 +57,25 @@ module Wrath
     def update
       super
 
-      2.times { WaterDroplet.create(parent: self, position: [rand($window.retro_width), rand($window.retro_height), 1],
-                                     velocity: [-0.5 + rand(0.99), 0, 0.2 + rand(0.3)], casts_shadow: false) }
+      if started?
+        2.times { WaterDroplet.create(parent: self, position: [rand($window.retro_width), rand($window.retro_height), 1],
+                                      velocity: [-0.5 + rand(0.99), 0, 0.2 + rand(0.3)], casts_shadow: false) }
+      end
+    end
+
+    def on_disaster
+      Sample["rock_sacrifice.wav"].play
     end
 
     def draw
-      # Draw overlay to make it look dark.
-      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+      if started?
+        # Draw overlay to make it look dark.
+        if @disaster_duration > 0
+          $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, LIGHTNING_COLOR, :additive)
+        else
+          $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+        end
+      end
 
       super
     end

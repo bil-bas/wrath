@@ -10,6 +10,8 @@ module Wrath
 
     def self.to_s; "Island of Utter Doom"; end
 
+    def disaster_duration; 0; end
+
     def create_objects
       super(PLAYER_SPAWNS)
 
@@ -73,6 +75,10 @@ module Wrath
       end
 
       grid
+    end
+
+    def on_disaster
+      # Todo: Lava!
     end
   end
 end
