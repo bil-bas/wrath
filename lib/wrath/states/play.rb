@@ -76,7 +76,7 @@ class Play < GameState
 
       create_objects
 
-      @started = true
+      start_game
     end
 
     send_message Message::StartGame.new if host?
