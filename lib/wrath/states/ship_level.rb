@@ -34,11 +34,11 @@ module Wrath
 
       # Static objects.
       MAST_SPAWNS.each do |pos|
-        Mast.create(x: altar.x + pos[0], y: altar.y + pos[1])
+        Mast.create(x: altar.x + pos[0], y: Margin::TOP + (($window.retro_height - Margin::TOP) / 2) + pos[1])
       end
 
       (0...$window.retro_width).step(8) do |x|
-        Bulwalk.create(x: x + 4, y: 16)
+        Bulwalk.create(x: x + 4, y: 16) unless x.between?($window.retro_width / 2 - 8, $window.retro_width / 2)
         Bulwalk.create(x: x + 4, y: $window.retro_height - 1)
       end
     end
@@ -48,7 +48,7 @@ module Wrath
 
       num_columns.times do |x|
         # Water at the top.
-        grid[0][x] = grid[1][x] = Water
+        grid[0][x] = grid[1][x] = SeaWater
       end
 
       grid
@@ -65,6 +65,10 @@ module Wrath
 
     def on_disaster
       Sample["rock_sacrifice.wav"].play
+    end
+
+    def create_altar
+      Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 2.5)
     end
 
     def draw

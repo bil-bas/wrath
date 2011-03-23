@@ -213,11 +213,15 @@ class Play < GameState
     end
   end
 
+  def create_altar
+    # The altar is all-important!
+    Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
+  end
+
   def create_objects(player_spawns)
     log.info "Creating objects"
 
-    # The altar is all-important!
-    @altar = Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
+    @altar = create_altar
     @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
