@@ -13,14 +13,16 @@ class Menu < Gui
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
-    pack :vertical, padding: 0 do
+    pack :vertical, spacing: 32 do
       label "WRATH!", font_size: 120
-      width = $window.width / 2
-      size = 48
-      button("Local Game", width: width, font_size: size, tip: 'Play on the same keyboard') { local_game }
-      button("Join Game", width: width, font_size: size, tip: 'Connect to a network game someone else is hosting') { join_game }
-      button("Host Game", width: width, font_size: size, tip: 'Host a network game that that another player can join') { host_game }
-      button("Exit", width: width, font_size: size) { close }
+      pack :vertical, spacing: 12 do
+        width = $window.width / 2
+        size = 48
+        button("Local Game", width: width, font_size: size, tip: 'Play on the same keyboard') { local_game }
+        button("Join Game", width: width, font_size: size, tip: 'Connect to a network game someone else is hosting') { join_game }
+        button("Host Game", width: width, font_size: size, tip: 'Host a network game that that another player can join') { host_game }
+        button("Exit", width: width, font_size: size) { close }
+      end
     end
   end
 
@@ -34,11 +36,11 @@ class Menu < Gui
   end
 
   def join_game
-    push_game_state EnterServerIP
+    push_game_state JoinDetails
   end
 
   def host_game
-    push_game_state Server
+    push_game_state HostDetails
   end
 
   def close

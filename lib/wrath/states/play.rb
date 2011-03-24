@@ -296,7 +296,7 @@ class Play < GameState
       @font.draw_rel("%d:%02d" % [m, s], $window.retro_width / 2, 0, ZOrder::GUI, 0.5, 0, 0.25, 0.25, Player::STATUS_COLOR)
       super
     else
-      @font.draw("Loading...", 0, 0, ZOrder::GUI)
+      @font.draw_rel("Loading...", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)
     end
   end
 

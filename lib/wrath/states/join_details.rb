@@ -1,5 +1,5 @@
 module Wrath
-  class EnterServerIP < Gui
+  class JoinDetails < Gui
     def initialize
       super
 

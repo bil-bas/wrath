@@ -11,7 +11,6 @@ class Server < GameStates::NetworkServer
   def initialize(options = {})
     options = {
       address: "0.0.0.0",
-      port: settings[:network, :port],
     }.merge! options
 
     @remote_socket = nil
@@ -23,6 +22,8 @@ class Server < GameStates::NetworkServer
     on_input(:escape) { pop_game_state }
 
     start(options[:address], options[:port])
+
+    settings[:network, :port] = port
   end
 
   #
