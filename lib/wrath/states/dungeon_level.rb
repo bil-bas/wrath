@@ -79,6 +79,14 @@ module Wrath
       Sample["rock_sacrifice.wav"].play
     end
 
+    def rock_spawn_position
+      [
+        Margin::LEFT + rand($window.retro_width - Margin::LEFT - Margin::RIGHT),
+        Margin::TOP + rand($window.retro_height - Margin::TOP - Margin::BOTTOM),
+        $window.retro_height
+      ]
+    end
+
     def update
       super
 
@@ -86,10 +94,13 @@ module Wrath
         if @disaster_duration > 0
           intensity = Math::log(@num_disasters * 100)
           @quake_offset = intensity / 4
+
           if not client? and rand(100) < ((intensity * frame_time) / 8000)
-            Rock.create(parent: self,
-                        position: [Margin::LEFT + rand($window.retro_width - Margin::LEFT - Margin::RIGHT),
-                                   Margin::TOP + rand($window.retro_height - Margin::TOP - Margin::BOTTOM), 150])
+            Rock.create(parent: self, position: rock_spawn_position)
+          end
+
+          if rand(100) < @num_disasters * 5
+            Pebble.create(parent: self, position: rock_spawn_position)
           end
         else
           @quake_offset = 0

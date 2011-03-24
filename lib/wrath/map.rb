@@ -52,6 +52,14 @@ module Wrath
       @animated_tiles.each(&:animate)
     end
 
+    public
+    # Splice an image onto the background.
+    def splice(image, x, y)
+      @background_image.splice image, x.round, y.round
+    end
+
+    public
+    # Set an individual pixel color on the background.
     def set_color(x, y, color)
       @background_image.pixel(x.round, y.round, color: color)
     end

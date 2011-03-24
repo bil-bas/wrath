@@ -7,5 +7,10 @@ class Pebble < Wrath::Particle
 
     super options
   end
+
+  def on_stopped
+    parent.map.splice(image, x - width / 2, y - height)
+    destroy
+  end
 end
 end
