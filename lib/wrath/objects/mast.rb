@@ -10,10 +10,12 @@ class Mast < StaticObject
 
     super options
 
+    image.refresh_cache # Ensure the tile is cached before doing any Texplay with it.
+
     unless defined? @@mast_image
       @@mast_image = TexPlay.create_image($window, width, height * IMAGE_REPEATS)
       (0...(height * IMAGE_REPEATS)).step(height) do |y|
-        @@mast_image.splice @frames[0], 0, y
+        @@mast_image.splice image, 0, y
       end
     end
 

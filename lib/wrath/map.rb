@@ -55,6 +55,7 @@ module Wrath
     public
     # Splice an image onto the background.
     def splice(image, x, y)
+      image.refresh_cache
       @background_image.splice image, x.round, y.round
     end
 

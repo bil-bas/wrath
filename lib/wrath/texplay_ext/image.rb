@@ -13,6 +13,7 @@ module Gosu
     # A white silhouette of the image.
     def silhouette
       unless @silhouette
+        refresh_cache
         @silhouette = self.dup
         @silhouette.clear(dest_ignore: :transparent, color: :white)
       end
