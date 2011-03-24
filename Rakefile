@@ -26,10 +26,10 @@ task :yard do
 end
 
 # Making a release.
-file EXECUTABLE => :make
+file EXECUTABLE => :ocra
 
-desc "Use Ocra to generate an executable (Windows only)"
-task make: SOURCE_FOLDER_FILES do
+desc "Use Ocra to generate #{EXECUTABLE} (Windows only)"
+task ocra: SOURCE_FOLDER_FILES do
   system "ocra bin/#{APP}.rbw --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*"
 end
 
