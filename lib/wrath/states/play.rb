@@ -224,14 +224,16 @@ class Play < GameState
     @altar = create_altar
     @objects << @altar # Needs to be added manually, since it is a static object.
 
+    player_sprites = %w[goblin druidess priestess].shuffle
+
     # Player 1.
     player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
-                            animation: "player1_8x8.png")
+                            animation: "player_#{player_sprites.pop}_8x8.png")
     players[0].avatar = player1
 
     # Player 2.
     player2 = Priest.create(local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
-                            factor_x: -1, animation: "player2_8x8.png")
+                            factor_x: -1, animation: "player_#{player_sprites.pop}_8x8.png")
     players[1].avatar = player2
   end
 
