@@ -23,6 +23,12 @@ class Play < GameState
       Message::StartGame
   ]
 
+  PRIEST_NAMES = %w[goblin druidess priestess]
+  PRIEST_SPRITES = {}
+  PRIEST_NAMES.each do |name|
+    PRIEST_SPRITES[name] = "player_#{name}_8x8.png"
+  end
+
   # Margin in which nothing should spawn.
   module Margin
     TOP = 20
@@ -44,12 +50,12 @@ class Play < GameState
   def level_duration; 300 * 1000; end
 
   # network: Server, Client, nil
-  def initialize(network = nil)
+  def initialize(network = nil, player_names, priest_files)
     BaseObject.reset_object_ids
 
     @@glow = make_glow
 
-    @network = network
+    @network, @player_names, @priest_files = network, player_names, priest_files
 
     super()
 
@@ -83,7 +89,7 @@ class Play < GameState
       start_game
     end
 
-    send_message Message::StartGame.new if host?
+    send_message(Message::StartGame.new) if host?
   end
 
   def self.levels
@@ -111,10 +117,6 @@ class Play < GameState
 
   def create_map(tiles)
     @map = Map.create(tiles)
-  end
-
-  def restart
-    switch_game_state self.class.new(@network)
   end
 
   # Start the game, after sending all the init data.
@@ -224,16 +226,14 @@ class Play < GameState
     @altar = create_altar
     @objects << @altar # Needs to be added manually, since it is a static object.
 
-    player_sprites = %w[goblin druidess priestess].shuffle
-
     # Player 1.
     player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
-                            animation: "player_#{player_sprites.pop}_8x8.png")
+                            animation: @priest_files[0])
     players[0].avatar = player1
 
     # Player 2.
     player2 = Priest.create(local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
-                            factor_x: -1, animation: "player_#{player_sprites.pop}_8x8.png")
+                            factor_x: -1, animation: @priest_files[1])
     players[1].avatar = player2
   end
 

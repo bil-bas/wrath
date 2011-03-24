@@ -12,7 +12,7 @@ class Message
     def action(state)
       raise "Bad level passed, #{@level}" unless @level != Play and @level.ancestors.include? Play
 
-      state.push_game_state @level.new(state.network)
+      state.new_game(@level)
     end
   end
 end

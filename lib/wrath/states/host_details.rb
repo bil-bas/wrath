@@ -1,18 +1,19 @@
 module Wrath
-  class HostDetails < Gui
+  class HostDetails < NetworkDetails
     def initialize
       super
 
-      on_input(:escape) { pop_game_state }
-
       pack :vertical, spacing: 32 do
-        pack :horizontal, spacing: 16 do
-          label "Port"
-          @port = text_area text: settings[:network, :port].to_s, max_height: 30, width: $window.width / 2
+        pack :grid, num_columns: 2, spacing: 16 do
+          name_entry
+          port_entry
         end
 
-        button("Host") { push_game_state Server.new(port: @port.text.to_i) }
+        button("Host") do
+          settings[:player, :name] = @player_name.text
+          push_game_state Server.new(port: @port.text.to_i)
+        end
       end
-     end
+    end
   end
 end

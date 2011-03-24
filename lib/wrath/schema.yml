@@ -5,6 +5,11 @@
   :background_color: ?none
 
 :Button:
+  :border_thickness: 2
+  :padding_left: 16
+  :padding_right: 16
+
+:ComboBox:
   :border_thickness: 0
 
 :ToolTip:
