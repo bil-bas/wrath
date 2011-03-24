@@ -69,7 +69,7 @@ class Play < GameState
     @players = []
     @started = false
 
-    @font = Font[20]
+    @font = Font["pixelated.ttf", 32]
 
     create_players
 
@@ -293,7 +293,7 @@ class Play < GameState
     if started?
       # Write the timer out.
       m, s = (@time_left / 1000.0).divmod 60
-      @font.draw_rel("%d:%02d" % [m, s], $window.retro_width / 2, 0, ZOrder::GUI, 0.5, 0, 0.4, 0.4)
+      @font.draw_rel("%d:%02d" % [m, s], $window.retro_width / 2, 0, ZOrder::GUI, 0.5, 0, 0.25, 0.25, Player::STATUS_COLOR)
       super
     else
       @font.draw("Loading...", 0, 0, ZOrder::GUI)

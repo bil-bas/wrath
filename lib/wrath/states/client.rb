@@ -9,7 +9,7 @@ class Client < GameStates::NetworkClient
     options = {
     }.merge! options
 
-    @font = Font[16]
+    @font = Font["pixelated.ttf", 16]
 
     super options
 

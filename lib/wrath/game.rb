@@ -7,7 +7,11 @@ require 'logger'
 # Gems
 require 'chingu'
 require 'texplay'
+require 'fidgit'
 require 'chipmunk'
+
+SCHEMA_FILE = File.join(ROOT_PATH, 'lib', 'wrath', 'schema.yml')
+
 
 begin
   # If this isn't the exe, allow dropping into a pry session.
@@ -24,6 +28,8 @@ include Chingu
 RequireAll.require_all File.dirname(__FILE__)
 
 Gosu::Sample.volume = 0.5
+
+Fidgit::Element.schema.merge_elements! YAML.load(File.read(SCHEMA_FILE))
 
 module Wrath
 module ZOrder
@@ -56,7 +62,7 @@ class Game < Window
     Font.autoload_dirs.unshift File.join(media_dir, 'fonts')
 
     retrofy
-    @sprite_scale = 4 # 160x120
+    @sprite_scale = 4
 
     @used_time = 0
     @last_time = milliseconds
@@ -72,7 +78,7 @@ class Game < Window
     draw_started = milliseconds
 
     # Draw sprites at the retrofied scale.
-    scale(@sprite_scale, @sprite_scale) do
+    scale(@sprite_scale) do
       super
     end
 

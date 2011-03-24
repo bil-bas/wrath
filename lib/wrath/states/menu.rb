@@ -1,32 +1,44 @@
 module Wrath
-class Menu < Chingu::GameState
+class Menu < Gui
   def initialize
     super
 
-    menu_items = {
-      "Local Game" => ->{ push_game_state(Lobby.new(nil, "Player2",  "Player1")) },
-      "Join Game" => EnterServerIP,
-      "Host Game" => Server,
-      "Exit" => :close,
-    }
-
     add_inputs(
-        l: Play,
-        j: EnterServerIP,
-        h: Server,
+        l: :local_game,
+        j: :join_game,
+        h: :host_game,
         e: :close,
         escape: :close
     )
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
-    center = $window.retro_width / 2
-    SimpleMenu.create(spacing: 3, x: center, y: 43, menu_items: menu_items, size: 14)
-    Text.create("Wrath!", x: center, y: 5, rotation_center: :top_center, size: 20, factor: 2, color: Color.rgb(0, 100, 0))
+    pack :vertical, padding: 0 do
+      label "WRATH!", font_size: 120
+      width = $window.width / 2
+      size = 48
+      button("Local Game", width: width, font_size: size, tip: 'Play on the same keyboard') { local_game }
+      button("Join Game", width: width, font_size: size, tip: 'Connect to a network game someone else is hosting') { join_game }
+      button("Host Game", width: width, font_size: size, tip: 'Host a network game that that another player can join') { host_game }
+      button("Exit", width: width, font_size: size) { close }
+    end
   end
 
   def setup
+    super
     log.info "Viewing main menu"
+  end
+
+  def local_game
+    push_game_state Lobby.new(nil, "Player2",  "Player1")
+  end
+
+  def join_game
+    push_game_state EnterServerIP
+  end
+
+  def host_game
+    push_game_state Server
   end
 
   def close

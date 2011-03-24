@@ -1,5 +1,5 @@
 module Wrath
-  class Lobby < GameState
+  class Lobby < Gui
     attr_reader :network
 
     public
@@ -15,28 +15,29 @@ module Wrath
 
       on_input(:escape) { game_state_manager.pop_until_game_state Menu }
 
-      case @network
-        when Server
-          Text.create(text: "Lobby - pick a level")
+      pack :vertical do
+        case @network
+          when Server
+            label "Lobby - pick a level"
 
-        when Client
-          @network.send_msg(Message::ClientReady.new(settings[:player, :name]))
-          Text.create(text: "Lobby - wait for host to pick a level")
+          when Client
+            @network.send_msg(Message::ClientReady.new(settings[:player, :name]))
+            label "Lobby - wait for host to pick a level"
 
-        else
-          Text.create(text: "Lobby")
-      end
-
-      Text.create(y: 15, text: "#{@self_name} vs #{@opponent_name}")
-
-      # Level-picker.
-      unless @network.is_a? Client
-        menu_items = {}
-        Play.levels.each do |level|
-          menu_items[level.to_s] = ->{ push_game_state level.new(@network) }
+          else
+            label "Lobby"
         end
 
-        SimpleMenu.create(spacing: 3, x: $window.retro_width / 2, y: 50, menu_items: menu_items, size: 12)
+        label "#{@self_name} vs #{@opponent_name}", y: 15
+
+        # Level-picker.
+        unless @network.is_a? Client
+          list do
+            Play.levels.each do |level|
+              item(level.to_s, level) { push_game_state level.new(@network) }
+            end
+          end
+        end
       end
     end
 

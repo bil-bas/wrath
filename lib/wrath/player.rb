@@ -36,7 +36,7 @@ class Player < BasicGameObject
     @keys_action = @@keys_config[:players, @number + 1, :action]
 
     @gui_pos = [[10, 0], [115, 0]][@number]
-    @font = Font[8]
+    @font = Font["pixelated.ttf", 32]
     @visible = true
 
     super(options)
@@ -155,7 +155,7 @@ class Player < BasicGameObject
                   "F: #{favor.to_i} H: #{@avatar.health.to_i}"
                 end
 
-      @font.draw message, *@gui_pos, ZOrder::GUI, 1, 1, STATUS_COLOR
+      @font.draw_rel message, *@gui_pos, ZOrder::GUI, 0, 0, 0.25, 0.25, STATUS_COLOR
     end
   end
 end

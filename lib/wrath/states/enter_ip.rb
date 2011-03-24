@@ -1,23 +1,23 @@
 module Wrath
-class EnterServerIP < GameState
-  def initialize
-    super
+  class EnterServerIP < Gui
+    def initialize
+      super
 
-    @textinput = TextInput.new
-    @textinput.text = settings[:network, :address]
+      on_input(:escape) { pop_game_state }
 
-    $window.text_input = @textinput
-    on_input([:enter, :return]) do
-      push_game_state Client.new(address: @ip.text, port: settings[:network, :port])
-    end
-    on_input(:escape) { pop_game_state }
+      pack :vertical, spacing: 32 do
+        pack :horizontal, spacing: 16 do
+          label "Host address"
+          @address = text_area text: settings[:network, :address], max_height: 30, width: $window.width / 2
+        end
 
-    @title = Text.create("Please enter server address:", size: 12)
-    @ip = Text.create("", x: 0, y: 20, size: 20)
+        pack :horizontal, spacing: 16 do
+          label "Host port"
+          @port = text_area text: settings[:network, :port].to_s, max_height: 30, width: $window.width / 2
+        end
+
+        button("Connect") { push_game_state Client.new(address: @address.text, port: @port.text.to_i) }
+      end
+     end
   end
-
-  def update
-    @ip.text = @textinput.text
-  end
-end
 end

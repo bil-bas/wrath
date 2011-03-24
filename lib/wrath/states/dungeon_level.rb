@@ -81,9 +81,9 @@ module Wrath
 
     def rock_spawn_position
       [
-        Margin::LEFT + rand($window.retro_width - Margin::LEFT - Margin::RIGHT),
-        Margin::TOP + rand($window.retro_height - Margin::TOP - Margin::BOTTOM),
-        $window.retro_height
+        Margin::LEFT + rand($window.width - Margin::LEFT - Margin::RIGHT),
+        Margin::TOP + rand($window.height - Margin::TOP - Margin::BOTTOM),
+        $window.height
       ]
     end
 
@@ -111,7 +111,7 @@ module Wrath
     def draw
       if started?
         # Draw overlay to make it look dark.
-        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
+        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, DARKNESS_COLOR)
 
         if @quake_offset == 0
           super

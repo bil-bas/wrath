@@ -16,7 +16,7 @@ class Server < GameStates::NetworkServer
 
     @remote_socket = nil
 
-    @font = Font[16]
+    @font = Font["pixelated.ttf", 16]
 
     super options
 
