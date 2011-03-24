@@ -73,7 +73,7 @@ module Wrath
     def player_row(player_name, player_number)
       unless @priest_sprites
         @priest_sprites = Play::PRIEST_SPRITES.values.map do |file|
-          SpriteSheet.new(file, 8, 8)[0]
+          ScaledImage.new(SpriteSheet.new(file, 8, 8)[0], $window.sprite_scale)
         end
 
         @player_sprite_combos = {}
