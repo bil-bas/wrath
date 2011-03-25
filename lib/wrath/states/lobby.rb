@@ -1,7 +1,13 @@
 module Wrath
   class Lobby < Gui
+
+    READY_COLOR = Color.rgb(0, 0, 0)
+    UNREADY_BACKGROUND_COLOR = Color.rgb(50, 50, 50)
+    READY_BACKGROUND_COLOR = Color.rgb(0, 255, 0)
+    DISAMBIGUATION_SUFFIX = '_'
+
     public
-    def accept_message?(message); [Message::NewGame].find {|m| message.is_a? m }; end
+    def accept_message?(message); [Message::NewGame, Message::UpdateLobby].find {|m| message.is_a? m }; end
 
     public
     def initialize(network, opponent_name, self_name = nil)
@@ -13,7 +19,9 @@ module Wrath
 
       @player_names = [self_name, opponent_name]
       @player_names.reverse! if @network.is_a? Client
-      @player_names[1] += ' ' if @player_names[1] == @player_names[0]
+      @player_names[1] += DISAMBIGUATION_SUFFIX if @player_names[1] == @player_names[0]
+
+      @player_number = host? ? 0 : 1
 
       on_input(:escape) { game_state_manager.pop_until_game_state Menu }
 
@@ -36,13 +44,34 @@ module Wrath
 
         level_picker
 
-        toggle_button("Ready") if @network
+        pack :horizontal do
+          if @network
+            toggle_button("Ready") do |sender, value|
+              update_ready @player_number, value
+              send_message(Message::UpdateLobby.new(:ready, @player_number, value))
+            end
+          end
 
-        if @network.is_a? Client
-          label "Wait for host to start a game"
-        else
-          button("Start") { new_game @level_picker.value }
+          if client?
+            label "Wait for host to start a game"
+          else
+            @start_button = button("Start", enabled: local?) do
+              new_game @level_picker.value
+            end
+          end
         end
+      end
+    end
+
+    def host?; @network.is_a? Server; end
+    def client?; @network.is_a? Client; end
+    def local?; @network.nil?; end
+
+    def send_message(message)
+      if client?
+        @network.send_msg(message)
+      else
+        @network.broadcast_msg(message)
       end
     end
 
@@ -51,9 +80,13 @@ module Wrath
       label "Level"
 
       pack :horizontal do
-        @level_picker = combo_box value: Play.levels[0], width: $window.width * 0.6 do
+        @level_picker = combo_box value: Play.levels[0], width: $window.width * 0.6, enabled: (not client?) do
           Play.levels.each do |level|
             item(level.to_s, level)
+          end
+
+          subscribe :changed do |sender, level|
+            send_message(Message::UpdateLobby.new(:level, level)) if host?
           end
         end
       end
@@ -61,6 +94,9 @@ module Wrath
 
     protected
     def player_grid
+      @ready_indicators = []
+      @num_readies = 0
+
       label "Players"
       pack :grid, num_columns: 3, spacing_h: 16, spacing_v: 4 do
         @player_names.each_with_index do |player_name, player_number|
@@ -79,19 +115,16 @@ module Wrath
         @player_sprite_combos = {}
       end
 
-      @player_sprite_combos[player_name] = combo_box width: 200 do
+      is_local = ((player_number == @player_number) or local?)
+      @player_sprite_combos[player_name] = combo_box width: 250, enabled: is_local do
         @priest_sprites.each_with_index do |sprite, i|
           item Play::PRIEST_NAMES[i].capitalize, i, icon: sprite
         end
 
-        subscribe :changed do |sender, value|
-          @player_sprite_combos.values.each do |combo|
-            @used_priests = @player_sprite_combos.values.map {|c| c.value }
+        subscribe :changed do |sender, priest_index|
+          enable_priest_options
 
-            combo.each do |item|
-              item.enabled = (not @used_priests.include?(item.value))
-            end
-          end
+          send_message(Message::UpdateLobby.new(:player, player_number, priest_index)) unless local?
         end
       end
 
@@ -101,7 +134,7 @@ module Wrath
       label player_name
 
       if @network
-        label 'Ready', background_color: Color.rgb(255, 0, 0)
+        @ready_indicators << label('Ready', color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)
       else
         label ''
       end
@@ -118,6 +151,44 @@ module Wrath
     def update
       super
       @network.update if @network
+    end
+
+    protected
+    # Enables and disables all the possible priest sprites, based on what is available.
+    def enable_priest_options
+      @player_sprite_combos.values.each do |combo|
+        @used_priests = @player_sprite_combos.values.map {|c| c.value }
+
+        combo.each do |item|
+          item.enabled = (not @used_priests.include?(item.value))
+        end
+      end
+    end
+
+    public
+    def update_player(player_number, priest_index)
+      @player_sprite_combos.values[player_number].value = priest_index
+      enable_priest_options
+    end
+
+    public
+    def update_level(level)
+      @level_picker.value = level
+    end
+
+    public
+    def update_ready(player_number, value)
+      if value
+        @num_readies += 1
+      else
+        @num_readies -= 1
+      end
+
+      if host?
+        @start_button.enabled = (@num_readies == 2)
+      end
+
+      @ready_indicators[player_number].background_color = value ? READY_BACKGROUND_COLOR : UNREADY_BACKGROUND_COLOR
     end
   end
 end
