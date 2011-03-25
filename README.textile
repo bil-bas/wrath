@@ -23,13 +23,17 @@ h3. Windows
 
 If running the .exe, there are no other requirements. Otherwise the requirements are the same as for Linux or OS/X.
 
-h3. OS X and Linux
+h3. OS X and Linux (or Windows from source)
 
 * Ruby 1.9.2
 ** Gosu gem 0.7.27
-** Chingu gem 0.9rc4 (use 'gem install chingu --pre')
+** Chingu gem 0.9rc4
 ** Chipmunk gem 5.2.2
+** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
+
+    gem install gosu texplay chipmunk --no-ri --no-rdoc
+    gem install fidgit chingu --pre --no-ri --no-rdoc
 
 h2. Credits
 
