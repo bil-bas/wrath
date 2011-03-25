@@ -70,7 +70,7 @@ module Wrath
     end
 
     def update
-      if state == :walking and not controlled_by_player?
+      if local? and state == :walking and not controlled_by_player?
         if walking_to_do?
           @walk_time_left -= frame_time
           if walking_to_do?
