@@ -15,7 +15,7 @@ module Wrath
 
     self.log = Logger.new(STDERR)
     log.formatter = lambda do |type, time, progname, message|
-      $stderr.puts "[#{time} #{type[0..0]}] #{progname ? "#{progname}: ": ''}#{message}"
+      $stderr.puts "[#{time} #{type.rjust(5)}] #{progname ? "#{progname}: ": ''}#{message}"
     end
   end
 end
