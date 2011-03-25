@@ -1,5 +1,5 @@
 module Wrath
-class Bard < Mob
+class Bard < Humanoid
   trait :timer
 
   public
@@ -7,10 +7,7 @@ class Bard < Mob
     options = {
       favor: 35,
       health: 30,
-      vertical_jump: 0.2,
-      horizontal_jump: 1.2,
       elasticity: 0.4,
-      jump_delay: 1500,
       encumbrance: 0.4,
       z_offset: -2,
       animation: "bard_8x8.png",

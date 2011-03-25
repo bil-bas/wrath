@@ -62,6 +62,23 @@ module Wrath
     end
 
     public
+    def on_collision(other)
+      case other
+        when Wall
+          # Everything, except carried objects, hit walls.
+          (not (can_pick_up? and inside_container?))
+
+        else
+          false
+      end
+    end
+
+    public
+    def halt
+      set_body_velocity(0, 0)
+    end
+
+    public
     def destroy
       @container.drop if inside_container?
       parent.objects.delete self

@@ -1,6 +1,6 @@
 module Wrath
 
-class Chicken < Mob
+class Chicken < Animal
   PERCENTAGE_LAYING_AN_EGG = 33
 
   public

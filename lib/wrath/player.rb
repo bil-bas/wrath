@@ -137,8 +137,7 @@ class Player < BasicGameObject
           # S
           moving.move(180)
         else
-          moving.set_body_velocity(0, 0)
-          # Standing entirely still.
+          moving.halt
         end
     end
   end

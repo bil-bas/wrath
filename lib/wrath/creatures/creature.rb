@@ -1,5 +1,6 @@
 module Wrath
 
+  # Any sort of living being.
 class Creature < Container
   extend Forwardable
 
@@ -26,9 +27,9 @@ class Creature < Container
   FRAME_SLEEP = 3
   FRAME_DEAD = 3
 
-  attr_reader :state, :speed, :favor, :health, :player, :max_health
+  attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing
 
-  attr_writer :player
+  attr_writer :player, :state
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
 
@@ -36,6 +37,7 @@ class Creature < Container
   def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
+  def facing=(angle); @facing = angle % 360; end
   def controlled_by_player?; not @player.nil?; end
   def poisoned?; @poisoned; end
 
@@ -44,6 +46,7 @@ class Creature < Container
     options = {
         health: 10000,
         poisoned: false,
+        facing: 0,
     }.merge! options
 
     super options
@@ -51,6 +54,7 @@ class Creature < Container
     @max_health = @health = options[:health]
     @speed = options[:speed]
     @poisoned = options[:poisoned]
+    @facing = options[:facing]
 
     @death_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
@@ -174,13 +178,6 @@ class Creature < Container
 
     update_color
 
-    case @state
-      when :standing
-        @state = :walking if [x_velocity, y_velocity] != [0, 0]
-      when :walking
-        @state = :standing if velocity == [0, 0, 0]
-    end
-
     # Ensure any carried object faces in the same direction as the player.
     if carrying?
       if (factor_x > 0 and contents.factor_x < 0) or
@@ -191,7 +188,7 @@ class Creature < Container
 
     self.image = case state
                    when :walking
-                     z <= @tile.ground_level ? @walking_animation.next : @frames[FRAME_WALK1]
+                     z <= ground_level ? @walking_animation.next : @frames[FRAME_WALK1]
                    when :standing
                      @frames[FRAME_WALK1]
                    when :carried

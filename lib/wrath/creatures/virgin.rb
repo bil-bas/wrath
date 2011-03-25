@@ -1,13 +1,10 @@
 module Wrath
 
-class Virgin < Mob
+class Virgin < Humanoid
   def initialize(options = {})
     options = {
       favor: 40,
       health: 30,
-      vertical_jump: 0.05,
-      horizontal_jump: 0.5,
-      jump_delay: 500,
       encumbrance: 0.4,
       z_offset: -2,
       animation: "virgin_8x8.png",

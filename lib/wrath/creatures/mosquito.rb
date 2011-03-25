@@ -1,5 +1,5 @@
 module Wrath
-  class Mosquito < Mob
+  class Mosquito < Animal
     DAMAGE = 0.5  / 1000.0 # 0.5/second
 
     def can_be_activated?(actor); false; end

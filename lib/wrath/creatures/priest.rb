@@ -1,6 +1,6 @@
 module Wrath
 
-class Priest < Creature
+class Priest < Humanoid
   MAX_HEALTH = 100
 
   def media_folder; 'players'; end

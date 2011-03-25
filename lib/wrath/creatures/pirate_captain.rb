@@ -1,5 +1,5 @@
 module Wrath
-class PirateCaptain < Pirate
+class PirateCaptain < Humanoid
   DAMAGE = 10 / 1000.0
 
   def initialize(options = {})

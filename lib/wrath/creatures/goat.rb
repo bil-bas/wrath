@@ -1,6 +1,6 @@
 module Wrath
 
-class Goat < Mob
+class Goat < Animal
   def initialize(options = {})
     options = {
       favor: 20,

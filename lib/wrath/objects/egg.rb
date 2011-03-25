@@ -34,7 +34,7 @@ class Egg < DynamicObject
 
   def on_collision(other)
     case other
-      when Priest, Virgin, Knight, Paladin, Bard # TODO: Humanoid?
+      when Humanoid
         if not thrown_by.include? other and (not inside_container?) and z > ground_level
           destroy
           other.pick_up(BrokenEgg.create(parent: parent))

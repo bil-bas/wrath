@@ -1,5 +1,5 @@
 module Wrath
-  class Mimic < Mob
+  class Mimic < Animal
 
     DAMAGE = 5  / 1000.0 # 5/second
     FRAME_DISCOVERED = 0

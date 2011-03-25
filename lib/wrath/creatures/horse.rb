@@ -1,6 +1,6 @@
 module Wrath
 
-class Horse < Mob
+class Horse < Animal
   def mount?; true; end
 
   public

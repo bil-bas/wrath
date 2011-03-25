@@ -321,36 +321,6 @@ class BaseObject < GameObject
   end
 
   public
-  def on_collision(other)
-    case other
-      when Wall
-        # Everything, except carrued objects, hit walls.
-        collides = (not (can_pick_up? and inside_container?))
-
-        # Bounce back from the edge of the screen
-        if collides and not controlled_by_player?
-          case other.side
-            when :right
-              self.x_velocity = - self.x_velocity * elasticity * 0.5 if x_velocity > 0
-            when :left
-              self.x_velocity = - self.x_velocity * elasticity * 0.5 if x_velocity < 0
-            when :top
-              self.y_velocity = - self.y_velocity * elasticity * 0.5 if y_velocity < 0
-            when :bottom
-              self.y_velocity = - self.y_velocity * elasticity * 0.5 if y_velocity > 0
-            else
-              raise "bad side"
-          end
-        end
-
-        collides
-
-      else
-        false
-    end
-  end
-
-  public
   def destroy
     super
 

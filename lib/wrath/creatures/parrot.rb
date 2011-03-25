@@ -1,5 +1,5 @@
 module Wrath
-  class Parrot < Mob
+  class Parrot < Animal
     def ground_level; super + ((@state == :thrown) ? 0 : 6); end
 
     def initialize(options = {})
