@@ -23,7 +23,7 @@ class Play < GameState
       Message::StartGame
   ]
 
-  PRIEST_NAMES = %w[druidess priestess shaman witch]
+  PRIEST_NAMES = %w[druidess monk priestess prophet shaman witch]
   PRIEST_SPRITES = {}
   PRIEST_NAMES.each do |name|
     PRIEST_SPRITES[name] = "#{name}_8x8.png"
