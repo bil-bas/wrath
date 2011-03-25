@@ -10,7 +10,7 @@ module Wrath
         elasticity: 0.5,
         encumbrance: 0.4,
         z_offset: -2,
-        animation: "blue_meanie_8x8.png",
+        animation: "blue_meanie_10x8.png",
       }.merge! options
 
       super(options)
