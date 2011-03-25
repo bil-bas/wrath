@@ -52,7 +52,7 @@ class Animal < Creature
         collides = (not (can_pick_up? and inside_container?))
 
         # Bounce back from the edge of the screen
-        if collides and not controlled_by_player?
+        if collides and not controlled_by_player? and (empty_handed? or not contents.controlled_by_player?)
           case other.side
             when :right
               self.x_velocity = - self.x_velocity * elasticity * 0.5 if x_velocity > 0
