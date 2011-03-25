@@ -42,7 +42,7 @@ module Wrath
     end
 
     public
-    # This is called by Message::PerformAction
+    # This is called by Message::PerformAction or when host/local player tries to do something.
     def perform_action(target)
      if target
         target.activated_by(self)
@@ -83,14 +83,7 @@ module Wrath
     def drop
       return unless @contents and @contents.can_be_dropped?(self)
 
-      # Drop remotely if this is a local carrier or in the special case of a player carrying another player.
-      if parent.networked?
-        if ((not local?) or (controlled_by_player? and contents.controlled_by_player?))
-          @parent.send_message Message::RequestAction.new(self)
-        else
-          @parent.send_message Message::PerformAction.new(self)
-        end
-      end
+      @parent.send_message Message::PerformAction.new(self) if parent.host?
 
       to_drop = @contents
       @contents = nil

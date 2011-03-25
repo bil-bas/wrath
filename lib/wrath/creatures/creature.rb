@@ -159,16 +159,13 @@ class Creature < Container
     near_objects.sort_by! {|g| distance_to(g) }
 
     target = near_objects.find {|o| o.can_be_activated?(self) }
-    if target
-      if parent.client?
-        # Client needs to ask permission first.
-        parent.send_message(Message::RequestAction.new(self, target))
-      else
-        # Host/local can do it immediately.
-        target.activated_by(self)
-      end
+
+    if parent.client?
+      # Client needs to ask permission first.
+      parent.send_message(Message::RequestAction.new(self, target))
     else
-      drop
+      # Host/local can do it immediately.
+      perform_action(target)
     end
   end
 
