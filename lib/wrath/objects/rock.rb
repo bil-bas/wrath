@@ -23,7 +23,7 @@ class Rock < DynamicObject
   end
 
   def sacrificed(actor, altar)
-    Sample["rock_sacrifice.wav"].play
+    Sample["objects/rock_sacrifice.wav"].play
 
     actor.health += EXPLOSION_HEALTH unless parent.client?
 

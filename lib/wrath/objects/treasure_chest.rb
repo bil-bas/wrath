@@ -9,7 +9,7 @@ module Wrath
         encumbrance: 0.8,
         elasticity: 0.1,
         z_offset: -2,
-        animation: "chest_of_gold_8x8.png",
+        animation: "treasure_chest_8x8.png",
       }.merge! options
 
       super options

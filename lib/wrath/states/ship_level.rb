@@ -64,7 +64,7 @@ module Wrath
     end
 
     def on_disaster
-      Sample["rock_sacrifice.wav"].play
+      Sample["objects/rock_sacrifice.wav"].play
     end
 
     def create_altar

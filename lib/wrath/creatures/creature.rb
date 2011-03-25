@@ -32,6 +32,7 @@ class Creature < Container
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
 
+  def media_folder; 'creatures'; end
   def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end

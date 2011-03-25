@@ -26,6 +26,7 @@ class BaseObject < GameObject
   def local?; @local; end
   def controlled_by_player?; false; end
   def networked?; not @id.nil?; end
+  def media_folder; 'objects'; end
 
   # Should #destroy be propagated over the network?
   def network_destroy?; @id and parent.host?; end
@@ -72,7 +73,7 @@ class BaseObject < GameObject
       @frames = options[:animation]
       width, height = @frames[0].width, @frames[0].height
     else
-      @frames = Animation.new(file: options[:animation])
+      @frames = Animation.new(file: File.join(media_folder, options[:animation]))
       options[:animation] =~ /(\d+)x(\d+)/
       width, height = $1.to_i, $2.to_i
     end

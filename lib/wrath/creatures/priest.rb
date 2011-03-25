@@ -3,6 +3,8 @@ module Wrath
 class Priest < Creature
   MAX_HEALTH = 100
 
+  def media_folder; 'players'; end
+
   def initialize(options = {})
     options = {
       speed: 2,

@@ -4,7 +4,7 @@ class Smoke < GameObject
     options = {
       color: Color.rgba(50, 50, 50, 100),
       factor: 1.5,
-      image: Image["pixel_1x1.png"],
+      image: Image["objects/pixel_1x1.png"],
     }.merge! options
 
     super options

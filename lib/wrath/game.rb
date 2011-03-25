@@ -68,7 +68,7 @@ class Game < Window
     @last_time = milliseconds
     @potential_fps = 0
 
-    @pixel = Image["pixel_1x1.png"]
+    @pixel = Image["objects/pixel_1x1.png"] # Used to draw with.
 
     push_game_state Menu
   end

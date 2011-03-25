@@ -22,7 +22,7 @@ class GameOver < GameState
 
     log.info { "Player ##{winner.number + 1} won" }
 
-    sparkle_frames = Animation.new(file: "sparkle_8x8.png")
+    sparkle_frames = Animation.new(file: "objects/sparkle_8x8.png")
     @sparkle = GameObject.create(image: sparkle_frames[winner.number],
                                  x: @avatar.x, y: @avatar.y - @avatar.height / 2.0,
                                  zorder: @avatar.y - 0.1, alpha: 150, mode: :additive)

@@ -23,7 +23,7 @@ class Note < StaticObject
       collision_type: :scenery,
     }.merge! options
 
-    Sample["note_#{index + 1}.wav"].play(VOLUME)
+    Sample["objects/note_#{index + 1}.wav"].play(VOLUME)
 
     super options
 

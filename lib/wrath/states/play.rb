@@ -23,10 +23,10 @@ class Play < GameState
       Message::StartGame
   ]
 
-  PRIEST_NAMES = %w[druidess goblin priestess witch]
+  PRIEST_NAMES = %w[druidess priestess shaman witch]
   PRIEST_SPRITES = {}
   PRIEST_NAMES.each do |name|
-    PRIEST_SPRITES[name] = "player_#{name}_8x8.png"
+    PRIEST_SPRITES[name] = "#{name}_8x8.png"
   end
 
   # Margin in which nothing should spawn.

@@ -52,7 +52,7 @@ module Wrath
     end
 
     def wake_up
-      Sample["chest_close.wav"].play
+      Sample["objects/chest_close.wav"].play
 
       parent.send_message(Message::PerformAction.new(self, self)) if parent.host?
 
