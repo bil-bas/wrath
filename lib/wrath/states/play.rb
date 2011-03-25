@@ -20,6 +20,7 @@ class Play < GameState
   # Messages accepted during the setup phase.
   GAME_SETUP_MESSAGES = [
       Message::Create, Message::EndGame, Message::Map,
+      Message::PerformAction,
       Message::StartGame
   ]
 

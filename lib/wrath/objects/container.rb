@@ -34,22 +34,11 @@ module Wrath
                     nil
                   end
 
-      # Fudge the contents, so we can pass it in the creation message, but then actually pick_up/drop.
-      @contents = to_be_contents
       super(options)
+
       @contents = nil
 
       pick_up(to_be_contents) if to_be_contents
-    end
-
-    protected
-    def recreate_options
-      options = super
-      if full?
-        options.merge! contents_id: contents.id
-      else
-        options
-      end
     end
 
     public
