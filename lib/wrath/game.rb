@@ -10,7 +10,7 @@ require 'texplay'
 require 'fidgit'
 require 'chipmunk'
 
-SCHEMA_FILE = File.join(ROOT_PATH, 'lib', 'wrath', 'schema.yml')
+SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
 
 
 begin
