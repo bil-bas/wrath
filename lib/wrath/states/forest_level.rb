@@ -3,7 +3,7 @@ module Wrath
     DEFAULT_TILE = Grass
     NUM_GOATS = 5
     NUM_CHICKENS = 2
-    CHEST_CONTENTS = [Crown, Chicken]
+    SACK_CONTENTS = [Crown, Chicken]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -23,7 +23,7 @@ module Wrath
 
       # Inanimate objects.
       4.times { Rock.create }
-      3.times { Chest.create(contents: CHEST_CONTENTS) }
+      3.times { Sack.create(contents: SACK_CONTENTS) }
       2.times { Fire.create }
       1.times { Cauldron.create }
       

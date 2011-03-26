@@ -13,7 +13,7 @@ class Crown < DynamicObject
   end
 
   def empowered?
-    inside_container? and container.player and container.player.favor > 0
+    inside_container? and container.controlled_by_player? and container.player.favor > 0
   end
 
   def initialize(options = {})
