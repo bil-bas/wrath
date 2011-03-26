@@ -174,13 +174,11 @@ class Creature < Container
     super
 
     # Ensure that state is updated remotely.
-    unless local?
-      case @state
-        when :standing
-          @state = :walking if [x_velocity, y_velocity] != [0, 0]
-        when :walking
-          @state = :standing if velocity == [0, 0, 0]
-      end
+    case @state
+      when :standing
+        @state = :walking if [x_velocity, y_velocity] != [0, 0]
+      when :walking
+        @state = :standing if velocity == [0, 0, 0]
     end
 
     update_color
