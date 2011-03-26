@@ -95,12 +95,7 @@ class Chest < Container
       end
 
       if contents.controlled_by_player?
-        after(PLAYER_TRAPPED_DURATION) do
-          if contents == object
-            drop
-            parent.send_message(Message::PerformAction.new(object, self)) if parent.host?
-          end
-        end
+        after(PLAYER_TRAPPED_DURATION) { drop if contents == object }
       end
     end
   end
