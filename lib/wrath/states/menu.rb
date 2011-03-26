@@ -19,8 +19,8 @@ class Menu < Gui
     icons = priest_sprite_files.map {|f| ScaledImage.new(SpriteSheet.new(f, 8, 8)[0], $window.sprite_scale * 3) }
 
     pack :horizontal do
-      pack :vertical, padding_top: 24, spacing: 16 do
-        icons[0..2].each {|icon| label '', icon: icon }
+      pack :vertical, padding_top: 12, spacing: 14 do
+        icons[0..3].each {|icon| label '', icon: icon }
       end
 
       pack :vertical, spacing: 18 do
@@ -38,8 +38,8 @@ class Menu < Gui
         end
       end
 
-      pack :vertical, padding_top: 24, spacing: 16 do
-        icons[3..6].each {|icon| label '', icon: icon }
+      pack :vertical, padding_top: 12, spacing: 14 do
+        icons[4..7].each {|icon| label '', icon: icon }
       end
     end
   end

@@ -116,7 +116,7 @@ module Wrath
       end
 
       is_local = ((player_number == @player_number) or local?)
-      @player_sprite_combos[player_name] = combo_box width: 250, enabled: is_local do
+      @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
         @priest_sprites.each_with_index do |sprite, i|
           item Play::PRIEST_NAMES[i].capitalize, i, icon: sprite
         end
