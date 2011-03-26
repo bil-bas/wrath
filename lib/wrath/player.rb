@@ -45,16 +45,22 @@ class Player < BasicGameObject
   end
 
   def win!
+    game_over
+  end
+
+  def lose!
+    game_over
+  end
+
+  def game_over
     if @state == :mounted
       @avatar.container.drop
     else
       @avatar.drop
     end
-  end
 
-  def lose!
-    @avatar.container.drop if @state == :mounted
-    @avatar.die!
+    @avatar.reset_forces
+    @avatar.pause!
   end
 
   def avatar=(creature)
@@ -146,9 +152,9 @@ class Player < BasicGameObject
     if avatar
       message = if parent.winner
                   if parent.winner == self
-                    "Ascended"
+                    "Won!"
                   else
-                    "Died"
+                    "Lost!"
                   end
                 else
                   "F: #{favor.to_i} H: #{@avatar.health.to_i}"
