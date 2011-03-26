@@ -24,16 +24,15 @@ class Menu < Gui
       end
 
       pack :vertical, spacing: 18 do
-        heading = label "Wrath!", font_size: 135, color: Color.rgb(30, 100, 255)
+        heading = label "Wrath!", font_size: 135, color: Color.rgb(30, 100, 255), padding_left: 10
 
-        pack :vertical, spacing: 12 do
-          width = $window.width / 2
-
-          options = { width: heading.width - 15, font_size: 36, justify: :center }
+        pack :vertical, spacing: 12, padding_left: 80 do
+          options = { width: heading.width - 15 - 160, font_size: 30, justify: :center }
           button("Play", options.merge(tip: 'Both players on the same keyboard')) { local_game }
           button("Join Game", options.merge(tip: 'Connect to a network game someone else is hosting')) { join_game }
           button("Host Game", options.merge(tip: 'Host a network game that that another player can join')) { host_game }
           button("Options", options.merge(enabled: false))
+          button("About", options.merge(enabled: false))
           button("Exit", options) { close }
         end
       end
