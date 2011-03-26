@@ -45,6 +45,7 @@ h2. Third party assets used
 
 * Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. These sprites are under the "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/ license.
 * Sound effects created using "as3sfxr-b":http://ded.increpare.com/~locus/as3sfxr-b/
+* "Pixelated" font - created by Affinity and Epsilon
 * "Gosu":http://libgosu.org/ game development library
 * "Chingu":http://ippa.se/chingu game library
 * "Texplay":http://banisterfiend.wordpress.com/2008/08/23/texplay-an-image-manipulation-tool-for-ruby-and-gosu/ image manipulation library for Gosu.
