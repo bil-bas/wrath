@@ -17,6 +17,8 @@ class BaseObject < GameObject
   # The unique identifier of the object (or nil if not a networked object). Networked objects have consistent id on all machines.
   attr_reader :id
 
+  # Not destroyed.
+  def exists?; not parent.nil?; end
   def zorder; y; end
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
@@ -144,7 +146,7 @@ class BaseObject < GameObject
     @shape.e = 0
     @shape.u = 0.5
     @shape.collision_type = collision_type
-    @shape.owner = self
+    @shape.object = self
   end
 
   public
@@ -226,6 +228,8 @@ class BaseObject < GameObject
 
     @tile.touched_by(self) unless @tile.nil? or z > 0
 
+    return unless exists? # Could have been destroyed, for example by touching lava.
+
     @z = ground_level if z <= ground_level
 
     # Deal with vertical physics manually.
@@ -245,6 +249,8 @@ class BaseObject < GameObject
         end
       end
     end
+
+    return unless exists? # Could have been destroyed, for example by stopping movingaaaaaaa.
 
     # Set facing based on direction of movement.
     if (factor_x > 0 and x_velocity < 0) or
@@ -322,16 +328,29 @@ class BaseObject < GameObject
 
   public
   def destroy
+    unless exists?
+      if networked?
+        log.warn { "Attempting to destroy an already destroyed network object #{self.class}##{id}" }
+      else
+        log.warn { "Attempting to destroy an already destroyed object #{self.class}##{__object_id__}" }
+      end
+
+      return
+    end
+
     super
 
     log.debug { "Destroyed network object #{self.class}##{id}" } if @id
 
+    log.debug { [@parent.space.inspect, @shape.inspect, @body.inspect] }
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
 
     if network_destroy?
       @parent.send_message(Message::Destroy.new(self))
     end
+
+    @parent = nil # The object no longer exists, so should not be linked to the scene.
   end
 end
 end

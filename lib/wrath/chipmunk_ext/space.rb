@@ -9,7 +9,12 @@ module CP
       a.each do |c|
         b.each do |d|
           add_collision_func(c, d) do |a, b|
-            yield a.owner, b.owner
+            # Prevent collisions between objects that have already been destroyed.
+            if a.object.exists? and b.object.exists?
+              yield a.object, b.object
+            else
+              false
+            end
           end
         end
       end

@@ -80,9 +80,9 @@ class Creature < Container
 
     @death_explosion.emit([x, y, z + height / 2], thrown_by: [self, corpse]) if @death_explosion
 
-    destroy
-
     parent.lose!(player) if player and not parent.winner
+
+    destroy
   end
 
   protected
