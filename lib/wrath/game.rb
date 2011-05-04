@@ -5,6 +5,12 @@ require 'fileutils'
 require 'logger'
 
 # Gems
+begin
+  require "rubygems"
+  require "bundler/setup"
+rescue LoadError
+end
+
 require 'chingu'
 require 'texplay'
 require 'fidgit'

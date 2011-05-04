@@ -32,8 +32,24 @@ h3. OS X and Linux (or Windows from source)
 ** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
 
+h4. Using Bundler to install gems
+
+<pre>
+    bundle install
+</pre>
+
+    If the Bundler gem isn't already installed, that can be installed with:
+
+<pre>
+    gem install bundler --no-ri --no-rdoc
+</pre>
+
+h4. Manual installation of gems
+
+<pre>
     gem install gosu texplay chipmunk --no-ri --no-rdoc
     gem install fidgit chingu --pre --no-ri --no-rdoc
+</pre>
 
 h2. Credits
 
