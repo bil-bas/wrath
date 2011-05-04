@@ -81,7 +81,7 @@ module Wrath
     public
     def destroy
       @container.drop if inside_container?
-      parent.objects.delete self
+      parent.objects.delete self if parent
       super
     end
   end
