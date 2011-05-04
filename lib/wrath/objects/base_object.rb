@@ -75,7 +75,10 @@ class BaseObject < GameObject
       @frames = options[:animation]
       width, height = @frames[0].width, @frames[0].height
     else
-      @frames = Animation.new(file: File.join(media_folder, options[:animation]))
+      # Cache animations to stop loading them ENDLESSLY!
+      @@animation_cache ||= {}
+      @@animation_cache[options[:animation]] ||= Animation.new(file: File.join(media_folder, options[:animation]))
+      @frames = @@animation_cache[options[:animation]]
       options[:animation] =~ /(\d+)x(\d+)/
       width, height = $1.to_i, $2.to_i
     end
