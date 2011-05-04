@@ -4,6 +4,8 @@ module Wrath
 
     include Log
 
+    attr_reader :tiles
+
     def initialize(tile_classes)
       super()
 

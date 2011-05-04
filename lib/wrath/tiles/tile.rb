@@ -9,6 +9,7 @@ class Tile < GameObject
   attr_reader :speed, :contents
 
   def ground_level; @ground_level; end
+  def z; 0; end
 
   def sprite_position; self.class.const_get(:SPRITE_POSITION); end
 

@@ -166,8 +166,13 @@ class BaseObject < GameObject
   end
 
   public
+  def can_spawn_onto?(tile)
+    not (tile.is_a? Water or tile.is_a? Lava)
+  end
+
+  public
   def spawn
-    self.position = spawn_position
+    self.position = parent.next_spawn_position(self)
   end
 
   public
@@ -285,21 +290,6 @@ class BaseObject < GameObject
   def set_body_velocity(angle, force)
     @x_velocity = offset_x(angle, 1) * force
     @y_velocity = offset_y(angle, 1) * force
- end
-
-  protected
-  def spawn_position
-    margin = parent.class::Margin
-    loop do
-      pos = [rand($window.retro_width - width * 2 - margin::LEFT - margin::RIGHT) + width + margin::LEFT,
-             rand($window.retro_height - width * 2 - margin::TOP - margin::BOTTOM) + width + margin::TOP,
-             0]
-
-      if distance(*pos[0..1], parent.altar.x, parent.altar.y) > 32 and
-          parent.objects.map {|other| distance(*pos[0..1], other.x, other.y) }.min > 16
-        return pos
-      end
-    end
   end
 
   public

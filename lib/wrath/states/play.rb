@@ -8,6 +8,7 @@ class Play < GameState
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
   DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
   GLOW_WIDTH = 64
+  MIN_DISTANCE_FROM_ALTAR_TO_SPAWN = 32
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
@@ -118,6 +119,26 @@ class Play < GameState
 
   def create_map(tiles)
     @map = Map.create(tiles)
+  end
+
+  # Find the next clear spawn position to place a newly created object.
+  def next_spawn_position(object)
+    unless @clear_tiles
+      @clear_tiles = @map.tiles.flatten
+      @clear_tiles.reject! {|tile| tile.y < 20 } # Get rid of top two rows.
+      @clear_tiles.select! {|tile| @altar.distance_to(tile) > MIN_DISTANCE_FROM_ALTAR_TO_SPAWN }
+      @clear_tiles.shuffle!
+    end
+
+    while free_tile = @clear_tiles.pop
+      if object.can_spawn_onto?(free_tile)
+        return [free_tile.x, free_tile.y, free_tile.z]
+      else
+        @clear_tiles.unshift free_tile
+      end
+    end
+
+    raise "Ran out of tiles to spawn onto!"
   end
 
   # Start the game, after sending all the init data.

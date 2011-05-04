@@ -22,6 +22,11 @@ class Rock < DynamicObject
                                            z_velocity: EXPLOSION_Z_VELOCITY)
   end
 
+  public
+  def can_spawn_onto?(tile)
+    true
+  end
+
   def sacrificed(actor, altar)
     Sample["objects/rock_sacrifice.wav"].play
 
