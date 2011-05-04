@@ -332,7 +332,6 @@ class BaseObject < GameObject
 
     log.debug { "Destroyed network object #{self.class}##{id}" } if @id
 
-    log.debug { [@parent.space.inspect, @shape.inspect, @body.inspect] }
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
 
