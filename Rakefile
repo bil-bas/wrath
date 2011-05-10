@@ -2,7 +2,7 @@ require 'rake/clean'
 require 'redcloth'
 
 APP = "wrath"
-RELEASE_VERSION = "0.0.1alpha"
+RELEASE_VERSION = "0.0.2alpha"
 
 EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media]
