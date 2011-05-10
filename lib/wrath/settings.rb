@@ -2,7 +2,7 @@ module Wrath
   class Settings
     include Log
 
-    USER_CONFIG_DIR = File.expand_path(File.join('~', '.wrath', 'config'))
+    USER_CONFIG_DIR = File.expand_path(File.join('~', '.wrath_spooner', 'config'))
     DEFAULT_CONFIG_DIR = File.join(EXTRACT_PATH, 'lib', 'wrath', 'default_config')
 
     public
