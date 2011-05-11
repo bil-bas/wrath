@@ -38,7 +38,7 @@ class Player < BasicGameObject
     @keys_down = @@keys_config[:players, @number + 1, :down]
     @keys_action = @@keys_config[:players, @number + 1, :action]
 
-    @gui_pos = [[20, 1], [130, 1]][@number]
+    @gui_pos = [[20, 1], [130 + Humanoid::PORTRAIT_WIDTH, 1]][@number]
     @font = Font["pixelated.ttf", 32]
     @visible = true
 
@@ -169,10 +169,13 @@ class Player < BasicGameObject
                     "Lost!"
                   end
                 else
-                  "" #"F: #{favor.to_i} H: #{@avatar.health.to_i}"
+                  ""
                 end
 
       @font.draw_rel message, *@gui_pos, ZOrder::GUI, 0, 0, 0.25, 0.25, STATUS_COLOR
+
+      portrait = avatar.portrait
+      portrait.draw @gui_pos[0] - portrait.width, @gui_pos[1], ZOrder::GUI
     end
   end
 end

@@ -1,6 +1,11 @@
 module Wrath
   # Humanoids are any sort of intelligent people. They move by "gliding" rather than bouncing.
   class Humanoid < Creature
+    PORTRAIT_WIDTH = 7
+    PORTRAIT_BACKGROUND_COLOR = Color.rgb(0, 0, 0)
+    PORTRAIT_CROP = [1, 0, 5, 4]
+    PORTRAIT_PADDING = 1
+
     trait :timer
 
     def walking_to_do?; @walk_time_left > 0; end
@@ -84,6 +89,17 @@ module Wrath
       end
 
       super
+    end
+
+    public
+    def portrait
+      unless @portrait
+        @portrait = TexPlay.create_image($window, PORTRAIT_WIDTH, PORTRAIT_WIDTH, color: PORTRAIT_BACKGROUND_COLOR)
+        @frames[0].refresh_cache
+        @portrait.splice @frames[0], PORTRAIT_PADDING, PORTRAIT_PADDING, crop: PORTRAIT_CROP, alpha_blend: true
+      end
+
+      @portrait
     end
 
     public
