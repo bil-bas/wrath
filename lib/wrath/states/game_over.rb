@@ -1,5 +1,5 @@
 module Wrath
-class GameOver < GameState
+class GameOver < Gui
   extend Forwardable
   trait :timer
 
@@ -13,14 +13,13 @@ class GameOver < GameState
     @winner = winner
     @avatar = winner.avatar
 
-    super
+    super()
 
     # Since the avatar is paused, need to animate it from here.
     every(500) { @avatar.toggle_cheer }
 
     on_input(:escape) do
-      send_message Message::EndGame.new if networked?
-      game_state_manager.pop_until_game_state Lobby
+      return_to_lobby
     end
 
     log.info { "Player ##{winner.number + 1} won" }
@@ -29,9 +28,34 @@ class GameOver < GameState
     @sparkle = GameObject.new(image: sparkle_frames[0],
                               x: @avatar.x, y: @avatar.y - @avatar.z - @avatar.height / 2.0,
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
+
+    pack :horizontal, spacing: 10, padding_top: 430, padding_h: 220 do
+      button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
+        replay
+      end
+      button "Lobby", z: ZOrder::GUI, tip: "Return to the game lobby" do
+        return_to_lobby
+      end
+    end
+  end
+
+  def end_game
+    send_message Message::EndGame.new if networked?
+  end
+
+  def return_to_lobby
+    end_game
+    game_state_manager.pop_until_game_state Lobby
+  end
+
+  def replay
+    end_game
+    pop_game_state
+    current_game_state.replay
   end
 
   def setup
+    super
     @play = previous_game_state
   end
 

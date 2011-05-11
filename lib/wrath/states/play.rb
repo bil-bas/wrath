@@ -94,6 +94,11 @@ class Play < GameState
     send_message(Message::StartGame.new) if host?
   end
 
+  def replay
+    pop_game_state
+    push_game_state(self.class.new(@network, @player_names, @priest_files))
+  end
+
   def self.levels
     unless defined? @@levels
       @@levels = []

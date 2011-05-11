@@ -44,8 +44,8 @@ module ZOrder
   SHADOWS = -2
   BACK_GLOW = -1
   OBJECTS = 0..640
-  FOREGROUND = 9999
-  GUI = 10000
+  FOREGROUND = 999999
+  GUI = Float::INFINITY
 end
 
 class Game < Window
