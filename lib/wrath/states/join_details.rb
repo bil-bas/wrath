@@ -13,9 +13,15 @@ module Wrath
           port_entry
         end
 
-        button("Connect") do
-          settings[:player, :name] = @player_name.text
-          push_game_state Client.new(address: @address.text, port: @port.text.to_i)
+        pack :horizontal, padding: 0 do
+          button "Cancel" do
+            pop_game_state
+          end
+
+          button("Connect") do
+            settings[:player, :name] = @player_name.text
+            push_game_state Client.new(address: @address.text, port: @port.text.to_i)
+          end
         end
       end
     end

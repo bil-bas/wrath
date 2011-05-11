@@ -45,6 +45,10 @@ module Wrath
         level_picker
 
         pack :horizontal do
+          button "Cancel" do
+            game_state_manager.pop_until_game_state Menu
+          end
+
           if @network
             @ready_button = toggle_button("Ready") do |sender, value|
               update_ready @player_number, value
