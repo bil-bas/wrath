@@ -13,6 +13,9 @@ class Player < BasicGameObject
   INITIAL_FAVOR = 0
   FAVOR_TO_WIN = 100
 
+  HEALTH_BAR_COLOR = Color.rgb(255, 0, 0)
+  FAVOR_BAR_COLOR = Color.rgb(0, 0, 255)
+
   attr_reader :number, :avatar, :favor, :visible
 
   def local?; @local; end
@@ -35,9 +38,12 @@ class Player < BasicGameObject
     @keys_down = @@keys_config[:players, @number + 1, :down]
     @keys_action = @@keys_config[:players, @number + 1, :action]
 
-    @gui_pos = [[10, 0], [115, 0]][@number]
+    @gui_pos = [[20, 1], [130, 1]][@number]
     @font = Font["pixelated.ttf", 32]
     @visible = true
+
+    @health_bar = Bar.create(x: @gui_pos[0], y: @gui_pos[1], color: HEALTH_BAR_COLOR)
+    @favor_bar = Bar.create(x: @gui_pos[0], y: @gui_pos[1] + 3, color: FAVOR_BAR_COLOR)
 
     super(options)
 
@@ -80,6 +86,8 @@ class Player < BasicGameObject
       parent.send_message(Message::SetFavor.new(self))
     end
 
+    @favor_bar.value = @favor.to_f / FAVOR_TO_WIN
+
     @favor
   end
 
@@ -90,7 +98,11 @@ class Player < BasicGameObject
   def update
     super
 
-    move_by_keys if local? and avatar and not parent.winner
+    if avatar
+      @health_bar.value = avatar.health.to_f / avatar.max_health
+
+      move_by_keys if local? and not parent.winner
+    end
   end
 
   def action
@@ -157,7 +169,7 @@ class Player < BasicGameObject
                     "Lost!"
                   end
                 else
-                  "F: #{favor.to_i} H: #{@avatar.health.to_i}"
+                  "" #"F: #{favor.to_i} H: #{@avatar.health.to_i}"
                 end
 
       @font.draw_rel message, *@gui_pos, ZOrder::GUI, 0, 0, 0.25, 0.25, STATUS_COLOR
