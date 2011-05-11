@@ -46,7 +46,7 @@ module Wrath
 
         pack :horizontal do
           if @network
-            toggle_button("Ready") do |sender, value|
+            @ready_button = toggle_button("Ready") do |sender, value|
               update_ready @player_number, value
               send_message(Message::UpdateLobby.new(:ready, @player_number, value))
             end
@@ -143,6 +143,12 @@ module Wrath
     public
     # Start a new game. Also called from Message::NewGame.
     def new_game(level)
+      if @network
+        # Turn off the ready indicators, in case we come back to this state.
+        2.times {|i| update_ready(i, false) }
+        @ready_button.value = false
+      end
+
       priest_files = @used_priests.map {|i| Play::PRIEST_SPRITES[Play::PRIEST_NAMES[i]] }
       push_game_state level.new(@network, @player_names, priest_files)
     end
@@ -189,6 +195,11 @@ module Wrath
       end
 
       @ready_indicators[player_number].background_color = value ? READY_BACKGROUND_COLOR : UNREADY_BACKGROUND_COLOR
+    end
+
+    public
+    def setup
+      super
     end
   end
 end
