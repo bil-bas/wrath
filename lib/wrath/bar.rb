@@ -19,7 +19,7 @@ module Wrath
           border_width: 1,
           border_height: 1,
           value: 0,
-          width: 40,
+          width: 30,
           height: 4,
       }.merge! options
 

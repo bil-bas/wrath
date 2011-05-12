@@ -68,6 +68,8 @@ class Play < GameState
 
     send_message(Message::NewGame.new(self.class)) if host?
 
+    @god = God.create
+
     @last_sync = milliseconds
 
     init_physics
@@ -318,9 +320,6 @@ class Play < GameState
 
   def draw
     if started?
-      # Write the timer out.
-      m, s = (@time_left / 1000.0).divmod 60
-      @font.draw_rel("%d:%02d" % [m, s], $window.retro_width / 2, 0, ZOrder::GUI, 0.5, 0, 0.25, 0.25, Player::STATUS_COLOR)
       super
     else
       @font.draw_rel("Loading...", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)

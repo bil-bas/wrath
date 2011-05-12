@@ -38,7 +38,7 @@ class Player < BasicGameObject
     @keys_down = @@keys_config[:players, @number + 1, :down]
     @keys_action = @@keys_config[:players, @number + 1, :action]
 
-    @gui_pos = [[20, 1], [130 + Humanoid::PORTRAIT_WIDTH, 1]][@number]
+    @gui_pos = [[30, 1], [130 + Humanoid::PORTRAIT_WIDTH, 1]][@number]
     @font = Font["pixelated.ttf", 32]
     @visible = true
 
