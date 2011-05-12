@@ -1,10 +1,10 @@
-h1. === Wrath! ===
+h1. === Wrath: Appease or Die! ===
 
 * "Github project (Spooner/wrath)":https://github.com/Spooner/wrath
 
 h2. Description
 
-Wrath! is a retro 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
+_Wrath: Appease or Die!_ is a retro 2.5D game in which both players must make sacrifices and mayhem in order to appease the gods.
 
 h3. User settings
 
@@ -23,16 +23,18 @@ h3. Windows
 
 If running the .exe, there are no other requirements. Otherwise the requirements are the same as for Linux or OS/X.
 
-h3. OS X and Linux (or Windows from source)
+h3. Linux (or Windows/OS X from source)
 
 * Ruby 1.9.2
-** Gosu gem 0.7.27
+** Gosu gem 0.7.27 ("Dependencies":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
 ** Chingu gem 0.9rc4
-** Chipmunk gem 5.2.2
+** Chipmunk gem 5.3.4.0
 ** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
 
-h4. Using Bundler to install gems
+h4. Using Bundler to install gems (recommended)
+
+In the game's main directory (with _Gemfile_ in it), use Bundler to automatically install the correct gem versions:
 
 <pre>
     bundle install
