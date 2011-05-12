@@ -8,7 +8,7 @@ _Wrath: Appease or Die!_ is a retro 2.5D game in which both players must make sa
 
 h3. User settings
 
-Wrath saves per-user-settings in the '~/.wrath' folder (This is probably 'C:\Users\<username>\.wrath\' on Windows).
+Wrath saves per-user-settings in the <tt>~/.wrath_spooner</tt> folder (This is probably <tt>C:\Users\<username>\.wrath_spooner\</tt> on Windows).
 Until a proper way to edit settings is implemented, if you need to change network port or change keys, you should edit
 these YAML files manually.
 
@@ -21,20 +21,26 @@ h2. Requirements
 
 h3. Windows
 
-If running the .exe, there are no other requirements. Otherwise the requirements are the same as for Linux or OS/X.
+If running <tt>wrath.exe</tt>, there are no other requirements.
+
+h3. OS X
+
+If running <tt>wrath.app</tt>, there are no other requirements.
+
+NOTE: there is no .app file available yet.
 
 h3. Linux (or Windows/OS X from source)
 
 * Ruby 1.9.2
-** Gosu gem 0.7.27 ("Dependencies":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
+** Gosu gem 0.7.27 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
 ** Chingu gem 0.9rc4
-** Chipmunk gem 5.3.4.0
+** Chipmunk gem 5.3.4.0 (NOTE: Dependencies for the current version of Chipmunk are not known at the moment for Linux)
 ** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
 
 h4. Using Bundler to install gems (recommended)
 
-In the game's main directory (with _Gemfile_ in it), use Bundler to automatically install the correct gem versions:
+In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to automatically install the correct gem versions:
 
 <pre>
     bundle install
@@ -53,18 +59,31 @@ h4. Manual installation of gems
     gem install fidgit chingu --pre --no-ri --no-rdoc
 </pre>
 
+h3. Running the game
+
+May need to use <tt>ruby19</tt> rather than <tt>ruby</tt>. Depends how you installed Ruby 1.9.2!
+
+<pre>
+    ruby bin/wrath.rbw
+</pre>
+
 h2. Credits
+
+Many thanks to:
 
 * SiliconEidolon for the initial brainstorming session that gave birth to the game.
 * Spiderspit, SiliconEidolon, Ippa, Myx, Spaz and Banisterfiend for alpha play-testing and suggestions.
+* Members of TIGSource who gave feedback in the the "Wrath topic":http://forums.tigsource.com/index.php?topic=19459.msg557507.
 * Ippa for code snippets I stole; I mean, was given :)
 
 h2. Third party assets used
 
 * Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. These sprites are under the "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/ license.
-* Sound effects created using "as3sfxr-b":http://ded.increpare.com/~locus/as3sfxr-b/
-* "Pixelated" font - created by Affinity and Epsilon
+* Original sprites created with "GIMP":http://www.gimp.org/
+* Sound effects created using "bfxr":http://www.bfxr.net/
+* "Pixelated" font - created by Affinity and Epsilon (see <tt>media/fonts/pixelated.txt</tt>)
 * "Gosu":http://libgosu.org/ game development library
-* "Chingu":http://ippa.se/chingu game library
+* "Chingu":http://ippa.se/chingu game library (extending Gosu)
+* "Fidgit":https://github.com/Spooner/fidgit gui library (extending Chingu)
 * "Texplay":http://banisterfiend.wordpress.com/2008/08/23/texplay-an-image-manipulation-tool-for-ruby-and-gosu/ image manipulation library for Gosu.
-* "Chipmunk":https://github.com/martincik/chipmunk-ruby 2D physics library
+* "Chipmunk":http://github.com/beoran/chipmunk 2D physics library
