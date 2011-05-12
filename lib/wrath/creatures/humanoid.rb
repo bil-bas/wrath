@@ -2,7 +2,7 @@ module Wrath
   # Humanoids are any sort of intelligent people. They move by "gliding" rather than bouncing.
   class Humanoid < Creature
     PORTRAIT_WIDTH = 7
-    PORTRAIT_BACKGROUND_COLOR = Color.rgb(0, 0, 0)
+    PORTRAIT_BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
     PORTRAIT_CROP = [1, 0, 5, 4]
     PORTRAIT_PADDING = 1
 

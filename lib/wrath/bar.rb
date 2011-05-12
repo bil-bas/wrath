@@ -1,7 +1,7 @@
 module Wrath
   # A part of the HUD that shows a coloured bar to indicate a value.
   class Bar < GameObject
-    DEFAULT_BACKGROUND_COLOR = Color.rgb(0, 0, 0)
+    DEFAULT_BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
     DEFAULT_COLOR = Color.rgb(255, 255, 255)
 
     include Log

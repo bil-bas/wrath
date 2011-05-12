@@ -14,7 +14,7 @@ class Player < BasicGameObject
   FAVOR_TO_WIN = 100
 
   HEALTH_BAR_COLOR = Color.rgb(255, 0, 0)
-  FAVOR_BAR_COLOR = Color.rgb(0, 0, 255)
+  FAVOR_BAR_COLOR = Color.rgb(200, 200, 255)
 
   attr_reader :number, :avatar, :favor, :visible
 
