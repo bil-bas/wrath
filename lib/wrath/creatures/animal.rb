@@ -38,6 +38,14 @@ class Animal < Creature
     after(@jump_delay + (rand(@jump_delay / 2.0) + rand(@jump_delay / 2.0)), name: :jump) { jump }
   end
 
+  def on_wounded
+    # Try to move away from pain.
+    if timer_exists? :jump
+      stop_timer(:jump)
+      jump
+    end
+  end
+
   def on_stopped
     stop_timer(:jump)
     schedule_jump unless dead?

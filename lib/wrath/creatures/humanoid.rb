@@ -46,13 +46,25 @@ module Wrath
       return unless local? and not controlled_by_player?
 
       after(@walk_interval + (rand(@walk_interval / 2.0) + rand(@walk_interval / 2.0)), name: :walk) do
-        if state == :standing
+        walk
+      end
+    end
+
+    def walk
+      if state == :standing
           self.state = :walking
           self.facing = rand(360)
           @walk_time_left = @walk_duration
         elsif alive?
           schedule_walk
         end
+    end
+
+    def on_wounded
+      # Try to move away from pain.
+      if timer_exists? :walk
+        stop_timer(:walk)
+        walk
       end
     end
 

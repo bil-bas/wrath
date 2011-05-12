@@ -111,6 +111,10 @@ class Creature < Container
 
     die! if @health == 0
 
+    if @health < original_health
+      on_wounded
+    end
+
     @health
   end
 
