@@ -2,7 +2,7 @@ module Wrath
 class Fire < DynamicObject
   trait :timer
 
-  ANIMATION_DELAY = 300
+  ANIMATION_DELAY = 800
   DAMAGE = 5  / 1000.0 # 5/second
   GLOW_COLOR = Color.rgb(255, 255, 50)
 
