@@ -18,15 +18,15 @@ class Menu < Gui
     priest_sprite_files = Play::PRIEST_SPRITES.values.map {|f| File.join('players', f) }
     icons = priest_sprite_files.map {|f| ScaledImage.new(SpriteSheet.new(f, 8, 8)[0], $window.sprite_scale * 3) }
 
-    pack :horizontal do
+    pack :horizontal, padding_left: 18 do
       pack :vertical, padding_top: 12, spacing: 14 do
         icons[0..3].each {|icon| label '', icon: icon }
       end
 
-      pack :vertical, spacing: 18 do
-        heading = label "Wrath!", font_size: 135, color: Color.rgb(30, 100, 255), padding_left: 10
-
-        pack :vertical, spacing: 12, padding_left: 80 do
+      pack :vertical, spacing: 0, padding: 0 do
+        heading = label "Wrath", font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
+        label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
+        pack :vertical, spacing: 10, padding_top: 12, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 30, justify: :center }
           button("Play", options.merge(tip: 'Both players on the same keyboard')) { local_game }
           button("Join Game", options.merge(tip: 'Connect to a network game someone else is hosting')) { join_game }
