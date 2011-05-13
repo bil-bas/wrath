@@ -11,8 +11,6 @@ module Wrath
 
     def self.to_s; "Forest of Even More Doom"; end
 
-    def disaster_duration; 0; end
-
     def create_objects
       super(PLAYER_SPAWNS)
 
@@ -66,10 +64,6 @@ module Wrath
       end
 
       grid
-    end
-
-    def on_disaster
-      # TODO: What disaster in a forest?
     end
   end
 end

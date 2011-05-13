@@ -1,7 +1,6 @@
 module Wrath
 class Play < GameState
   extend Forwardable
-  trait :timer
 
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
@@ -41,15 +40,13 @@ class Play < GameState
 
   def_delegators :@map, :tile_at_coordinate
 
-  attr_reader :objects, :map, :players, :network, :space, :altar, :winner
+  attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner
 
   def networked?; not @network.nil?; end
   def host?; @network.is_a? Server; end
   def client?; @network.is_a? Client; end
   def local?; @network.nil?; end
   def started?; @started; end
-  def disaster_interval; 30000 - 1000 * @num_disasters; end
-  def level_duration; 300 * 1000; end
 
   # network: Server, Client, nil
   def initialize(network = nil, player_names, priest_files)
@@ -67,8 +64,6 @@ class Play < GameState
     end
 
     send_message(Message::NewGame.new(self.class)) if host?
-
-    @god = self.class.const_get(:GOD).create
 
     @last_sync = milliseconds
 
@@ -92,6 +87,8 @@ class Play < GameState
 
       start_game
     end
+
+    @god = self.class.const_get(:GOD).create
 
     send_message(Message::StartGame.new) if host?
   end
@@ -150,23 +147,7 @@ class Play < GameState
 
   # Start the game, after sending all the init data.
   def start_game
-    @time_left = level_duration
     @started = true
-    @num_disasters = 0
-    @disaster_duration = 0
-    after(disaster_interval, name: :disaster) { disaster } unless client?
-  end
-
-  def disaster
-    @num_disasters += 1
-    @disaster_duration = disaster_duration
-
-    unless client?
-      send_message Message::Disaster.new if host?
-      after(disaster_interval, name: :disaster) { disaster }
-    end
-
-    on_disaster
   end
 
   def send_message(message)
@@ -288,9 +269,6 @@ class Play < GameState
     @network.update if @network
 
     if started?
-      @time_left -= frame_time
-      @disaster_duration -= frame_time
-
       super
 
       objects.each {|o| o.update_forces }

@@ -60,7 +60,7 @@ class GameOver < Gui
   end
 
   def update
-    @play.update
+    @avatar.update
 
     super
 

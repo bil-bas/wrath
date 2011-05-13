@@ -1,11 +1,18 @@
 module Wrath
   class God < GameObject
+    include Fidgit::Event
     include Log
+
+    trait :timer
 
     BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
     ANGER_COLOR = Color.rgb(255, 0, 255)
     ANGER_WIDTH = 30
     BORDER_WIDTH = 1
+
+    event :on_disaster
+
+    def disaster_interval; 30000 - 1000 * @num_disasters; end
 
     def initialize(options = {})
       options = {
@@ -28,9 +35,17 @@ module Wrath
       @animation_index = nil
 
       @anger_bar = Bar.create(x: x - ANGER_WIDTH / 2, y: y + image.height, width: ANGER_WIDTH, height: 4, value: 0.5, color: ANGER_COLOR)
+
+      @num_disasters = 0
+      @started = true
+      @num_disasters = 0
+      @disaster_duration = 0
+      after(disaster_interval, name: :disaster) { disaster } unless parent.client?
     end
 
     def update
+      @disaster_duration -= parent.frame_time
+
       @anger = [@anger + parent.frame_time / 1000.0, @max_anger].min
       @anger_bar.value = @anger / @max_anger
       new_animation_index = (@anger_bar.value * 4).floor
@@ -48,6 +63,18 @@ module Wrath
     def draw
       $window.pixel.draw x - BORDER_WIDTH - image.width / 2, y - BORDER_WIDTH, zorder, 10, 9, BACKGROUND_COLOR
       super
+    end
+
+    def disaster
+      @num_disasters += 1
+      @disaster_duration = disaster_duration
+
+      unless parent.client?
+        parent.send_message Message::Disaster.new if parent.host?
+        after(disaster_interval, name: :disaster) { disaster }
+      end
+
+      publish :on_disaster
     end
   end
 end

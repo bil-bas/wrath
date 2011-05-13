@@ -10,13 +10,6 @@ module Wrath
 
     def self.to_s; "Dungeon of Doom"; end
 
-    def disaster_duration; 1000 + 100 * @num_disasters; end
-
-    def setup
-      @quake_offset = 0
-      super
-    end
-
     def create_objects
       super(PLAYER_SPAWNS)
 
@@ -76,48 +69,15 @@ module Wrath
       grid
     end
 
-    def on_disaster
-      Sample["objects/rock_sacrifice.wav"].play
-    end
-
-    def rock_spawn_position
-      [
-        Margin::LEFT + rand($window.width - Margin::LEFT - Margin::RIGHT),
-        Margin::TOP + rand($window.height - Margin::TOP - Margin::BOTTOM),
-        $window.height
-      ]
-    end
-
-    def update
-      super
-
-      if started?
-        if @disaster_duration > 0
-          intensity = Math::log(@num_disasters * 100)
-          @quake_offset = intensity / 4
-
-          if not client? and rand(100) < ((intensity * frame_time) / 8000)
-            Rock.create(parent: self, position: rock_spawn_position)
-          end
-
-          if rand(100) < @num_disasters * 5
-            Pebble.create(parent: self, position: rock_spawn_position)
-          end
-        else
-          @quake_offset = 0
-        end
-      end
-    end
-
     def draw
       if started?
         # Draw overlay to make it look dark.
         $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, DARKNESS_COLOR)
 
-        if @quake_offset == 0
+        if @god.quake_offset == 0
           super
         else
-          $window.translate(0, Math::sin(milliseconds / 50.0) * @quake_offset) do
+          $window.translate(0, Math::sin(milliseconds / 50.0) * @god.quake_offset) do
             super
           end
         end

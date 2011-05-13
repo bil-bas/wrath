@@ -4,18 +4,13 @@ module Wrath
 
     CHEST_CONTENTS = [Crown, Fire, Rope]
     BARREL_CONTENTS = [Chicken, Grog]
-    GOD = Sea
-
-    LIGHTNING_COLOR = Color.rgba(255, 255, 255, 50)
-
+    GOD = Storm
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
 
     def self.to_s; "Ship of Doomed Fools"; end
-
-    def disaster_duration; 300 + 20 * @num_disasters; end
 
     def create_objects
       super(PLAYER_SPAWNS)
@@ -64,25 +59,8 @@ module Wrath
       end
     end
 
-    def on_disaster
-      Sample["objects/rock_sacrifice.wav"].play
-    end
-
     def create_altar
       Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 2.5)
-    end
-
-    def draw
-      if started?
-        # Draw overlay to make it look dark.
-        if @disaster_duration > 0
-          $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, LIGHTNING_COLOR, :additive)
-        else
-          $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DARKNESS_COLOR)
-        end
-      end
-
-      super
     end
   end
 end
