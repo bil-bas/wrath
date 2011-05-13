@@ -2,6 +2,7 @@
 
 v0.0.3alpha
 
+  * Creatures can be knocked down if hit with a sufficiently large thrown object.
   * Added a disaster to the forest/dryad level (trees awaken).
   * Replaced game text overlay with a graphical overlay.
   * Made level-dependent gods and anger meter.

@@ -45,7 +45,7 @@ class Rock < DynamicObject
       when Creature
         if not thrown_by.include? other and (not inside_container?) and z > ground_level
           other.health -= DAMAGE
-          @thrown_by << other
+          # No longer need to add to thrown_by list, since this will also knock the creature down.
         end
     end
 

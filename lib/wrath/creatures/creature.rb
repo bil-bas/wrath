@@ -253,6 +253,34 @@ class Creature < Container
     set_body_velocity(angle, effective_speed)
   end
 
+  public
+  def on_collision(other)
+    collided = super(other)
+
+    # Make being hit with something heavy knock you over.
+    if not collided and
+        state != :thrown and
+        other.encumbrance >= encumbrance * 0.5 and
+        not other.thrown_by.empty? and
+        not other.thrown_by.include? self
+
+      knocked_down_by(other)
+    end
+
+    collided
+  end
+
+  public
+  def knocked_down_by(knocker)
+    parent.send_message(Message::KnockedDown.new(self, knocker)) if parent.host?
+
+    @state = :thrown
+    @thrown_by = [knocker] + knocker.thrown_by
+    self.z_velocity = 0.5
+
+    knocker.thrown_by << self
+  end
+
   protected
   def cure_poison
     @poisoned = false
