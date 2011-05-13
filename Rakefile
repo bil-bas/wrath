@@ -17,6 +17,8 @@ RELEASE_FOLDER_SOURCE = "#{RELEASE_FOLDER_BASE}_SOURCE"
 README_TEXTILE = "README.textile"
 README_HTML = "README.html"
 
+CHANGELOG = "CHANGELOG.txt"
+
 CLEAN.include("*.log")
 CLOBBER.include("doc/**/*", "wrath.exe", RELEASE_FOLDER, README_HTML)
 
@@ -55,6 +57,7 @@ task release_win32:  [:win32_zip] # No point making a 7z, since it is same size.
 file RELEASE_FOLDER_WIN32 => [EXECUTABLE, README_HTML] do
   mkdir_p RELEASE_FOLDER_WIN32
   cp EXECUTABLE, RELEASE_FOLDER_WIN32
+  cp CHANGELOG, RELEASE_FOLDER_WIN32
   cp README_HTML, RELEASE_FOLDER_WIN32
 end
 

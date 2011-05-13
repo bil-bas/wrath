@@ -1,0 +1,14 @@
+=== CHANGELOG ===
+
+v0.0.3alpha
+
+  * Replaced game text overlay with a graphical overlay.
+  * Made level-dependent gods and anger meter.
+  * Added buttons to replay the game or return to the main menu when game ends.
+  * FIXED: Ready indicators are left on when leaving a game.
+  * FIXED: Sacrifice of the forest virgin crashes the game.
+  * FIXED: Player objects skid around the screen when the game ends.
+
+v0.0.2alpha (2011-05-10)
+
+  * First public release.
