@@ -4,6 +4,7 @@ module Wrath
 
     CHEST_CONTENTS = [Crown, Fire, Rope]
     BARREL_CONTENTS = [Chicken, Grog]
+    GOD = Sea
 
     LIGHTNING_COLOR = Color.rgba(255, 255, 255, 50)
 

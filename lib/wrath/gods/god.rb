@@ -9,7 +9,6 @@ module Wrath
 
     def initialize(options = {})
       options = {
-          animation: "gods/ship_8x8.png",
           x: $window.retro_width / 2,
           y: 1,
           zorder: ZOrder::GUI,
@@ -18,14 +17,15 @@ module Wrath
 
       super options
 
-      @max_anger = 1.5 * 60 # Time before the god goes crazy (game ends).
+      @max_anger = 60 # Time before the god goes crazy (game ends).
       @anger = 0
 
       @animation_cache ||= {}
-      @animation_cache[options[:animation]] ||= Animation.new(file: options[:animation], delay: 500)
+      sprite_name = self.class.name.downcase[/[a-z]+$/]
+      @animation_cache[options[:animation]] ||= Animation.new(file: "gods/#{sprite_name}_8x8.png", delay: 500)
       @frames = @animation_cache[options[:animation]]
       self.image = @frames[0]
-      @animation_index = -1
+      @animation_index = nil
 
       @anger_bar = Bar.create(x: x - ANGER_WIDTH / 2, y: y + image.height, width: ANGER_WIDTH, height: 4, value: 0.5, color: ANGER_COLOR)
     end
@@ -33,25 +33,14 @@ module Wrath
     def update
       @anger = [@anger + parent.frame_time / 1000.0, @max_anger].min
       @anger_bar.value = @anger / @max_anger
-      new_animation_index = (@anger_bar.value * @frames.frames.size).to_i
+      new_animation_index = (@anger_bar.value * 4).floor
       if new_animation_index != @animation_index
         @animation_index = new_animation_index
-        @animation =  case @animation_index
-                        when 0
-                          @frames[0..0]
-                        when 1
-                          @frames[0..1]
-                        when 2
-                          @frames[1..2]
-                        when 3
-                          @frames[2..3]
-                        when 4
-                          @frames[3..3]
-                       end
+        frame_index = @animation_index * 2
+        @current_animation = @frames[frame_index..(frame_index + 1)]
       end
 
-
-      self.image = @animation.next
+      self.image = @current_animation.next
 
       super
     end

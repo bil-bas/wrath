@@ -68,7 +68,7 @@ class Play < GameState
 
     send_message(Message::NewGame.new(self.class)) if host?
 
-    @god = God.create
+    @god = self.class.const_get(:GOD).create
 
     @last_sync = milliseconds
 

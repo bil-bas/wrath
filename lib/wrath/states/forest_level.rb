@@ -4,6 +4,7 @@ module Wrath
     NUM_GOATS = 5
     NUM_CHICKENS = 2
     SACK_CONTENTS = [Crown, Chicken]
+    GOD = Dryad
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]

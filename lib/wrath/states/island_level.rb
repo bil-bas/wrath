@@ -4,6 +4,7 @@ module Wrath
 
     CHEST_CONTENTS = [Crown, Fire]
     BARREL_CONTENTS = [Mushroom, Chicken, Pirate]
+    GOD = Volcano
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -11,6 +12,7 @@ module Wrath
     def self.to_s; "Island of Utter Doom"; end
 
     def disaster_duration; 0; end
+    def god_name; "volcano"; end
 
     def create_objects
       super(PLAYER_SPAWNS)

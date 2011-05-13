@@ -1,6 +1,7 @@
 module Wrath
   class DungeonLevel < Play
     DEFAULT_TILE = Gravel
+    GOD = Earthquake
 
     CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet ]
 
