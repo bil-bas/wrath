@@ -98,7 +98,7 @@ class Player < BasicGameObject
   def update
     super
 
-    if avatar
+    if avatar and avatar.parent
       @health_bar.value = avatar.health.to_f / avatar.max_health
 
       move_by_keys if local? and not parent.winner
@@ -106,7 +106,7 @@ class Player < BasicGameObject
   end
 
   def action
-    return unless avatar and not parent.winner
+    return unless avatar and avatar.parent and not parent.winner
 
     case avatar.state
       when :carried, :mounted

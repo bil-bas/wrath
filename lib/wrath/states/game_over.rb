@@ -5,7 +5,7 @@ class GameOver < Gui
 
   AVATAR_GLOW = Color.rgba(0, 255, 0, 150)
 
-  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :tile_at_coordinate, :send_message
+  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :client?, :tile_at_coordinate, :send_message
 
   def accept_message?(message); [Message::Create, Message::Destroy, Message::EndGame, Message::SetHealth, Message::Sync].find {|m| message.is_a? m }; end
 
@@ -30,9 +30,12 @@ class GameOver < Gui
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
 
     pack :horizontal, spacing: 10, padding_top: 430, padding_h: 220 do
-      button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
-        replay
+      unless previous_game_state.client?
+        button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
+          replay
+        end
       end
+
       button "Lobby", z: ZOrder::GUI, tip: "Return to the game lobby" do
         return_to_lobby
       end
