@@ -2,6 +2,7 @@
 
 v0.0.3alpha
 
+  * Added a disaster to the forest/dryad level (trees awaken).
   * Replaced game text overlay with a graphical overlay.
   * Made level-dependent gods and anger meter.
   * Added buttons to replay the game or return to the main menu when game ends.

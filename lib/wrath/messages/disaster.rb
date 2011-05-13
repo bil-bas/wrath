@@ -3,7 +3,7 @@ module Wrath
     class Disaster < Message
       protected
       def action(state)
-        state.disaster
+        state.god.disaster
       end
     end
   end

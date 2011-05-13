@@ -9,8 +9,7 @@ module Wrath
       @quake_offset = 0
     end
 
-    def disaster
-      super
+    def on_disaster(sender)
       Sample["objects/rock_sacrifice.wav"].play
     end
 

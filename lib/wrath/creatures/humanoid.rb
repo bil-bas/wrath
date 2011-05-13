@@ -87,6 +87,8 @@ module Wrath
     end
 
     def update
+      return unless parent
+
       if local? and state == :walking and not controlled_by_player?
         if walking_to_do?
           @walk_time_left -= frame_time

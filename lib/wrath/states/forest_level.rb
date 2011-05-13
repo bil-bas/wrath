@@ -29,7 +29,7 @@ module Wrath
       5.times { Mushroom.create }
 
       # Static objects.
-      12.times { Tree.create }
+      16.times { Tree.create(can_wake: true) } # May become ents!
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|
