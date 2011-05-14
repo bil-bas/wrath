@@ -9,8 +9,6 @@ _Wrath: Appease or Die!_ is a retro 2.5D game in which both players must make sa
 h3. User settings
 
 Wrath saves per-user-settings in the <tt>~/.wrath_spooner</tt> folder (This is probably <tt>C:\Users\<username>\.wrath_spooner\</tt> on Windows).
-Until a proper way to edit settings is implemented, if you need to change network port or change keys, you should edit
-these YAML files manually.
 
 h3. Logs
 
@@ -23,22 +21,24 @@ h3. Windows
 
 If running <tt>wrath.exe</tt>, there are no other requirements.
 
-h3. OS X
+h3. OS X [10.6 only!]
+
+If running OS X 10.6, use the executable. If not, the only option is running from source (details below).
 
 If running <tt>wrath.app</tt>, there are no other requirements.
 
-NOTE: there is no .app file available yet.
+NOTE: there is no .app file available for the current version of the game!
 
-h3. Linux (or Windows/OS X from source)
+h3. Source for Linux (or Windows/OS X if not using the executable)
 
 * Ruby 1.9.2
-** Gosu gem 0.7.29 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
+** Gosu gem 0.7.29 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux or "OS X":https://github.com/jlnr/gosu/wiki/Getting-Started-on-OS-X)
 ** Chingu gem 0.9rc4
 ** Chipmunk gem 5.2.2.0
 ** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
 
-Both Gosu and Chipmunk _must_ be that exact version, or the game may not work.
+Both Gosu and Chipmunk _must_ be that exact version (not newer or older), or the game may not work.
 
 h4. Using Bundler to install gems (strongly recommended)
 
