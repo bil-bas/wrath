@@ -10,7 +10,7 @@ module Wrath
     end
 
     def on_disaster(sender)
-      Sample["objects/rock_sacrifice.wav"].play
+      Sample["objects/rock_sacrifice.ogg"].play
     end
 
     def update

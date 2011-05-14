@@ -14,9 +14,9 @@ class Chest < Container
   # Minimum "size" of a creature so it bounces the chest it is in.
   MIN_BOUNCE_ENCUMBRANCE = 0.4
 
-  CHEST_OPEN_SOUND = "objects/chest_close.wav"
-  CHEST_CLOSED_SOUND = "objects/chest_close.wav"
-  CHEST_SACRIFICED_SOUND = "objects/rock_sacrifice.wav"
+  CHEST_OPEN_SOUND = "objects/chest_close.ogg"
+  CHEST_CLOSED_SOUND = "objects/chest_close.ogg"
+  CHEST_SACRIFICED_SOUND = "objects/rock_sacrifice.ogg"
 
   alias_method :open?, :empty?
   alias_method :closed?, :full?

@@ -6,7 +6,7 @@ module Wrath
     def disaster_duration; 300 + 20 * @num_disasters; end
 
     def on_disaster(sender)
-      Sample["objects/rock_sacrifice.wav"].play
+      Sample["objects/rock_sacrifice.ogg"].play
     end
 
     def draw
