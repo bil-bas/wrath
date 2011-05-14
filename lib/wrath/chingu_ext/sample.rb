@@ -8,7 +8,8 @@ module Gosu
     alias_method :old_play, :play
 
     def play(volume = 1, speed = 1, looping = false)
-      old_play(volume * @@global_volume * Window.volume, speed, looping)
+      effective_volume = volume * @@global_volume * Window.volume
+      old_play(effective_volume, speed, looping) if effective_volume > 0.0
     end
   end
 end
