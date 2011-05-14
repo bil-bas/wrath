@@ -1,7 +1,8 @@
 === CHANGELOG ===
 
-v0.0.3alpha
+v0.0.3alpha (unreleased)
 
+  * Key settings in options.
   * Creatures can be knocked down if hit with a sufficiently large thrown object.
   * Added a disaster to the forest/dryad level (trees awaken).
   * Replaced game text overlay with a graphical overlay.

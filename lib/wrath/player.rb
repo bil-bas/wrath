@@ -41,7 +41,7 @@ class Player < BasicGameObject
 
     if local?
       keys_config = Settings.new(KEYS_CONFIG_FILE)
-      group = parent.networked? ? :multiplayer : :"singleplayer_player_#{@number + 1}"
+      group = parent.networked? ? :network_player : :"local_player_#{@number + 1}"
       @keys_left = keys_config[group, :left]
       @keys_right = keys_config[group, :right]
       @keys_up = keys_config[group, :up]

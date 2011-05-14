@@ -1,19 +1,19 @@
 ---
-:singleplayer_player_1:
+:local_player_1:
   :left: :a
   :right: :d
   :up: :w
   :down: :s
   :action: :space
 
-:singleplayer_player_2:
+:local_player_2:
   :left: :left
   :right: :right
   :up: :up
   :down: :down
   :action: :right_control
 
-:multiplayer:
+:network_player:
   :left: :left
   :right: :right
   :up: :up

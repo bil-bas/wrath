@@ -2,10 +2,12 @@ module Wrath
   class OptionsControls < Gui
 
     GROUPS = {
-        singleplayer_player_1: "Player 1",
-        singleplayer_player_2: "Player 2",
-        multiplayer:           "Multi-player",
-        #general: "General",
+        local_player_1:
+            { title: "Player 1", tip: "Controls for player 1 (left side) when sharing the keyboard" },
+        local_player_2:
+            { title: "Player 2", tip: "Controls for player 2 (right side) when sharing the keyboard" },
+        network_player:
+            { title: "Network player", tip: "Controls for the local player in a network game" },
     }
 
     public
@@ -16,8 +18,7 @@ module Wrath
 
       @controls = Settings.new(Player::KEYS_CONFIG_FILE)
 
-
-      @waiting_for_key = nil
+      @control_waiting_for_key = nil
 
       init_key_codes
 
@@ -27,8 +28,8 @@ module Wrath
         # Choose control group.
         pack :horizontal do
           @group_buttons = []
-          GROUPS.each_pair do |symbol, label|
-            @group_buttons << button(label) { |sender| choose_group sender, symbol }
+          GROUPS.each_pair do |symbol, options|
+            @group_buttons << button(options[:title], tip: options[:tip].to_s) { |sender| choose_group sender, symbol }
           end
         end
 
@@ -46,17 +47,17 @@ module Wrath
 
     public
     def update
-      if @control
+      if @control_waiting_for_key
         # Check every key to see if it pressed and a valid key.
         @key_codes.each do |code|
           if $window.button_down?(code)
             if symbols = Chingu::Input::CONSTANT_TO_SYMBOL[code]
               symbol = symbols.first
               symbol = :space if symbol == :' '
-              @controls[@group, @control] = symbol
+              @controls[@group, @control_waiting_for_key] = symbol
             end
 
-            @control = nil
+            @control_waiting_for_key = nil
             list_keys
           end
         end
@@ -75,12 +76,14 @@ module Wrath
 
     protected
     def choose_group(button, symbol)
+      @control_waiting_for_key = nil
       @group_buttons.each {|b| b.enabled = (b != button) }
       @group = symbol
       list_keys
     end
 
     protected
+    # Make a new list of keys in the main part of the window.
     def list_keys
       @key_grid.with do
         clear
@@ -94,9 +97,11 @@ module Wrath
     end
 
     protected
+    # Get ready to pick a key.
     def choose_key(control, key_label)
       key_label.color = Color.rgb(255, 0, 0)
-      @control = control
+      @control_waiting_for_key = control
+      @key_grid.each {|element| element.enabled = false if element.is_a? Fidgit::Button }
     end
   end
 end
