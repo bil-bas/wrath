@@ -31,7 +31,7 @@ class Menu < Gui
           button("Play", options.merge(tip: 'Both players on the same keyboard')) { local_game }
           button("Join Game", options.merge(tip: 'Connect to a network game someone else is hosting')) { join_game }
           button("Host Game", options.merge(tip: 'Host a network game that that another player can join')) { host_game }
-          button("Options", options.merge(enabled: false))
+          button("Options", options.merge(tip: "Set controls")) { push_game_state OptionsControls }
           button("About", options.merge(enabled: false))
           button("Exit", options) { close }
         end

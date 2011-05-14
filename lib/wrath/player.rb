@@ -30,14 +30,6 @@ class Player < BasicGameObject
 
     @number, @local = number, local
 
-    @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
-
-    @keys_left = @@keys_config[:players, @number + 1, :left]
-    @keys_right = @@keys_config[:players, @number + 1, :right]
-    @keys_up = @@keys_config[:players, @number + 1, :up]
-    @keys_down = @@keys_config[:players, @number + 1, :down]
-    @keys_action = @@keys_config[:players, @number + 1, :action]
-
     @gui_pos = [[30, 1], [130 + Humanoid::PORTRAIT_WIDTH, 1]][@number]
     @font = Font["pixelated.ttf", 32]
     @visible = true
@@ -47,7 +39,17 @@ class Player < BasicGameObject
 
     super(options)
 
-    on_input(@keys_action, :action) if local?
+    if local?
+      keys_config = Settings.new(KEYS_CONFIG_FILE)
+      group = parent.networked? ? :multiplayer : :"singleplayer_player_#{@number + 1}"
+      @keys_left = keys_config[group, :left]
+      @keys_right = keys_config[group, :right]
+      @keys_up = keys_config[group, :up]
+      @keys_down = keys_config[group, :down]
+      @keys_action = keys_config[group, :action]
+
+      on_input(@keys_action, :action)
+    end
   end
 
   def win!

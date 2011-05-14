@@ -1,29 +1,21 @@
 ---
-:players:
-  1:
-    :left:
-      - :a
-    :right:
-      - :d
-    :up:
-      - :w
-    :down:
-      - :s
-    :action:
-      - :left_shift
-      - :left_control
-      - :space
+:singleplayer_player_1:
+  :left: :a
+  :right: :d
+  :up: :w
+  :down: :s
+  :action: :space
 
-  2:
-    :left:
-      - :left
-    :right:
-      - :right
-    :up:
-      - :up
-    :down:
-      - :down
-    :action:
-      - :right_shift
-      - :right_control
-      - :enter
+:singleplayer_player_2:
+  :left: :left
+  :right: :right
+  :up: :up
+  :down: :down
+  :action: :right_control
+
+:multiplayer:
+  :left: :left
+  :right: :right
+  :up: :up
+  :down: :down
+  :action: :space

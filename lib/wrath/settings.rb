@@ -42,6 +42,24 @@ module Wrath
     end
 
     public
+    # Get a list of keys for a given group.
+    def keys(*keys)
+      value = @settings
+
+      keys.each_with_index do |key, i|
+        unless value.is_a? Hash and value.has_key? key
+          raise "Tried to read non-existent key, '#{keys[0..i].join('/')}', in settings file"
+        end
+
+        value = value[key]
+      end
+
+      raise "Tried to get keys from data entry, '#{keys.join('/')}', rather than a key group, in settings file" unless value.is_a? Hash
+
+      value.keys
+    end
+
+    public
     # Write a settings value.
     #
     # @example
@@ -74,7 +92,7 @@ module Wrath
       user_settings = YAML::load(File.read(@user_file))
       default_settings = YAML::load(File.read(@default_file))
 
-      @settings = default_settings.merge user_settings
+      @settings = default_settings.deep_merge user_settings
       save_settings
 
       log.debug { "Loaded settings from '#{@user_file}': #{@settings.inspect}" }
