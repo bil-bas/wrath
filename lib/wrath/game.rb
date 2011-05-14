@@ -7,9 +7,10 @@ require 'logger'
 # Gems
 begin
   require "rubygems"
-  require "bundler/setup"
 rescue LoadError
 end
+
+require "bundler/setup"
 
 require 'chingu'
 require 'texplay'

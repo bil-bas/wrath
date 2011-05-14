@@ -32,13 +32,15 @@ NOTE: there is no .app file available yet.
 h3. Linux (or Windows/OS X from source)
 
 * Ruby 1.9.2
-** Gosu gem 0.7.27 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
+** Gosu gem 0.7.29 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
 ** Chingu gem 0.9rc4
-** Chipmunk gem 5.3.4.0 (NOTE: Dependencies for the current version of Chipmunk are not known at the moment for Linux)
+** Chipmunk gem 5.2.2.0
 ** Fidgit gem 0.0.5alpha
 ** Texplay gem 0.3.5
 
-h4. Using Bundler to install gems (recommended)
+Both Gosu and Chipmunk _must_ be that exact version, or the game may not work.
+
+h4. Using Bundler to install gems (strongly recommended)
 
 In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to automatically install the correct gem versions:
 
@@ -50,13 +52,6 @@ In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to autom
 
 <pre>
     gem install bundler --no-ri --no-rdoc
-</pre>
-
-h4. Manual installation of gems
-
-<pre>
-    gem install gosu texplay chipmunk --no-ri --no-rdoc
-    gem install fidgit chingu --pre --no-ri --no-rdoc
 </pre>
 
 h3. Running the game

@@ -2,6 +2,8 @@
 
 v0.0.3alpha (unreleased)
 
+  * === Now works on Linux (rolled back some libraries for maximum compatibility)
+
   * Key settings in options.
   * Creatures can be knocked down if hit with a sufficiently large thrown object.
   * Added a disaster to the forest/dryad level (trees awaken).
