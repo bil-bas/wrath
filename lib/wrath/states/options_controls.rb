@@ -26,10 +26,17 @@ module Wrath
         label "Options  |  Controls"
 
         # Choose control group.
-        pack :horizontal do
-          @group_buttons = []
-          GROUPS.each_pair do |symbol, options|
-            @group_buttons << button(options[:title], tip: options[:tip].to_s) { |sender| choose_group sender, symbol }
+
+        @tabs_group = group do
+          pack :horizontal do
+            GROUPS.each_pair do |symbol, options|
+              radio_button(options[:title], symbol, tip: options[:tip].to_s)
+            end
+          end
+
+          subscribe :changed do |sender, value|
+            @control_waiting_for_key = nil
+            list_keys
           end
         end
 
@@ -42,7 +49,7 @@ module Wrath
         end
       end
 
-      choose_group @group_buttons.first, GROUPS.keys.first
+      @tabs_group.value = GROUPS.keys.first
     end
 
     public
@@ -51,10 +58,11 @@ module Wrath
         # Check every key to see if it pressed and a valid key.
         @key_codes.each do |code|
           if $window.button_down?(code)
+            # If it is defined in Chingu, allow its use. If not, leave the key as it is.
             if symbols = Chingu::Input::CONSTANT_TO_SYMBOL[code]
               symbol = symbols.first
               symbol = :space if symbol == :' '
-              @controls[@group, @control_waiting_for_key] = symbol
+              @controls[@tabs_group.value, @control_waiting_for_key] = symbol
             end
 
             @control_waiting_for_key = nil
@@ -75,22 +83,14 @@ module Wrath
     end
 
     protected
-    def choose_group(button, symbol)
-      @control_waiting_for_key = nil
-      @group_buttons.each {|b| b.enabled = (b != button) }
-      @group = symbol
-      list_keys
-    end
-
-    protected
     # Make a new list of keys in the main part of the window.
     def list_keys
       @key_grid.with do
         clear
 
-        @controls.keys(@group).each do |control|
+        @controls.keys(@tabs_group.value).each do |control|
           key_label = label control.to_s.capitalize.tr('_', ' ')
-          key_name = @controls[@group, control]
+          key_name = @controls[@tabs_group.value, control]
           button(key_name.to_s.tr('_', ' '), width: 400) { choose_key control, key_label }
         end
       end
