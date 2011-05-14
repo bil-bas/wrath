@@ -5,3 +5,6 @@
   :port: 60000
 :player:
   :name: Player
+:audio:
+  :master_volume: 0.5
+  :effects_volume: 1.0

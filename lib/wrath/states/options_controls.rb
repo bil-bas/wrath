@@ -22,13 +22,13 @@ module Wrath
 
       init_key_codes
 
-      pack :vertical, spacing: 24 do
-        label "Options  |  Controls"
+      pack :vertical, spacing: 24, padding: 20 do
+        label "Options  |  Controls", font_size: 24
 
         # Choose control group.
 
         @tabs_group = group do
-          pack :horizontal do
+          pack :horizontal, padding: 0 do
             GROUPS.each_pair do |symbol, options|
               radio_button(options[:title], symbol, tip: options[:tip].to_s)
             end
@@ -44,7 +44,7 @@ module Wrath
           @key_grid = pack :grid, num_columns: 2, spacing: 10, padding: 10
         end
 
-        pack :horizontal do
+        pack :horizontal, padding: 0 do
           button("Back") { pop_game_state }
         end
       end

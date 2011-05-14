@@ -34,8 +34,6 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
-Gosu::Sample.volume = 0.5
-
 Fidgit::Element.schema.merge_elements! YAML.load(File.read(SCHEMA_FILE))
 
 module Wrath

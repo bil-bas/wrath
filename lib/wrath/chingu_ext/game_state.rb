@@ -7,12 +7,12 @@ module Chingu
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
     # Settings object, containing general settings from config.
-    def settings; @@settings; end
+    def self.settings; @@settings ||= Wrath::Settings.new(SETTINGS_CONFIG_FILE); end
+    def settings; self.class.settings; end
 
     alias_method :original_initialize, :initialize
     public
     def initialize(options = {})
-      @@settings ||= Wrath::Settings.new(SETTINGS_CONFIG_FILE)
       on_input(:f12) { pry } if respond_to? :pry
       original_initialize(options)
     end
