@@ -1,8 +1,9 @@
 require 'rake/clean'
 require 'redcloth'
+require_relative "lib/wrath/version"
 
 APP = "wrath"
-RELEASE_VERSION = "0.0.2alpha"
+RELEASE_VERSION = Wrath::VERSION
 
 EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media]
@@ -30,7 +31,7 @@ end
 # Making a release.
 file EXECUTABLE => :ocra
 
-desc "Use Ocra to generate #{EXECUTABLE} (Windows only)"
+desc "Use Ocra to generate #{EXECUTABLE} (Windows only) v#{RELEASE_VERSION}"
 task ocra: SOURCE_FOLDER_FILES do
   system "ocra bin/#{APP}.rbw --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*"
 end
@@ -44,13 +45,13 @@ def compress(package, folder, option = '')
   cd '..'
 end
 
-desc "Create release packages"
+desc "Create release packages v#{RELEASE_VERSION}"
 task release: [:release_source, :release_win32]
 
-desc "Create source releases"
+desc "Create source releases v#{RELEASE_VERSION}"
 task release_source: [:source_zip, :source_7z]
 
-desc "Create win32 releases"
+desc "Create win32 releases v#{RELEASE_VERSION}"
 task release_win32:  [:win32_zip] # No point making a 7z, since it is same size.
 
 # Create folders for release.
