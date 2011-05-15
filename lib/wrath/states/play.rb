@@ -325,6 +325,7 @@ class Play < GameState
 
   def make_glow
     @@glow = TexPlay.create_image($window, GLOW_WIDTH, GLOW_WIDTH)
+    @@glow.refresh_cache
 
     center = @@glow.width / 2.0
     radius =  @@glow.width / 2.0
