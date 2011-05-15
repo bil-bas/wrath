@@ -110,7 +110,7 @@ class Play < GameState
 
       Wrath::constants.each do |const_name|
         const = Wrath.const_get const_name
-        if const != Play and const.ancestors.include? Play
+        if const != Play and const.is_a? Class and const.ancestors.include? Play
           @@levels << const
         end
       end
