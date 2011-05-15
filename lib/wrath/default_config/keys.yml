@@ -11,7 +11,7 @@
   :right: :right
   :up: :up
   :down: :down
-  :action: :right_control
+  :action: :right_shift
 
 :network_player:
   :left: :left

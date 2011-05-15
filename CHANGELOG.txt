@@ -10,7 +10,7 @@ v0.0.3alpha (unreleased)
   * Creatures can be knocked down if hit with a sufficiently large thrown object.
   * Added a disaster to the forest/dryad level (trees awaken).
   * Replaced game text overlay with a graphical overlay.
-  * Made level-dependent gods and anger meter.
+  * Made level-dependent gods and anger meter, which triggers disasters. Sacrifice reduces anger.
   * Added buttons to replay the game or return to the main menu when game ends.
   * FIXED: Ready indicators are left on when leaving a game.
   * FIXED: Sacrifice of the forest virgin crashes the game.

@@ -68,7 +68,7 @@ h3. 2 players sharing a keyboard
 Player 1 controls the priest on the left-hand side. Player 2 controls the priest on the right-hand side.
 
 * Player 1 controls: WASD + Space
-* Player 2 controls: Arrow keys + RightControl
+* Player 2 controls: Arrow keys + RightShift
 
 Note: The game only supports a single gamepad, so only one of the players may use one at a time. Enable this in _Options->Controls_.
 
