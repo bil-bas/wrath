@@ -159,8 +159,9 @@ module Wrath
 
     public
     def update
-      super
       @network.update if @network
+      super
+      @network.flush if @network
     end
 
     protected

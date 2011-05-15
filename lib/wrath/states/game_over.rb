@@ -63,12 +63,14 @@ class GameOver < Gui
   end
 
   def update
-    @avatar.update
+    @network.update if @network
 
     super
 
     @sparkle.angle -= frame_time * 0.1
     @sparkle.factor = 1.5 + Math::sin(milliseconds / 1000.0) * 0.3
+
+    @network.flush if @network
   end
 
   def draw

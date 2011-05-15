@@ -96,6 +96,7 @@ class Play < GameState
   end
 
   def replay
+    log.info { "Replaying #{self.class}" }
     pop_game_state
     push_game_state(self.class.new(@network, @player_names, @priest_files))
   end
