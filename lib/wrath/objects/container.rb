@@ -61,7 +61,7 @@ module Wrath
     public
     # Pick up an object.
     def pick_up(object)
-      raise "Trying to pick up something when already encumbered" if @contents
+      drop unless empty?
 
       parent.send_message(Message::PerformAction.new(self, object)) if parent.host?
 
