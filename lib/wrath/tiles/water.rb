@@ -6,6 +6,8 @@ class Water < AnimatedTile
   EMPTY_LEVEL = -3
   FULL_LEVEL = 0
 
+  attr_writer :filled
+
   def filled?; @filled; end
 
   def initialize(options = {})

@@ -45,7 +45,11 @@ class Emitter
   def random(value)
     case value
       when Range
-        value.min + rand(value.max - value.min)
+        if value.max.is_a? Integer and value.min.is_a? Integer
+          value.min + rand(value.max - value.min)
+        else
+          value.min + rand() * (value.max - value.min)
+        end
       else
         value
     end

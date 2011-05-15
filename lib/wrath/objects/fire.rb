@@ -2,7 +2,7 @@ module Wrath
 class Fire < DynamicObject
   trait :timer
 
-  ANIMATION_DELAY = 800
+  ANIMATION_DELAY = 500
   DAMAGE = 5  / 1000.0 # 5/second
   GLOW_COLOR = Color.rgb(255, 255, 50)
 
@@ -29,7 +29,7 @@ class Fire < DynamicObject
     super
 
     self.image = @frames.next
-    if rand(100) < 10
+    if rand(100) < 3
       Smoke.create(x: x - 3 + rand(4) + rand(4), y: y - z - 3 - rand(3), zorder: y - 0.01 + rand(0.02))
     end
   end

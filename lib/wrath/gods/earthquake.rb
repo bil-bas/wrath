@@ -33,9 +33,9 @@ module Wrath
     def rock_spawn_position
       margin = parent.class::Margin
       [
-        margin::LEFT + rand($window.width - margin::LEFT - margin::RIGHT),
-        margin::TOP + rand($window.height - margin::TOP - margin::BOTTOM),
-        $window.height
+        margin::LEFT + rand($window.retro_width - margin::LEFT - margin::RIGHT),
+        margin::TOP + rand($window.retro_height - margin::TOP - margin::BOTTOM),
+        $window.retro_height
       ]
     end
   end

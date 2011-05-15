@@ -10,8 +10,9 @@ module Wrath
     BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
     SAFE_COLOR = Color.rgb(0, 255, 255)
     DISASTER_COLOR = Color.rgb(255, 0, 255)
-    ANGER_WIDTH = 30
+    ANGER_WIDTH = 30 # Of the bar.
     BORDER_WIDTH = 1
+    PATIENCE_DURATION = 30 # 30s before first disaster.
 
     event :on_disaster_start
     event :on_disaster_end
@@ -43,7 +44,7 @@ module Wrath
 
       super options
 
-      @max_anger = 30 # Time before the god goes crazy (game ends).
+      @max_anger = PATIENCE_DURATION # Time before the god goes crazy (game ends).
       @max_safe_anger = @max_anger / 2
       @anger = 0
 

@@ -78,7 +78,7 @@ class BaseObject < GameObject
       # Cache animations to stop loading them ENDLESSLY!
       @@animation_cache ||= {}
       @@animation_cache[options[:animation]] ||= Animation.new(file: File.join(media_folder, options[:animation]))
-      @frames = @@animation_cache[options[:animation]]
+      @frames = @@animation_cache[options[:animation]].dup # Duplicate structure, not images.
       options[:animation] =~ /(\d+)x(\d+)/
       width, height = $1.to_i, $2.to_i
     end

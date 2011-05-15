@@ -3,7 +3,7 @@ class Smoke < GameObject
   def initialize(options = {})
     options = {
       color: Color.rgba(50, 50, 50, 100),
-      factor: 1.5,
+      factor: 2,
       image: Image["objects/pixel_1x1.png"],
     }.merge! options
 

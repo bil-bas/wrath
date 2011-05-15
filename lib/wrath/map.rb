@@ -66,5 +66,18 @@ module Wrath
     def set_color(x, y, color)
       @background_image.pixel(x.round, y.round, color: color)
     end
+
+    public
+    # x and y screen position, not tile position.
+    def replace_tile(x, y, type)
+      tile = tile_at_coordinate(x, y)
+
+      grid_x, grid_y = (x / Tile::WIDTH).floor, (y / Tile::HEIGHT).floor
+      tile = type.new(grid: [grid_x, grid_y])
+      @tiles[grid_y][grid_x] = tile
+      @animated_tiles << tile if tile.is_a? AnimatedTile
+
+      tile
+    end
   end
 end
