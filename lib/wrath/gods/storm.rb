@@ -3,9 +3,7 @@ module Wrath
   class Storm < God
     LIGHTNING_COLOR = Color.rgba(255, 255, 255, 50)
 
-    def disaster_duration; 300 + 20 * @num_disasters; end
-
-    def on_disaster(sender)
+    def on_disaster_start(sender)
       Sample["objects/rock_sacrifice.ogg"].play
     end
 
@@ -13,7 +11,7 @@ module Wrath
       super
 
       # Draw overlay to make it look dark.
-      if @disaster_duration > 0
+      if @in_disaster
         color = LIGHTNING_COLOR
         mode = :additive
       else

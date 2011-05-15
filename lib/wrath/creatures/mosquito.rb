@@ -29,7 +29,7 @@ module Wrath
           other.health -= DAMAGE * frame_time
       end
 
-      false
+      super(other)
     end
   end
 end

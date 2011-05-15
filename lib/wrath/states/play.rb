@@ -12,16 +12,19 @@ class Play < GameState
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
       Message::Create, Message::Destroy,
-      Message::Disaster, Message::EndGame,
-      Message::StandUp,
+      Message::EndGame,
       Message::KnockedDown,
-      Message::PerformAction, Message::RequestAction, Message::Sync,
-      Message::SetFavor, Message::SetHealth
+      Message::PerformAction, Message::RequestAction,
+      Message::StandUp,
+      Message::Sync,
+      Message::SetAnger, Message::SetFavor, Message::SetHealth
   ]
 
   # Messages accepted during the setup phase.
   GAME_SETUP_MESSAGES = [
-      Message::Create, Message::EndGame, Message::Map,
+      Message::Create,
+      Message::EndGame,
+      Message::Map,
       Message::PerformAction,
       Message::StartGame
   ]

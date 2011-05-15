@@ -88,6 +88,10 @@ class Player < BasicGameObject
       parent.send_message(Message::SetFavor.new(self))
     end
 
+    if @favor > original_favor
+      parent.god.give_favor(@favor - original_favor)
+    end
+
     @favor_bar.value = @favor.to_f / FAVOR_TO_WIN
 
     @favor
