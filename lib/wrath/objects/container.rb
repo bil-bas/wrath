@@ -81,7 +81,7 @@ module Wrath
 
     public
     def drop
-      return unless @contents and @contents.can_be_dropped?(self)
+      return unless @contents
 
       @parent.send_message Message::PerformAction.new(self) if parent.host?
 

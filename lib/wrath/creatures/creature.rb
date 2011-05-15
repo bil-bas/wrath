@@ -175,11 +175,16 @@ class Creature < Container
 
     target = near_objects.find {|o| o.can_be_activated?(self) }
 
+    # Special case if we are carrying something that we can't drop.
+    if not target and not empty_handed? and not @contents.can_be_dropped?(self)
+      return
+    end
+
     if parent.client?
       # Client needs to ask permission first.
       parent.send_message(Message::RequestAction.new(self, target))
-    else
       # Host/local can do it immediately.
+    else
       perform_action(target)
     end
   end

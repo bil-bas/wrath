@@ -5,7 +5,7 @@ class BrokenEgg < DynamicObject
   ANIMATION_DELAY = 300
   EGGED_DURATION = 3 * 1000
 
-  def can_be_dropped?(container); @can_be_dropped; end
+  def can_be_dropped?(container); false; end
 
   public
   def initialize(options = {})
@@ -15,21 +15,17 @@ class BrokenEgg < DynamicObject
       animation: "broken_egg_6x5.png",
     }.merge! options
 
-    @can_be_dropped = false
-
     super options
   end
 
   protected
   def on_being_picked_up(container)
     super(container)
-    after(EGGED_DURATION) { destroy } if local?
+    after(EGGED_DURATION) { destroy } unless parent.client?
   end
 
-  public
-  def destroy
-    @can_be_dropped = true
-    super
+  def on_being_dropped(container)
+    destroy
   end
 end
 end

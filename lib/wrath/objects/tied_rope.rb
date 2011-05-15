@@ -4,7 +4,7 @@ module Wrath
 
     TIED_DURATION = 4 * 1000
 
-    def can_be_dropped?(container); @can_be_dropped; end
+    def can_be_dropped?(container); false; end
 
     public
     def initialize(options = {})
@@ -13,8 +13,6 @@ module Wrath
         z_offset: -8,
         animation: "rope_10x6.png",
       }.merge! options
-
-      @can_be_dropped = false
 
       super options
 
@@ -27,10 +25,8 @@ module Wrath
       after(TIED_DURATION) { destroy } unless parent.client?
     end
 
-    public
-    def destroy
-      @can_be_dropped = true
-      super
+    def on_being_dropped(container)
+      destroy
     end
   end
 end
