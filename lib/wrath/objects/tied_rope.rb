@@ -24,7 +24,7 @@ module Wrath
     protected
     def on_being_picked_up(container)
       super(container)
-      after(TIED_DURATION) { destroy }
+      after(TIED_DURATION) { destroy } unless parent.client?
     end
 
     public

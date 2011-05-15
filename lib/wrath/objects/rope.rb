@@ -1,5 +1,7 @@
 module Wrath
   class Rope < DynamicObject
+    def can_knock_down_creature?(creature); false; end
+
     def initialize(options = {})
       options = {
           shape: :circle,

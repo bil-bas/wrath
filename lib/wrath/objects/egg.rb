@@ -4,6 +4,8 @@ class Egg < DynamicObject
 
   GESTATION_DELAY = 3 * 1000
 
+  def can_knock_down_creature?(creature); false; end
+
   def initialize(options = {})
     options = {
       favor: 1,
@@ -19,7 +21,7 @@ class Egg < DynamicObject
 
   def on_stopped
     super
-    after(GESTATION_DELAY, name: :gestation) { hatch }
+    after(GESTATION_DELAY, name: :gestation) { hatch } unless parent.client?
   end
 
   def on_being_picked_up(container)
@@ -28,7 +30,7 @@ class Egg < DynamicObject
   end
 
   def hatch
-    Chicken.create(position: position, parent: parent)
+    Chicken.create(position: position, parent: parent, z_velocity: 0.5)
     destroy
   end
 

@@ -13,6 +13,7 @@ class Play < GameState
   GAME_STARTED_MESSAGES = [
       Message::Create, Message::Destroy,
       Message::Disaster, Message::EndGame,
+      Message::StandUp,
       Message::KnockedDown,
       Message::PerformAction, Message::RequestAction, Message::Sync,
       Message::SetFavor, Message::SetHealth

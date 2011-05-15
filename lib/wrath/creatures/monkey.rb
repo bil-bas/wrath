@@ -1,5 +1,7 @@
 module Wrath
   class Monkey < Animal
+    def can_knock_down_creature?(creature); false; end
+
     def initialize(options = {})
       options = {
         favor: 15,

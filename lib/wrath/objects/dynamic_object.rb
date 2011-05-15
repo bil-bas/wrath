@@ -12,6 +12,7 @@ module Wrath
 
     def on_being_picked_up(by); end
     def on_being_dropped(by); end
+    def thrown?; not @thrown_by.empty?; end
 
     public
     def initialize(options = {})
@@ -28,6 +29,12 @@ module Wrath
       super options
 
       parent.objects << self if networked?
+    end
+
+    public
+    def can_knock_down_creature?(creature)
+      encumbrance >= creature.encumbrance * 0.5 and
+      thrown? and not thrown_by.include? creature
     end
 
     public

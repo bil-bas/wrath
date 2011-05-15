@@ -23,7 +23,7 @@ class BrokenEgg < DynamicObject
   protected
   def on_being_picked_up(container)
     super(container)
-    after(EGGED_DURATION) { destroy }
+    after(EGGED_DURATION) { destroy } if local?
   end
 
   public

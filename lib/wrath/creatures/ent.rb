@@ -27,17 +27,16 @@ module Wrath
       @last_picked_up_at = milliseconds
       @last_picked_up = nil
 
-      after(options[:duration]) { go_to_sleep }
+      after(options[:duration]) { go_to_sleep } if local?
     end
 
     def go_to_sleep
-      drop
       Tree.create(position: position, can_wake: true) unless parent.client?
       self.destroy
     end
 
     def on_collision(other)
-      if other.is_a? Creature
+      if local? and other.is_a? Creature
         if empty_handed? and
             ((milliseconds - @last_picked_up_at) > MIN_PICKUP_DELAY) and
             (other.encumbrance >= MIN_ENCUMBRANCE_TO_PICK_UP) and

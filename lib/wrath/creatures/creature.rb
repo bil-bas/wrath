@@ -118,6 +118,12 @@ class Creature < Container
     @health
   end
 
+  public
+  def stand_up
+    parent.send_message(Message::StandUp.new(self)) if parent.host?
+    @state = :standing if @state == :thrown
+  end
+
   protected
   def effective_speed
     contents ? (@speed * (1 - contents.encumbrance)) : @speed
@@ -260,9 +266,7 @@ class Creature < Container
     # Make being hit with something heavy knock you over.
     if not collided and
         state != :thrown and
-        other.encumbrance >= encumbrance * 0.5 and
-        not other.thrown_by.empty? and
-        not other.thrown_by.include? self
+        other.can_knock_down_creature?(self)
 
       knocked_down_by(other)
     end
@@ -309,7 +313,7 @@ class Creature < Container
     case @state
       when :thrown
         # Stand up if we were thrown.
-        after(STAND_UP_DELAY, name: :stand_up) { @state = :standing if @state == :thrown }
+        after(STAND_UP_DELAY, name: :stand_up) { stand_up } unless parent.client?
     end
 
     super
