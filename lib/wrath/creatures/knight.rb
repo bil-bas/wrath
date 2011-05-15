@@ -7,7 +7,7 @@ class Knight < Humanoid
     options = {
       favor: 30,
       health: 40,
-      elasticity: 0.4,
+      elasticity: 0.1,
       encumbrance: 0.5,
       z_offset: -2,
       damage: DAMAGE,

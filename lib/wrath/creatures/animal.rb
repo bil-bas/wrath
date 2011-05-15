@@ -5,6 +5,9 @@ module Wrath
 class Animal < Creature
   trait :timer
 
+  # Animals don't bounce much if thrown. Usual elasticity only used in movement.
+  def elasticity; thrown? ? [0.3, super].min : super; end
+
   def initialize(options = {})
     options = {
     }.merge! options

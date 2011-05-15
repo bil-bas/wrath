@@ -27,6 +27,10 @@ class Creature < Container
   FRAME_SLEEP = 3
   FRAME_DEAD = 3
 
+  THROW_MOVING_SPEED_MULTIPLIER = 3 # Speed things are thrown at, compared to own speed.
+  THROW_STATIONARY_SPEED = 1
+  THROW_UP_SPEED = 0.5
+
   attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing
 
   attr_writer :player, :state
@@ -132,11 +136,12 @@ class Creature < Container
   public
   def on_having_dropped(object)
     if alive?
+      object.x_velocity = x_velocity * THROW_MOVING_SPEED_MULTIPLIER
       # Give a little push if you are stationary, so that it doesn't just land at their feet.
-      extra_x_velocity = (x_velocity == 0 and y_velocity == 0) ? factor_x * 0.5 : 0
-      object.x_velocity += x_velocity * 0.5 + extra_x_velocity
-      object.y_velocity += y_velocity * 0.5
-      object.z_velocity += 0.5
+      object.x_velocity += factor_x * THROW_STATIONARY_SPEED if (x_velocity == 0 and y_velocity == 0)
+
+      object.y_velocity = y_velocity * THROW_MOVING_SPEED_MULTIPLIER
+      object.z_velocity = z_velocity + THROW_UP_SPEED
     end
 
     nil
@@ -276,7 +281,7 @@ class Creature < Container
 
   public
   def knocked_down_by(knocker)
-    parent.send_message(Message::KnockedDown.new(self, knocker)) if parent.host?
+    parent.send_message(Message::KnockedDown.new(self, knocker)) if parent and parent.host?
 
     @state = :thrown
     @thrown_by = [knocker] + knocker.thrown_by

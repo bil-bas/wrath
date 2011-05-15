@@ -13,6 +13,7 @@ module Wrath
     def initialize(options = {})
       options = {
           speed: 1,
+          elasticity: 0.3,
           walk_duration: 2000,
           walk_interval: 2000,
       }.merge! options

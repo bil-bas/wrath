@@ -7,7 +7,6 @@ module Wrath
         favor: 30,
         health: 20,
         walk_interval: 0,
-        elasticity: 0.5,
         encumbrance: 0.4,
         z_offset: -2,
         animation: "blue_meanie_10x8.png",

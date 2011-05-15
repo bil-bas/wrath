@@ -15,7 +15,7 @@ module Wrath
         health: 30,
         vertical_jump: 0.3,
         horizontal_jump: 0.6,
-        elasticity: 0.4,
+        elasticity: 0.1,
         jump_delay: 1000,
         encumbrance: 0.4,
         z_offset: -2,

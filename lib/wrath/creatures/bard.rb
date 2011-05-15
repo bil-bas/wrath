@@ -7,7 +7,6 @@ class Bard < Humanoid
     options = {
       favor: 35,
       health: 30,
-      elasticity: 0.4,
       encumbrance: 0.4,
       z_offset: -2,
       animation: "bard_8x8.png",

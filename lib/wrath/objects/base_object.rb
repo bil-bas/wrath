@@ -247,7 +247,7 @@ class BaseObject < GameObject
 
       if @z <= ground_level
         @z = ground_level
-        @z_velocity = - @z_velocity * @elasticity if @z_velocity < 0
+        @z_velocity = - @z_velocity * elasticity if @z_velocity < 0
 
         if @z_velocity < 0.2
           self.velocity = [0, 0, 0]
