@@ -101,5 +101,14 @@ module Wrath
     def disaster_end
       @in_disaster = false
     end
+
+    def spawn_position(height)
+      margin = parent.class::Margin
+      [
+        margin::LEFT + rand($window.retro_width - margin::LEFT - margin::RIGHT),
+        margin::TOP + rand($window.retro_height - margin::TOP - margin::BOTTOM),
+        height
+      ]
+    end
   end
 end

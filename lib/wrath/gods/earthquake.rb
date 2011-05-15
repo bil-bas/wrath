@@ -19,24 +19,15 @@ module Wrath
         @quake_offset = intensity / 6
 
         if not parent.client? and rand(100) < ((intensity * parent.frame_time) / 8000)
-          Rock.create(position: rock_spawn_position)
+          Rock.create(position: spawn_position($window.retro_height))
         end
 
         if rand(100) < @num_disasters * 5
-          Pebble.create(position: rock_spawn_position)
+          Pebble.create(position: spawn_position($window.retro_height))
         end
       else
         @quake_offset = 0
       end
-    end
-
-    def rock_spawn_position
-      margin = parent.class::Margin
-      [
-        margin::LEFT + rand($window.retro_width - margin::LEFT - margin::RIGHT),
-        margin::TOP + rand($window.retro_height - margin::TOP - margin::BOTTOM),
-        $window.retro_height
-      ]
     end
   end
 end
