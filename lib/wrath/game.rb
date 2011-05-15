@@ -50,7 +50,7 @@ end
 class Game < Window
   include Log
 
-  SIZE = [768, 480]
+  DEFAULT_SIZE = [768, 480]
 
   TITLE = "=== Wrath! === Appease the gods or suffer the consequences..."
   attr_reader :pixel, :sprite_scale
@@ -111,7 +111,9 @@ class Game < Window
   end
 
   def self.run
-    new(*SIZE, false).show
+    full_screen = Wrath::Settings.new(Chingu::GameState::SETTINGS_CONFIG_FILE)[:video, :full_screen]
+    size = (full_screen ? [screen_width, screen_height] : DEFAULT_SIZE)
+    new(*size, full_screen).show
   end
 end
 

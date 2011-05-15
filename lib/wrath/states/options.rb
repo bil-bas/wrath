@@ -14,8 +14,10 @@ module Wrath
       pack :vertical, spacing: 20, padding: 20 do
         label "Options", font_size: 24
 
-        PAGES.each_pair do |state, label|
-          button(label) { push_game_state state }
+        pack :horizontal, padding: 0, spacing: 20 do
+          PAGES.each_pair do |state, label|
+            button(label) { push_game_state state }
+          end
         end
 
         pack :horizontal, padding: 0 do
