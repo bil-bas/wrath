@@ -22,7 +22,7 @@ module Wrath
       1.times { Monkey.create }
 
       # Inanimate objects.
-      5.times { Barrel.create(contents: BARREL_CONTENTS) }
+      7.times { Barrel.create(contents: BARREL_CONTENTS) }
       2.times { TreasureChest.create }
       2.times { Chest.create(contents: CHEST_CONTENTS) }
       3.times { Grog.create }

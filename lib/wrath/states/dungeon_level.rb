@@ -3,7 +3,7 @@ module Wrath
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 
-    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet ]
+    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet, Crown]
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -14,12 +14,12 @@ module Wrath
       super(PLAYER_SPAWNS)
 
       # Mobs.
-      3.times { Knight.create }
+      4.times { Knight.create }
       2.times { BlueMeanie.create }
 
       # Inanimate objects.
       8.times { Rock.create }
-      (4 + rand(3)).times { Chest.create(contents: CHEST_CONTENTS) }
+      (5 + rand(3)).times { Chest.create(contents: CHEST_CONTENTS) }
       (1 + rand(3)).times { Mimic.create }
       4.times { Fire.create }
       8.times { Mushroom.create }

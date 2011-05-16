@@ -2,7 +2,7 @@ module Wrath
   class IslandLevel < Play
     DEFAULT_TILE = Sand
 
-    CHEST_CONTENTS = [Crown, Fire]
+    CHEST_CONTENTS = [TreasureChest, Crown, FlyingCarpet]
     BARREL_CONTENTS = [Mushroom, Chicken, Pirate]
     GOD = Volcano
 
@@ -26,7 +26,7 @@ module Wrath
       7.times { Rock.create }
       3.times { Barrel.create(contents: BARREL_CONTENTS) }
       1.times { OgreSkull.create }
-      3.times { X.create(contents: TreasureChest) }
+      3.times { X.create(contents: CHEST_CONTENTS) }
 
       # Static objects.
       12.times { PalmTree.create }

@@ -3,7 +3,7 @@ module Wrath
     DEFAULT_TILE = Grass
     NUM_GOATS = 5
     NUM_CHICKENS = 2
-    SACK_CONTENTS = [Crown, Chicken]
+    SACK_CONTENTS = [Crown, Chicken, FlyingCarpet]
     GOD = Dryad
 
     # This is relative to the altar.
@@ -19,10 +19,11 @@ module Wrath
       NUM_GOATS.times { Goat.create }
       NUM_CHICKENS.times { Chicken.create }
       1.times { Bard.create }
+      2.times { Knight.create }
 
       # Inanimate objects.
       4.times { Rock.create }
-      3.times { Sack.create(contents: SACK_CONTENTS) }
+      5.times { Sack.create(contents: SACK_CONTENTS) }
       2.times { Fire.create }
       1.times { Cauldron.create }
       
