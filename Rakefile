@@ -6,7 +6,7 @@ APP = "wrath"
 RELEASE_VERSION = Wrath::VERSION
 
 EXECUTABLE = "#{APP}.exe"
-SOURCE_FOLDERS = %w[bin lib media]
+SOURCE_FOLDERS = %w[bin lib media build]
 SOURCE_FOLDER_FILES = FileList[SOURCE_FOLDERS.map {|f| "#{f}/**/*"}]
 EXTRA_SOURCE_FILES = %w[.gitignore Rakefile README.textile Gemfile Gemfile.lock]
 OSX_GEMS = %w[bundler chingu fidgit]
@@ -24,7 +24,7 @@ CHANGELOG = "CHANGELOG.txt"
 CLEAN.include("*.log")
 CLOBBER.include("doc/**/*", "wrath.exe", RELEASE_FOLDER, README_HTML)
 
-require_relative 'rake_osx_package'
+require_relative 'build/rake_osx_package'
 
 desc "Generate Yard docs."
 task :yard do
