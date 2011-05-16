@@ -3,8 +3,10 @@ module Wrath
     def initialize
       super
 
-      pack :vertical, spacing: 32 do
-        pack :grid, num_columns: 2, spacing: 16 do
+      pack :vertical do
+        label "Joining a Game", font_size: 32
+
+        pack :grid, num_columns: 2, padding: 0 do
           name_entry
 
           label "Host address"

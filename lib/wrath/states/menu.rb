@@ -18,8 +18,8 @@ class Menu < Gui
     priest_sprite_files = Play::PRIEST_SPRITES.values.map {|f| File.join('players', f) }
     icons = priest_sprite_files.map {|f| ScaledImage.new(SpriteSheet.new(f, 8, 8)[0], $window.sprite_scale * 3) }
 
-    pack :horizontal, padding_left: 18 do
-      pack :vertical, padding_top: 12, spacing: 14 do
+    pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
+      pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
         icons[0..3].each {|icon| label '', icon: icon }
       end
 
@@ -36,10 +36,10 @@ class Menu < Gui
           button("Exit", options) { close }
         end
 
-        label "v#{VERSION}", font_size: 18
+        label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
       end
 
-      pack :vertical, padding_top: 12, spacing: 14 do
+      pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
         icons[4..7].each {|icon| label '', icon: icon }
       end
     end

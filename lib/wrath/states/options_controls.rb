@@ -22,13 +22,12 @@ module Wrath
 
       init_key_codes
 
-      pack :vertical, spacing: 24, padding: 20 do
-        label "Options  |  Controls", font_size: 24
+      pack :vertical do
+        label "Options  |  Controls", font_size: 32
 
         # Choose control group.
-
         @tabs_group = group do
-          pack :horizontal, padding: 0 do
+          pack :horizontal, padding: 0, spacing: 0 do
             GROUPS.each_pair do |symbol, options|
               radio_button(options[:title], symbol, tip: options[:tip].to_s)
             end
@@ -41,7 +40,7 @@ module Wrath
         end
 
         scroll_window height: 250, width: 600 do
-          @key_grid = pack :grid, num_columns: 2, spacing: 10, padding: 10
+          @key_grid = pack :grid, num_columns: 2, padding: 10, spacing: 10
         end
 
         pack :horizontal, padding: 0 do

@@ -1,16 +1,46 @@
 ---
-:Element:
-  :font_name: pixelated.ttf
-  :font_size: 24
-  :background_color: ?none
+:constants:
+  :blue_white: [224, 224, 255]
+  :very_dark_blue: [0, 0, 100]
+  :dark_blue: [50, 50, 150]
+  :light_blue: [150, 150, 255]
 
-:Button:
-  :border_thickness: 2
-  :padding_left: 16
-  :padding_right: 16
+:elements:
+  :Element:
+    :font_name: pixelated.ttf
+    :font_size: 24
+    :color: ?blue_white
+    :background_color: ?none
+    :border_color: ?light_blue
 
-:ComboBox:
-  :border_thickness: 0
+    :disabled:
+      :background_color: ?very_dark_blue
+      :border_color: ?dark_blue
 
-:ToolTip:
-  :font_size: 15
+    :hover:
+      :background_color: ?light_blue
+
+  :Packer:
+    :spacing_h: 20
+    :spacing_v: 20
+    :padding_left: 16
+    :padding_right: 16
+    :padding_top: 12
+    :padding_bottom: 18
+
+  :Button:
+    :border_thickness: 2
+    :padding_left: 16
+    :padding_right: 16
+    :background_color: ?dark_blue
+
+  :ComboBox:
+    :border_thickness: 0
+
+  :ToolTip:
+    :font_size: 15
+    :background_color: ?very_dark_blue
+
+  :TextArea:
+    :color: ?blue_white
+    :background_color: ?very_dark_blue

@@ -37,31 +37,31 @@ module Wrath
           "Lobby"
       end
 
-      pack :vertical, spacing: 16 do
+      pack :vertical, spacing: 0 do
         label heading, font_size: 32
 
         player_grid
 
         level_picker
+      end
 
-        pack :horizontal do
-          button "Cancel" do
-            game_state_manager.pop_until_game_state Menu
+      pack :horizontal do
+        button "Cancel" do
+          game_state_manager.pop_until_game_state Menu
+        end
+
+        if @network
+          @ready_button = toggle_button("Ready") do |sender, value|
+            update_ready @player_number, value
+            send_message(Message::UpdateLobby.new(:ready, @player_number, value))
           end
+        end
 
-          if @network
-            @ready_button = toggle_button("Ready") do |sender, value|
-              update_ready @player_number, value
-              send_message(Message::UpdateLobby.new(:ready, @player_number, value))
-            end
-          end
-
-          if client?
-            label "Wait for host to start a game"
-          else
-            @start_button = button("Start", enabled: local?) do
-              new_game @level_picker.value
-            end
+        if client?
+          label "Wait for host to start a game"
+        else
+          @start_button = button("Start", enabled: local?) do
+            new_game @level_picker.value
           end
         end
       end
@@ -83,8 +83,8 @@ module Wrath
     def level_picker
       label "Level"
 
-      pack :horizontal do
-        @level_picker = combo_box value: Play.levels[0], width: $window.width * 0.6, enabled: (not client?) do
+      pack :horizontal, spacing: 0 do
+        @level_picker = combo_box value: Play.levels[0], width: $window.width * 0.6, padding: 0, enabled: (not client?) do
           Play.levels.each do |level|
             item(level.to_s, level)
           end
@@ -93,6 +93,8 @@ module Wrath
             send_message(Message::UpdateLobby.new(:level, level)) if host?
           end
         end
+
+        label "", icon: Image["combo_arrow.png"], padding: 0
       end
     end
 
@@ -102,7 +104,7 @@ module Wrath
       @num_readies = 0
 
       label "Players"
-      pack :grid, num_columns: 3, spacing_h: 16, spacing_v: 4 do
+      pack :grid, num_columns: 3, spacing_v: 4 do
         @player_names.each_with_index do |player_name, player_number|
           player_row player_name, player_number
         end
@@ -120,16 +122,19 @@ module Wrath
       end
 
       is_local = ((player_number == @player_number) or local?)
-      @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
-        @priest_sprites.each_with_index do |sprite, i|
-          item Play::PRIEST_NAMES[i].capitalize, i, icon: sprite
-        end
+      pack :horizontal, spacing: 0, padding: 0 do
+        @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
+          @priest_sprites.each_with_index do |sprite, i|
+            item Play::PRIEST_NAMES[i].capitalize, i, icon: sprite
+          end
 
-        subscribe :changed do |sender, priest_index|
-          enable_priest_options
+          subscribe :changed do |sender, priest_index|
+            enable_priest_options
 
-          send_message(Message::UpdateLobby.new(:player, player_number, priest_index)) unless local?
+            send_message(Message::UpdateLobby.new(:player, player_number, priest_index)) unless local?
+          end
         end
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.5), padding: 0
       end
 
       # Do this afterwards, to force :changed event.

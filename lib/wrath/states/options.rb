@@ -11,10 +11,10 @@ module Wrath
 
       on_input(:escape, :pop_game_state)
 
-      pack :vertical, spacing: 20, padding: 20 do
-        label "Options", font_size: 24
+      pack :vertical do
+        label "Options", font_size: 32
 
-        pack :horizontal, padding: 0, spacing: 20 do
+        pack :horizontal, padding: 0 do
           PAGES.each_pair do |state, label|
             button(label) { push_game_state state }
           end

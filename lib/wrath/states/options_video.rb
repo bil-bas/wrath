@@ -11,7 +11,7 @@ module Wrath
 
 
       pack :vertical, spacing: 20, padding: 20 do
-        label "Options  |  Video", font_size: 24
+        label "Options  |  Video", font_size: 32
 
         pack :horizontal, padding: 0 do
           toggle_button "Fullscreen?", value: settings[:video, :full_screen] do |sender, value|

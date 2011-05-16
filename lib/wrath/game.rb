@@ -34,7 +34,8 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
-Fidgit::Element.schema.merge_elements! YAML.load(File.read(SCHEMA_FILE))
+Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
+
 
 module Wrath
 module ZOrder

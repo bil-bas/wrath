@@ -7,8 +7,8 @@ module Wrath
 
       on_input(:escape, :pop_game_state)
 
-      pack :vertical, spacing: 20, padding: 20 do
-        label "Options  |  Audio", font_size: 24
+      pack :vertical do
+        label "Options  |  Audio", font_size: 32
 
         pack :grid, num_columns: 4, padding: 0 do
           # MASTER
