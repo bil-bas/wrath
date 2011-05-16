@@ -1,28 +1,33 @@
 ---
 -
-  :type: :block
+  :title: The Gods
   :body: |
-     * Wrath is a two player game. It is primarily adversarial, but has cooperative elements.
-     * You play as a priest. Your current health is shown as a red bar next to your priest's portrait.
+    * Gods are wrathful and enjoy smiting more than anything else (well, except seducing mortals)!
 
--
-  :type: :title
-  :body: THE GODS
-
--
-  :type: :block
-  :body: |
     * Each map has a local deity that you must appease, such as the god of earthquakes or storms.
+
     * Gods slowly become angry then they rain down disasters until they become bored (anger bar fills then empties).
-    * As you make sacrifices, you also reduce the anger of the god.
+
+    * As you make sacrifices, it reduces the anger of the god as well as giving you Holy Favour.
 
 -
-  :type: :title
-  :body: GAINING HOLY FAVOUR
-
--
-  :type: :block
+  :title: Priests
   :body: |
-    * Accumulate favour by making sacrifices at the altar. The gods like animals, people and treasures sacrificed, but dislike mundane things.
+     * Each player picks one of eight priests. All priests are identical in play, but some look cooler than others.
+
+     * Your priest can pick up, use or throw objects or creatures. They do this with a single "action" key.
+
+     * A priest's current health is shown as a red bar next to her portrait.
+
+     * Dying will mean the other player wins by default!
+
+-
+  :title: Holy Favour
+  :body: |
+    * Accumulate favour by making sacrifices at the altar (priests start standing next to the altar).
+
+    * The gods like animals, people and treasures as sacrifices, but dislike mundane things, like rocks.
+
     * Your holy favour is shown as a white bar. Fill the bar before the other priest to win!
+
     * Favour can also be used to power magical items (e.g. magic carpets).
