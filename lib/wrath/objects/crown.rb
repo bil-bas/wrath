@@ -1,24 +1,22 @@
-# Crown of levitation. It makes the player float, but costs favour.
+# Crown of healing. It heals the player, but costs favour.
 module Wrath
 class Crown < DynamicObject
-  LEVITATE_HEIGHT = 15
-  LEVITATE_SPEED = 0.05
-  FAVOUR_COST = 1 / 1000.0 # Per second
+  HEAL_RATE = 4 / 1000.0
+  FAVOUR_COST = 2 / 1000.0 # Per second
+
+  GLOW_COLOR = Color.rgba(0, 255, 0, 100)
 
   trait :timer
 
-  # Speeds the user up while flying, but not on the ground.
-  def encumbrance
-    (empowered? and container.z > container.ground_level) ? -0.25 : 0
-  end
-
   def empowered?
-    inside_container? and container.controlled_by_player? and container.player.favor > 0
+    inside_container? and container.controlled_by_player? and
+        container.player.favor > 0 and container.health < container.max_health
   end
 
   def initialize(options = {})
     options = {
       favor: 5,
+      encumbrance: 0,
       elasticity: 0.2,
       z_offset: -2,
       animation: "crown_6x2.png",
@@ -30,7 +28,15 @@ class Crown < DynamicObject
   def update
     if empowered?
       container.player.favor -= FAVOUR_COST * frame_time
-      container.z_velocity = [LEVITATE_HEIGHT - container.z, 0].max * LEVITATE_SPEED
+      container.health += HEAL_RATE * frame_time
+    end
+
+    super
+  end
+
+  def draw
+    if empowered?
+      parent.draw_glow(x, y, GLOW_COLOR, 0.6)
     end
 
     super
