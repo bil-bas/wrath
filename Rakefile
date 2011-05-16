@@ -8,7 +8,8 @@ RELEASE_VERSION = Wrath::VERSION
 EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media]
 SOURCE_FOLDER_FILES = FileList[SOURCE_FOLDERS.map {|f| "#{f}/**/*"}]
-EXTRA_SOURCE_FILES = %w[.gitignore Rakefile README.textile]
+EXTRA_SOURCE_FILES = %w[.gitignore Rakefile README.textile Gemfile Gemfile.lock]
+OSX_GEMS = %w[bundler chingu fidgit]
 
 RELEASE_FOLDER = 'pkg'
 RELEASE_FOLDER_BASE = File.join(RELEASE_FOLDER, "#{APP}_v#{RELEASE_VERSION.gsub(/\./, '_')}")
@@ -23,6 +24,8 @@ CHANGELOG = "CHANGELOG.txt"
 CLEAN.include("*.log")
 CLOBBER.include("doc/**/*", "wrath.exe", RELEASE_FOLDER, README_HTML)
 
+require_relative 'rake_osx_package'
+
 desc "Generate Yard docs."
 task :yard do
   system "yard doc lib"
@@ -36,6 +39,8 @@ task ocra: SOURCE_FOLDER_FILES do
   system "ocra bin/#{APP}.rbw --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*"
 end
 
+# Making a release.
+
 def compress(package, folder, option = '')
   puts "Compressing #{package}"
   rm package if File.exist? package
@@ -46,7 +51,7 @@ def compress(package, folder, option = '')
 end
 
 desc "Create release packages v#{RELEASE_VERSION}"
-task release: [:release_source, :release_win32]
+task release: [:release_source, :release_win32, :release_osx]
 
 desc "Create source releases v#{RELEASE_VERSION}"
 task release_source: [:source_zip, :source_7z]
@@ -66,18 +71,19 @@ file RELEASE_FOLDER_SOURCE => README_HTML do
   mkdir_p RELEASE_FOLDER_SOURCE
   SOURCE_FOLDERS.each {|f| cp_r f, RELEASE_FOLDER_SOURCE }
   cp EXTRA_SOURCE_FILES, RELEASE_FOLDER_SOURCE
+  cp CHANGELOG, RELEASE_FOLDER_SOURCE
   cp README_HTML, RELEASE_FOLDER_SOURCE
 end
 
 { "7z" => '', :zip => '-tzip' }.each_pair do |compression, option|
-  { source: RELEASE_FOLDER_SOURCE, win32: RELEASE_FOLDER_WIN32 }.each_pair do |name, folder|
+  { source: RELEASE_FOLDER_SOURCE, win32: RELEASE_FOLDER_WIN32}.each_pair do |name, folder|
     package = "#{folder}.#{compression}"
     desc "Create #{package}"
     task :"#{name}_#{compression}" => package
     file package => folder do
       compress(package, folder, option)
     end
- end
+  end
 end
 
 # Generate a friendly readme
