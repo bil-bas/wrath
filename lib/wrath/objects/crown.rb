@@ -26,7 +26,7 @@ class Crown < DynamicObject
   end
 
   def update
-    if empowered?
+    if empowered? and not parent.client?
       container.player.favor -= FAVOUR_COST * frame_time
       container.health += HEAL_RATE * frame_time
     end
