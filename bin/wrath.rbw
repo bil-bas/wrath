@@ -10,7 +10,14 @@ begin
   end
 
   APP_NAME = File.basename(__FILE__).chomp(File.extname(__FILE__))
-  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}.log")
+
+  # Create multiple log-files if debugging on my machine.
+  log_file_name = if __FILE__ =~ %r[C:/Users/Spooner/RubymineProjects/]
+                    "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}.log"
+                  else
+                    "#{APP_NAME}.log"
+                  end
+  LOG_FILE = File.join(ROOT_PATH, log_file_name)
 
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"

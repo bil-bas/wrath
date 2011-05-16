@@ -5,6 +5,7 @@ v0.0.3alpha (unreleased)
   * === Now works on Linux (rolled back some libraries for maximum compatibility).
   * === Now works on OS X (rolled back some libraries for maximum compatibility).
 
+  * Overwrites the same log file each time it is run (before it created one for every run).
   * Instructions page, telling you how to play.
   * Audio settings in options.
   * Controls (keys/gamepad) settings in options.

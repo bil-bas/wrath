@@ -84,10 +84,6 @@ h3. User settings
 
 Wrath saves per-user settings in the <tt>~/.wrath_spooner</tt> folder (This is probably <tt>C:\Users\MyUsername\.wrath_spooner\</tt> on Windows). If you have problems, deleting this folder will return you to default settings.
 
-h3. Logs
-
-Wrath creates a log every time it runs. If you have problems or crashes, it will help to include a copy of the log in your report :)
-
 h2. Credits
 
 Many thanks to:
