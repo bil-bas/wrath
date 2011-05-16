@@ -3,7 +3,9 @@
 v0.0.3alpha (unreleased)
 
   * === Now works on Linux (rolled back some libraries for maximum compatibility).
+  * === Now works on OS X (rolled back some libraries for maximum compatibility).
 
+  * Instructions page, telling you how to play.
   * Audio settings in options.
   * Controls (keys/gamepad) settings in options.
   * Throwing items now makes them travel a lot further (Except throwing animals, which generally is less far now).
