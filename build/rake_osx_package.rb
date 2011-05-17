@@ -5,9 +5,11 @@
 GAME_URL = "com.github.spooner.#{APP}"
 OSX_APP = "#{APP}.app"
 
+OSX_GEMS = %w[chingu fidgit]
+
 RELEASE_FOLDER_OSX = "#{RELEASE_FOLDER_BASE}_OSX_10_6"
 
-OSX_BUILD_DIR =  File.join(File.dirname(File.dirname(File.dirname(__FILE__))), "gosu_wrappers")
+OSX_BUILD_DIR =  File.join(File.dirname(File.dirname(File.dirname(File.dirname(__FILE__)))), "gosu_wrappers")
 BASE_OSX_APP = File.join(OSX_BUILD_DIR, "RubyGosu App.app")
 TMP_OSX_PKG_DIR = File.join(OSX_BUILD_DIR, File.basename(RELEASE_FOLDER_OSX))
 TMP_OSX_APP = File.join(TMP_OSX_PKG_DIR, OSX_APP)
@@ -17,8 +19,11 @@ TMP_OSX_INFO_FILE = File.join(TMP_OSX_APP, "Contents", "Info.plist")
 TMP_OSX_MAIN_FILE = File.join(TMP_OSX_APP, "Contents", "Resources", "Main.rb")
 TMP_OSX_RUBY = File.join(TMP_OSX_APP, "Contents", "MacOS", "RubyGosu App")
 
+RUN_FILE_OLD = File.join(TMP_OSX_SOURCE_DIR, "bin/#{APP}.rbw")
+RUN_FILE_NEW = RUN_FILE_OLD.sub('.rbw', '.rb')
+
 desc "Create OS X releases v#{RELEASE_VERSION}"
-task release_osx: [:osx_tar_bz2]
+task release_osx: [:osx_app]
 
 # Create folders for release.
 file RELEASE_FOLDER_OSX => [OSX_APP, README_HTML] do
@@ -31,35 +36,55 @@ end
 file OSX_APP => :osx_app
 
 desc "Generate #{OSX_APP} (OS X 10.6) v#{RELEASE_VERSION}"
-task osx_app: SOURCE_FOLDER_FILES do
-  mkdir_p File.dirname(TMP_OSX_APP)
+task osx_app: :readme do
+  puts "--- Copying App"
+  mkdir_p TMP_OSX_PKG_DIR
 
   cp_r BASE_OSX_APP, TMP_OSX_APP
 
-  mkdir_p TMP_OSX_SOURCE_DIR
-
   # Copy my source files.
+  puts "--- Copying source"
+  mkdir_p TMP_OSX_SOURCE_DIR
   SOURCE_FOLDERS.each {|f| cp_r f, TMP_OSX_SOURCE_DIR }
+  cp README_HTML, TMP_OSX_PKG_DIR
+  cp CHANGELOG, TMP_OSX_PKG_DIR
 
   # Copy my gems.
+  puts "--- Copying gems"
   OSX_GEMS.each do |gem|
-    gem_path = %x[bundle show #{gem}].chomp
-    yardocs = File.join(gem_path, ".yardoc")
-    rm_r yardocs if File.exist?(yardocs) # yarddoc is just bloat!
+    gem_path = File.join(%x[bundle show #{gem}].chomp, 'lib', '.')
     cp_r gem_path, TMP_OSX_GEM_DIR
   end
 
   # Something for the .app to run -> just a little redirection file.
+  puts "--- Creating Main.rb"
+  mv RUN_FILE_OLD, RUN_FILE_NEW
   File.open(TMP_OSX_MAIN_FILE, "w") do |file|
-    file.puts "require_relative 'wrath/bin/#{APP}.rbw'"
+    file.puts <<END_TEXT
+OSX_EXECUTABLE = File.join(File.dirname(File.dirname(File.dirname(__FILE__))), #{OSX_APP})
+require_relative '#{RUN_FILE_NEW.chomp(File.extname(RUN_FILE_NEW))}'
+END_TEXT
   end
 
   # Edit the info file to be specific for my game.
+  puts "--- Editing init"
   info = File.read(TMP_OSX_INFO_FILE)
   info.sub!('org.libgosu.UntitledGame', GAME_URL)
   info.sub!('RubyGosu App', OSX_APP)
   File.open(TMP_OSX_INFO_FILE, "w") {|f| f.puts info }
 
   # Ensure execute access to the startup file.
+  puts "--- Setting execution privilege  App"
   chmod 0755, TMP_OSX_RUBY
+
+  puts "--- Compressing"
+  old_dir = pwd
+  cd OSX_BUILD_DIR
+  package_dir = TMP_OSX_PKG_DIR.sub(OSX_BUILD_DIR, '').sub(/^\//, '')
+  package = "#{package_dir}.tar.bz2"
+  system "tar -jcvf #{package} #{package_dir}"
+  cd old_dir
+
+  mkdir_p RELEASE_FOLDER
+  mv File.join(OSX_BUILD_DIR, package), RELEASE_FOLDER
 end

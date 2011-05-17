@@ -9,7 +9,6 @@ EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media build]
 SOURCE_FOLDER_FILES = FileList[SOURCE_FOLDERS.map {|f| "#{f}/**/*"}]
 EXTRA_SOURCE_FILES = %w[.gitignore Rakefile README.textile Gemfile Gemfile.lock]
-OSX_GEMS = %w[bundler chingu fidgit]
 
 RELEASE_FOLDER = 'pkg'
 RELEASE_FOLDER_BASE = File.join(RELEASE_FOLDER, "#{APP}_v#{RELEASE_VERSION.gsub(/\./, '_')}")

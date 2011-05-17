@@ -6,23 +6,20 @@ require 'logger'
 
 # Gems
 begin
-  require "rubygems"
+  require 'rubygems' unless defined? OSX_EXECUTABLE
 rescue LoadError
 end
 
-require "bundler/setup"
+require 'bundler/setup' unless defined? OSX_EXECUTABLE
 
 require 'chingu'
 require 'texplay'
 require 'fidgit'
 require 'chipmunk'
 
-SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
-
-
 begin
   # If this isn't the exe, allow dropping into a pry session.
-  unless defined? Ocra
+  unless defined? Ocra or defined? OSX_EXECUTABLE
     require 'pry'
     require 'win32console'
   end
@@ -34,6 +31,7 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
+SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
 Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
 
 
@@ -53,7 +51,7 @@ class Game < Window
 
   DEFAULT_SIZE = [768, 480]
 
-  TITLE = "=== Wrath! === Appease the gods or suffer the consequences..."
+  TITLE = "-=- Wrath: Appease or Die! -=- by Spooner -=-"
   attr_reader :pixel, :sprite_scale
 
   def retro_width; width / @sprite_scale; end

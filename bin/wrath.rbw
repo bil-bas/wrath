@@ -4,10 +4,12 @@ begin
   EXTRACT_PATH = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
   ROOT_PATH = if ENV['OCRA_EXECUTABLE']
-    File.dirname(File.expand_path(ENV['OCRA_EXECUTABLE']))
-  else
-    EXTRACT_PATH
-  end
+                File.dirname(File.expand_path(ENV['OCRA_EXECUTABLE']))
+              elsif defined? OSX_EXECUTABLE
+                File.dirname(OSX_EXECUTABLE)
+              else
+                EXTRACT_PATH
+              end
 
   APP_NAME = File.basename(__FILE__).chomp(File.extname(__FILE__))
 
