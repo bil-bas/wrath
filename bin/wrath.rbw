@@ -5,8 +5,8 @@ begin
 
   ROOT_PATH = if ENV['OCRA_EXECUTABLE']
                 File.dirname(File.expand_path(ENV['OCRA_EXECUTABLE']))
-              elsif defined? OSX_EXECUTABLE
-                File.dirname(OSX_EXECUTABLE)
+              elsif defined? OSX_EXECUTABLE_FOLDER
+                File.dirname(OSX_EXECUTABLE_FOLDER)
               else
                 EXTRACT_PATH
               end
@@ -36,7 +36,7 @@ begin
 
   exit_message = Wrath::Game.run unless defined? Ocra
 
-rescue => ex
+rescue Exception => ex
   $stderr.puts "FATAL ERROR - #{ex.class}: #{ex.message}\n#{ex.backtrace.join("\n")}"
   raise ex # Just to make sure that the user sees the error in the CLI/IDE too.
 ensure

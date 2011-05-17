@@ -3,7 +3,7 @@
 # APP, RELEASE_VERSION and RELEASE_FOLDER_BASE must be defined elsewhere.
 
 GAME_URL = "com.github.spooner.#{APP}"
-OSX_APP = "#{APP}.app"
+OSX_APP = "#{APP.capitalize}.app"
 
 OSX_GEMS = %w[chingu fidgit]
 
@@ -55,8 +55,12 @@ task osx_app: :readme do
   OSX_GEMS.each do |gem|
     gem_path = File.join(%x[bundle show #{gem}].chomp, 'lib', '.')
     cp_r gem_path, TMP_OSX_GEM_DIR
+
+    # Fidgit reads a file outside of /lib, which is both evil and not supported by the .app!
     if gem == "fidgit"
-      cp_r File.expand_path(File.join(gem_path, '..', 'config')), File.dirname(TMP_OSX_GEM_DIR)
+      ["config", "media"].each do |folder|
+        cp_r File.expand_path(File.join(gem_path, '..', folder)), File.dirname(TMP_OSX_GEM_DIR)
+      end
     end
   end
 
@@ -65,7 +69,7 @@ task osx_app: :readme do
   mv RUN_FILE_OLD, RUN_FILE_NEW
   File.open(TMP_OSX_MAIN_FILE, "w") do |file|
     file.puts <<END_TEXT
-OSX_EXECUTABLE = File.dirname(File.dirname(File.dirname(__FILE__)))
+OSX_EXECUTABLE_FOLDER = File.dirname(File.dirname(File.dirname(__FILE__)))
 require_relative File.join('wrath', 'bin', '#{File.basename(RUN_FILE_NEW)}')
 END_TEXT
   end
@@ -84,10 +88,21 @@ END_TEXT
   old_dir = pwd
   cd OSX_BUILD_DIR
   package_dir = TMP_OSX_PKG_DIR.sub(OSX_BUILD_DIR, '').sub(/^\//, '')
-  package = "#{package_dir}.tar.bz2"
-  system "tar -jcvf #{package} #{package_dir}"
+
+  tar_package = "#{package_dir}.tar.bz2"
+  system "tar -jcvf #{tar_package} #{package_dir}"
+
+  seven_z_package = "#{package_dir}.7z"
+  system "7z a #{seven_z_package} #{package_dir}"
+
+  zip_package = "#{package_dir}.zip"
+  system "7z a -tzip #{zip_package} #{package_dir}"
+
   cd old_dir
 
   mkdir_p RELEASE_FOLDER
-  mv File.join(OSX_BUILD_DIR, package), RELEASE_FOLDER
+
+  mv File.join(OSX_BUILD_DIR, tar_package), RELEASE_FOLDER
+  mv File.join(OSX_BUILD_DIR, seven_z_package), RELEASE_FOLDER
+  mv File.join(OSX_BUILD_DIR, zip_package), RELEASE_FOLDER
 end

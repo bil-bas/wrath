@@ -1,1 +1,1 @@
-module Wrath  VERSION = "0.0.2alpha"end
+module Wrath  VERSION = "0.0.3alpha"end

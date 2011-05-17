@@ -49,8 +49,8 @@ def compress(package, folder, option = '')
   cd '..'
 end
 
-desc "Create release packages v#{RELEASE_VERSION}"
-task release: [:release_source, :release_win32, :release_osx]
+desc "Create release packages v#{RELEASE_VERSION} (Not OSX)"
+task release: [:release_source, :release_win32]
 
 desc "Create source releases v#{RELEASE_VERSION}"
 task release_source: [:source_zip, :source_7z]

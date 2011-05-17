@@ -5,6 +5,7 @@ h1. Wrath: Appease or Die! [v0.0.3alpha]
 * "Github project (Spooner/wrath)":https://github.com/Spooner/wrath (including issue tracker and downloads)
 * "Devlog @ libgosu forums":http://www.libgosu.org/cgi-bin/mwf/topic_show.pl?tid=554
 * "Feedback @ TIGSource forums":http://forums.tigsource.com/index.php?topic=19459
+* The game was developed by Spooner (Bil Bas) bil.bagpuss@gmail.com
 
 h2. Description
 
@@ -26,7 +27,9 @@ NOTE: there is no .app file available for the current version of the game!
 
 h3. Source for Linux (or Windows/OS X if not using the executable)
 
-* Ruby 1.9.2
+If using OS X 10.6, use the executable version (see above), otherwise you will need:
+
+* Ruby 1.9.2 (Install via package manager or rvm)
 ** Gosu gem 0.7.29 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux or "OS X":https://github.com/jlnr/gosu/wiki/Getting-Started-on-OS-X)
 ** Chingu gem 0.9rc4
 ** Chipmunk gem 5.2.2.0
@@ -35,7 +38,7 @@ h3. Source for Linux (or Windows/OS X if not using the executable)
 
 Both Gosu and Chipmunk _must_ be that exact version (not newer or older), or the game may not work.
 
-h4. Using Bundler to install gems (strongly recommended)
+h4. Using Bundler to install gems
 
 In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to automatically install the correct gem versions:
 
@@ -92,6 +95,7 @@ Many thanks to:
 * Spiderspit, SiliconEidolon, Ippa, Myx, Spaz and Banisterfiend for alpha play-testing and suggestions.
 * Members of TIGSource who gave feedback in the the "Wrath topic":http://forums.tigsource.com/index.php?topic=19459.msg557507.
 * Ippa for code snippets I stole; I mean, was given :)
+* jlnr for making the OS X executable package (and putting up with helping me build it on Linux!).
 
 h2. Third party assets used
 
