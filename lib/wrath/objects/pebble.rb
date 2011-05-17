@@ -3,6 +3,7 @@ class Pebble < Wrath::Particle
   def initialize(options = {})
     options = {
       animation: "pebble_2x2.png",
+      elasticity: 0.2,
     }.merge! options
 
     super options
