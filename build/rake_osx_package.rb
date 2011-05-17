@@ -61,8 +61,8 @@ task osx_app: :readme do
   mv RUN_FILE_OLD, RUN_FILE_NEW
   File.open(TMP_OSX_MAIN_FILE, "w") do |file|
     file.puts <<END_TEXT
-OSX_EXECUTABLE = File.join(File.dirname(File.dirname(File.dirname(__FILE__))), #{OSX_APP})
-require_relative '#{RUN_FILE_NEW.chomp(File.extname(RUN_FILE_NEW))}'
+OSX_EXECUTABLE = File.dirname(File.dirname(File.dirname(__FILE__)))
+require_relative File.join('wrath', 'bin', '#{File.basename(RUN_FILE_NEW)}')
 END_TEXT
   end
 
@@ -70,7 +70,6 @@ END_TEXT
   puts "--- Editing init"
   info = File.read(TMP_OSX_INFO_FILE)
   info.sub!('org.libgosu.UntitledGame', GAME_URL)
-  info.sub!('RubyGosu App', OSX_APP)
   File.open(TMP_OSX_INFO_FILE, "w") {|f| f.puts info }
 
   # Ensure execute access to the startup file.
