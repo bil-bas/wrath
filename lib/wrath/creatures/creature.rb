@@ -30,6 +30,7 @@ class Creature < Container
   THROW_MOVING_SPEED_MULTIPLIER = 3 # Speed things are thrown at, compared to own speed.
   THROW_STATIONARY_SPEED = 1
   THROW_UP_SPEED = 0.5
+  MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
 
   attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing
 
@@ -142,6 +143,13 @@ class Creature < Container
 
       object.y_velocity = y_velocity * THROW_MOVING_SPEED_MULTIPLIER
       object.z_velocity = z_velocity + THROW_UP_SPEED
+
+      # Cap the thrown speed.
+      h_speed = Math::sqrt(object.x_velocity ** 2 + object.y_velocity ** 2)
+      if h_speed > MAX_THROW_SPEED
+        object.x_velocity *= MAX_THROW_SPEED / h_speed
+        object.y_velocity *= MAX_THROW_SPEED / h_speed
+      end
     end
 
     nil
