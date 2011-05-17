@@ -49,11 +49,15 @@ task osx_app: :readme do
   cp README_HTML, TMP_OSX_PKG_DIR
   cp CHANGELOG, TMP_OSX_PKG_DIR
 
+
   # Copy my gems.
   puts "--- Copying gems"
   OSX_GEMS.each do |gem|
     gem_path = File.join(%x[bundle show #{gem}].chomp, 'lib', '.')
     cp_r gem_path, TMP_OSX_GEM_DIR
+    if gem == "fidgit"
+      cp_r File.expand_path(File.join(gem_path, '..', 'config')), File.dirname(TMP_OSX_GEM_DIR)
+    end
   end
 
   # Something for the .app to run -> just a little redirection file.
