@@ -30,7 +30,7 @@ h3. Source for Linux (or Windows/OS X if not using the executable)
 If using OS X 10.6, use the executable version (see above), otherwise you will need:
 
 * Ruby 1.9.2 (Install via package manager or rvm)
-** Gosu gem 0.7.29 (Dependencies: "Linux":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux or "OS X":https://github.com/jlnr/gosu/wiki/Getting-Started-on-OS-X)
+** Gosu gem 0.7.29 (Dependencies: "Linux only":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
 ** Chingu gem 0.9rc4
 ** Chipmunk gem 5.2.2.0
 ** Fidgit gem 0.0.5alpha
