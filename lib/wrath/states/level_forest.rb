@@ -1,5 +1,5 @@
 module Wrath
-  class ForestLevel < Play
+  class LevelForest < Level
     DEFAULT_TILE = Grass
     NUM_GOATS = 5
     NUM_CHICKENS = 2

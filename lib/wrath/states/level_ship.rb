@@ -1,5 +1,5 @@
 module Wrath
-  class ShipLevel < Play
+  class LevelShip < Level
     DEFAULT_TILE = Planking
 
     CHEST_CONTENTS = [Crown, Fire, Rope]

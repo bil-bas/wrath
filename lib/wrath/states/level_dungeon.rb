@@ -1,5 +1,5 @@
 module Wrath
-  class DungeonLevel < Play
+  class LevelDungeon < Level
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 

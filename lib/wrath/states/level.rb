@@ -1,5 +1,5 @@
 module Wrath
-class Play < GameState
+class Level < GameState
   extend Forwardable
 
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
@@ -110,7 +110,7 @@ class Play < GameState
 
       Wrath::constants.each do |const_name|
         const = Wrath.const_get const_name
-        if const != Play and const.is_a? Class and const.ancestors.include? Play
+        if const != Level and const.is_a? Class and const.ancestors.include? Level
           @@levels << const
         end
       end

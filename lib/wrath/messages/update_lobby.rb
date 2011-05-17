@@ -17,7 +17,7 @@ module Wrath
 
           when :level
             level = @data[0]
-            raise "Bad level update data: #{level}" unless level != Play and level.ancestors.include? Play
+            raise "Bad level update data: #{level}" unless level != Level and level.ancestors.include? Level
             state.update_level level
 
           when :ready

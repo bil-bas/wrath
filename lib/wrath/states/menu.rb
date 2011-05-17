@@ -15,7 +15,7 @@ class Menu < Gui
 
     create_background
 
-    priest_sprite_files = Play::PRIEST_SPRITES.values.map {|f| File.join('players', f) }
+    priest_sprite_files = Level::PRIEST_SPRITES.values.map {|f| File.join('players', f) }
     icons = priest_sprite_files.map {|f| ScaledImage.new(SpriteSheet.new(f, 8, 8)[0], $window.sprite_scale * 3) }
 
     pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
