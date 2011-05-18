@@ -70,7 +70,7 @@ task osx_app: :readme do
   File.open(TMP_OSX_MAIN_FILE, "w") do |file|
     file.puts <<END_TEXT
 OSX_EXECUTABLE_FOLDER = File.dirname(File.dirname(File.dirname(__FILE__)))
-require_relative File.join('wrath', 'bin', '#{File.basename(RUN_FILE_NEW)}')
+require_relative File.join('#{APP}', 'bin', '#{File.basename(RUN_FILE_NEW)}')
 END_TEXT
   end
 
