@@ -207,6 +207,10 @@ class Creature < Container
         @state = :walking if [x_velocity, y_velocity] != [0, 0]
       when :walking
         @state = :standing if velocity == [0, 0, 0]
+
+        # Turn if we are walking into a wall. 500 degrees/second.
+        @facing += 0.5 * parent.frame_time if position == @last_position
+        @last_position = position
     end
 
     update_color
