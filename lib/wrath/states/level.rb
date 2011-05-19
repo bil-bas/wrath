@@ -249,7 +249,7 @@ class Level < GameState
 
     # Player 1.
     player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
-                            animation: @priest_files[0])
+                            factor_x: 1, animation: @priest_files[0])
     players[0].avatar = player1
 
     # Player 2.

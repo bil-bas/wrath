@@ -10,6 +10,8 @@ class BaseObject < GameObject
   TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.
 
   @@next_object_id = 0
+  @@animation_cache = {}
+  @@default_images = {}
 
   attr_reader :frames, :elasticity, :favor
   attr_writer :local
@@ -51,6 +53,8 @@ class BaseObject < GameObject
   def velocity; [@x_velocity, @y_velocity, @z_velocity]; end
   def velocity=(vector); @x_velocity, @y_velocity, @z_velocity = vector; end
 
+  def self.default_image; @@default_images[self]; end
+
   public
   def initialize(options = {})
     options = {
@@ -82,12 +86,13 @@ class BaseObject < GameObject
       width, height = @frames[0].width, @frames[0].height
     else
       # Cache animations to stop loading them ENDLESSLY!
-      @@animation_cache ||= {}
       @@animation_cache[options[:animation]] ||= Animation.new(file: File.join(media_folder, options[:animation]))
       @frames = @@animation_cache[options[:animation]].dup # Duplicate structure, not images.
       options[:animation] =~ /(\d+)x(\d+)/
       width, height = $1.to_i, $2.to_i
     end
+
+    @@default_images[self.class] = @frames[0]
 
     @frames.delay = 0 # Don't animate by default.
 
