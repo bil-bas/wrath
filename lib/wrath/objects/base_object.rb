@@ -13,7 +13,7 @@ class BaseObject < GameObject
   @@animation_cache = {}
   @@default_images = {}
 
-  attr_reader :frames, :elasticity, :favor
+  attr_reader :frames, :elasticity
   attr_writer :local
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
 
@@ -32,6 +32,8 @@ class BaseObject < GameObject
   def controlled_by_player?; false; end
   def networked?; not @id.nil?; end
   def media_folder; 'objects'; end
+  def base_favor; @favor; end
+  def favor; parent and parent.god ? parent.god.favor_for(self) : @favor; end
 
   # Should #destroy be propagated over the network?
   def network_destroy?; @id and parent.host?; end

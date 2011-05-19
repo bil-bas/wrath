@@ -5,7 +5,7 @@ class Knight < Humanoid
 
   def initialize(options = {})
     options = {
-      favor: 30,
+      favor: 12,
       health: 40,
       elasticity: 0.1,
       encumbrance: 0.5,

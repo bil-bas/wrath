@@ -3,7 +3,7 @@ module Wrath
 class Virgin < Humanoid
   def initialize(options = {})
     options = {
-      favor: 40,
+      favor: 15,
       health: 30,
       encumbrance: 0.4,
       z_offset: -2,

@@ -3,7 +3,7 @@ module Wrath
 class Goat < Animal
   def initialize(options = {})
     options = {
-      favor: 20,
+      favor: 6,
       health: 20,
       vertical_jump: 0.3,
       horizontal_jump: 0.6,

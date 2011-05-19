@@ -5,7 +5,7 @@ class Bard < Humanoid
   public
   def initialize(options = {})
     options = {
-      favor: 35,
+      favor: 10,
       health: 30,
       encumbrance: 0.4,
       z_offset: -2,

@@ -3,6 +3,8 @@ module Wrath
   class Earthquake < God
     attr_reader :quake_offset
 
+    def loved_objects; [Knight, BlueMeanie, Mimic]; end
+
     def setup
       @quake_offset = 0
     end

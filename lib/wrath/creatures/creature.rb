@@ -33,7 +33,7 @@ class Creature < Container
   THROW_UP_SPEED = 0.5
   MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
 
-  attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing, :strength
+  attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
 
   attr_writer :player, :state, :facing, :strength
   alias_method :carrying?, :full?

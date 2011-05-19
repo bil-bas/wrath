@@ -5,7 +5,7 @@ class Paladin < Knight
   def initialize(options = {})
     options = {
         damage: DAMAGE,
-        favor: 50,
+        favor: 15,
         health: 70,
         animation: "paladin_8x8.png",
     }.merge! options

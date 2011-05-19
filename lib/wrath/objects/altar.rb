@@ -73,7 +73,7 @@ class Altar < StaticObject
     if @blood > 0
       change = frame_time / 20.0
       @blood -= change
-      @player.favor += @sacrifice.favor * change / 100.0
+      @player.favor += parent.god.favor_for(@sacrifice) * change / 100.0
 
       if @blood <= 0
         self.image = @frames[0]

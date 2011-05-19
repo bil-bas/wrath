@@ -14,8 +14,24 @@ module Wrath
     BORDER_WIDTH = 1
     PATIENCE_DURATION = 30 # 30s before first disaster.
 
+    LOVE_MULTIPLIER = 3 # Favour multiplier for loved type.
+
     event :on_disaster_start
     event :on_disaster_end
+
+    def loves=(loves)
+      @loves = loves
+      @loves_object.image = @loves.default_image if @loves
+
+      parent.send_message(Message::GodLoves.new(@loves)) if parent.host?
+      @loves
+    end
+
+    def favor_for(object)
+      favor = object.base_favor
+      favor *= LOVE_MULTIPLIER if (object.class == @loves)
+      favor
+    end
 
     def in_disaster?; @in_disaster; end
     def anger=(value)
@@ -30,6 +46,7 @@ module Wrath
       @anger
     end
 
+    # A player has gained favor, so appeasing the god.
     def give_favor(amount)
       self.anger -= amount * @max_anger / 100.0
     end
@@ -46,7 +63,7 @@ module Wrath
 
       @max_anger = PATIENCE_DURATION # Time before the god goes crazy (game ends).
       @max_safe_anger = @max_anger / 2
-      @anger = 0
+      @anger = @old_anger = 0
 
       @animation_cache ||= {}
       sprite_name = self.class.name.downcase[/[a-z]+$/]
@@ -60,16 +77,31 @@ module Wrath
       @num_disasters = 0
       @in_disaster = false
 
+      # The object that the god really wants!
+      @loves_object = GameObject.new(x: x + (width / 2) + (ANGER_WIDTH - width) / 4, y: y + height - 1,
+                                     zorder: ZOrder::GUI, rotation_center: :bottom_center, factor: 0.7)
+      change_loved
+
       subscribe(:on_disaster_start) { disaster_start }
       subscribe(:on_disaster_end) { disaster_end }
     end
 
+    def change_loved
+      old_loves = @loves
+      @loves = nil
+
+      unless parent.client?
+        after(1000) do
+          self.loves = (loved_objects - [old_loves]).select {|o| o.default_image }.sample
+        end
+      end
+    end
+
     def update
       unless parent.client?
-        old_anger = anger
         self.anger = anger + parent.frame_time / (@in_disaster ?  -250.0 : 1000.0)
-
-        parent.send_message(Message::SetAnger.new(self)) if old_anger != anger and parent.host?
+        parent.send_message(Message::SetAnger.new(self)) if @old_anger != anger and parent.host?
+        @old_anger = anger
       end
 
       @anger_bar.color = @in_disaster ? DISASTER_COLOR : SAFE_COLOR
@@ -92,7 +124,10 @@ module Wrath
       $window.pixel.draw x - @anger_bar.width / 2 - BORDER_WIDTH , y - BORDER_WIDTH, zorder,
                          @anger_bar.width + BORDER_WIDTH * 2, height + @anger_bar.height + BORDER_WIDTH * 3,
                          BACKGROUND_COLOR
+
+      @loves_object.draw if @loves
       @anger_bar.draw
+
       super
     end
 
@@ -102,6 +137,7 @@ module Wrath
     end
 
     def disaster_end
+      change_loved
       @in_disaster = false
     end
 

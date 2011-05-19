@@ -15,7 +15,7 @@ class Crown < DynamicObject
 
   def initialize(options = {})
     options = {
-      favor: 5,
+      favor: 8,
       encumbrance: 0,
       elasticity: 0.2,
       z_offset: -2,

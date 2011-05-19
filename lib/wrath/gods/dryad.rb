@@ -1,6 +1,8 @@
 module Wrath
   # God of the forest.
   class Dryad < God
+    def loved_objects; [Bard, Virgin, Knight, Goat]; end
+
     def disaster_duration; 0; end
 
     def on_disaster_start(sender)

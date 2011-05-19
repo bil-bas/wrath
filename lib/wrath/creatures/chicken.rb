@@ -6,7 +6,7 @@ class Chicken < Animal
   public
   def initialize(options = {})
     options = {
-      favor: 10,
+      favor: 4,
       health: 10,
       vertical_jump: 0.1,
       horizontal_jump: 0.2,

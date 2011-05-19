@@ -1,5 +1,11 @@
 === CHANGELOG ===
 
+v0.0.4alpha (unreleased)
+
+  * Gods love certain sacrifices at any given time, which will net greatly increased favour.
+  * Favour of object currently carried is indicated next to favour bars.
+  * FIXED: Poison/growth status effects are not properly synchronised in network play.
+
 v0.0.3alpha (2011-05-17)
 
   * === Now works on Linux from source (rolled back some libraries for maximum compatibility).

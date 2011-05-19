@@ -15,6 +15,7 @@ class Level < GameState
       Message::Create,
       Message::Destroy,
       Message::EndGame,
+      Message::GodLoves,
       Message::KnockedDown,
       Message::PerformAction,
       Message::RemoveStatus,

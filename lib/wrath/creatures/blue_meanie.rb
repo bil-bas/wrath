@@ -4,7 +4,7 @@ module Wrath
 
     def initialize(options = {})
       options = {
-        favor: 30,
+        favor: 8,
         health: 20,
         walk_interval: 0,
         encumbrance: 0.4,
