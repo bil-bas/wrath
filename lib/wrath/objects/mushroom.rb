@@ -4,7 +4,7 @@ class Mushroom < DynamicObject
 
   def initialize(options = {})
     options = {
-      favor: 1,
+      favor: 2,
       factor: 0.7,
       encumbrance: 0.1,
       elasticity: 0,

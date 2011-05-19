@@ -7,7 +7,7 @@ module Wrath
 
     attr_reader :anger
 
-    BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
+    BACKGROUND_COLOR = Player::BACKGROUND_COLOR
     SAFE_COLOR = Color.rgb(0, 255, 255)
     DISASTER_COLOR = Color.rgb(255, 0, 255)
     ANGER_WIDTH = 30 # Of the bar.
@@ -55,7 +55,7 @@ module Wrath
       self.image = @frames[0]
       @animation_index = nil
 
-      @anger_bar = Bar.new(x: x - ANGER_WIDTH / 2, y: y + image.height, width: ANGER_WIDTH, color: SAFE_COLOR)
+      @anger_bar = Bar.new(x: x - ANGER_WIDTH / 2, y: y + image.height + BORDER_WIDTH, width: ANGER_WIDTH, color: SAFE_COLOR)
 
       @num_disasters = 0
       @in_disaster = false
@@ -90,7 +90,7 @@ module Wrath
 
     def draw
       $window.pixel.draw x - @anger_bar.width / 2 - BORDER_WIDTH , y - BORDER_WIDTH, zorder,
-                         @anger_bar.width + BORDER_WIDTH * 2, height + @anger_bar.height + BORDER_WIDTH * 2,
+                         @anger_bar.width + BORDER_WIDTH * 2, height + @anger_bar.height + BORDER_WIDTH * 3,
                          BACKGROUND_COLOR
       @anger_bar.draw
       super

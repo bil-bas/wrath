@@ -8,7 +8,7 @@ class Player < BasicGameObject
 
   STATUS_ICON_SCALE = 0.5
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
-  BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
+  BACKGROUND_COLOR = Color.rgba(0, 0, 0, 150)
 
   KEYS_CONFIG_FILE = 'keys.yml'
 
@@ -16,7 +16,11 @@ class Player < BasicGameObject
   FAVOR_TO_WIN = 100
 
   HEALTH_BAR_COLOR = Color.rgb(255, 0, 0)
-  FAVOR_BAR_COLOR = Color.rgb(200, 200, 255)
+  FAVOR_BAR_COLOR = Color.rgb(200, 200, 250)
+  carried_color = FAVOR_BAR_COLOR.dup
+  carried_color.alpha = 100
+  CARRIED_FAVOR_BAR_COLOR = carried_color
+
   PADDING = 1
 
   attr_reader :number, :avatar, :favor, :visible
@@ -39,6 +43,7 @@ class Player < BasicGameObject
 
     @health_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING, color: HEALTH_BAR_COLOR)
     @favor_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING + @health_bar.height, color: FAVOR_BAR_COLOR)
+    @carried_favor_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING + @health_bar.height, color: CARRIED_FAVOR_BAR_COLOR)
 
     super(options)
 
@@ -107,8 +112,15 @@ class Player < BasicGameObject
   def update
     super
 
-    if avatar and avatar.parent
-      @health_bar.value = avatar.health.to_f / avatar.max_health
+    if @avatar and @avatar.parent
+      @health_bar.value = @avatar.health.to_f / @avatar.max_health
+
+      @carried_favor_bar.value = @favor_bar.value +
+          if @avatar.empty_handed? or @avatar.contents.controlled_by_player?
+            0
+          else
+            @avatar.contents.favor.to_f / FAVOR_TO_WIN
+          end
 
       move_by_keys if local? and not parent.winner
     end
@@ -177,6 +189,7 @@ class Player < BasicGameObject
       $window.pixel.draw(@gui_pos[0] - portrait.width, @gui_pos[1], ZOrder::GUI,
                          portrait.width + @health_bar.width + PADDING * 2, 8, BACKGROUND_COLOR)
 
+      @carried_favor_bar.draw if @carried_favor_bar.value > 0
       @health_bar.draw
       @favor_bar.draw
 

@@ -5,7 +5,7 @@ class Corpse < DynamicObject
 
   def initialize(options = {})
     options = {
-        favor: 1,
+        favor: 2,
         elasticity: 0,
     }.merge! options
 

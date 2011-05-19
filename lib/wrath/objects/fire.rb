@@ -12,7 +12,7 @@ class Fire < DynamicObject
 
   def initialize(options = {})
     options = {
-      favor: 1,
+      favor: 2,
       encumbrance: -0.5,
       elasticity: 0.2,
       z_offset: -2,

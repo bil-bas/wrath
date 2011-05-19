@@ -8,7 +8,7 @@ class Egg < DynamicObject
 
   def initialize(options = {})
     options = {
-      favor: 1,
+      favor: 2,
       encumbrance: 0,
       elasticity: 0.4,
       factor: 0.7,
