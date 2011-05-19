@@ -11,10 +11,14 @@ class Level < GameState
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
-      Message::Create, Message::Destroy,
+      Message::ApplyStatus,
+      Message::Create,
+      Message::Destroy,
       Message::EndGame,
       Message::KnockedDown,
-      Message::PerformAction, Message::RequestAction,
+      Message::PerformAction,
+      Message::RemoveStatus,
+      Message::RequestAction,
       Message::StandUp,
       Message::Sync,
       Message::SetAnger, Message::SetFavor, Message::SetHealth
@@ -22,6 +26,7 @@ class Level < GameState
 
   # Messages accepted during the setup phase.
   GAME_SETUP_MESSAGES = [
+      Message::ApplyStatus,
       Message::Create,
       Message::EndGame,
       Message::Map,

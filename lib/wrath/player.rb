@@ -6,7 +6,9 @@ class Player < BasicGameObject
   extend Forwardable
   include Helpers::InputClient
 
+  STATUS_ICON_SCALE = 0.5
   STATUS_COLOR = Color.rgba(255, 255, 255, 150)
+  BACKGROUND_COLOR = Color.rgba(0, 0, 0, 100)
 
   KEYS_CONFIG_FILE = 'keys.yml'
 
@@ -15,6 +17,7 @@ class Player < BasicGameObject
 
   HEALTH_BAR_COLOR = Color.rgb(255, 0, 0)
   FAVOR_BAR_COLOR = Color.rgb(200, 200, 255)
+  PADDING = 1
 
   attr_reader :number, :avatar, :favor, :visible
 
@@ -34,8 +37,8 @@ class Player < BasicGameObject
     @font = Font["pixelated.ttf", 32]
     @visible = true
 
-    @health_bar = Bar.create(x: @gui_pos[0], y: @gui_pos[1], color: HEALTH_BAR_COLOR)
-    @favor_bar = Bar.create(x: @gui_pos[0], y: @gui_pos[1] + 3, color: FAVOR_BAR_COLOR)
+    @health_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING, color: HEALTH_BAR_COLOR)
+    @favor_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING + @health_bar.height, color: FAVOR_BAR_COLOR)
 
     super(options)
 
@@ -168,6 +171,27 @@ class Player < BasicGameObject
 
   def draw
     if avatar
+      portrait = avatar.portrait
+
+      # Draw background and bars.
+      $window.pixel.draw(@gui_pos[0] - portrait.width, @gui_pos[1], ZOrder::GUI,
+                         portrait.width + @health_bar.width + PADDING * 2, 8, BACKGROUND_COLOR)
+
+      @health_bar.draw
+      @favor_bar.draw
+
+      # Portrait of avatar.
+      portrait.draw @gui_pos[0] - portrait.width, @gui_pos[1], ZOrder::GUI
+
+      # List of status effects.
+      x = @gui_pos[0] + PADDING
+      @avatar.statuses.each do |status|
+        icon = status.image
+        icon.draw  x, @gui_pos[1] + 5.25, ZOrder::GUI, STATUS_ICON_SCALE, STATUS_ICON_SCALE
+        x += icon.width * STATUS_ICON_SCALE + PADDING
+      end
+
+      # Text message over the top.
       message = if parent.winner
                   if parent.winner == self
                     "Won!"
@@ -179,9 +203,6 @@ class Player < BasicGameObject
                 end
 
       @font.draw_rel message, *@gui_pos, ZOrder::GUI, 0, 0, 0.25, 0.25, STATUS_COLOR
-
-      portrait = avatar.portrait
-      portrait.draw @gui_pos[0] - portrait.width, @gui_pos[1], ZOrder::GUI
     end
   end
 end

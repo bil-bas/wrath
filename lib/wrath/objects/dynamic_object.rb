@@ -3,6 +3,7 @@ module Wrath
   class DynamicObject < BaseObject
     attr_reader :container, :thrown_by, :z_offset
     attr_reader :encumbrance
+    attr_writer :encumbrance
 
     def can_be_dropped?(container); true; end
     def can_be_picked_up?(container); true; end

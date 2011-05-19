@@ -4,6 +4,8 @@ module Wrath
 class Creature < Container
   extend Forwardable
 
+  include HasStatus
+
   trait :timer
 
   ACTION_DISTANCE = 12
@@ -13,7 +15,6 @@ class Creature < Container
 
   WOUND_FLASH_PERIOD = 200
   AFTER_WOUND_FLASH_DURATION = 100
-  POISON_COLOR = Color.rgba(0, 200, 0, 150)
   HURT_COLOR = Color.rgba(255, 0, 0, 150)
 
   WALK_ANIMATION_DELAY = 200
@@ -32,9 +33,9 @@ class Creature < Container
   THROW_UP_SPEED = 0.5
   MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
 
-  attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing
+  attr_reader :state, :speed, :favor, :health, :player, :max_health, :facing, :strength
 
-  attr_writer :player, :state
+  attr_writer :player, :state, :facing, :strength
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
 
@@ -44,13 +45,12 @@ class Creature < Container
   def dead?; @health <= 0; end
   def facing=(angle); @facing = angle % 360; end
   def controlled_by_player?; not @player.nil?; end
-  def poisoned?; @poisoned; end
 
   public
   def initialize(options = {})
     options = {
         health: 10000,
-        poisoned: false,
+        strength: 1.0,
         facing: 0,
     }.merge! options
 
@@ -58,7 +58,7 @@ class Creature < Container
 
     @max_health = @health = options[:health]
     @speed = options[:speed]
-    @poisoned = options[:poisoned]
+    @strength = options[:strength]
     @facing = options[:facing]
 
     @death_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
@@ -131,7 +131,7 @@ class Creature < Container
 
   protected
   def effective_speed
-    contents ? (@speed * (1 - contents.encumbrance)) : @speed
+    contents ? (@speed * ([strength - contents.encumbrance, 1].min)) : @speed
   end
 
   public
@@ -255,29 +255,16 @@ class Creature < Container
 
   protected
   def reset_color
-    if poisoned?
-      @overlay_color = POISON_COLOR
-    else
-      @overlay_color = nil
-    end
+    @overlay_color = nil
   end
 
   public
-  def poison(duration)
-    # TODO: play gulping noise.
-    @poisoned = true
-    reset_color
-    stop_timer(:cure_poison)
-    after(duration, name: :cure_poison) { cure_poison }
-  end
-
   public
   def move(angle)
-    angle += (Math::sin(milliseconds / 150) * 45) if poisoned?
+    angle += status(:poisoned).displacement_angle if poisoned?
     set_body_velocity(angle, effective_speed)
   end
 
-  public
   def on_collision(other)
     collided = super(other)
 
@@ -301,12 +288,6 @@ class Creature < Container
     self.z_velocity = 0.5
 
     knocker.thrown_by << self
-  end
-
-  protected
-  def cure_poison
-    @poisoned = false
-    reset_color
   end
 
   protected

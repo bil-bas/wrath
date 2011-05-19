@@ -19,7 +19,7 @@ class Mushroom < DynamicObject
     case other
       when Creature
         if not thrown_by.include? other and (not inside_container?) and z > ground_level
-          other.poison(POISON_DURATION)
+          other.apply_status(:poisoned, duration: POISON_DURATION)
           destroy
         end
     end
