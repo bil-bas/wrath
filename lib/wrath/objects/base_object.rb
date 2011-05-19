@@ -70,6 +70,11 @@ class BaseObject < GameObject
       shape: :rectangle,
     }.merge! options
 
+    # Face either direction, unless specified.
+    unless options[:factor_x] or options[:factor]
+      options[:factor_x] = rand() < 0.5 ? -1 : 1
+    end
+
     @favor = options[:favor]
 
     if options[:animation].is_a? Animation

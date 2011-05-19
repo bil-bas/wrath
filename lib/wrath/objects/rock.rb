@@ -18,6 +18,8 @@ class Rock < DynamicObject
 
     super options
 
+    self.image = @frames.frames.sample
+
     @death_explosion = Emitter.new(Pebble, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
                                            z_velocity: EXPLOSION_Z_VELOCITY)
   end
