@@ -14,7 +14,7 @@ module Wrath
     BORDER_WIDTH = 1
     PATIENCE_DURATION = 30 # 30s before first disaster.
 
-    LOVE_MULTIPLIER = 3 # Favour multiplier for loved type.
+    LOVE_MULTIPLIER = 2 # Favour multiplier for loved type.
 
     event :on_disaster_start
     event :on_disaster_end

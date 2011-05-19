@@ -4,6 +4,7 @@ v0.0.4alpha (unreleased)
 
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
   * Favour of object currently carried is indicated next to favour bars.
+  * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
   * FIXED: Poison/growth status effects are not properly synchronised in network play.
 
 v0.0.3alpha (2011-05-17)

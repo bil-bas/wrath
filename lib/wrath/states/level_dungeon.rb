@@ -4,6 +4,10 @@ module Wrath
     GOD = Earthquake
 
     CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet, Crown]
+    SPAWNS = {
+        Knight => 5,
+        BlueMeanie => 4,
+    }
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
@@ -16,11 +20,11 @@ module Wrath
       # Mobs.
       4.times { Knight.create }
       2.times { BlueMeanie.create }
+      (1 + rand(3)).times { Mimic.create }
 
       # Inanimate objects.
       8.times { Rock.create }
       (5 + rand(3)).times { Chest.create(contents: CHEST_CONTENTS) }
-      (1 + rand(3)).times { Mimic.create }
       4.times { Fire.create }
       8.times { Mushroom.create }
       1.times { OgreSkull.create }

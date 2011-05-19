@@ -5,6 +5,14 @@ module Wrath
     CHEST_CONTENTS = [TreasureChest, Crown, FlyingCarpet]
     BARREL_CONTENTS = [Mushroom, Chicken, Pirate]
     GOD = Volcano
+    SPAWNS = {
+        Pirate => 3,
+        Amazon => 1,
+        Chicken => 1,
+        Parrot => 4,
+        Monkey => 2,
+        Mosquito => 2,
+    }
 
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]

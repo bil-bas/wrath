@@ -7,7 +7,7 @@ class Level < GameState
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
   DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
   GLOW_WIDTH = 64
-  MIN_DISTANCE_FROM_ALTAR_TO_SPAWN = 32
+  MIN_DISTANCE_FROM_PLAYER_TO_SPAWN = 28
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [
@@ -80,6 +80,7 @@ class Level < GameState
 
     init_physics
 
+    @clear_tiles = []
     @winner = nil
     @objects = []
     @players = []
@@ -98,6 +99,8 @@ class Level < GameState
 
       start_game
     end
+
+    Spawner.create(self.class.const_get(:SPAWNS)) unless client?
 
     @god = self.class.const_get(:GOD).create
 
@@ -139,10 +142,13 @@ class Level < GameState
 
   # Find the next clear spawn position to place a newly created object.
   def next_spawn_position(object)
-    unless @clear_tiles
+    if @clear_tiles.empty?
       @clear_tiles = @map.tiles.flatten
       @clear_tiles.reject! {|tile| tile.y < 20 } # Get rid of top two rows.
-      @clear_tiles.select! {|tile| @altar.distance_to(tile) > MIN_DISTANCE_FROM_ALTAR_TO_SPAWN }
+      # Not too close to either player.
+      @clear_tiles.reject! do |tile|
+        @players.any? {|player| player.avatar.distance_to(tile) < MIN_DISTANCE_FROM_PLAYER_TO_SPAWN }
+      end
       @clear_tiles.shuffle!
     end
 
@@ -153,8 +159,6 @@ class Level < GameState
         @clear_tiles.unshift free_tile
       end
     end
-
-    raise "Ran out of tiles to spawn onto!"
   end
 
   # Start the game, after sending all the init data.

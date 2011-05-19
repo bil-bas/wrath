@@ -6,6 +6,14 @@ module Wrath
     SACK_CONTENTS = [Crown, Chicken, FlyingCarpet]
     GOD = Dryad
 
+    SPAWNS = {
+        Knight => 3,
+        Virgin => 1,
+        Goat => 3,
+        Chicken => 6,
+        Bard => 1,
+    }
+
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
