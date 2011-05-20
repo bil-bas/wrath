@@ -320,9 +320,11 @@ class BaseObject < GameObject
   def sacrificed(actor, altar)
     self.position = [altar.x, altar.y, altar.z + altar.height]
     explode(@sacrifice_particle).each do |particle|
+      angle = rand(360)
+      speed = rand() * @sacrifice_speed
       particle.velocity = [
-          (rand() -0.5) * @sacrifice_speed * 2,
-          (rand() -0.5) * @sacrifice_speed * 2,
+          Math::sin(angle) * speed,
+          Math::cos(angle) * speed,
           rand() * @sacrifice_speed
       ]
     end
