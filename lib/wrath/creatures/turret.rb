@@ -8,6 +8,7 @@ module Wrath
         encumbrance: 0.2,
         z_offset: -2,
         animation: "turret_6x6.png",
+        sacrifice_particle: Spark,
       }.merge! options
 
       super(options)

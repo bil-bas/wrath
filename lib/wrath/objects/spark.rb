@@ -5,7 +5,7 @@ module Wrath
     def on_stopped
       color = SMOKE_COLOR.dup
       color.alpha += rand(50)
-      Smoke.create(x: x, y: y - z, color: color)
+      Smoke.create(parent: parent, x: x, y: y - z, color: color)
       destroy
     end
   end

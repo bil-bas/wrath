@@ -3,7 +3,6 @@ module Wrath
     def initialize(options = {})
       options = {
         favor: 6,
-        factor: 0.7,
         encumbrance: 0.6,
         elasticity: 0.4,
         z_offset: -2,

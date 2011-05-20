@@ -21,11 +21,11 @@ module Wrath
         @quake_offset = intensity / 6
 
         if not parent.client? and rand(100) < ((intensity * parent.frame_time) / 8000)
-          Rock.create(position: spawn_position($window.retro_height))
+          Rock.create(position: spawn_position($window.retro_height), parent: parent)
         end
 
         if rand(100) < @num_disasters * 5
-          Pebble.create(position: spawn_position($window.retro_height))
+          Pebble.create(position: spawn_position($window.retro_height), parent: parent)
         end
       else
         @quake_offset = 0

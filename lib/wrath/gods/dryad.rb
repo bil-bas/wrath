@@ -8,7 +8,7 @@ module Wrath
     def on_disaster_start(sender)
       unless parent.client?
         Tree.all.select(&:can_wake?).sample(4).each do |tree|
-          Ent.create(position: tree.position)
+          Ent.create(position: tree.position, parent: parent)
           tree.destroy
         end
       end

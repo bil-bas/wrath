@@ -8,14 +8,14 @@ module Wrath
     def loved_objects; [Pirate, PirateCaptain, Monkey, Grog, TreasureChest]; end
 
     def on_disaster_start(sender)
-      after(500) { Lightning.create(position: spawn_position(0)) }
+      after(500) { Lightning.create(position: spawn_position(0), parent: parent) }
       schedule_lightning unless parent.client?
     end
 
     def schedule_lightning
       after(1000 + rand(2000)) do
         if in_disaster?
-          Lightning.create(position: spawn_position(0))
+          Lightning.create(position: spawn_position(0), parent: parent)
           schedule_lightning
         end
       end

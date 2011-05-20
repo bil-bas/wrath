@@ -319,7 +319,7 @@ class BaseObject < GameObject
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
     self.position = [altar.x, altar.y, altar.z + altar.height]
-    explode(@sacrifice_particle).each do |particle|
+    explode(@sacrifice_particle, parent).each do |particle|
       angle = rand(360)
       speed = rand() * @sacrifice_speed
       particle.velocity = [
@@ -350,7 +350,7 @@ class BaseObject < GameObject
 
   # Shatter the object into its component pixel fragments.
   public
-  def explode(type)
+  def explode(type, parent)
     no_color = Color.rgb(255, 255, 255)
     fragments = []
 
@@ -367,7 +367,8 @@ class BaseObject < GameObject
       fragments << type.create(x: x,
                   y: self.y,
                   z: z + height - y,
-                  color: effective_color)
+                  color: effective_color,
+                  parent: parent)
     end
 
     fragments

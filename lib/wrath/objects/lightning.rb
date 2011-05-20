@@ -21,7 +21,7 @@ module Wrath
 
       unless parent.client?
         after(100 + rand(200)) do
-          Fire.create(position: position)
+          Fire.create(position: position, parent: parent)
           destroy
         end
       end
