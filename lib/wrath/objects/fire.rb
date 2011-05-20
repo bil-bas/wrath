@@ -18,6 +18,7 @@ class Fire < DynamicObject
       z_offset: -2,
       animation: "fire_8x8.png",
       casts_shadow: false,
+      sacrifice_particle: Spark,
     }.merge! options
 
     super options

@@ -61,7 +61,7 @@ class Altar < StaticObject
     if @sacrifice
       color = GHOST_COLOR.dup
       color.alpha = (@blood * 1.5).to_i
-      @sacrifice.frames[0].draw_rot(x, y - height + (@blood - 100) / 10.0, zorder + y,
+      @sacrifice.frames[0].draw_rot(x, y - height + (@blood - 100) / 5.0, zorder + y,
                                 0, 0.5, 1, @facing, 1, color, :additive)
     end
   end

@@ -55,6 +55,7 @@ class Creature < Container
         health: 10000,
         strength: 1.0,
         facing: 0,
+        sacrifice_particle: BloodDroplet,
     }.merge! options
 
     super options

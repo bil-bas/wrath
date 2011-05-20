@@ -73,6 +73,8 @@ class BaseObject < GameObject
       mass: 1,
       casts_shadow: true,
       collision_type: :object,
+      sacrifice_particle: Droplet,
+      sacrifice_speed: 1.5,
       shape: :rectangle,
     }.merge! options
 
@@ -107,6 +109,8 @@ class BaseObject < GameObject
     @z = options[:z]
     @elasticity = options[:elasticity]
     @casts_shadow = options[:casts_shadow]
+    @sacrifice_particle = options[:sacrifice_particle]
+    @sacrifice_speed = options[:sacrifice_speed]
 
     super(options)
 
@@ -310,10 +314,18 @@ class BaseObject < GameObject
     @y_velocity = offset_y(angle, 1) * force
   end
 
+
   public
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
-    @death_explosion.emit([altar.x, altar.y, altar.z + altar.height + height / 2], thrown_by: self) if @death_explosion
+    self.position = [altar.x, altar.y, altar.z + altar.height]
+    explode(@sacrifice_particle).each do |particle|
+      particle.velocity = [
+          (rand() -0.5) * @sacrifice_speed * 2,
+          (rand() -0.5) * @sacrifice_speed * 2,
+          rand() * @sacrifice_speed
+      ]
+    end
   end
 
   public
@@ -332,6 +344,31 @@ class BaseObject < GameObject
   # Object has bounced off the ground.
   def on_bounced
 
+  end
+
+  # Shatter the object into its component pixel fragments.
+  public
+  def explode(type)
+    no_color = Color.rgb(255, 255, 255)
+    fragments = []
+
+    image.explosion.each do |color, x, y|
+      effective_color = if self.color == no_color
+                          color.dup
+                        else
+                          self.color.dup
+                        end
+
+      # Allow for direction of facing.
+      x = factor_x > 0 ? (self.x - width / 2.0 + x) : (self.x + width / 2.0 - x)
+
+      fragments << type.create(x: x,
+                  y: self.y,
+                  z: z + height - y,
+                  color: effective_color)
+    end
+
+    fragments
   end
 
   public

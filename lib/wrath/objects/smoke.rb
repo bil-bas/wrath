@@ -1,10 +1,12 @@
 module Wrath
 class Smoke < GameObject
+  COLOR = Color.rgba(50, 50, 50, 100)
+
   def initialize(options = {})
     options = {
-      color: Color.rgba(50, 50, 50, 100),
+      color: COLOR.dup,
       factor: 2,
-      image: Image["objects/pixel_1x1.png"],
+      image: $window.pixel,
     }.merge! options
 
     super options

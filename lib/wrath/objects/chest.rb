@@ -35,10 +35,6 @@ class Chest < Container
 
     super options
 
-    @death_explosion = Emitter.new(Splinter, parent, number: EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
-                                           z_velocity: EXPLOSION_Z_VELOCITY)
-
-
     # Ensure our initial state is correct.
     open? ? open : close
   end

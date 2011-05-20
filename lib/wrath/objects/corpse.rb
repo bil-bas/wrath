@@ -7,9 +7,8 @@ class Corpse < DynamicObject
     options = {
         favor: 2,
         elasticity: 0,
+        sacrifice_particle: BloodDroplet,
     }.merge! options
-
-    @death_explosion = options[:emitter]
 
     super(options)
   end

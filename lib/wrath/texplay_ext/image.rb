@@ -20,5 +20,20 @@ module Gosu
 
       @silhouette
     end
+
+    # Array of [colour, x, y] for all solid pixels in the object.
+    def explosion
+      unless @explosion
+        refresh_cache
+        @explosion = []
+        each do |color, x, y|
+          if color[3] > 0.1
+            @explosion << [Color.from_texplay(color), x, y]
+          end
+        end
+      end
+
+      @explosion
+    end
   end
 end

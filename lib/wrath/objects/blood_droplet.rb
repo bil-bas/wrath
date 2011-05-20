@@ -4,8 +4,9 @@ class BloodDroplet < Droplet
 
   def initialize(options = {})
     options = {
-      color: COLOR,
     }.merge! options
+
+    options[:color] = COLOR.dup
 
     super options
   end
