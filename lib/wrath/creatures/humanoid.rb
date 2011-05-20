@@ -60,7 +60,7 @@ module Wrath
         end
     end
 
-    def on_wounded
+    def on_wounded(sender, damage)
       # Try to move away from pain.
       if timer_exists? :walk
         stop_timer(:walk)

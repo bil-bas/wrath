@@ -4,7 +4,10 @@ module Wrath
 class Creature < Container
   extend Forwardable
 
+  include Fidgit::Event
   include HasStatus
+
+  event :on_wounded
 
   trait :timer
 
@@ -117,7 +120,7 @@ class Creature < Container
     die! if @health == 0
 
     if @health < original_health
-      on_wounded
+      publish :on_wounded, original_health - @health
     end
 
     @health
