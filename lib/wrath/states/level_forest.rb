@@ -17,6 +17,9 @@ module Wrath
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
+    STANDING_STONES_RADIUS = 18
+    NUM_STANDING_STONES = 5
+
     def self.to_s; "Forest of Even More Doom"; end
 
     def create_objects
@@ -48,6 +51,14 @@ module Wrath
           x += 6 + rand(6)
         end
       end
+
+
+      # Standing stones.
+      (-180...180).step(360 / NUM_STANDING_STONES) do |angle|
+        angle = angle.degrees_to_radians
+        Boulder.create(x: altar.x + Math::sin(angle) * STANDING_STONES_RADIUS,
+                       y: altar.y + Math::cos(angle) * STANDING_STONES_RADIUS, factor_x: 0.7)
+      end
     end
 
     def random_tiles
@@ -65,9 +76,9 @@ module Wrath
         end
       end
 
-      # Put Earth under the altar.
-      ((num_rows / 2)..(num_rows / 2 + 2)).each do |y|
-        ((num_columns / 2 - 2)..(num_columns / 2 + 1)).each do |x|
+      # Put Earth under the altar and standing stones.
+      ((num_rows / 2 - 1)..(num_rows / 2 + 3)).each do |y|
+        ((num_columns / 2 - 3)..(num_columns / 2 + 2)).each do |x|
           grid[y][x] = Earth
         end
       end
