@@ -55,7 +55,7 @@ class Game < Window
 
   SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.
   STATISTICS_CONFIG_FILE = 'statistics.yml'
-  CONTROLS_CONFIG_FILE = 'keys.yml'
+  CONTROLS_CONFIG_FILE = 'controls.yml'
 
   TITLE = "-=- Wrath: Appease or Die! -=- by Spooner -=-"
 

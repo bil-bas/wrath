@@ -81,7 +81,7 @@ The host will need to ensure that the port (which can be configured) is open in 
 
 Host controls the left-hand priest. Client controls the right-hand priest.
 
-* Player controls: Arrow keys + Space
+* Player controls: WASD + Space
 
 h3. User settings
 

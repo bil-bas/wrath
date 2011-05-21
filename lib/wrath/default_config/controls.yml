@@ -1,21 +1,21 @@
 ---
-:local_player_1:
+:offline_player_1:
   :left: :a
   :right: :d
   :up: :w
   :down: :s
   :action: :space
 
-:local_player_2:
+:offline_player_2:
   :left: :left
   :right: :right
   :up: :up
   :down: :down
   :action: :right_shift
 
-:network_player:
-  :left: :left
-  :right: :right
-  :up: :up
-  :down: :down
+:online_player:
+  :left: :a
+  :right: :d
+  :up: :w
+  :down: :s
   :action: :space

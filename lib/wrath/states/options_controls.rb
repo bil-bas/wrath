@@ -7,7 +7,7 @@ module Wrath
         local_player_2:
             { title: "Player 2", tip: "Controls for player 2 (right side) when sharing the keyboard" },
         network_player:
-            { title: "Network player", tip: "Controls for the local player in a network game" },
+            { title: "Online player", tip: "Controls for the player in a network game" },
     }
 
     public
