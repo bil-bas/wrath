@@ -12,7 +12,7 @@ class Priest < Humanoid
 
   @@sprites = {} # Cache of sprite images (first sprite on sheet).
 
-  def self.sprite(name)
+  def self.icon(name)
     @@sprites[name] = SpriteSheet.new(animation_file(name), 8, 8)[0]
   end
 

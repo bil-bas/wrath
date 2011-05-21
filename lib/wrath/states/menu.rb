@@ -16,7 +16,7 @@ class Menu < Gui
 
     create_background
 
-    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.sprite(name), $window.sprite_scale * 3) }
+    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), $window.sprite_scale * 3) }
 
     pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
       pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do

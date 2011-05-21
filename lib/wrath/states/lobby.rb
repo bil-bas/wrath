@@ -84,9 +84,9 @@ module Wrath
       label "Level"
 
       pack :horizontal, spacing: 0 do
-        @level_picker = combo_box value: Level.levels[0], width: $window.width * 0.6, padding: 0, enabled: (not client?) do
+        @level_picker = combo_box value: Level.levels[0], width: $window.width * 0.6, enabled: (not client?) do
           Level.levels.each do |level|
-            item(level.to_s, level)
+            item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale))
           end
 
           subscribe :changed do |sender, level|
@@ -94,8 +94,12 @@ module Wrath
           end
         end
 
-        label "", icon: Image["combo_arrow.png"], padding: 0
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.5), padding: 0
       end
+
+      # Do this afterwards, to force :changed event.
+      @level_picker.value = Level::Forest
+      @level_picker.value = Level::Cave
     end
 
     protected
@@ -115,7 +119,7 @@ module Wrath
     def player_row(player_name, player_number)
       unless @priest_sprites
         @priest_sprites = Priest::NAMES.map do |name|
-          ScaledImage.new(Priest.sprite(name), $window.sprite_scale)
+          ScaledImage.new(Priest.icon(name), $window.sprite_scale)
         end
 
         @player_sprite_combos = {}
@@ -172,12 +176,12 @@ module Wrath
     protected
     # Enables and disables all the possible priest sprites, based on what is available.
     def enable_priest_options
-      @player_sprite_combos.values.each do |combo|
-        @used_priests = @player_sprite_combos.values.map {|c| c.value }
+      # TODO: Bit of a fudge to prevent this breaking because there aren't two combos.
+      return unless @player_sprite_combos.size == 2
 
-        combo.each do |item|
-          item.enabled = (not @used_priests.include?(item.value))
-        end
+      @player_sprite_combos.each_value do |this_combo|
+        other_combo = (@player_sprite_combos.values - [this_combo]).first
+        this_combo.each {|item| item.enabled = (item.value != other_combo.value) }
       end
     end
 

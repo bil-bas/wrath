@@ -9,12 +9,12 @@ module Wrath
 
       case @type
         when :priest
-          @image = Priest.sprite(@name)
+          @image = Priest.icon(@name)
           @title = Priest.title(@name)
 
         when :level
           level = Level.const_get(@name)
-          @image = level.sprite
+          @image = level.icon
           @title = level.to_s
 
         else

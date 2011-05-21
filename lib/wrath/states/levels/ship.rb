@@ -17,7 +17,7 @@ class Level
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
 
-    def self.to_s; "Ship of Doomed Fools"; end
+    def self.to_s; "4. Ship of Doomed Fools"; end
 
     def create_objects
       super(PLAYER_SPAWNS)
