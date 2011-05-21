@@ -95,7 +95,7 @@ class Game < Window
     @last_time = milliseconds
     @potential_fps = 0
 
-    @pixel = Image["objects/pixel_1x1.png"] # Used to draw with.
+    @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
 
     @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
     push_game_state Menu
