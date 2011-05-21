@@ -45,21 +45,6 @@
 # Number of times played each level.
 # ---------------------------------------
 -
-  :name: :played_cave
-  :title: Spelunker
-  :description: Played the Cave level.
-  :statistics:
-    - [:levels, :Cave, :played]
-  :required: 1
-  :unlocks:
-    -
-      :type: :level
-      :name: :Forest
-    -
-      :type: :priest
-      :name: :shaman
-
--
   :name: :played_forest
   :title: Forester
   :description: Played the Forest level.
@@ -69,10 +54,25 @@
   :unlocks:
     -
       :type: :level
-      :name: :Ship
+      :name: :Cave
     -
       :type: :priest
       :name: :druidess
+
+-
+  :name: :played_cave
+  :title: Spelunker
+  :description: Played the Cave level.
+  :statistics:
+    - [:levels, :Cave, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: :level
+      :name: :Ship
+    -
+      :type: :priest
+      :name: :shaman
 
 -
   :name: :played_ship

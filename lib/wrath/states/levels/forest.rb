@@ -21,7 +21,7 @@ class Level
     STANDING_STONES_RADIUS = 18
     NUM_STANDING_STONES = 5
 
-    def self.to_s; "2. Forest of Even More Doom"; end
+    def self.to_s; "1. Forest of Doom"; end
 
     def create_objects
       super(PLAYER_SPAWNS)
