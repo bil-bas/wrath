@@ -114,8 +114,8 @@ module Wrath
     protected
     def player_row(player_name, player_number)
       unless @priest_sprites
-        @priest_sprites = Level::PRIEST_SPRITES.values.map do |file|
-          ScaledImage.new(SpriteSheet.new(File.join('players', file), 8, 8)[0], $window.sprite_scale)
+        @priest_sprites = Priest::NAMES.map do |name|
+          ScaledImage.new(Priest.sprite(name), $window.sprite_scale)
         end
 
         @player_sprite_combos = {}
@@ -125,7 +125,7 @@ module Wrath
       pack :horizontal, spacing: 0, padding: 0 do
         @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
           @priest_sprites.each_with_index do |sprite, i|
-            item Level::PRIEST_NAMES[i].capitalize, i, icon: sprite
+            item Priest.title(Priest::NAMES[i]), i, icon: sprite
           end
 
           subscribe :changed do |sender, priest_index|
@@ -158,8 +158,8 @@ module Wrath
         @ready_button.value = false
       end
 
-      priest_files = @used_priests.map {|i| Level::PRIEST_SPRITES[Level::PRIEST_NAMES[i]] }
-      push_game_state level.new(@network, @player_names, priest_files)
+      priest_names = @used_priests.map {|i| Priest::NAMES[i] }
+      push_game_state level.new(@network, @player_names, priest_names)
     end
 
     public

@@ -23,15 +23,17 @@ class Player < BasicGameObject
 
   PADDING = 1
 
-  attr_reader :number, :avatar, :favor, :visible
+  attr_reader :number, :avatar, :favor, :visible, :priest_name
 
   def local?; @local; end
   def remote?; not @local; end
 
-  def initialize(number, local, options = {})
+  def initialize(number, local, priest_name, options = {})
     options = {
         favor: INITIAL_FAVOR,
     }.merge! options
+
+    @priest_name = priest_name
 
     @favor = options[:favor]
 

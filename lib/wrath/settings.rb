@@ -34,7 +34,7 @@ module Wrath
     # @example
     #    left = settings[:keys, :player1, :left]
     def [](*keys)
-      group = find_group(*keys[0...-1])
+      group = find_group(*keys[0...-1], false)
 
       value = group[keys.last]
 
@@ -48,7 +48,7 @@ module Wrath
     public
     # Get a list of keys for a given group.
     def keys(*keys)
-      group = find_group(*keys)
+      group = find_group(*keys, false)
 
       unless group.is_a? Hash
         raise "Tried to get keys from data entry, '#{keys.join('/')}', rather than a key group, in settings file"
@@ -69,7 +69,7 @@ module Wrath
     # @example
     #    settings[:keys, :player1, :left] = :a
     def []=(*keys, value)
-      group = find_group(*keys[0...-1])
+      group = find_group(*keys[0...-1], true)
 
       if group[keys.last].is_a? Hash
         raise "Tried to overwrite group, '#{keys.join('/')}', in settings file"
@@ -84,11 +84,18 @@ module Wrath
 
     protected
     # Gets a group (hash) from the settings file, creating any hashes as necessary.
-    def find_group(*keys)
+    def find_group(*keys, writing)
       group = @settings
 
       keys.each do |key|
-        group[key] = {} unless group.has_key? key
+        unless group.has_key? key
+          if writing
+            group[key] = {}
+          else
+            return {}
+          end
+        end
+
         group = group[key]
         raise "Trying to find a group that isn't a hash, '#{keys.join('/')}'" unless group.is_a? Hash
       end

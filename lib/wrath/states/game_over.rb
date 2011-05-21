@@ -68,11 +68,11 @@ class GameOver < Gui
     end
 
     # Priests played.
-#    priests_played = [players[0].priest_name]
-#    priests_played << players[1].priest_name unless networked?
-#    priests_played.each do |priest|
-#      statistics.increment(:priests, priest.name[/[^:]+$/].to_sym)
-#    end
+    priests_played = [players[0].priest_name]
+    priests_played << players[1].priest_name unless networked?
+    priests_played.each do |priest|
+      statistics.increment(:priests, priest)
+    end
 
     statistics.save
   end

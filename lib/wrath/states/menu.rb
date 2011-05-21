@@ -15,12 +15,11 @@ class Menu < Gui
 
     create_background
 
-    priest_sprite_files = Level::PRIEST_SPRITES.values.map {|f| File.join('players', f) }
-    icons = priest_sprite_files.map {|f| ScaledImage.new(SpriteSheet.new(f, 8, 8)[0], $window.sprite_scale * 3) }
+    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.sprite(name), $window.sprite_scale * 3) }
 
     pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
       pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
-        icons[0..3].each {|icon| label '', icon: icon }
+        icons[0..3].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i]) }
       end
 
       pack :vertical, spacing: 0, padding: 0 do
@@ -40,7 +39,7 @@ class Menu < Gui
       end
 
       pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
-        icons[4..7].each {|icon| label '', icon: icon }
+        icons[4..7].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i + 4]) }
       end
     end
   end

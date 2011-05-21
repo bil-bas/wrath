@@ -4,7 +4,19 @@ class Priest < Humanoid
   MAX_HEALTH = 100
   CHEER_SPRITE = 4
 
-  def media_folder; 'players'; end
+  NAMES = [:druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
+
+  def self.animation_file(name)
+    "players/#{name}_8x8.png"
+  end
+
+  @@sprites = {} # Cache of sprite images (first sprite on sheet).
+
+  def self.sprite(name)
+    @@sprites[name] = SpriteSheet.new(animation_file(name), 8, 8)[0]
+  end
+
+  def self.title(name); name.to_s.capitalize; end
 
   def initialize(options = {})
     options = {
@@ -14,14 +26,15 @@ class Priest < Humanoid
       health: MAX_HEALTH,
     }.merge! options
 
-    @animation_file = options[:animation]
+    @name = options[:name]
+    options[:animation] = Animation.new(file: self.class.animation_file(@name))
 
     super(options)
   end
 
   def recreate_options
     {
-        animation: @animation_file,
+        name: @name,
         local: remote?, # Invert locality of player created on client.
     }.merge! super
   end

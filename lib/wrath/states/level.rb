@@ -35,12 +35,6 @@ class Level < GameState
       Message::StartGame
   ]
 
-  PRIEST_NAMES = %w[druidess monk priestess prophet seer shaman thaumaturge witch]
-  PRIEST_SPRITES = {}
-  PRIEST_NAMES.each do |name|
-    PRIEST_SPRITES[name] = "#{name}_8x8.png"
-  end
-
   # Margin in which nothing should spawn.
   module Margin
     TOP = 20
@@ -60,12 +54,12 @@ class Level < GameState
   def started?; @started; end
 
   # network: Server, Client, nil
-  def initialize(network = nil, player_names, priest_files)
+  def initialize(network = nil, player_names, priest_names)
     BaseObject.reset_object_ids
 
     @@glow = make_glow
 
-    @network, @player_names, @priest_files = network, player_names, priest_files
+    @network, @player_names, @priest_names = network, player_names, priest_names
 
     super()
 
@@ -110,7 +104,7 @@ class Level < GameState
   def replay
     log.info { "Replaying #{self.class}" }
     pop_game_state
-    push_game_state(self.class.new(@network, @player_names, @priest_files))
+    push_game_state(self.class.new(@network, @player_names, @priest_names))
   end
 
   def self.levels
@@ -177,8 +171,8 @@ class Level < GameState
   def create_players
     log.info "Creating players"
 
-    @players << Player.create(0, (not client?))
-    @players << Player.create(1, (not host?))
+    @players << Player.create(0, (not client?), @priest_names[0])
+    @players << Player.create(1, (not host?), @priest_names[1])
   end
 
   def init_physics
@@ -253,13 +247,13 @@ class Level < GameState
     @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
-    player1 = Priest.create(local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
-                            factor_x: 1, animation: @priest_files[0])
+    player1 = Priest.create(name: @priest_names[0], local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
+                            factor_x: 1)
     players[0].avatar = player1
 
     # Player 2.
-    player2 = Priest.create(local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
-                            factor_x: -1, animation: @priest_files[1])
+    player2 = Priest.create(name: @priest_names[1], local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
+                            factor_x: -1)
     players[1].avatar = player2
   end
 
