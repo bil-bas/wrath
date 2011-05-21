@@ -1,9 +1,12 @@
 module Wrath
   class Settings
     include Log
+    include Fidgit::Event
 
     USER_CONFIG_DIR = File.expand_path(File.join('~', '.wrath_spooner', 'config'))
     DEFAULT_CONFIG_DIR = File.join(EXTRACT_PATH, 'lib', 'wrath', 'default_config')
+
+    event :on_changed
 
     attr_writer :auto_save
     def auto_save?; @auto_save; end
@@ -78,6 +81,8 @@ module Wrath
       group[keys.last] = value
 
       save if auto_save?
+
+      publish :on_changed, keys, value
 
       value
     end

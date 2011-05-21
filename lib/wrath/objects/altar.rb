@@ -49,7 +49,14 @@ class Altar < StaticObject
     end
 
     if actor.local?
-      parent.statistics.increment(:sacrifices, lamb.class.name[/[^:]+$/].to_sym)
+      parent.statistics.increment(:sacrifices, :type, lamb.class.name[/[^:]+$/].to_sym)
+
+      type = case lamb
+               when Humanoid      then :humanoids
+               when Animal        then :animals
+               when DynamicObject then :objects
+             end
+      parent.statistics.increment(:sacrifices, :totals, type)
     end
 
     @parent.send_message Message::PerformAction.new(actor, self) if parent.host?

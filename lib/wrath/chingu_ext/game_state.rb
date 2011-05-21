@@ -5,7 +5,7 @@ module Chingu
 
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
-    def_delegators :$window, :settings, :controls, :statistics
+    def_delegators :$window, :settings, :controls, :statistics, :achievement_manager
 
     alias_method :original_initialize, :initialize
     public

@@ -2,11 +2,11 @@ module Wrath
   class OptionsControls < Gui
 
     GROUPS = {
-        local_player_1:
+        offline_player_1:
             { title: "Player 1", tip: "Controls for player 1 (left side) when sharing the keyboard" },
-        local_player_2:
+        offline_player_2:
             { title: "Player 2", tip: "Controls for player 2 (right side) when sharing the keyboard" },
-        network_player:
+        online_player:
             { title: "Online player", tip: "Controls for the player in a network game" },
     }
 

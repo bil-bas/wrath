@@ -27,7 +27,7 @@ class Menu < Gui
         label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
         pack :vertical, spacing: 8, padding_top: 12, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
-          button("Play", options.merge(tip: 'Both players on the same keyboard')) { local_game }
+          button("Play Offline", options.merge(tip: 'Both players on the same keyboard')) { local_game }
           button("Join Game", options.merge(tip: 'Connect to a network game someone else is hosting')) { join_game }
           button("Host Game", options.merge(tip: 'Host a network game that that another player can join')) { host_game }
           button("Instructions", options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }

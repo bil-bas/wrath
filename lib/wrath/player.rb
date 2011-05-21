@@ -50,7 +50,7 @@ class Player < BasicGameObject
     super(options)
 
     if local?
-      group = parent.networked? ? :network_player : :"local_player_#{@number + 1}"
+      group = parent.networked? ? :online_player : :"offline_player_#{@number + 1}"
       @keys_left = parent.controls[group, :left]
       @keys_right = parent.controls[group, :right]
       @keys_up = parent.controls[group, :up]

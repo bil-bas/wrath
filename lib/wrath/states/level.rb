@@ -45,7 +45,7 @@ class Level < GameState
 
   def_delegators :@map, :tile_at_coordinate
 
-  attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner
+  attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at
 
   def networked?; not @network.nil?; end
   def host?; @network.is_a? Server; end
@@ -158,6 +158,7 @@ class Level < GameState
   # Start the game, after sending all the init data.
   def start_game
     @started = true
+    @started_at = Time.now
   end
 
   def send_message(message)

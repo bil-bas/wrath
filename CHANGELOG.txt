@@ -3,7 +3,8 @@
 v0.0.4alpha (unreleased)
 
   * Changed default online player controls to same as player 1. Reset everyone's settings to default.
-  * Started to collect game-play statistics locally (for achievements/unlocks, to be implemented later).
+  * Collects game-play statistics locally (for achievements).
+  * Added achievements and unlocks system.
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
   * Favour of object currently carried is indicated next to favour bars. 
   * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.

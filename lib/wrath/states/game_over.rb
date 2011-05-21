@@ -56,16 +56,24 @@ class GameOver < Gui
   end
 
   def update_stats
+    duration = Time.now - previous_game_state.started_at
+
     # Games played.
     level_completed = previous_game_state.class.name[/[^:]+$/].to_sym
 
-    if (host? and @winner.number == 0) or (client? and @winner.number == 1)
-      statistics.increment(:levels, level_completed, :online_won)
-    elsif (host? and @winner.number == 1) or (client? and @winner.number == 0)
-      statistics.increment(:levels, level_completed, :online_lost)
-    else
-      statistics.increment(:levels, level_completed, :"offline_player_#{@winner.number + 1}_won")
-    end
+    winner_name = if (host? and @winner.number == 0) or (client? and @winner.number == 1)
+                    :local_player
+                  elsif (host? and @winner.number == 1) or (client? and @winner.number == 0)
+                    :remote_player
+                  else
+                    :"offline_player_#{@winner.number + 1}"
+                  end
+
+    statistics.increment(:levels, level_completed, :winner, winner_name)
+
+    statistics.increment(:levels, level_completed, :played)
+
+    statistics[:levels, level_completed, :duration] = (statistics[:levels, level_completed, :duration] || 0) + duration
 
     # Priests played.
     priests_played = [players[0].priest_name]
@@ -74,6 +82,11 @@ class GameOver < Gui
       statistics.increment(:priests, priest)
     end
 
+    group = [:played, networked? ? :online : :offline]
+    statistics.increment(*group, :times)
+    statistics[*group, :duration] = statistics[*group, :duration] + duration
+
+    achievement_manager.save
     statistics.save
   end
 

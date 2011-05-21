@@ -1,0 +1,186 @@
+---
+# ---------------------------------------
+# Number of times played and time played.
+# ---------------------------------------
+-
+  :name: :played_online
+  :title: Online!
+  :description: Played an online game.
+  :statistics:
+    - [:played, :online, :times]
+  :required: 1
+  :unlocks: []
+
+-
+  :name: :played_offline
+  :title: Offline!
+  :description: Played an offline game.
+  :statistics:
+    - [:played, :offline, :times]
+  :required: 1
+  :unlocks: []
+
+-
+  :name: :long_play_1
+  :title: Battler
+  :description: Played for an hour
+  :statistics:
+    - [:played, :offline, :duration]
+    - [:played, :online, :duration]
+  :required: 3600
+  :unlocks: []
+
+-
+  :name: :long_play_2
+  :title: Endless battler
+  :description: Played for 10 hours
+  :statistics:
+    - [:played, :offline, :duration]
+    - [:played, :online, :duration]
+  :required: 36000
+  :unlocks: []
+
+
+# ---------------------------------------
+# Number of times played each level.
+# ---------------------------------------
+-
+  :name: :played_forest
+  :title: Forester
+  :description: Played the Forest level.
+  :statistics:
+    - [:levels, :Forest, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: level
+      :name: :Cave
+    -
+      :type: priest
+      :name: :druidess
+
+-
+  :name: :played_cave
+  :title: Spelunker
+  :description: Played the Cave level.
+  :statistics:
+    - [:levels, :Cave, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: level
+      :name: :Ship
+    -
+      :type: priest
+      :name: :shaman
+
+-
+  :name: :played_ship
+  :title: Pirate wench
+  :description: Played the Ship level.
+  :statistics:
+    - [:levels, :Ship, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: level
+      :name: :Island
+    -
+      :type: priest
+      :name: :priestess
+
+-
+  :name: :played_island
+  :title: Castaway
+  :description: Played the Island level.
+  :requirements:
+    - [:levels, :Island, :played]
+  :statistics: []
+  :required: 1
+  :unlocks:
+    -
+      :type: level
+      :name: :Facility
+    -
+      :type: priest
+      :name: :seer
+
+# ---------------------------------------
+# Sacrifices (general).
+# ---------------------------------------
+-
+  :name: :sacrificed_object
+  :title: Wrecker
+  :description: Sacrificed 100 inanimate objects.
+  :statistics:
+    - [:sacrifices, :totals, :objects]
+  :required: 100
+  :unlocks: []
+
+-
+  :name: :sacrificed_animal
+  :title: Animal sacrifice
+  :description: Sacrificed 10 defencessless animals.
+  :statistics:
+    - [:sacrifices, :totals, :animals]
+  :required: 10
+  :unlocks: []
+
+-
+  :name: :sacrificed_humanoid
+  :title: The sun will come up tomorrow
+  :description: Indulged in human(oid) sacrifice. The Aztecs swore by it!
+  :statistics:
+    - [:sacrifices, :totals, :humanoids]
+  :required: 1
+  :unlocks: []
+
+-
+  :name: :sacrificed_everything
+  :title: High Priest
+  :description: Made 1000 sacrifices
+  :statistics:
+    - [:sacrifices, :totals, :objects]
+    - [:sacrifices, :totals, :animals]
+    - [:sacrifices, :totals, :humanoids]
+  :required: 1000
+  :unlocks: []
+
+# ---------------------------------------
+# Sacrifices (by type).
+# ---------------------------------------
+-
+  :name: :sacrificed_knight
+  :title: Knightmare
+  :description: Sacrificed a brave knight.
+  :statistics:
+    - [:sacrifices, :types, :Knight]
+  :required: 1
+  :unlocks: []
+
+-
+  :name: :sacrificed_monkey
+  :title: Monkey-juggler
+  :description: Sacrificed 10 monkeys.
+  :statistics:
+    - [:sacrifices, :types, :Monkey]
+  :required: 10
+  :unlocks: []
+
+-
+  :name: :sacrificed_test_subject
+  :title: Slave to the AI
+  :description: Sacrificed the innocent test subject.
+  :statistics:
+    - [:sacrifices, :types, :TestSubject]
+  :required: 1
+  :unlocks: []
+
+-
+  :name: :sacrificed_sheep
+  :title: Butcher
+  :description: Sacrificed 100 sheep.
+  :statistics:
+    - [:sacrifices, :types, :Sheep]
+  :required: 100
+  :unlocks: []

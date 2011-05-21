@@ -1,4 +1,13 @@
 ---
+# Numbers of times played.
+:played:
+  :online:
+    :times: 0
+    :duration: 0
+  :offline:
+    :times: 0
+    :duration: 0
+
 # What levels have been playing and win/losses.
 :levels: {}
 

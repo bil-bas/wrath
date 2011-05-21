@@ -56,6 +56,7 @@ class Game < Window
   SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.
   STATISTICS_CONFIG_FILE = 'statistics.yml'
   CONTROLS_CONFIG_FILE = 'controls.yml'
+  ACHIEVEMENTS_CONFIG_FILE = 'achievements.yml'
 
   TITLE = "-=- Wrath: Appease or Die! -=- by Spooner -=-"
 
@@ -72,7 +73,7 @@ class Game < Window
   self.volume = settings[:audio, :master_volume]
   Sample.volume = settings[:audio, :effects_volume]
 
-  attr_reader :pixel, :sprite_scale
+  attr_reader :pixel, :sprite_scale, :achievement_manager
 
   def retro_width; width / @sprite_scale; end
   def retro_height; height / @sprite_scale; end
@@ -96,6 +97,7 @@ class Game < Window
 
     @pixel = Image["objects/pixel_1x1.png"] # Used to draw with.
 
+    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
     push_game_state Menu
   end
 
