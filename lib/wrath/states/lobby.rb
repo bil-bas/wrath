@@ -162,7 +162,10 @@ module Wrath
         @ready_button.value = false
       end
 
-      priest_names = @used_priests.map {|i| Priest::NAMES[i] }
+      priest_names = @player_sprite_combos.values.map do |combo|
+        Priest::NAMES[combo.value]
+      end
+
       push_game_state level.new(@network, @player_names, priest_names)
     end
 
