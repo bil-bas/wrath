@@ -6,7 +6,6 @@ module Wrath
     READY_BACKGROUND_COLOR = Color.rgb(0, 255, 0)
     DISAMBIGUATION_SUFFIX = '_'
 
-    FREE_PRIESTS = [:monk, :prophet, :thaumaturge, :witch] # Priests that are unlocked automatically.
     FREE_LEVELS = [Level::Forest] # Levels that are unlocked automatically.
 
     public
@@ -25,13 +24,6 @@ module Wrath
       @player_names[1] += DISAMBIGUATION_SUFFIX if @player_names[1] == @player_names[0]
 
       @player_number = host? ? 0 : 1
-
-      # Work out which priests can be played.
-      @unlocked_priests = FREE_PRIESTS.dup
-      (Priest::NAMES - FREE_PRIESTS).each do |priest|
-        @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
-        @unlocked_priests.sort!
-      end
 
       on_input(:escape) { game_state_manager.pop_until_game_state Menu }
 
@@ -107,9 +99,28 @@ module Wrath
     public
     def setup
       super
+
+      # Work out which priests can be played.
+      @unlocked_priests = Priest::FREE_UNLOCKS.dup
+      (Priest::NAMES - Priest::FREE_UNLOCKS).each do |priest|
+        @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
+        @unlocked_priests.sort!
+      end
+
       # Ensure that any unlocks are updated.
       update_level_picker
+      2.times {|i| update_priests(i) }
       enable_priest_options
+    end
+
+    def update_priests(combo_index)
+      combo = @player_sprite_combos.values[combo_index]
+      old_value = combo.value
+      combo.clear
+      Priest::NAMES.each do |name|
+        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale)
+      end
+      combo.value = old_value || @unlocked_priests[combo_index]
     end
 
     protected
@@ -153,20 +164,15 @@ module Wrath
       is_local = ((player_number == @player_number) or local?)
       pack :horizontal, spacing: 0, padding: 0 do
         @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
-          Priest::NAMES.each do |name|
-            item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale)
-          end
-
           subscribe :changed do |sender, name|
             enable_priest_options
 
             send_message(Message::UpdateLobby.new(:player, player_number, name)) unless local?
           end
         end
+
         label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.5), padding: 0
       end
-
-      @player_sprite_combos[player_name].value = @unlocked_priests[player_number]
 
       label player_name
 

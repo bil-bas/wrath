@@ -16,12 +16,8 @@ class Menu < Gui
 
     create_background
 
-    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), $window.sprite_scale * 3) }
-
     pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
-      pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
-        icons[0..3].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i]) }
-      end
+      @left_priests = pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
 
       pack :vertical, spacing: 0, padding: 0 do
         heading = label "Wrath", font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
@@ -38,9 +34,7 @@ class Menu < Gui
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
       end
 
-      pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14 do
-        icons[4..7].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i + 4]) }
-      end
+      @right_priests = pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
     end
   end
 
@@ -59,6 +53,18 @@ class Menu < Gui
 
   def setup
     super
+
+    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), $window.sprite_scale * 3) }
+    @left_priests.clear
+    @left_priests.with do
+      icons[0..3].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i]) }
+    end
+
+    @right_priests.clear
+    @right_priests.with do
+       icons[4..7].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i + 4]) }
+    end
+
     log.info "Viewing main menu"
   end
 

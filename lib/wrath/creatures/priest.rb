@@ -5,6 +5,8 @@ class Priest < Humanoid
   CHEER_SPRITE = 4
 
   NAMES = [:druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
+  FREE_UNLOCKS = [:monk, :prophet, :thaumaturge, :witch] # Others must be manually unlocked.
+  LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 
   def self.animation_file(name)
     "players/#{name}_8x8.png"
@@ -13,7 +15,13 @@ class Priest < Humanoid
   @@sprites = {} # Cache of sprite images (first sprite on sheet).
 
   def self.icon(name)
-    @@sprites[name] = SpriteSheet.new(animation_file(name), 8, 8)[0]
+    icon = SpriteSheet.new(animation_file(name), 8, 8)[0]
+    manager = $window.achievement_manager
+    unless FREE_UNLOCKS.include?(name) or (manager and manager.unlocked?(:priest, name))
+      icon = icon.silhouette
+      icon.clear color: LOCKED_COLOR, dest_ignore: :transparent
+    end
+    icon
   end
 
   def self.title(name); name.to_s.capitalize; end
