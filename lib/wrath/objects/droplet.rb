@@ -5,7 +5,7 @@ class Droplet < Wrath::Particle
   def initialize(options = {})
     options = {
       elasticity: 0,
-      animation: "pixel_1x1.png",
+      animation: Animation.new(frames: [$window.pixel]),
     }.merge! options
 
     super options
