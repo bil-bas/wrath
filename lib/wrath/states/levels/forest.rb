@@ -1,5 +1,6 @@
 module Wrath
-  class LevelForest < Level
+class Level
+  class Forest < Level
     DEFAULT_TILE = Grass
     NUM_SHEEP = 5
     NUM_CHICKENS = 2
@@ -65,7 +66,7 @@ module Wrath
       num_columns, num_rows, grid = super(DEFAULT_TILE)
 
       # Add forest floor.
-      num_rows.times {|i| grid[0][i] = grid[1][i] = Forest }
+      num_rows.times {|i| grid[0][i] = grid[1][i] = ForestFloor }
 
       # Add water-features.
       (rand(5) + 1).times do
@@ -86,4 +87,5 @@ module Wrath
       grid
     end
   end
+end
 end

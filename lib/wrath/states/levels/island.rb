@@ -1,5 +1,6 @@
 module Wrath
-  class LevelIsland < Level
+class Level
+  class Island < Level
     DEFAULT_TILE = Sand
 
     CHEST_CONTENTS = [TreasureChest, Crown, FlyingCarpet]
@@ -83,4 +84,5 @@ module Wrath
       grid
     end
   end
+end
 end

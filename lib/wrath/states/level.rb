@@ -111,9 +111,9 @@ class Level < GameState
     unless defined? @@levels
       @@levels = []
 
-      Wrath::constants.each do |const_name|
-        const = Wrath.const_get const_name
-        if const != Level and const.is_a? Class and const.ancestors.include? Level
+      constants.each do |const_name|
+        const = const_get const_name
+        if const.is_a? Class and const.ancestors.include? self
           @@levels << const
         end
       end

@@ -1,4 +1,5 @@
 module Wrath
+class Level
   class LevelFacility < Level
     DEFAULT_TILE = Plastic
 
@@ -36,4 +37,5 @@ module Wrath
       grid
     end
   end
+end
 end

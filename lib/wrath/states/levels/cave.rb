@@ -1,5 +1,6 @@
 module Wrath
-  class LevelDungeon < Level
+class Level
+  class Cave < Level
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 
@@ -12,7 +13,7 @@ module Wrath
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
-    def self.to_s; "Dungeon of Doom"; end
+    def self.to_s; "Cave of Doom"; end
 
     def create_objects
       super(PLAYER_SPAWNS)
@@ -90,4 +91,5 @@ module Wrath
       end
     end
   end
+end
 end

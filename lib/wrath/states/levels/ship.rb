@@ -1,5 +1,6 @@
 module Wrath
-  class LevelShip < Level
+class Level
+  class Ship < Level
     DEFAULT_TILE = Planking
 
     CHEST_CONTENTS = [Crown, Fire, Rope]
@@ -69,4 +70,5 @@ module Wrath
       Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 2.5)
     end
   end
+end
 end
