@@ -4,10 +4,11 @@ class Menu < Gui
     super
 
     add_inputs(
-        p: :local_game,
-        j: :join_game,
-        h: :host_game,
-        e: :close,
+        p: Play,
+        i: Instructions,
+        a: ViewAchievements,
+        o: Options,
+        x: :close,
         escape: :close
     )
 
@@ -25,14 +26,13 @@ class Menu < Gui
       pack :vertical, spacing: 0, padding: 0 do
         heading = label "Wrath", font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
         label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
-        pack :vertical, spacing: 8, padding_top: 12, padding_left: 80 do
+        pack :vertical, spacing: 8, padding_top: 30, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
-          button("Play Offline", options.merge(tip: 'Both players on the same keyboard')) { local_game }
-          button("Join Game", options.merge(tip: 'Connect to a network game someone else is hosting')) { join_game }
-          button("Host Game", options.merge(tip: 'Host a network game that that another player can join')) { host_game }
-          button("Instructions", options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
-          button("Options", options.merge(tip: "View and change game settings")) { push_game_state Options }
-          button("Exit", options) { close }
+          button("(P)lay", options.merge(tip: 'Play the game, on- or off-line')) { push_game_state Play }
+          button("(I)nstructions", options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
+          button("(A)chievements", options.merge(tip: 'Review your achievements')) { push_game_state ViewAchievements }
+          button("(O)ptions", options.merge(tip: "View and change game settings")) { push_game_state Options }
+          button("E(x)it", options) { close }
         end
 
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
@@ -60,18 +60,6 @@ class Menu < Gui
   def setup
     super
     log.info "Viewing main menu"
-  end
-
-  def local_game
-    push_game_state Lobby.new(nil, "Player2",  "Player1")
-  end
-
-  def join_game
-    push_game_state JoinDetails
-  end
-
-  def host_game
-    push_game_state HostDetails
   end
 
   def close
