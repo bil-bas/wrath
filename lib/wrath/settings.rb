@@ -5,8 +5,16 @@ module Wrath
     USER_CONFIG_DIR = File.expand_path(File.join('~', '.wrath_spooner', 'config'))
     DEFAULT_CONFIG_DIR = File.join(EXTRACT_PATH, 'lib', 'wrath', 'default_config')
 
+    attr_writer :auto_save
+    def auto_save?; @auto_save; end
+
     public
-    def initialize(settings_file)
+    def initialize(settings_file, options = {})
+      options = {
+          auto_save: true,
+      }.merge! options
+
+      @auto_save = options[:auto_save]
       @default_file = File.join(DEFAULT_CONFIG_DIR, settings_file)
       @user_file = File.join(USER_CONFIG_DIR, settings_file)
 
@@ -17,7 +25,7 @@ module Wrath
         FileUtils.cp @default_file, @user_file
       end
 
-      load_settings
+      load
     end
 
     public
@@ -26,17 +34,13 @@ module Wrath
     # @example
     #    left = settings[:keys, :player1, :left]
     def [](*keys)
-      value = @settings
+      group = find_group(*keys[0...-1])
 
-      keys.each_with_index do |key, i|
-        unless value.is_a? Hash and value.has_key? key
-          raise "Tried to read non-existent key, '#{keys[0..i].join('/')}', in settings file"
-        end
+      value = group[keys.last]
 
-        value = value[key]
+      if value.is_a? Hash
+        raise "Tried to directly access group, '#{keys.join('/')}', rather than a key, in settings file"
       end
-
-      raise "Tried to directly access group, '#{keys.join('/')}', rather than a key, in settings file" if value.is_a? Hash
 
       value
     end
@@ -44,19 +48,19 @@ module Wrath
     public
     # Get a list of keys for a given group.
     def keys(*keys)
-      value = @settings
+      group = find_group(*keys)
 
-      keys.each_with_index do |key, i|
-        unless value.is_a? Hash and value.has_key? key
-          raise "Tried to read non-existent key, '#{keys[0..i].join('/')}', in settings file"
-        end
-
-        value = value[key]
+      unless group.is_a? Hash
+        raise "Tried to get keys from data entry, '#{keys.join('/')}', rather than a key group, in settings file"
       end
 
-      raise "Tried to get keys from data entry, '#{keys.join('/')}', rather than a key group, in settings file" unless value.is_a? Hash
+      group.keys
+    end
 
-      value.keys
+    public
+    # Increase the value of a given key (+1). Set to 1 if key unset.
+    def increment(*keys)
+      self[*keys] = (self[*keys] || 0) + 1
     end
 
     public
@@ -65,42 +69,48 @@ module Wrath
     # @example
     #    settings[:keys, :player1, :left] = :a
     def []=(*keys, value)
-      hash = @settings
+      group = find_group(*keys[0...-1])
 
-      keys[0...-1].each_with_index do |key, i|
-        unless hash.is_a? Hash and hash.has_key? key
-          raise "Tried to set non-existent key, '#{keys[0..i].join('/')}', in settings file"
-        end
-
-        hash = hash[key]
-      end
-
-      if hash[keys.last].is_a? Hash
+      if group[keys.last].is_a? Hash
         raise "Tried to overwrite group, '#{keys.join('/')}', in settings file"
       end
 
-      hash[keys.last] = value
+      group[keys.last] = value
 
-      save_settings
+      save if auto_save?
 
       value
     end
 
     protected
+    # Gets a group (hash) from the settings file, creating any hashes as necessary.
+    def find_group(*keys)
+      group = @settings
+
+      keys.each do |key|
+        group[key] = {} unless group.has_key? key
+        group = group[key]
+        raise "Trying to find a group that isn't a hash, '#{keys.join('/')}'" unless group.is_a? Hash
+      end
+
+      group
+    end
+
+    protected
     # Loads settings from the user file, using default settings if they are missing.
-    def load_settings
+    def load
       user_settings = YAML::load(File.read(@user_file))
       default_settings = YAML::load(File.read(@default_file))
 
       @settings = default_settings.deep_merge user_settings
-      save_settings
+      save if auto_save?
 
       log.debug { "Loaded settings from '#{@user_file}': #{@settings.inspect}" }
     end
 
-    protected
+    public
     # Saves the settings to the user's version of the file.
-    def save_settings
+    def save
       File.open(@user_file, "w") {|f| f.puts @settings.to_yaml }
     end
   end

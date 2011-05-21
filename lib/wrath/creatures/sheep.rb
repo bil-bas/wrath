@@ -1,6 +1,6 @@
 module Wrath
 
-class Goat < Animal
+class Sheep < Animal
   def initialize(options = {})
     options = {
       favor: 6,
@@ -11,7 +11,7 @@ class Goat < Animal
       jump_delay: 1000,
       encumbrance: 0.2,
       z_offset: -2,
-      animation: "goat_8x8.png",
+      animation: "sheep_8x8.png",
     }.merge! options
 
     super(options)

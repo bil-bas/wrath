@@ -48,6 +48,10 @@ class Altar < StaticObject
         actor.player.favor += lamb.favor
     end
 
+    if actor.local?
+      parent.statistics.increment(:sacrifices, lamb.class.name[/[^:]+$/].to_sym)
+    end
+
     @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
 
     lamb.sacrificed(actor, self)

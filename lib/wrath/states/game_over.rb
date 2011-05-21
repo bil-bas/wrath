@@ -5,9 +5,18 @@ class GameOver < Gui
 
   AVATAR_GLOW = Color.rgba(0, 255, 0, 150)
 
-  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :client?, :tile_at_coordinate, :send_message
+  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :client?, :host?, :tile_at_coordinate,
+                 :send_message, :players
 
-  def accept_message?(message); [Message::Create, Message::Destroy, Message::EndGame, Message::SetHealth, Message::Sync].find {|m| message.is_a? m }; end
+  ACCEPTED_MESSAGES = [
+      Message::Create,
+      Message::Destroy,
+      Message::EndGame,
+      Message::SetHealth,
+      Message::Sync
+  ]
+
+  def accept_message?(message); ACCEPTED_MESSAGES.find {|m| message.is_a? m }; end
 
   def initialize(winner)
     @winner = winner
@@ -46,6 +55,28 @@ class GameOver < Gui
     send_message Message::EndGame.new if networked?
   end
 
+  def update_stats
+    # GAMES PLAYED/WON/LOST
+    level_completed = previous_game_state.class.name[/[^:]+$/].to_sym
+
+    if (host? and @winner.number == 0) or (client? and @winner.number == 1)
+      statistics.increment(:levels, level_completed, :online_won)
+    elsif (host? and @winner.number == 1) or (client? and @winner.number == 0)
+      statistics.increment(:levels, level_completed, :online_lost)
+    else
+      statistics.increment(:levels, level_completed, :offline_played)
+    end
+
+    # Priests played.
+#    priests_played = [players[0].priest_name]
+#    priests_played << players[1].priest_name unless networked?
+#    priests_played.each do |priest|
+#      statistics.increment(:priests, priest.name[/[^:]+$/].to_sym)
+#    end
+
+    statistics.save
+  end
+
   def return_to_lobby
     end_game
     game_state_manager.pop_until_game_state Lobby
@@ -60,6 +91,7 @@ class GameOver < Gui
   def setup
     super
     @play = previous_game_state
+    update_stats
   end
 
   def update

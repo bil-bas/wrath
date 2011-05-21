@@ -1,7 +1,7 @@
 module Wrath
   class LevelForest < Level
     DEFAULT_TILE = Grass
-    NUM_GOATS = 5
+    NUM_SHEEP = 5
     NUM_CHICKENS = 2
     SACK_CONTENTS = [Crown, Chicken, FlyingCarpet]
     GOD = Dryad
@@ -9,7 +9,7 @@ module Wrath
     SPAWNS = {
         Knight => 3,
         Virgin => 1,
-        Goat => 3,
+        Sheep => 3,
         Chicken => 6,
         Bard => 1,
     }
@@ -27,7 +27,7 @@ module Wrath
 
       # Mobs.
       1.times { Virgin.create }
-      NUM_GOATS.times { Goat.create }
+      NUM_SHEEP.times { Sheep.create }
       NUM_CHICKENS.times { Chicken.create }
       1.times { Bard.create }
       2.times { Knight.create }
