@@ -48,13 +48,12 @@ class Player < BasicGameObject
     super(options)
 
     if local?
-      keys_config = Settings.new(KEYS_CONFIG_FILE)
       group = parent.networked? ? :network_player : :"local_player_#{@number + 1}"
-      @keys_left = keys_config[group, :left]
-      @keys_right = keys_config[group, :right]
-      @keys_up = keys_config[group, :up]
-      @keys_down = keys_config[group, :down]
-      @keys_action = keys_config[group, :action]
+      @keys_left = parent.controls[group, :left]
+      @keys_right = parent.controls[group, :right]
+      @keys_up = parent.controls[group, :up]
+      @keys_down = parent.controls[group, :down]
+      @keys_action = parent.controls[group, :action]
 
       on_input(@keys_action, :action)
     end

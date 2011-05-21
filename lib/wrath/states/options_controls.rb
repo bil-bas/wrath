@@ -16,8 +16,6 @@ module Wrath
 
       on_input(:escape) { pop_game_state }
 
-      @controls = Settings.new(Player::KEYS_CONFIG_FILE)
-
       @control_waiting_for_key = nil
 
       init_key_codes
@@ -61,7 +59,7 @@ module Wrath
             if symbols = Chingu::Input::CONSTANT_TO_SYMBOL[code]
               symbol = symbols.first
               symbol = :space if symbol == :' '
-              @controls[@tabs_group.value, @control_waiting_for_key] = symbol
+              controls[@tabs_group.value, @control_waiting_for_key] = symbol
             end
 
             @control_waiting_for_key = nil
@@ -87,9 +85,9 @@ module Wrath
       @key_grid.with do
         clear
 
-        @controls.keys(@tabs_group.value).each do |control|
+        controls.keys(@tabs_group.value).each do |control|
           key_label = label control.to_s.capitalize.tr('_', ' ')
-          key_name = @controls[@tabs_group.value, control]
+          key_name = controls[@tabs_group.value, control]
           button(key_name.to_s.tr('_', ' '), width: 400) { choose_key control, key_label }
         end
       end

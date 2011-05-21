@@ -1,6 +1,6 @@
 module Gosu
   class Sample
-    @@global_volume = GameState.settings[:audio, :effects_volume]
+    @@global_volume = 1.0
 
     def self.volume; @@global_volume; end
     def self.volume=(value); @@global_volume = value; end

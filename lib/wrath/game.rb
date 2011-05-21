@@ -35,6 +35,8 @@ SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
 Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
 
 
+
+
 module Wrath
 module ZOrder
   BACKGROUND = -Float::INFINITY
@@ -51,7 +53,25 @@ class Game < Window
 
   DEFAULT_SIZE = [768, 480]
 
+  SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.
+  STATISTICS_CONFIG_FILE = 'statistics.yml'
+  CONTROLS_CONFIG_FILE = 'keys.yml'
+
   TITLE = "-=- Wrath: Appease or Die! -=- by Spooner -=-"
+
+  @@settings = Settings.new(SETTINGS_CONFIG_FILE)
+  @@controls = Settings.new(CONTROLS_CONFIG_FILE)
+  @@statistics = Settings.new(STATISTICS_CONFIG_FILE, auto_save: false)
+  def self.settings; @@settings; end
+  def self.controls; @@controls; end
+  def self.statistics; @@statistics; end
+  def settings; self.class.settings; end
+  def controls; self.class.controls; end
+  def statistics; self.class.statistics; end
+
+  self.volume = settings[:audio, :master_volume]
+  Sample.volume = settings[:audio, :effects_volume]
+
   attr_reader :pixel, :sprite_scale
 
   def retro_width; width / @sprite_scale; end
@@ -112,7 +132,7 @@ class Game < Window
   end
 
   def self.run
-    full_screen = Wrath::Settings.new(Chingu::GameState::SETTINGS_CONFIG_FILE)[:video, :full_screen]
+    full_screen = settings[:video, :full_screen]
     size = (full_screen ? [screen_width, screen_height] : DEFAULT_SIZE)
     new(*size, full_screen).show
   end
