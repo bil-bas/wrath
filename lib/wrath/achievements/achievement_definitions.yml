@@ -53,10 +53,10 @@
   :required: 1
   :unlocks:
     -
-      :type: level
+      :type: :level
       :name: :Cave
     -
-      :type: priest
+      :type: :priest
       :name: :druidess
 
 -
@@ -68,10 +68,10 @@
   :required: 1
   :unlocks:
     -
-      :type: level
+      :type: :level
       :name: :Ship
     -
-      :type: priest
+      :type: :priest
       :name: :shaman
 
 -
@@ -83,27 +83,35 @@
   :required: 1
   :unlocks:
     -
-      :type: level
+      :type: :level
       :name: :Island
     -
-      :type: priest
+      :type: :priest
       :name: :priestess
 
 -
   :name: :played_island
   :title: Castaway
   :description: Played the Island level.
-  :requirements:
+  :statistics:
     - [:levels, :Island, :played]
-  :statistics: []
   :required: 1
   :unlocks:
     -
-      :type: level
+      :type: :level
       :name: :Facility
     -
-      :type: priest
+      :type: :priest
       :name: :seer
+
+-
+  :name: :played_facility
+  :title: Irradiated
+  :description: Played the Facility level.
+  :statistics:
+    - [:levels, :Facility, :played]
+  :required: 1
+  :unlocks: []
 
 # ---------------------------------------
 # Sacrifices (general).
@@ -154,7 +162,7 @@
   :title: Knightmare
   :description: Sacrificed a brave knight.
   :statistics:
-    - [:sacrifices, :types, :Knight]
+    - [:sacrifices, :type, :Knight]
   :required: 1
   :unlocks: []
 
@@ -163,7 +171,7 @@
   :title: Monkey-juggler
   :description: Sacrificed 10 monkeys.
   :statistics:
-    - [:sacrifices, :types, :Monkey]
+    - [:sacrifices, :type, :Monkey]
   :required: 10
   :unlocks: []
 
@@ -172,7 +180,7 @@
   :title: Slave to the AI
   :description: Sacrificed the innocent test subject.
   :statistics:
-    - [:sacrifices, :types, :TestSubject]
+    - [:sacrifices, :type, :TestSubject]
   :required: 1
   :unlocks: []
 
@@ -181,6 +189,6 @@
   :title: Butcher
   :description: Sacrificed 100 sheep.
   :statistics:
-    - [:sacrifices, :types, :Sheep]
+    - [:sacrifices, :type, :Sheep]
   :required: 100
   :unlocks: []

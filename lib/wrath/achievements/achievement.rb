@@ -5,24 +5,25 @@ module Wrath
 
     event :on_achieved
 
-    attr_reader :name, :unlocks
+    attr_reader :name, :description, :title, :unlocks, :total, :progress, :required
 
-    def achieved?; @achieved; end
+    def complete?; @complete; end
 
     public
     def initialize(definition, manager, already_done)
-      @achieved = already_done
+      @complete = already_done
       @manager = manager
 
       @name = definition[:name]
+      @title = definition[:title]
       @description = definition[:description]
       @statistics = definition[:statistics]
       @required = definition[:required]
       @unlocks = definition[:unlocks].map {|definition| Unlock.new(definition) }
 
-      check_statistics
+      calculate_progress
 
-      unless achieved?
+      unless complete?
         @statistics.each do |statistic|
           @manager.add_monitor(self, statistic)
         end
@@ -37,16 +38,24 @@ module Wrath
     end
 
     protected
-    def check_statistics
-      return if achieved?
-
-      total = 0
+    def calculate_progress
+      @total = 0
       @statistics.each do |statistic_keys|
-        total += @manager.statistics[*statistic_keys] || 0
+        @total += @manager.statistics[*statistic_keys] || 0
       end
 
-      if total >= @required
-        @achieved = true
+      # If already complete, it stays that way.
+      @complete ||= (@total >= @required)
+      @progress = @complete ? 1.0 : (@total.to_f / @required)
+
+      nil
+    end
+
+    protected
+    def check_statistics
+      return if complete?
+      calculate_progress
+      if complete?
         @statistics.each do |statistic|
           @manager.remove_monitor(self, statistic)
         end

@@ -1,6 +1,6 @@
 module Wrath
 class Level
-  class LevelFacility < Level
+  class Facility < Level
     DEFAULT_TILE = Plastic
 
     GOD = Ai

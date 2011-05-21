@@ -53,6 +53,8 @@ class Level < GameState
   def local?; @network.nil?; end
   def started?; @started; end
 
+  def self.sprite; Image["levels/#{name[/[^:]+$/].downcase}.png"]; end
+
   # network: Server, Client, nil
   def initialize(network = nil, player_names, priest_names)
     BaseObject.reset_object_ids

@@ -7,7 +7,7 @@ module Wrath
     event :on_achievement_gained # [sender, achievement]
     event :on_unlock_gained # [sender, unlock]
 
-    attr_reader :statistics, :unlocks
+    attr_reader :statistics, :achievements, :unlocks
 
     public
     def initialize(achievements_settings_file, statistics)

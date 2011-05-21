@@ -56,7 +56,7 @@ class GameOver < Gui
   end
 
   def update_stats
-    duration = Time.now - previous_game_state.started_at
+    duration = (Time.now - previous_game_state.started_at).floor
 
     # Games played.
     level_completed = previous_game_state.class.name[/[^:]+$/].to_sym
