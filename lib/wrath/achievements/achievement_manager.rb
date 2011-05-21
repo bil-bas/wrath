@@ -7,7 +7,7 @@ module Wrath
     event :on_achievement_gained # [sender, achievement]
     event :on_unlock_gained # [sender, unlock]
 
-    attr_reader :statistics, :achievements, :unlocks
+    attr_reader :statistics, :achievements
 
     public
     def initialize(achievements_settings_file, statistics)
@@ -15,7 +15,7 @@ module Wrath
       @statistics = statistics
 
       @achievements = []
-      @unlocks = []
+      @unlocks = {}
 
       @monitors = Hash.new {|hash, key| hash[key] = [] }
 
@@ -46,13 +46,25 @@ module Wrath
     end
 
     public
+    def add_unlock(unlock)
+      search = [unlock.type, unlock.name]
+      raise "repeat unlock, #{unlock}" if @unlocks.has_key? search
+      @unlocks[search] = unlock
+    end
+
+    def unlocked?(type, name)
+      unlock = @unlocks[[type, name]]
+      raise "undefined unlock, #{type.inspect} / #{name.inspect}" unless unlock
+      return unlock.unlocked?
+    end
+
+    public
     def achieve(achievement)
       @achievements_settings[achievement.name, :complete] = true
       @achievements_settings[achievement.name, :date] = Time.now
 
-      @unlocks += achievement.unlocks
-
       publish :on_achievement_gained, achievement
+      achievement.unlocks.each {|unlock| publish :on_unlock_gained, unlock }
 
       nil
     end

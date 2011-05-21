@@ -19,9 +19,12 @@ module Wrath
       @description = definition[:description]
       @statistics = definition[:statistics]
       @required = definition[:required]
-      @unlocks = definition[:unlocks].map {|definition| Unlock.new(definition) }
 
       calculate_progress
+
+      @unlocks = definition[:unlocks].map do |definition|
+        Unlock.new(definition[:type], definition[:name], @manager, unlocked: @complete)
+      end
 
       unless complete?
         @statistics.each do |statistic|
@@ -59,9 +62,13 @@ module Wrath
         @statistics.each do |statistic|
           @manager.remove_monitor(self, statistic)
         end
-        log.info { "Achieved: #{name}" }
+
+        @unlocks.each(&:unlock)
+
         @manager.achieve(self)
         publish :on_achieved
+
+        log.info { "Achieved: #{name}" }
       end
 
       nil

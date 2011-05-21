@@ -10,10 +10,10 @@ module Wrath
       def action(state)
         case @type
           when :player
-            player_number, priest_index = @data
+            player_number, priest_name = @data
             raise "Bad player_number update data: #{player_number}" unless player_number.is_a? Fixnum
-            raise "Bad priest_index update data: #{priest_index}" unless priest_index.is_a? Fixnum
-            state.update_player player_number, priest_index
+            raise "Bad priest_index update data: #{priest_index}" unless Priest::NAMES.include? priest_name
+            state.update_player player_number, priest_name
 
           when :level
             level = @data[0]

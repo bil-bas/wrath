@@ -69,25 +69,10 @@
   :unlocks:
     -
       :type: :level
-      :name: :Ship
-    -
-      :type: :priest
-      :name: :shaman
-
--
-  :name: :played_ship
-  :title: Pirate wench
-  :description: Played the Ship level.
-  :statistics:
-    - [:levels, :Ship, :played]
-  :required: 1
-  :unlocks:
-    -
-      :type: :level
       :name: :Island
     -
       :type: :priest
-      :name: :priestess
+      :name: :shaman
 
 -
   :name: :played_island
@@ -99,10 +84,25 @@
   :unlocks:
     -
       :type: :level
-      :name: :Facility
+      :name: :Ship
     -
       :type: :priest
       :name: :seer
+
+-
+  :name: :played_ship
+  :title: Pirate wench
+  :description: Played the Ship level.
+  :statistics:
+    - [:levels, :Ship, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: :level
+      :name: :Facility
+    -
+      :type: :priest
+      :name: :priestess
 
 -
   :name: :played_facility

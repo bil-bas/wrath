@@ -1,12 +1,28 @@
 module Wrath
   class Unlock
-    attr_reader :name, :title, :type, :image
+    include Log
 
-    def initialize(definition)
-      @name = definition[:name]
+    attr_reader :name, :title, :type, :image, :manager
 
-      @type = definition[:type]
+    def unlocked?; @unlocked; end
 
+    public
+    def initialize(type, name, manager, options = {})
+      options = {
+          unlocked: false
+      }.merge! options
+
+      @name, @type, @manager = name, type, manager
+
+      @unlocked = options[:unlocked]
+
+      eval_type
+
+      @manager.add_unlock(self)
+    end
+
+    protected
+    def eval_type
       case @type
         when :priest
           @image = Priest.icon(@name)
@@ -18,8 +34,14 @@ module Wrath
           @title = level.to_s
 
         else
-          raise "Unknown unlock type: #{@type}"
+          raise "Unknown unlock type: #{@type.inspect}"
       end
+    end
+
+    public
+    def unlock
+      log.info { "Unlocked: #{@type.inspect} / #{@name.inspect}" }
+      @unlocked = true
     end
   end
 end
