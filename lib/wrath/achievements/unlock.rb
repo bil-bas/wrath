@@ -2,7 +2,7 @@ module Wrath
   class Unlock
     include Log
 
-    attr_reader :name, :title, :type, :image, :manager
+    attr_reader :name, :type, :manager
 
     def unlocked?; @unlocked; end
 
@@ -16,25 +16,24 @@ module Wrath
 
       @unlocked = options[:unlocked]
 
-      eval_type
-
       @manager.add_unlock(self)
     end
 
-    protected
-    def eval_type
+    public
+    def title
       case @type
-        when :priest
-          @image = Priest.icon(@name)
-          @title = Priest.title(@name)
-
-        when :level
-          level = Level.const_get(@name)
-          @image = level.icon
-          @title = level.to_s
-
+        when :priest then Priest.title(@name)
+        when :level  then Level.const_get(@name).to_s
         else
           raise "Unknown unlock type: #{@type.inspect}"
+      end
+    end
+
+    public
+    def icon
+      case @type
+        when :priest then Priest.icon(@name)
+        when :level then Level.const_get(@name).icon
       end
     end
 

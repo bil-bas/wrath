@@ -71,7 +71,7 @@ module Wrath
                 if achieve.complete? and not achieve.unlocks.empty?
                   pack :horizontal, padding: 0, spacing: 4 do
                     achieve.unlocks.each do |unlock|
-                      icon = ScaledImage.new(unlock.image, sprite_scale * 0.75)
+                      icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
                       label "", icon: icon, tip: "Unlocked: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
                     end
                   end
