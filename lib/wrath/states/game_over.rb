@@ -56,7 +56,7 @@ class GameOver < Gui
   end
 
   def update_stats
-    # GAMES PLAYED/WON/LOST
+    # Games played.
     level_completed = previous_game_state.class.name[/[^:]+$/].to_sym
 
     if (host? and @winner.number == 0) or (client? and @winner.number == 1)
@@ -64,7 +64,7 @@ class GameOver < Gui
     elsif (host? and @winner.number == 1) or (client? and @winner.number == 0)
       statistics.increment(:levels, level_completed, :online_lost)
     else
-      statistics.increment(:levels, level_completed, :offline_played)
+      statistics.increment(:levels, level_completed, :"offline_player_#{@winner.number + 1}_won")
     end
 
     # Priests played.
