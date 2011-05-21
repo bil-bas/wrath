@@ -178,7 +178,7 @@
 -
   :name: :sacrificed_test_subject
   :title: Slave to the AI
-  :description: Sacrificed the innocent test subject.
+  :description: Sacrificed the life of the innocent test subject for Science.
   :statistics:
     - [:sacrifices, :type, :TestSubject]
   :required: 1

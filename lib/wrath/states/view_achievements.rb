@@ -8,6 +8,7 @@ module Wrath
       options = {
           background_color: BACKGROUND_COLOR,
           color: TEXT_COLOR,
+          padding_left: 12,
       }.merge! options
 
       super("#{total} / #{required}", options)
@@ -38,16 +39,21 @@ module Wrath
       )
 
       pack :vertical do
-        label "Achievements", font_size: 32
+        pack :horizontal, padding: 0 do |packer|
+          packer.label "Achievements", font_size: 32
+          completed = achievement_manager.achievements.count {|a| a.complete? }
+          ProgressBar.new(completed, achievement_manager.achievements.size,
+                                    parent: packer, width: 400, font_size: 32)
+        end
 
         scroll_window width: $window.width - 50, height: $window.height - 150, background_color: WINDOW_BACKGROUND_COLOR do
-          pack :vertical do
+          pack :vertical, spacing: 5 do
             achievement_manager.achievements.each do |achieve|
               pack :vertical, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
                 pack :horizontal, padding: 0, spacing: 0 do |packer|
                   # title
                   color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
-                  packer.label achieve.title, width: 400, font_size: 20, color: color
+                  packer.label achieve.title, width: 390, font_size: 20, color: color
 
                   # Progress bar, if needed.
                   if achieve.complete?
