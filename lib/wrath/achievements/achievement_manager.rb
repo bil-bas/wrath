@@ -3,6 +3,7 @@ module Wrath
     include Fidgit::Event
 
     DEFINITIONS_FILE = File.join(File.dirname(__FILE__), 'achievement_definitions.yml')
+    TIME_FORMAT = "%F %T" # 2007-11-19 08:37:48
 
     event :on_achievement_gained # [sender, achievement]
     event :on_unlock_gained # [sender, unlock]
@@ -58,10 +59,14 @@ module Wrath
       return unlock.unlocked?
     end
 
+    def completion_time(name)
+      @achievements_settings[name, :time].localtime.strftime(TIME_FORMAT)
+    end
+
     public
     def achieve(achievement)
       @achievements_settings[achievement.name, :complete] = true
-      @achievements_settings[achievement.name, :date] = Time.now
+      @achievements_settings[achievement.name, :time] = Time.now
 
       publish :on_achievement_gained, achievement
       achievement.unlocks.each {|unlock| publish :on_unlock_gained, unlock }

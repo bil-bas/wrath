@@ -4,8 +4,8 @@
 # ---------------------------------------
 -
   :name: :played_online
-  :title: Online!
-  :description: Played an online game.
+  :title: Paranoid
+  :description: Played an online game, not letting anyone touch my precious keyboard.
   :statistics:
     - [:played, :online, :times]
   :required: 1
@@ -13,8 +13,8 @@
 
 -
   :name: :played_offline
-  :title: Offline!
-  :description: Played an offline game.
+  :title: War of elbows
+  :description: Played an offline game, in which there should have been lots of frantic elbowing action.
   :statistics:
     - [:played, :offline, :times]
   :required: 1

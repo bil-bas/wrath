@@ -57,7 +57,8 @@ module Wrath
 
                   # Progress bar, if needed.
                   if achieve.complete?
-                    packer.label "Complete!", font_size: 15
+                    completed_at = achievement_manager.completion_time(achieve.name)
+                    packer.label completed_at, font_size: 15, padding_left: 0
                   else
                     ProgressBar.new(achieve.total, achieve.required,
                                     parent: packer, width: 225, height: 20, font_size: 15)
