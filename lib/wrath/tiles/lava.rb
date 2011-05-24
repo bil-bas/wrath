@@ -8,16 +8,12 @@ class Lava < Water
   GLOW_COLOR = Color.rgba(255, 100, 0, 20)
   GLOW_SIZE = 0.65
 
-  attr_writer :filled
-
   def touched_by(object)
     case object
       when Rock
         unless filled?
           object.destroy
-          @filled = true
-          @ground_level = FULL_LEVEL
-          @speed = 1
+          self.filled = true
         end
 
       when Creature

@@ -5,15 +5,21 @@ class Water < AnimatedTile
 
   EMPTY_LEVEL = -3
   FULL_LEVEL = 0
-
-  attr_writer :filled
+  FULL_SPEED = 1
+  EMPTY_SPEED  = 0.25
 
   def filled?; @filled; end
+  
+  def filled=(value)
+    @filled = value
+    @ground_level = @filled ? FULL_LEVEL : EMPTY_LEVEL
+    @speed = @filled ? FULL_SPEED : EMPTY_SPEED
+  end
 
   def initialize(options = {})
     options = {
         ground_level: EMPTY_LEVEL,
-        speed: 0.25,
+        speed: EMPTY_SPEED,
     }.merge! options
 
     super options
@@ -40,9 +46,7 @@ class Water < AnimatedTile
         unless filled?
           splash(object)
           object.destroy
-          @filled = true
-          @ground_level = FULL_LEVEL
-          @speed = 1
+          self.filled = true
           return
         end
 
