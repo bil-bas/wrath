@@ -5,7 +5,7 @@
 -
   :name: :played_online
   :title: Paranoid
-  :description: Played an online game, not letting anyone touch my precious keyboard.
+  :description: Played an online game, not letting anyone touch my precious keyboard. Just have to worry about the alien mind-control lasers now!
   :statistics:
     - [:played, :online, :times]
   :required: 1
@@ -22,8 +22,8 @@
 
 -
   :name: :long_play_1
-  :title: Battler
-  :description: Played for an hour
+  :title: Waster of time
+  :description: Played for an hour; time which won't ever be got back.
   :statistics:
     - [:played, :offline, :duration]
     - [:played, :online, :duration]
@@ -32,8 +32,8 @@
 
 -
   :name: :long_play_2
-  :title: Endless battler
-  :description: Played for 10 hours
+  :title: Methuselah
+  :description: Played for 10 hours, which is very nearly a thousand years.
   :statistics:
     - [:played, :offline, :duration]
     - [:played, :online, :duration]
@@ -47,7 +47,7 @@
 -
   :name: :played_forest
   :title: Forester
-  :description: Played the Forest level.
+  :description: Played the Forest level with an eye to rapid deforestation.
   :statistics:
     - [:levels, :Forest, :played]
   :required: 1
@@ -62,7 +62,7 @@
 -
   :name: :played_cave
   :title: Spelunker
-  :description: Played the Cave level.
+  :description: Played the Cave level in the dark.
   :statistics:
     - [:levels, :Cave, :played]
   :required: 1
@@ -77,7 +77,7 @@
 -
   :name: :played_island
   :title: Castaway
-  :description: Played the Island level.
+  :description: Played the Island level with a friend who doesn't talk much.
   :statistics:
     - [:levels, :Island, :played]
   :required: 1
@@ -91,8 +91,8 @@
 
 -
   :name: :played_ship
-  :title: Pirate wench
-  :description: Played the Ship level.
+  :title: All in the eye-liner
+  :description: Played the Ship level with a mockney accent and a bit too much eye-makeup.
   :statistics:
     - [:levels, :Ship, :played]
   :required: 1
@@ -107,7 +107,7 @@
 -
   :name: :played_facility
   :title: Irradiated
-  :description: Played the Facility level.
+  :description: Played the Facility level without lead underpants.
   :statistics:
     - [:levels, :Facility, :played]
   :required: 1
@@ -128,7 +128,7 @@
 -
   :name: :sacrificed_animal
   :title: Animal sacrifice
-  :description: Sacrificed 10 defencessless animals.
+  :description: Sacrificed 10 defenceless animals.
   :statistics:
     - [:sacrifices, :totals, :animals]
   :required: 10
@@ -146,7 +146,7 @@
 -
   :name: :sacrificed_everything
   :title: High Priest
-  :description: Made 1000 sacrifices
+  :description: Made 1000 sacrifices, just to make sure.
   :statistics:
     - [:sacrifices, :totals, :objects]
     - [:sacrifices, :totals, :animals]
@@ -160,7 +160,7 @@
 -
   :name: :sacrificed_knight
   :title: Knightmare
-  :description: Sacrificed a brave knight.
+  :description: Sacrificed brave Sir Robin, who didn't get to run away.
   :statistics:
     - [:sacrifices, :type, :Knight]
   :required: 1
@@ -177,7 +177,7 @@
 
 -
   :name: :sacrificed_test_subject
-  :title: Slave to the AI
+  :title: Slave to the Machine
   :description: Sacrificed the life of the innocent test subject for Science.
   :statistics:
     - [:sacrifices, :type, :TestSubject]

@@ -39,6 +39,14 @@ module Wrath
 
       nil
     end
+    
+    def completion_time
+      @manager.completion_time(self.name)
+    end
+    
+    def icon
+      @icon ||= Image["achievements/#{name}.png"]
+    end
 
     protected
     def calculate_progress

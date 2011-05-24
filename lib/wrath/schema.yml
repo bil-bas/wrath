@@ -44,3 +44,9 @@
   :TextArea:
     :color: ?blue_white
     :background_color: ?very_dark_blue
+    
+  :ScrollBar: # < Composite
+    :rail_width: 24
+    
+  :ScrollWindow: # < Composite
+    :scroll_bar_thickness: 24

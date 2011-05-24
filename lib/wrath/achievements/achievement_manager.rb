@@ -3,7 +3,6 @@ module Wrath
     include Fidgit::Event
 
     DEFINITIONS_FILE = File.join(File.dirname(__FILE__), 'achievement_definitions.yml')
-    TIME_FORMAT = "%F %T" # 2007-11-19 08:37:48
 
     event :on_achievement_gained # [sender, achievement]
     event :on_unlock_gained # [sender, unlock]
@@ -60,7 +59,7 @@ module Wrath
     end
 
     def completion_time(name)
-      @achievements_settings[name, :time].localtime.strftime(TIME_FORMAT)
+      @achievements_settings[name, :time].localtime
     end
 
     public
