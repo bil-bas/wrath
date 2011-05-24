@@ -13,7 +13,7 @@ class Level
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
-    def self.to_s; "2. Cave of Considerable Doom"; end
+    def self.to_s; "Cave of Considerable Doom"; end
 
     def create_objects
       super(PLAYER_SPAWNS)

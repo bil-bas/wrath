@@ -42,6 +42,8 @@ class Level < GameState
     LEFT = 0
     RIGHT = 0
   end
+  
+  LEVELS = [Forest, Cave, Island, Ship, Facility]
 
   def_delegators :@map, :tile_at_coordinate
 
@@ -102,28 +104,15 @@ class Level < GameState
 
     send_message(Message::StartGame.new) if host?
   end
-
+  
+  def self.unlocked?
+    $window.achievement_manager.unlocked?(:level, name[/[^:]+$/].to_sym)
+  end
+  
   def replay
     log.info { "Replaying #{self.class}" }
     pop_game_state
     push_game_state(self.class.new(@network, @player_names, @priest_names))
-  end
-
-  def self.levels
-    unless defined? @@levels
-      @@levels = []
-
-      constants.each do |const_name|
-        const = const_get const_name
-        if const.is_a? Class and const.ancestors.include? self
-          @@levels << const
-        end
-      end
-
-      @@levels.sort_by! {|level| level.to_s }
-    end
-
-    @@levels
   end
 
   def accept_message?(message)

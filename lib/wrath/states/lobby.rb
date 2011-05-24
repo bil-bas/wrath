@@ -90,7 +90,7 @@ module Wrath
       label "Level"
 
       pack :horizontal, spacing: 0 do
-        @level_picker = combo_box value: Level.levels[0], width: $window.width * 0.75, enabled: (not client?) do
+        @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
           end
@@ -129,21 +129,10 @@ module Wrath
 
     protected
     def update_level_picker
-      # Work out which levels can be played.
-      if client?
-        # Can't modify the levels; the host decides that.
-        unlocked_levels = Levels.levels
-      else
-        unlocked_levels = FREE_LEVELS.dup
-        (Level.levels - FREE_LEVELS).each do |level|
-          unlocked_levels << level if achievement_manager.unlocked?(:level, level.name[/[^:]+$/].to_sym)
-        end
-      end
-
       old_value = @level_picker.value # Preserve the previous setting.
       @level_picker.clear
-      unlocked_levels.each do |level|
-        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale))
+      Level::LEVELS.each do |level|
+        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale), enabled: level.unlocked?)
       end
       @level_picker.value = old_value if old_value
     end

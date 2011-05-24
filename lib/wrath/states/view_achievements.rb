@@ -87,11 +87,12 @@ module Wrath
           text_area text: achieve.description, font_size: 15, width: $window.width - 175,
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
 
-          if achieve.complete? and not achieve.unlocks.empty?
+          unless achieve.unlocks.empty?
             pack :horizontal, padding: 0, spacing: 4 do
               achieve.unlocks.each do |unlock|
               icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
-              label "", icon: icon, tip: "Unlocked: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
+              title = unlock.unlocked? ? "Unlocked" : "Locked"
+              label "", icon: icon, tip: "#{title}: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
               end
             end
           end

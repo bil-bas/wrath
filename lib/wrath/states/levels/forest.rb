@@ -21,7 +21,9 @@ class Level
     STANDING_STONES_RADIUS = 18
     NUM_STANDING_STONES = 5
 
-    def self.to_s; "1. Forest of Doom"; end
+    def self.to_s; "Forest of Doom"; end
+    
+    def self.unlocked?; true; end # First level, so is unlocked by default.
 
     def create_objects
       super(PLAYER_SPAWNS)
