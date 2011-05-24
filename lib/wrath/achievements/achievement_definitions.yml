@@ -168,11 +168,11 @@
 
 -
   :name: :sacrificed_monkey
-  :title: Monkey-juggler
-  :description: Sacrificed 10 monkeys.
+  :title: 12 Monkeys
+  :description: Sacrificed twelve monkeys.
   :statistics:
     - [:sacrifices, :type, :Monkey]
-  :required: 10
+  :required: 12
   :unlocks: []
 
 -
