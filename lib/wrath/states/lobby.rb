@@ -25,7 +25,11 @@ module Wrath
 
       @player_number = host? ? 0 : 1
 
-      on_input(:escape) { game_state_manager.pop_until_game_state Menu }
+      add_inputs(
+        escape:  ->{ game_state_manager.pop_until_game_state Menu },
+        b: ->{ pop_game_state },
+        s: ->{ new_game @level_picker.value if @start_button.enabled? }
+       )
 
       heading = case @network
         when Server
@@ -48,7 +52,7 @@ module Wrath
       end
 
       pack :horizontal do
-        button "Cancel" do
+        button "(B)ack" do
           game_state_manager.pop_until_game_state Menu
         end
 
@@ -62,7 +66,7 @@ module Wrath
         if client?
           label "Wait for host to start a game"
         else
-          @start_button = button("Start", enabled: local?) do
+          @start_button = button("(S)tart", enabled: local?) do
             new_game @level_picker.value
           end
         end

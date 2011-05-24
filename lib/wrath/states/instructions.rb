@@ -5,7 +5,7 @@ module Wrath
     def initialize
       super
 
-      on_input(:escape, :pop_game_state)
+      on_input([:escape, :b], :pop_game_state)
 
       pack :vertical do
         label "Instructions", font_size: 32
@@ -29,7 +29,7 @@ module Wrath
 
         @tabs_group.value = 0
 
-        button("Back") { pop_game_state }
+        button("(B)ack") { pop_game_state }
       end
     end
   end

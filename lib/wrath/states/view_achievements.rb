@@ -36,7 +36,7 @@ module Wrath
       super
 
       add_inputs(
-          c: :pop_game_state,
+          b: :pop_game_state,
           escape: :pop_game_state
       )
 
@@ -57,7 +57,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button("(C)ancel") { pop_game_state }
+          button("(B)ack") { pop_game_state }
         end
       end
     end

@@ -1,15 +1,20 @@
 module Wrath
   class Options < Gui
     PAGES = {
-        OptionsAudio => "Audio",
-        #OptionsVideo => "Video",
-        OptionsControls => "Controls",
+        OptionsAudio => "(A)udio",
+        #OptionsVideo => "(V)ideo",
+        OptionsControls => "(C)ontrols",
     }
 
     def initialize
       super
 
-      on_input(:escape, :pop_game_state)
+      add_inputs(
+        a: OptionsAudio,
+        c: OptionsControls,
+        b: :pop_game_state,
+        escape: :pop_game_state
+        )
 
       pack :vertical do
         label "Options", font_size: 32
@@ -21,7 +26,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button("Back") { pop_game_state }
+          button("(B)ack") { pop_game_state }
         end
       end
     end

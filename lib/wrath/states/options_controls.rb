@@ -14,7 +14,7 @@ module Wrath
     def initialize
       super
 
-      on_input(:escape) { pop_game_state }
+      on_input([:escape, :b]) { pop_game_state }
 
       @control_waiting_for_key = nil
 
@@ -42,7 +42,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button("Back") { pop_game_state }
+          button("(B)ack") { pop_game_state }
         end
       end
 

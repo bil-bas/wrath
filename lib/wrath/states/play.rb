@@ -7,7 +7,7 @@ module Wrath
           o: :local_game,
           j: :join_game,
           h: :host_game,
-          c: :pop_game_state,
+          b: :pop_game_state,
           escape: :pop_game_state
       )
 
@@ -21,7 +21,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button("(C)ancel") { pop_game_state }
+          button("(B)ack") { pop_game_state }
         end
       end
     end

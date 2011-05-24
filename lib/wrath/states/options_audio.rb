@@ -5,7 +5,7 @@ module Wrath
     def initialize
       super
 
-      on_input(:escape, :pop_game_state)
+      on_input([:escape, :b], :pop_game_state)
 
       pack :vertical do
         label "Options  |  Audio", font_size: 32
@@ -50,7 +50,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button("Back") { pop_game_state }
+          button("(B)ack") { pop_game_state }
           button("Defaults") do
             @master_slider.value = 0.5
             @effects_slider.value = 1.0

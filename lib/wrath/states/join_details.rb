@@ -16,7 +16,7 @@ module Wrath
         end
 
         pack :horizontal, padding: 0 do
-          button "Cancel" do
+          button "(B)ack" do
             pop_game_state
           end
 
