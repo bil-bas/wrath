@@ -5,7 +5,7 @@ module Wrath
     attr_reader :encumbrance
     attr_writer :encumbrance
 
-    def can_be_dropped?(container); true; end
+    def can_be_dropped?; true; end
     def can_be_picked_up?(container)
       not @thrown_by.include? container # So you can't pick something up the moment you throw it.
     end

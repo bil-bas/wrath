@@ -193,7 +193,7 @@ class Creature < Container
     target = near_objects.find {|o| o.can_be_activated?(self) }
 
     # Special case if we are carrying something that we can't drop.
-    if not target and not empty_handed? and not @contents.can_be_dropped?(self)
+    if not target and not empty_handed? and not @contents.can_be_dropped?
       return
     end
 

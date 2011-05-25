@@ -5,7 +5,7 @@ class BrokenEgg < DynamicObject
   ANIMATION_DELAY = 300
   EGGED_DURATION = 3 * 1000
 
-  def can_be_dropped?(container); false; end
+  def can_be_dropped?; false; end
 
   public
   def initialize(options = {})

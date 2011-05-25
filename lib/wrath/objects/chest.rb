@@ -41,7 +41,11 @@ class Chest < Container
 
   public
   def can_be_activated?(actor)
-    (closed? and actor.empty_handed?) or open?
+    if actor.empty_handed?
+      closed?
+    else      
+      open? and actor.contents.can_be_dropped?
+    end
   end
 
   public

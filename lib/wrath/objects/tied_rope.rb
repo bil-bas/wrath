@@ -4,7 +4,7 @@ module Wrath
 
     TIED_DURATION = 4 * 1000
 
-    def can_be_dropped?(container); false; end
+    def can_be_dropped?; false; end
 
     public
     def initialize(options = {})
