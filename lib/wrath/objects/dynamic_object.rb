@@ -6,7 +6,9 @@ module Wrath
     attr_writer :encumbrance
 
     def can_be_dropped?(container); true; end
-    def can_be_picked_up?(container); true; end
+    def can_be_picked_up?(container)
+      not @thrown_by.include? container # So you can't pick something up the moment you throw it.
+    end
     def inside_container?; not @container.nil?; end
     def affected_by_gravity?; @container.nil?; end
     def can_be_activated?(actor); can_be_picked_up?(actor) and actor.empty_handed?; end
