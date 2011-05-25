@@ -5,7 +5,7 @@ class Priest < Humanoid
   CHEER_SPRITE = 4
 
   NAMES = [:druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
-  FREE_UNLOCKS = [:monk, :prophet, :thaumaturge, :witch] # Others must be manually unlocked.
+  FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 
   def self.animation_file(name)

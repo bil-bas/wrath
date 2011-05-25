@@ -9,6 +9,7 @@ v0.0.4alpha (unreleased)
   * Favour of object currently carried is indicated next to favour bars. 
   * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
   * Added level in a tech facility (AI _are_ gods, aren't they?)
+  * Added level in a desert (reused storm god, though, until unique one created)
   * Added level on a moon (reused volcano god, though, until unique one created)
   * FIXED: Poison/growth status effects are not properly synchronised in network play.
 

@@ -72,7 +72,7 @@
       :name: :Island
     -
       :type: :priest
-      :name: :shaman
+      :name: :thaumaturge
 
 -
   :name: :played_island
@@ -99,10 +99,25 @@
   :unlocks:
     -
       :type: :level
-      :name: :Facility
+      :name: :Desert
     -
       :type: :priest
       :name: :priestess
+      
+-
+  :name: :played_desert
+  :title: Sand got in the sandwiches
+  :description: Played the Desert level without Tupperware.
+  :statistics:
+    - [:levels, :Desert, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: :level
+      :name: :Facility
+    -
+      :type: :priest
+      :name: :prophet
 
 -
   :name: :played_facility
@@ -115,7 +130,7 @@
     -
       :type: :level
       :name: :Moon
-      
+       
 -
   :name: :played_moon
   :title: Cosmic Horror
@@ -123,7 +138,10 @@
   :statistics:
     - [:levels, :Moon, :played]
   :required: 1
-  :unlocks: []
+  :unlocks:
+    -
+      :type: :priest
+      :name: :shaman
 
 # ---------------------------------------
 # Sacrifices (general).

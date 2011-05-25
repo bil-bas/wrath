@@ -63,6 +63,13 @@ class Level
         (0..1).each do |y|
           grid[y][x] = Gravel
         end
+        
+        # Grass at the top
+        (2..4).each do |y|
+          grid[y][x] = Grass
+        end
+         grid[5][x] = Grass if rand() < 0.75
+         grid[6][x] = Grass if rand() < 0.5 and grid[5][x] == Grass
       end
 
       # Add water-features.
