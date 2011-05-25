@@ -6,7 +6,6 @@ class BaseObject < GameObject
   include Log
   extend Forwardable
 
-  GRAVITY = -5 / 1000.0 # Acceleration per second.
   TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.
 
   @@next_object_id = 0
@@ -259,7 +258,7 @@ class BaseObject < GameObject
 
     # Deal with vertical physics manually.
     if affected_by_gravity? and (@z_velocity != 0 or @z > ground_level)
-      @z_velocity += GRAVITY * frame_time
+      @z_velocity += parent.gravity * frame_time
       @z_velocity = [@z_velocity, TERMINAL_VELOCITY].max
 
       @z += @z_velocity

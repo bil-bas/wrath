@@ -111,6 +111,18 @@
   :statistics:
     - [:levels, :Facility, :played]
   :required: 1
+  :unlocks:
+    -
+      :type: :level
+      :name: :Moon
+      
+-
+  :name: :played_moon
+  :title: Cosmic Horror
+  :description: Played the Yuggoth level without much sanity left.
+  :statistics:
+    - [:levels, :Moon, :played]
+  :required: 1
   :unlocks: []
 
 # ---------------------------------------

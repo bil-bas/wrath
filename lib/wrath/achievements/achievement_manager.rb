@@ -59,13 +59,15 @@ module Wrath
     end
 
     def completion_time(name)
-      @achievements_settings[name, :time].localtime
+      time = @achievements_settings[name, :time]
+      raise "No such achievement, #{name.inspect}" unless time
+      time
     end
 
     public
     def achieve(achievement)
       @achievements_settings[achievement.name, :complete] = true
-      @achievements_settings[achievement.name, :time] = Time.now
+      @achievements_settings[achievement.name, :time] = Time.now.localtime
 
       publish :on_achievement_gained, achievement
       achievement.unlocks.each {|unlock| publish :on_unlock_gained, unlock }

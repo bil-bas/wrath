@@ -87,8 +87,6 @@ module Wrath
 
     protected
     def level_picker
-      label "Level"
-
       pack :horizontal, spacing: 0 do
         @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
           subscribe :changed do |sender, level|
@@ -142,8 +140,7 @@ module Wrath
       @ready_indicators = []
       @num_readies = 0
 
-      label "Players"
-      pack :grid, num_columns: 3, spacing_v: 4 do
+      pack :grid, num_columns: 3, spacing: 4 do
         @player_names.each_with_index do |player_name, player_number|
           player_row player_name, player_number
         end

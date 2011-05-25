@@ -2,6 +2,8 @@ module Wrath
 class Level < GameState
   extend Forwardable
 
+  GRAVITY = -5 / 1000.0 # Acceleration per second.
+    
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
@@ -43,7 +45,7 @@ class Level < GameState
     RIGHT = 0
   end
   
-  LEVELS = [Forest, Cave, Island, Ship, Facility]
+  LEVELS = [Forest, Cave, Island, Ship, Facility, Moon]
 
   def_delegators :@map, :tile_at_coordinate
 
@@ -54,7 +56,7 @@ class Level < GameState
   def client?; @network.is_a? Client; end
   def local?; @network.nil?; end
   def started?; @started; end
-
+  def gravity; GRAVITY; end
   def self.icon; Image["levels/#{name[/[^:]+$/].downcase}.png"]; end
 
   # network: Server, Client, nil
