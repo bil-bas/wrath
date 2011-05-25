@@ -94,7 +94,7 @@ module Wrath
           end
         end
 
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.5), padding: 0
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.16), padding: 0
       end
     end
 
@@ -120,7 +120,7 @@ module Wrath
       old_value = combo.value
       combo.clear
       Priest::NAMES.each do |name|
-        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale)
+        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale * 0.75)
       end
       combo.value = old_value || @unlocked_priests[combo_index]
     end
@@ -130,7 +130,7 @@ module Wrath
       old_value = @level_picker.value # Preserve the previous setting.
       @level_picker.clear
       Level::LEVELS.each do |level|
-        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale), enabled: level.unlocked?)
+        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
       end
       @level_picker.value = old_value if old_value
     end
@@ -161,7 +161,7 @@ module Wrath
           end
         end
 
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.5), padding: 0
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.16), padding: 0
       end
 
       label player_name
