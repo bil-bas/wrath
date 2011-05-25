@@ -92,7 +92,7 @@ class GameOver < Gui
 
   def return_to_lobby
     end_game
-    game_state_manager.pop_until_game_state Lobby
+    pop_until_game_state Lobby
   end
 
   def replay

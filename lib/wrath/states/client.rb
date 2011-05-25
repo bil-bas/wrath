@@ -28,7 +28,7 @@ class Client < GameStates::NetworkClient
 
   def on_disconnect
     log.info "Disconnected from server"
-    game_state_manager.pop_until_game_state Menu
+    pop_until_game_state Menu
   end
 
   def draw

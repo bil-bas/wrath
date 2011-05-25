@@ -9,10 +9,6 @@ class Server < GameStates::NetworkServer
 
   public
   def initialize(options = {})
-    options = {
-      address: "0.0.0.0",
-    }.merge! options
-
     @remote_socket = nil
 
     @font = Font["pixelated.ttf", 16]
@@ -42,7 +38,7 @@ class Server < GameStates::NetworkServer
 
   def on_disconnect(socket)
     log.info { "Player disconnected: #{socket.inspect}" }
-    game_state_manager.pop_until_game_state Menu
+    pop_until_game_state Menu unless current_game_state.is_a? Menu
     @remote_socket = nil
   end
 
@@ -56,6 +52,10 @@ class Server < GameStates::NetworkServer
 
   def broadcast_msg(message)
     send_msg(@remote_socket, message) if @remote_socket
+  end
+  
+  def popped
+    close
   end
 end
 end

@@ -7,6 +7,7 @@ module Chingu
 
     def_delegators :$window, :settings, :controls, :statistics, :achievement_manager
     def_delegators :$window, :sprite_scale, :retro_width, :retro_height
+    def_delegators :@game_state_manager, :pop_until_game_state
 
     alias_method :original_initialize, :initialize
     public

@@ -26,7 +26,7 @@ module Wrath
         pack :horizontal, padding: 0, spacing: 20 do
           button("Back") { pop_game_state }
           @exit_button = button("Exit", enabled: false) do
-            game_state_manager.pop_until_game_state Menu
+            pop_until_game_state Menu
             current_game_state.close
           end
         end

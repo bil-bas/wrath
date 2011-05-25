@@ -69,7 +69,7 @@ class Level < GameState
 
     on_input(:escape) do
       send_message(Message::EndGame.new) if networked?
-      game_state_manager.pop_until_game_state Lobby
+      pop_until_game_state Lobby
     end
 
     send_message(Message::NewGame.new(self.class)) if host?
