@@ -5,15 +5,11 @@ class GameOver < Gui
 
   AVATAR_GLOW = Color.rgba(0, 255, 0, 150)
 
-  def_delegators :@play, :space, :object_by_id, :objects, :network, :networked?, :client?, :host?, :tile_at_coordinate,
-                 :send_message, :players
+  def_delegators :previous_game_state, :space, :object_by_id, :objects, :network, :networked?, :client?, :host?, :tile_at_coordinate,
+                 :send_message, :players, :draw_glow
 
   ACCEPTED_MESSAGES = [
-      Message::Create,
-      Message::Destroy,
-      Message::EndGame,
-      Message::SetHealth,
-      Message::Sync
+      Message::EndGame
   ]
 
   def accept_message?(message); ACCEPTED_MESSAGES.find {|m| message.is_a? m }; end
@@ -39,7 +35,7 @@ class GameOver < Gui
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
 
     pack :horizontal, spacing: 10, padding_top: 430, padding_h: 220 do
-      unless previous_game_state.client?
+      unless client?
         button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
           replay
         end
@@ -103,19 +99,18 @@ class GameOver < Gui
 
   def setup
     super
-    @play = previous_game_state
     update_stats
   end
 
   def update
-    @network.update if @network
+    network.update if networked?
 
     super
 
     @sparkle.angle -= frame_time * 0.1
     @sparkle.factor = 1.5 + Math::sin(milliseconds / 1000.0) * 0.3
 
-    @network.flush if @network
+    network.flush if networked?
   end
 
   def draw
@@ -124,9 +119,9 @@ class GameOver < Gui
        @sparkle.draw
     end
 
-    previous_game_state.draw_glow(@avatar.x, @avatar.y, AVATAR_GLOW, @sparkle.factor)
+    draw_glow(@avatar.x, @avatar.y, AVATAR_GLOW, @sparkle.factor)
 
-    @play.draw
+    previous_game_state.draw
 
     super
   end
