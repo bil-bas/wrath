@@ -284,7 +284,8 @@ class Creature < Container
     # Make being hit with something heavy knock you over.
     if not collided and
         state != :thrown and
-        other.can_knock_down_creature?(self)
+        other.can_knock_down_creature?(self) and
+        other.thrown_by.any? {|o| o.is_a? Creature } # So items popping out of chests don't knock you down.
 
       knocked_down_by(other)
     end
