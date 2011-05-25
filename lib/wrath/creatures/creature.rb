@@ -101,6 +101,11 @@ class Creature < Container
     if @overlay_color
       image.silhouette.draw_rot(x, y - z, y, 0, center_x, center_y, factor_x, factor_y, @overlay_color)
     end
+    
+    if health < max_health
+      $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width, 1, Color::BLACK
+      $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width * health / max_health.to_f, 0.5, Color::RED
+    end    
   end
 
   public
