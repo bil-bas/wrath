@@ -65,6 +65,7 @@ module Wrath
     protected
     def check_statistics
       return if complete?
+      
       calculate_progress
       if complete?
         @statistics.each do |statistic|
@@ -76,7 +77,7 @@ module Wrath
         @manager.achieve(self)
         publish :on_achieved
 
-        log.info { "Achieved: #{name}" }
+        log.info { "Achieved: #{name.inspect}" }
       end
 
       nil

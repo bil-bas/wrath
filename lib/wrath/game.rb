@@ -97,7 +97,9 @@ class Game < Window
 
     @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
 
-    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
+    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)    
+    @achievement_overlay = AchievementOverlay.new(@achievement_manager)
+    
     push_game_state Menu
   end
 
@@ -111,10 +113,17 @@ class Game < Window
     end
 
     @used_time += milliseconds - draw_started
+    
+    @achievement_overlay.draw
+  rescue Exception => ex
+    log.error "DRAW: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
+    raise ex
   end
 
   def update
     update_started = milliseconds
+    
+    @achievement_overlay.update
 
     super
 
@@ -123,6 +132,9 @@ class Game < Window
     @used_time += milliseconds - update_started
 
     recalculate_cpu_load
+  rescue Exception => ex
+    log.error "UPDATE: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
+    raise ex
   end
 
   def recalculate_cpu_load
