@@ -4,7 +4,7 @@ module Wrath
     class Moon < Level
       DEFAULT_TILE = MoonDust
 
-      GOD = Volcano
+      GOD = Azathoth
       SPAWNS = {
           MiGo => 5,
           Nightgaunt => 3,

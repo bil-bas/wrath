@@ -52,7 +52,7 @@ module Wrath
       return unless status(type)
 
       status = @statuses.delete status(type)
-      parent.send_message(Message::RemoveStatus.new(self, status)) if parent.host?
+      parent.send_message(Message::RemoveStatus.new(self, status)) if parent and parent.host?
       status.remove
 
       publish :on_removed_status, status

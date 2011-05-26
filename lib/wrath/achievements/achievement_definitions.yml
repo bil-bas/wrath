@@ -121,8 +121,8 @@
 
 -
   :name: :played_facility
-  :title: Irradiated
-  :description: Played the Facility level without lead underpants.
+  :title: Tested
+  :description: Played the Facility level while being overseen by a benevolent AI.
   :statistics:
     - [:levels, :Facility, :played]
   :required: 1
