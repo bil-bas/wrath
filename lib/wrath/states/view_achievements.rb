@@ -11,7 +11,7 @@ module Wrath
           padding_left: 12,
       }.merge! options
 
-      super("#{total} / #{required}", options)
+      super("#{total.floor} / #{required.floor}", options)
 
       @progress = [total.to_f / required, 1].min
     end

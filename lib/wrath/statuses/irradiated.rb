@@ -4,19 +4,23 @@ module Wrath
     # Being irradiated makes you strong and glowey.
     class Irradiated < Status
       OVERLAY_COLOR = Color.rgba(0, 250, 0, 100)
-      DAMAGE = 5 / 1000.0
+      DAMAGE = 3 / 1000.0
+      
+      @@outlines = []
 
       def update
-        OVERLAY_COLOR.alpha = ((2 + Math::sin(milliseconds / 500.0)) * 50).to_i
+        OVERLAY_COLOR.alpha = ((1.3 + Math::sin(milliseconds / 250.0)) * 90).to_i
         owner.health -= DAMAGE * parent.frame_time
         super
       end
       
-      def draw       
-        @owner.image.outline.draw_rot(@owner.x, @owner.y + 1 - @owner.z, @owner.y,
+      def draw
+        $window.clip_to(0, 0, 10000, @owner.y) do         
+          @owner.image.outline.draw_rot(@owner.x, @owner.y + 1 - @owner.z, @owner.y,
                                          0, @owner.center_x, @owner.center_y,
                                          @owner.factor_x, @owner.factor_y,
                                          OVERLAY_COLOR, :additive)
+        end
       end
 
       def on_applied(sender, creature)

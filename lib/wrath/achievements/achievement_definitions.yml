@@ -222,3 +222,13 @@
     - [:sacrifices, :type, :Sheep]
   :required: 100
   :unlocks: []
+  
+# Status effects
+-
+  :name: :status_irradiated
+  :title: Nightlight
+  :description: Irradiated for a minute.
+  :statistics:
+    - [:status, :irradiated]
+  :required: 60.0
+  :unlocks: []

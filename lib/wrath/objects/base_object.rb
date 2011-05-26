@@ -198,7 +198,7 @@ class BaseObject < GameObject
   def draw
     if z < 0
       # Clip bottom of sprite, but allow shadow to still be seem (sticks out horizontally)
-      $window.clip_to(x - width * 1.5, y - height, width * 3, height) do
+      $window.clip_to(0, 0, 10000, y) do
         draw_self
       end
     else

@@ -23,11 +23,14 @@ module Wrath
       raise ArgumentError("Owner must be networked") unless owner.networked?
 
       @owner = owner
-      @duration = options[:duration]
+      
 
       super options
 
-      after(@duration) { remove } if @duration and not parent.client?
+      duration_timer(options[:duration]) if options[:duration]
+      
+      # Ensure that the stat exists.
+      parent.statistics[:status, type] = parent.statistics[:status, type] || 0.0
 
       publish :on_applied, @owner
 
@@ -36,9 +39,27 @@ module Wrath
         "Applied status #{type} to #{@owner.class}##{@owner.id} #{duration}"
       end
     end
+    
+    def duration_timer(duration)
+      after(duration, name: :duration) { remove } unless parent.client?
+    end
+    
+    # Called if the status effect is already on an object.
+    # Duration reset to that of the new duration.
+    def reapply(options = {})
+      if timer_exists? :duration
+        stop_timer :duration
+        duration_timer(options[:duration])
+      end    
+    end
 
     def update
-      update_trait
+      return unless @owner
+          
+      if @owner.local? and @owner.controlled_by_player?
+        parent.statistics[:status, type] = parent.statistics[:status, type] + (parent.frame_time / 1000.0)
+      end
+      
       super
     end
 

@@ -1,6 +1,6 @@
 module Wrath
   class Meteorite < Rock
-    IRRADIATED_DURATION = 4000
+    IRRADIATED_DURATION = 6000
     
     def can_be_picked_up?(container); false; end
     def ground_level; -2; end
@@ -39,7 +39,7 @@ module Wrath
     end 
 
     def on_collision(other)
-      if not parent.client? and other.is_a? Creature and not other.irradiated?
+      if not parent.client? and other.is_a? Creature
         other.apply_status(:irradiated, duration: IRRADIATED_DURATION)
       end
       

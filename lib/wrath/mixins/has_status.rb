@@ -36,16 +36,18 @@ module Wrath
     end
 
     def apply_status(type, options = {})
-      # Get rid of any lingering status effect of the same type.
-      remove_status(type) if status(type)
+      existing_status = status(type)
+      if existing_status
+        existing_status.reapply(options)
+      else
+        status = @@status_types[type].new(self, options)
+        parent.send_message(Message::ApplyStatus.new(self, status)) if parent.host?
 
-      status = @@status_types[type].new(self, options)
-      parent.send_message(Message::ApplyStatus.new(self, status)) if parent.host?
+        @statuses << status
+        @statuses.sort_by {|s| s.type }
 
-      @statuses << status
-      @statuses.sort_by {|s| s.type }
-
-      publish :on_applied_status, status
+        publish :on_applied_status, status
+      end
     end
 
     def remove_status(type)
@@ -59,6 +61,7 @@ module Wrath
     end
 
     def update
+      @statuses.each(&:update_trait)
       @statuses.each(&:update)
       super
     end
