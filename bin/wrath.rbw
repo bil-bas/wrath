@@ -24,6 +24,8 @@ begin
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
 
+  puts "Redirecting output to '#{LOG_FILE}'"
+
   original_stderr = $stderr.dup
   $stderr.reopen LOG_FILE
   $stderr.sync = true
