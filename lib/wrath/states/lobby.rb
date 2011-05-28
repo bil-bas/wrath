@@ -24,7 +24,7 @@ module Wrath
       @player_number = host? ? 0 : 1
 
       add_inputs(
-        escape:  ->{ pop_until_game_state Menu },
+        escape:  ->{ pop_until_game_state Play },
         b: ->{ pop_game_state },
         s: ->{ new_game @level_picker.value if @start_button.enabled? }
        )
@@ -51,7 +51,7 @@ module Wrath
 
       pack :horizontal do
         button "(B)ack" do
-          pop_until_game_state Menu
+          pop_until_game_state Play
         end
 
         if @network
