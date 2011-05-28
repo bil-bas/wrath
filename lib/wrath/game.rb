@@ -70,10 +70,8 @@ class Game < Window
   def controls; self.class.controls; end
   def statistics; self.class.statistics; end
 
-  self.volume = settings[:audio, :master_volume]
-  Sample.volume = settings[:audio, :effects_volume]
-
   attr_reader :pixel, :sprite_scale, :achievement_manager
+
 
   def retro_width; width / @sprite_scale; end
   def retro_height; height / @sprite_scale; end
@@ -85,7 +83,7 @@ class Game < Window
     media_dir = File.expand_path(File.join(EXTRACT_PATH, 'media'))
     Image.autoload_dirs.unshift File.join(media_dir, 'images')
     Sample.autoload_dirs.unshift File.join(media_dir, 'sounds')
-    Song.autoload_dirs.unshift File.join(media_dir, 'sounds')
+    Song.autoload_dirs.unshift File.join(media_dir, 'music')
     Font.autoload_dirs.unshift File.join(media_dir, 'fonts')
 
     retrofy
@@ -97,9 +95,16 @@ class Game < Window
 
     @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
 
+    log.info "Reading achievement/stats"
     @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)    
     @achievement_overlay = AchievementOverlay.new(@achievement_manager)
-    
+
+    log.info "Reading sound settings"
+    self.volume = settings[:audio, :master_volume]
+    mute if settings[:audio, :muted]
+    Sample.volume = settings[:audio, :effects_volume]
+    Song.volume = settings[:audio, :music_volume]
+
     push_game_state Menu
   end
 

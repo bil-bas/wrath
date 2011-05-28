@@ -8,5 +8,7 @@
 :audio:
   :master_volume: 0.5
   :effects_volume: 1.0
+  :music_volume: 1.0
+  :muted: false
 :video:
   :full_screen: false
