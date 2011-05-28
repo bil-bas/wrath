@@ -92,12 +92,13 @@ class Game < Window
     @used_time = 0
     @last_time = milliseconds
     @potential_fps = 0
+    @overlays = []
 
     @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
 
     log.info "Reading achievement/stats"
     @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)    
-    @achievement_overlay = AchievementOverlay.new(@achievement_manager)
+    add_overlay AchievementOverlay.new(@achievement_manager)
 
     log.info "Reading sound settings"
     self.volume = settings[:audio, :master_volume]
@@ -108,6 +109,15 @@ class Game < Window
     push_game_state Menu
   end
 
+  def add_overlay(overlay)
+    @overlays << overlay
+    overlay
+  end
+
+  def remove_overlay(overlay)
+    @overlays.delete overlay
+    overlay
+  end
 
   def draw
     draw_started = milliseconds
@@ -119,7 +129,7 @@ class Game < Window
 
     @used_time += milliseconds - draw_started
     
-    @achievement_overlay.draw
+    @overlays.each(&:draw)
   rescue Exception => ex
     log.error "DRAW: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
     raise ex
@@ -128,7 +138,7 @@ class Game < Window
   def update
     update_started = milliseconds
     
-    @achievement_overlay.update
+    @overlays.each(&:update)
 
     super
 

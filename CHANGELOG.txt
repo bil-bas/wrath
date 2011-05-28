@@ -11,6 +11,7 @@ v0.0.4alpha (unreleased)
   * Added level in a tech facility (AI _are_ gods, aren't they?)
   * Added level in a desert (reused storm god, though, until unique one created)
   * Added level on a moon (reused volcano god, though, until unique one created)
+  * Network stats overlay (Ctrl-N)
   * FIXED: Poison/growth status effects are not properly synchronised in network play.
 
 v0.0.3alpha (2011-05-17)

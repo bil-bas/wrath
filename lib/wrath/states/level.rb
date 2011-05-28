@@ -74,6 +74,16 @@ class Level < GameState
       pop_until_game_state Lobby
     end
 
+    if networked?
+      # control-N to show/hide network stats.
+      on_input(:n) do
+        if holding_any? :left_control, :right_control
+          @network_overlay ||= $window.add_overlay NetworkOverlay.new(@network)
+          @network_overlay.toggle
+        end
+      end
+    end
+
     send_message(Message::NewGame.new(self.class)) if host?
 
     @last_sync = milliseconds
@@ -350,6 +360,10 @@ class Level < GameState
 
       @last_sync = milliseconds
     end
+  end
+
+  def popped
+    $window.remove_overlay @network_overlay if @network_overlay
   end
 end
 end
