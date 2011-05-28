@@ -9,13 +9,13 @@ class Client < GameStates::NetworkClient
     options = {
     }.merge! options
 
-    @font = Font["pixelated.ttf", 16]
+    @font = Font["pixelated.ttf", 48]
 
     super options
 
     on_input(:escape) { close; pop_game_state }
 
-    after(1) { connect(options[:address], options[:port]) }
+    connect(options[:address], options[:port])
   end
 
   def on_connect
@@ -28,15 +28,17 @@ class Client < GameStates::NetworkClient
 
   def on_disconnect
     log.info "Disconnected from server"
-    pop_until_game_state Menu
+    pop_until_game_state Menu unless current_game_state.is_a? Menu
   end
 
   def draw
-    @font.draw("Connecting to host...", 0, 0, ZOrder::GUI)
+    $window.scale(1.0 / $window.sprite_scale) do
+      @font.draw("Connecting to host...", 10, 10, ZOrder::GUI)
+    end
   end
 
   def on_msg(message)
-    message.process
+    message.process if message.is_a? Message
   end
 end
 end

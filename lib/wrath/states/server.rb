@@ -9,9 +9,11 @@ class Server < GameStates::NetworkServer
 
   public
   def initialize(options = {})
-    @remote_socket = nil
+    options = {
+        max_connections: 1,
+    }.merge! options
 
-    @font = Font["pixelated.ttf", 16]
+    @font = Font["pixelated.ttf", 48]
 
     super options
 
@@ -26,32 +28,23 @@ class Server < GameStates::NetworkServer
   # Called for each new client connecting to our server
   #
   def on_connect(socket)
-    if @remote_socket
-      log.warn { "Another player tried to connect, but was refused: #{socket.inspect}" }
-      disconnect_client(socket)
-    else
-      log.info { "Player connected: #{socket.inspect}" }
-      @remote_socket = socket
-      send_msg(@remote_socket, Message::ServerReady.new(settings[:player, :name]))
-    end
+    log.info { "Player connected: #{socket.inspect}" }
+    send_msg(socket, Message::ServerReady.new(settings[:player, :name]))
   end
 
   def on_disconnect(socket)
     log.info { "Player disconnected: #{socket.inspect}" }
     pop_until_game_state Menu unless current_game_state.is_a? Menu
-    @remote_socket = nil
   end
 
   def draw
-    @font.draw("Waiting for player...", 0, 0, ZOrder::GUI)
+    $window.scale(1.0 / $window.sprite_scale) do
+      @font.draw("Waiting for player...", 10, 10, ZOrder::GUI)
+    end
   end
 
   def on_msg(socket, message)
-    message.process
-  end
-
-  def broadcast_msg(message)
-    send_msg(@remote_socket, message) if @remote_socket
+    message.process if message.is_a? Message
   end
   
   def popped

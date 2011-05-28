@@ -1,8 +1,12 @@
+PATH
+  remote: ~/RubymineProjects/chingu
+  specs:
+    chingu (0.9rc5)
+      gosu (>= 0.7.27.1)
+
 GEM
   remote: http://gemcutter.org/
   specs:
-    chingu (0.9rc4)
-      gosu (>= 0.7.27.1)
     chipmunk (5.2.2)
     chipmunk (5.2.2-x86-mingw32)
     fidgit (0.0.5alpha)
@@ -20,7 +24,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  chingu (~> 0.9rc4)
+  chingu!
   chipmunk (= 5.2.2.0)
   fidgit (~> 0.0.5alpha)
   gosu (= 0.7.29)

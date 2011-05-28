@@ -6,8 +6,6 @@ module Wrath
     READY_BACKGROUND_COLOR = Color.rgb(0, 255, 0)
     DISAMBIGUATION_SUFFIX = '_'
 
-    FREE_LEVELS = [Level::Forest] # Levels that are unlocked automatically.
-
     public
     def accept_message?(message); [Message::NewGame, Message::UpdateLobby].find {|m| message.is_a? m }; end
 
