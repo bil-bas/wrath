@@ -20,7 +20,7 @@ class BaseObject < GameObject
   attr_reader :id
 
   # Not destroyed.
-  def exists?; not parent.nil?; end
+  def exists?; !!@parent; end
   def zorder; y; end
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
@@ -29,7 +29,7 @@ class BaseObject < GameObject
   def remote?; not @local; end
   def local?; @local; end
   def controlled_by_player?; false; end
-  def networked?; not @id.nil?; end
+  def networked?; !!@id; end
   def media_folder; 'objects'; end
   def base_favor; @favor; end
   def favor; parent and parent.god ? parent.god.favor_for(self) : @favor; end

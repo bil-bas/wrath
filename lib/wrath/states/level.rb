@@ -51,7 +51,7 @@ class Level < GameState
 
   attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at
 
-  def networked?; not @network.nil?; end
+  def networked?; !!@network; end
   def host?; @network.is_a? Server; end
   def client?; @network.is_a? Client; end
   def local?; @network.nil?; end
