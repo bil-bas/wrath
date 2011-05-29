@@ -21,7 +21,6 @@ begin
   # If this isn't the exe, allow dropping into a pry session.
   unless defined? Ocra or defined? OSX_EXECUTABLE
     require 'pry'
-    require 'win32console'
   end
 rescue LoadError
 end

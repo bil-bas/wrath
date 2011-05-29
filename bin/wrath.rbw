@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+CONSOLE = (ARGV[0] and ARGV[0] == "--console")
+  
+
 begin
   EXTRACT_PATH = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
@@ -24,15 +27,17 @@ begin
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
 
-  puts "Redirecting output to '#{LOG_FILE}'"
+  unless CONSOLE
+    puts "Redirecting output to '#{LOG_FILE}'"
 
-  original_stderr = $stderr.dup
-  $stderr.reopen LOG_FILE
-  $stderr.sync = true
+    original_stderr = $stderr.dup
+    $stderr.reopen LOG_FILE
+    $stderr.sync = true
 
-  original_stdout = $stdout.dup
-  $stdout.reopen LOG_FILE
-  $stdout.sync = true
+    original_stdout = $stdout.dup
+    $stdout.reopen LOG_FILE
+    $stdout.sync = true
+  end
 
   require_relative "../lib/wrath"
 

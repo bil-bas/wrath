@@ -1,31 +1,42 @@
-PATH
-  remote: ~/RubymineProjects/chingu
-  specs:
-    chingu (0.9rc5)
-      gosu (>= 0.7.27.1)
-
 GEM
   remote: http://gemcutter.org/
   specs:
+    chingu (0.9rc5)
+      gosu (>= 0.7.27.1)
     chipmunk (5.2.2)
     chipmunk (5.2.2-x86-mingw32)
+    coderay (0.9.7)
     fidgit (0.0.5alpha)
       chingu (~> 0.9rc4)
       gosu (~> 0.7.28)
     gosu (0.7.29)
     gosu (0.7.29-x86-mingw32)
+    method_source (0.4.0)
+      ruby_parser (>= 2.0.5)
+    pry (0.8.3-x86-mingw32)
+      coderay (>= 0.9.7)
+      method_source (>= 0.4.0)
+      ruby_parser (>= 2.0.5)
+      slop (>= 1.5.3)
+      win32console (>= 1.3.0)
+    ruby_parser (2.0.6)
+      sexp_processor (~> 3.0)
+    sexp_processor (3.0.5)
+    slop (1.6.0)
     texplay (0.3.5)
       gosu (>= 0.7.25)
     texplay (0.3.5-x86-mingw32)
       gosu (>= 0.7.25)
+    win32console (1.3.0-x86-mingw32)
 
 PLATFORMS
   ruby
   x86-mingw32
 
 DEPENDENCIES
-  chingu!
+  chingu (~> 0.9rc5)
   chipmunk (= 5.2.2.0)
   fidgit (~> 0.0.5alpha)
   gosu (= 0.7.29)
+  pry (~> 0.8.3)
   texplay (~> 0.3.5)
