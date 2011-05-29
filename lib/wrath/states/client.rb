@@ -13,9 +13,9 @@ class Client < GameStates::NetworkClient
 
     super options
 
-    on_input(:escape) { close; pop_game_state }
+    on_input(:escape) { pop_game_state }
 
-    connect(options[:address], options[:port])
+    connect
   end
 
   def on_connect
@@ -28,7 +28,18 @@ class Client < GameStates::NetworkClient
 
   def on_disconnect
     log.info "Disconnected from server"
-    pop_until_game_state Menu unless current_game_state.is_a? Menu
+    pop_until_game_state self unless current_game_state == self
+    pop_game_state
+  end
+
+  def on_timeout
+    log.debug "Timed out from connection"
+    connect
+  end
+
+  def on_connection_refused
+    log.debug "Connection was refused by server"
+    super
   end
 
   def draw
@@ -39,6 +50,10 @@ class Client < GameStates::NetworkClient
 
   def on_msg(message)
     message.process if message.is_a? Message
+  end
+
+  def popped
+    close
   end
 end
 end

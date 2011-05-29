@@ -34,7 +34,16 @@ class Server < GameStates::NetworkServer
 
   def on_disconnect(socket)
     log.info { "Player disconnected: #{socket.inspect}" }
-    pop_until_game_state Menu unless current_game_state.is_a? Menu
+    pop_until_game_state self unless current_game_state == self
+    pop_game_state
+  end
+
+  def on_start
+    log.info { "Server listening on #{address}:#{port}" }
+  end
+
+  def on_start_error(msg)
+    log.info { "Error when starting server: #{msg}" }
   end
 
   def draw
