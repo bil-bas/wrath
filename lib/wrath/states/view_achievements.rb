@@ -40,8 +40,8 @@ module Wrath
           escape: :pop_game_state
       )
 
-      pack :vertical do
-        pack :horizontal, padding: 0 do |packer|
+      vertical do
+        horizontal padding: 0 do |packer|
           packer.label "Achievements", font_size: 32
           completed = achievement_manager.achievements.count {|a| a.complete? }
           ProgressBar.new(completed, achievement_manager.achievements.size,
@@ -49,14 +49,14 @@ module Wrath
         end
 
         scroll_window width: $window.width - 50, height: $window.height - 150, background_color: WINDOW_BACKGROUND_COLOR do
-          pack :vertical, spacing: 5 do
+          vertical spacing: 5 do
             complete, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
             complete.each {|achieve| achievement(achieve) }
             incomplete.each {|achieve| achievement(achieve) }
           end
         end
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
         end
       end
@@ -64,11 +64,11 @@ module Wrath
     
     protected
     def achievement(achieve)
-      pack :horizontal, padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
+      horizontal padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
         label "", icon: ScaledImage.new(achieve.icon, sprite_scale * 1.5),
           border_thickness: 4, border_color: Color::BLACK, padding: 0
-        pack :vertical, padding: 0, spacing: 0 do
-          pack :horizontal, padding: 0, spacing: 0 do |packer|
+        vertical padding: 0, spacing: 0 do
+          horizontal padding: 0, spacing: 0 do |packer|
             # title
             color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
             packer.label achieve.title, width: 390, font_size: 20, color: color
@@ -88,7 +88,7 @@ module Wrath
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
 
           unless achieve.unlocks.empty?
-            pack :horizontal, padding: 0, spacing: 4 do
+            horizontal padding: 0, spacing: 4 do
               achieve.unlocks.each do |unlock|
               icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
               title = unlock.unlocked? ? "Unlocked" : "Locked"

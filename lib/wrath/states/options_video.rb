@@ -8,10 +8,10 @@ module Wrath
       on_input(:escape, :pop_game_state)
 
 
-      pack :vertical, spacing: 20, padding: 20 do
+      vertical spacing: 20, padding: 20 do
         label "Options  |  Video", font_size: 32
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           toggle_button "Fullscreen?", value: settings[:video, :full_screen] do |sender, value|
             settings[:video, :full_screen] = value
             @exit_button.enabled = true
@@ -23,7 +23,7 @@ module Wrath
 
         @warning_label = label " "
 
-        pack :horizontal, padding: 0, spacing: 20 do
+        horizontal padding: 0, spacing: 20 do
           button("Back") { pop_game_state }
           @exit_button = button("Exit", enabled: false) do
             pop_until_game_state Menu

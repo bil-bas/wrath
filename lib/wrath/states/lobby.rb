@@ -41,7 +41,7 @@ module Wrath
           "Lobby"
       end
 
-      pack :vertical, spacing: 0 do
+      vertical spacing: 0 do
         label heading, font_size: 32
 
         player_grid
@@ -49,7 +49,7 @@ module Wrath
         level_picker
       end
 
-      pack :horizontal do
+      horizontal do
         button "(B)ack" do
           pop_until_game_state Play
         end
@@ -85,7 +85,7 @@ module Wrath
 
     protected
     def level_picker
-      pack :horizontal, spacing: 0 do
+      horizontal spacing: 0 do
         @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
@@ -138,7 +138,7 @@ module Wrath
       @ready_indicators = []
       @num_readies = 0
 
-      pack :grid, num_columns: 3, spacing: 4 do
+      grid num_columns: 3, spacing: 4 do
         @player_names.each_with_index do |player_name, player_number|
           player_row player_name, player_number
         end
@@ -150,7 +150,7 @@ module Wrath
       @player_sprite_combos ||= {}
 
       is_local = ((player_number == @player_number) or local?)
-      pack :horizontal, spacing: 0, padding: 0 do
+      horizontal spacing: 0, padding: 0 do
         @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
           subscribe :changed do |sender, name|
             enable_priest_options

@@ -7,10 +7,10 @@ module Wrath
 
       on_input([:escape, :b], :pop_game_state)
 
-      pack :vertical do
+      vertical do
         label "Options  |  Audio", font_size: 32
 
-        pack :grid, num_columns: 4, padding: 0 do
+        grid num_columns: 4, padding: 0 do
           # MASTER
           label "Master"
           @master_slider = slider width: SLIDER_WIDTH,  range: 0.0..1.0 do |sender, value|
@@ -56,7 +56,7 @@ module Wrath
           #@play_song_button = button("Play") { @song.playing? ? @song.stop : @song.play }
         end
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
           button("Defaults") do
             @master_slider.value = Window::DEFAULT_VOLUME

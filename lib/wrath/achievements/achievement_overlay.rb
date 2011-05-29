@@ -32,9 +32,9 @@ module Wrath
         
         label_options = { z: ZOrder::GUI, font: options[:font], font_size: options[:font_size] }
         
-        @packer = pack :horizontal, padding: 0, spacing: 0 do 
+        @packer = horizontal padding: 0, spacing: 0 do
           label "", label_options.merge(icon: ScaledImage.new(icon, $window.sprite_scale), padding: 0, border_thickness: 4, border_color: ICON_BACKGROUND_COLOR)            
-          pack :vertical, padding: 0, spacing: 0 do
+          vertical padding: 0, spacing: 0 do
             label title, label_options.merge(color: TITLE_COLOR, font_size: TITLE_FONT_SIZE)
             text_area label_options.merge(width: TEXT_WIDTH, text: body, background_color: Color::NONE)
           end

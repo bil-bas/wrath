@@ -34,7 +34,7 @@ class GameOver < Gui
                               x: @avatar.x, y: @avatar.y - @avatar.z - @avatar.height / 2.0,
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
 
-    pack :horizontal, spacing: 10, padding_top: 430, padding_h: 220 do
+    horizontal spacing: 10, padding_top: 430, padding_h: 220 do
       unless client?
         button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
           replay

@@ -11,16 +11,16 @@ module Wrath
           escape: :pop_game_state
       )
 
-      pack :vertical do
+      vertical do
         label "Play Wrath", font_size: 32
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button("(O)ffline game", tip: 'Both players on the same keyboard') { local_game }
           button("(J)oin Game", tip: 'Connect to a network game someone else is hosting') { join_game }
           button("(H)ost Game", tip: 'Host a network game that that another player can join') { host_game }
         end
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
         end
       end

@@ -16,16 +16,16 @@ module Wrath
         escape: :pop_game_state
         )
 
-      pack :vertical do
+      vertical do
         label "Options", font_size: 32
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           PAGES.each_pair do |state, label|
             button(label) { push_game_state state }
           end
         end
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
         end
       end

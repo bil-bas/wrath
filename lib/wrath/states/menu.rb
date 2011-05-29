@@ -16,13 +16,12 @@ class Menu < Gui
 
     create_background
 
-    pack :horizontal, padding_left: 30, padding_top: 0, spacing: 0 do
-      @left_priests = pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
-
-      pack :vertical, spacing: 0, padding: 0 do
+    horizontal padding_left: 30, padding_top: 0, spacing: 0 do
+      @left_priests = vertical padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
+      vertical spacing: 0, padding: 0 do
         heading = label "Wrath", font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
         label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
-        pack :vertical, spacing: 8, padding_top: 30, padding_left: 80 do
+        vertical spacing: 8, padding_top: 30, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
           button("(P)lay", options.merge(tip: 'Play the game, on- or off-line')) { push_game_state Play }
           button("(I)nstructions", options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
@@ -34,7 +33,7 @@ class Menu < Gui
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
       end
 
-      @right_priests = pack :vertical, padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
+      @right_priests = vertical padding_top: 12, padding_left: 0, padding_right: 0, spacing: 14
     end
   end
 

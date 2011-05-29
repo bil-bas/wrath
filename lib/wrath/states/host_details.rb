@@ -3,15 +3,15 @@ module Wrath
     def initialize
       super
 
-      pack :vertical do
+      vertical do
         label "Hosting a Game", font_size: 32
 
-        pack :grid, num_columns: 2, padding: 0 do
+        grid num_columns: 2, padding: 0 do
           name_entry
           port_entry
         end
 
-        pack :horizontal, padding: 0 do
+        horizontal padding: 0 do
           button "(B)ack" do
             pop_game_state
           end
