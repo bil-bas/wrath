@@ -3,7 +3,7 @@ module Wrath
     include Log
 
     MAX_HISTORY = 300
-    SCALE = 1000.0
+    SCALE = 250.0
     SENT_COLOR = Color.rgba(0, 0, 255, 100)
     RECEIVED_COLOR = Color.rgba(0, 255, 0, 100)
     TEXT_COLOR = Color.rgba(255, 255, 255, 100)
@@ -31,19 +31,27 @@ module Wrath
 
     def average_over(time, y)
       time = [time, @seconds.size].min
-      sent, received = 0, 0
+      bytes_sent, bytes_received = 0, 0
+      packets_sent, packets_received = 0, 0
       @seconds[-time..-1].each do |second|
-        sent += second[:sent]
-        received += second[:received]
+        bytes_sent += second[:bytes_sent]
+        bytes_received += second[:bytes_received]
+        packets_sent += second[:packets_sent]
+        packets_received += second[:packets_received]
       end
 
-      str = "%7ds %12d %12d" % [time, (sent / time).round, (received / time).round]
+      str = "%7ds %15d %5d %20d %5d" % [
+          time,
+          (bytes_sent / time).round, (packets_sent / time).round,
+          (bytes_received / time).round, (packets_received / time).round
+      ]
+
       @font.draw str, 0, y, ZOrder::GUI, 1, 1, TEXT_COLOR
     end
 
     def draw
       if @visible
-        @font.draw "Over(s)     Sent(b) Received(b)", 0, $window.height - 80, ZOrder::GUI, 1, 1, TEXT_COLOR
+        @font.draw "Over(s)  Sent(b/s | pkt/s) Received(b/s | pkt/s)", 0, $window.height - 80, ZOrder::GUI, 1, 1, TEXT_COLOR
 
         unless @seconds.empty?
           average_over(1, $window.height - 60)
@@ -52,8 +60,8 @@ module Wrath
 
           pixel = $window.pixel
           @seconds.each_with_index do |data, i|
-            sent_height, received_height = data[:sent] / SCALE, data[:received] / SCALE
-            pixel.draw i, 200 - sent_height, ZOrder::GUI, 1, sent_height, SENT_COLOR
+            sent_height, received_height = data[:bytes_sent] / SCALE, data[:bytes_received] / SCALE
+            pixel.draw i, 400 - sent_height, ZOrder::GUI, 1, sent_height, SENT_COLOR
             pixel.draw i, 400 - received_height, ZOrder::GUI, 1, received_height, RECEIVED_COLOR
           end
         end
@@ -66,7 +74,12 @@ module Wrath
 
     def count
       @seconds.shift if @seconds.size == MAX_HISTORY
-      @seconds << { sent: @network.bytes_sent, received: @network.bytes_received }
+      @seconds << {
+          bytes_sent: @network.bytes_sent,
+          bytes_received: @network.bytes_received,
+          packets_sent: @network.packets_sent,
+          packets_received: @network.packets_received
+      }
       log.debug { "Over the last second, sent #{@network.bytes_sent} bytes in #{@network.packets_sent} packets; and received #{@network.bytes_received} bytes in #{@network.packets_received} packets" }
       @network.reset_counters
     end

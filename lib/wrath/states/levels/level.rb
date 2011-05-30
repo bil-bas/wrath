@@ -5,7 +5,7 @@ class Level < GameState
   GRAVITY = -5 / 1000.0 # Acceleration per second.
     
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
-  SYNC_DELAY = 1.0 / SYNCS_PER_SECOND
+  SYNC_DELAY = 0 # 1000.0 / SYNCS_PER_SECOND
   IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
   DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
   GLOW_WIDTH = 64
@@ -357,12 +357,14 @@ class Level < GameState
   end
 
   def sync
-    if (milliseconds - @last_sync) > SYNC_DELAY
+    if (milliseconds - @last_sync) >= SYNC_DELAY
       needs_sync = objects.select {|o| o.network_sync? }
-      length = send_message(Message::Sync.new(needs_sync))
+      sync = Message::Sync.new(needs_sync)
+      unless sync.empty?
+        length = send_message(sync)
 
-      log.debug { "Synchronised #{needs_sync.size} objects in #{length} bytes" }
-
+        log.debug { "Synchronised #{needs_sync.size} objects in #{length} bytes" }
+      end
       @last_sync = milliseconds
     end
   end
