@@ -1,16 +1,18 @@
 module Wrath
   class Mimic < Animal
-
-    DAMAGE = 5  / 1000.0 # 5/second
     FRAME_DISCOVERED = 0
     FRAME_UNDISCOVERED = 1
 
+    DAMAGE = 10
+
+    def hurts?(other); discovered? and not other.is_a?(Mimic); end
     def discovered?; @discovered; end
     def can_pick_up?; discovered?; end
     def can_be_activated?(actor); actor.empty_handed?; end
 
     def initialize(options = {})
       options = {
+        damage_per_hit: DAMAGE,
         favor: 10,
         health: 30,
         vertical_jump: 0.3,
@@ -19,19 +21,14 @@ module Wrath
         jump_delay: 1000,
         encumbrance: 0.4,
         z_offset: -2,
-        discovered: false,
         animation: "mimic_8x8.png",
       }.merge! options
-
-      @discovered = options[:discovered]
 
       super(options)
 
       # Make the mimic seem innocuous.
-      unless discovered?
-        self.image = @walking_animation[FRAME_UNDISCOVERED]
-        stop_timer(:jump)
-      end
+      @discovered = false
+      stop_timer(:jump)
     end
 
     def recreate_options
@@ -46,8 +43,7 @@ module Wrath
       end
     end
 
-    def health=(value)
-      super(value)
+    def on_wounded(sender, damage)
       wake_up unless discovered?
     end
 
@@ -66,20 +62,6 @@ module Wrath
     def update
       super
       self.image = @walking_animation[FRAME_UNDISCOVERED] unless discovered?
-    end
-
-    def on_collision(other)
-      return unless discovered?
-
-      case other
-        when Mimic
-          # Do nothing.
-
-        when Creature
-          other.health -= DAMAGE * frame_time
-      end
-
-      super(other)
     end
   end
 end

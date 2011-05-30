@@ -20,11 +20,11 @@ module Wrath
       @statistics = definition[:statistics]
       @required = definition[:required]
 
-      calculate_progress
-
       @unlocks = definition[:unlocks].map do |definition|
         Unlock.new(definition[:type], definition[:name], @manager, unlocked: @complete)
       end
+
+      check_statistics
 
       unless complete?
         @statistics.each do |statistic|

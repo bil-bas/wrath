@@ -3,10 +3,9 @@ module Wrath
 
     ANIMATION_DELAY = 250
     POISON_DURATION = 4000
-    DAMAGE = 10  / 1000.0 # dam/second
     GAS_COLOR = Color.rgba(0, 200, 0, 100)
 
-
+    def damage_per_second(other); 10; end
     def can_be_picked_up?(actor); false; end
 
     def initialize(options = {})
@@ -34,7 +33,6 @@ module Wrath
     def on_collision(other)
       case other
         when Creature
-          other.health -= DAMAGE * frame_time
           other.apply_status(:poisoned, duration: POISON_DURATION) unless other.poisoned?
       end
 

@@ -3,9 +3,9 @@ module Wrath
     trait :timer
 
     ANIMATION_DELAY = 50
-    DAMAGE = 20  / 1000.0 # 5/second
     GLOW_COLOR = Color.rgb(200, 200, 255)
 
+    def damage_per_second(other); 30; end
     def can_be_picked_up?(actor); false; end
 
     def initialize(options = {})
@@ -25,15 +25,6 @@ module Wrath
           destroy
         end
       end
-    end
-
-    def on_collision(other)
-      case other
-        when Creature
-          other.health -= DAMAGE * frame_time
-      end
-
-      super(other)
     end
 
     def update

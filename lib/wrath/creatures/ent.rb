@@ -1,17 +1,18 @@
 module Wrath
   class Ent < Humanoid
-    DAMAGE = 15 / 1000.0 # damage/second
+    DAMAGE = 30
 
+    def hurts?(other); other.controlled_by_player?; end
     def can_be_picked_up?(container); false; end
 
     def initialize(options = {})
       options = {
-        favor: 0,
-        health: 1000000,
-        walk_interval: 100,
-        elasticity: 0,
-        encumbrance: Float::INFINITY,
-        animation: "ent_16x16.png",
+          damage_per_hit: DAMAGE,
+          health: 1000000,
+          walk_interval: 100,
+          elasticity: 0,
+          encumbrance: Float::INFINITY,
+          animation: "ent_16x16.png",
       }.merge! options
 
       super options
@@ -22,16 +23,8 @@ module Wrath
       self.destroy
     end
 
-    def on_collision(other)
-      case other
-        when Ent
-          # Do nothing.
-
-        when Creature
-          other.health -= DAMAGE * frame_time
-      end
-
-      super(other)
+    def knocked_down_by(other)
+      # DON'T KNOCK ME DOWN!
     end
   end
 end

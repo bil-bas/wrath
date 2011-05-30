@@ -17,6 +17,9 @@
 # What killed you.
 :deaths: {}
 
+# What wounded you.
+:damage: {}
+
 # Favourite priests played.
 :priests: {}
 

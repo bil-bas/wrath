@@ -1,11 +1,18 @@
 module Wrath
-class Pirate < Knight
-  def initialize(options = {})
-    options = {
-        animation: "pirate_8x8.png",
-    }.merge! options
+  class Pirate < Humanoid
+    DAMAGE = 10
 
-    super options
+    def hurts?(other); other.controlled_by_player?; end
+
+    def initialize(options = {})
+      options = {
+          favour: 10,
+          health: 30,
+          damage_per_hit: DAMAGE,
+          animation: "pirate_8x8.png",
+      }.merge! options
+
+      super options
+    end
   end
-end
 end

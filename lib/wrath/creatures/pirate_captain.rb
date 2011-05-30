@@ -1,14 +1,16 @@
 module Wrath
-class PirateCaptain < Paladin
-  DAMAGE = 10 / 1000.0
+  class PirateCaptain < Pirate
+    DAMAGE = 15
 
-  def initialize(options = {})
-    options = {
-        damage: DAMAGE,
-        animation: "pirate_captain_8x8.png",
-    }.merge! options
+    def initialize(options = {})
+      options = {
+          favour: 12,
+          health: 50,
+          damage_per_hit: DAMAGE,
+          animation: "pirate_captain_8x8.png",
+      }.merge! options
 
-    super options
+      super options
+    end
   end
-end
 end

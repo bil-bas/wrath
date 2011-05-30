@@ -36,7 +36,14 @@ class Creature < Container
   THROW_UP_SPEED = 0.5
   MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
 
+  KNOCK_DOWN_SPEED_V  = 0.75
+  KNOCK_DOWN_SPEED_H = 3
+
+  PLAYER_STAND_UP_DELAY = 750 # Don't annoy the player.
+  CREATURE_STAND_UP_DELAY = 2000 # Give the player time to grab the creature.
+
   attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
+  attr_reader :flying_height
 
   attr_writer :player, :state, :facing, :strength
   alias_method :carrying?, :full?
@@ -48,18 +55,28 @@ class Creature < Container
   def dead?; @health <= 0; end
   def facing=(angle); @facing = angle % 360; end
   def controlled_by_player?; not @player.nil?; end
+  def can_be_picked_up?(container); ((@state == :lying) and (not hurts?(container))) or super; end
+  def stand_up_delay; controlled_by_player? ? PLAYER_STAND_UP_DELAY : CREATURE_STAND_UP_DELAY; end
+  def can_hit?(other)
+    super(other) and [:standing, :walking, :mounted].include? @state
+  end
+
+  def ground_level; super + (([:lying, :thrown].include? @state) ? 0 : @flying_height); end
 
   public
   def initialize(options = {})
     options = {
+        flying_height: 0,
         health: 10000,
         strength: 1.0,
+        z_offset: -2,
         facing: 0,
         sacrifice_particle: BloodDroplet,
     }.merge! options
 
     super options
 
+    @flying_height = options[:flying_height]
     @max_health = @health = options[:health]
     @speed = options[:speed]
     @strength = options[:strength]
@@ -134,8 +151,10 @@ class Creature < Container
 
   public
   def stand_up
-    parent.send_message(Message::StandUp.new(self)) if parent.host?
-    @state = :standing if @state == :thrown
+    if @state == :lying
+      parent.send_message(Message::StandUp.new(self)) if parent.host?
+      @state = :standing
+    end
   end
 
   protected
@@ -172,7 +191,7 @@ class Creature < Container
 
   public
   def mount(mount)
-    mount.activated_by(self)
+    mount.pick_up(self)
   end
 
   public
@@ -272,12 +291,12 @@ class Creature < Container
   end
 
   public
-  public
   def move(angle)
     angle += status(:poisoned).displacement_angle if poisoned?
     set_body_velocity(angle, effective_speed)
   end
 
+  public
   def on_collision(other)
     collided = super(other)
 
@@ -294,14 +313,47 @@ class Creature < Container
   end
 
   public
+  def wound(damage, wounder, type)
+    raise ArgumentError.new("bad type: #{type.inspect}") unless [:hit, :over_time].include? type
+
+    if local? and controlled_by_player?
+      stats = parent.statistics
+      wounder_name = wounder.class.name[/[^:+]+$/].to_sym
+
+      stats[:damage, :total] = (stats[:damage, :total] || 0) + damage
+      stats[:damage, :type, wounder_name] = (stats[:damage, :type, wounder_name] || 0) + damage
+
+      if damage >= health
+        stats.increment(:deaths, :total)
+        stats.increment(:deaths, :type, wounder_name)
+      end
+    end
+
+    self.health -= damage
+
+    if alive? and type == :hit
+      knocked_down_by(wounder)
+    end
+
+    self
+  end
+
+  public
+  # You were knocked down by someone else.
   def knocked_down_by(knocker)
     parent.send_message(Message::KnockedDown.new(self, knocker)) if parent and parent.host?
 
     @state = :thrown
-    @thrown_by = [knocker] + knocker.thrown_by
-    self.z_velocity = 0.5
+    @thrown_by += [knocker] + knocker.thrown_by
+    @thrown_by << knocker.container if knocker.container and knocker.container.mount?
+    drop unless empty_handed?
 
-    knocker.thrown_by << self
+    angle = Gosu::angle(knocker.x, knocker.y, x, y)
+    self.velocity = [offset_x(angle, KNOCK_DOWN_SPEED_H), offset_y(angle, KNOCK_DOWN_SPEED_H), KNOCK_DOWN_SPEED_V]
+
+    knocker.knocked_someone_down(self)
+
+    nil
   end
 
   protected
@@ -326,7 +378,8 @@ class Creature < Container
     case @state
       when :thrown
         # Stand up if we were thrown.
-        after(STAND_UP_DELAY, name: :stand_up) { stand_up } unless parent.client?
+        @state = :lying
+        after(stand_up_delay, name: :stand_up) { stand_up } unless parent.client?
     end
 
     super

@@ -222,7 +222,27 @@
     - [:sacrifices, :type, :Sheep]
   :required: 100
   :unlocks: []
-  
+
+# Deaths
+-
+  :name: :death_fire
+  :title: Charcoal briquette
+  :description: Burned to death.
+  :statistics:
+    - [:deaths, :type, :Fire]
+  :required: 1
+  :unlocks: []
+
+# Damage
+-
+  :name: :damage_1
+  :title: Black and blue
+  :description: Took 10,000 damage.
+  :statistics:
+    - [:damage, :total]
+  :required: 10000
+  :unlocks: []
+
 # Status effects
 -
   :name: :status_irradiated

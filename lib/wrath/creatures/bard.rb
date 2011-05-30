@@ -1,29 +1,26 @@
 module Wrath
-class Bard < Humanoid
-  trait :timer
+  class Bard < Humanoid
+    trait :timer
 
-  public
-  def initialize(options = {})
-    options = {
-      favor: 10,
-      health: 30,
-      encumbrance: 0.4,
-      z_offset: -2,
-      animation: "bard_8x8.png",
-    }.merge! options
+    public
+    def initialize(options = {})
+      options = {
+          favor: 10,
+          animation: "bard_8x8.png",
+      }.merge! options
 
-    super options
+      super options
 
-    after(2) { play }
-  end
-
-  protected
-  def play
-    if [x_velocity, y_velocity, z_velocity] == [0, 0, 0]
-      Note.create(parent: parent, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)
+      after(2) { play }
     end
 
-    after(400 + rand(3) * 200) { play }
+    protected
+    def play
+      if [x_velocity, y_velocity, z_velocity] == [0, 0, 0]
+        Note.create(parent: parent, x: x + (factor_x * 4) - 1 + rand(3), y: y, z: z + 3)
+      end
+
+      after(400 + rand(3) * 200) { play }
+    end
   end
-end
 end

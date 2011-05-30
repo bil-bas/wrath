@@ -1,16 +1,16 @@
 module Wrath
-class Paladin < Knight
-  DAMAGE = 10 / 1000.0 # 10/second
+  class Paladin < Knight
+    DAMAGE = 20
 
-  def initialize(options = {})
-    options = {
-        damage: DAMAGE,
-        favor: 15,
-        health: 70,
-        animation: "paladin_8x8.png",
-    }.merge! options
+    def initialize(options = {})
+      options = {
+          damage_per_hit: DAMAGE,
+          favor: 15,
+          health: 70,
+          animation: "paladin_8x8.png",
+      }.merge! options
 
-    super options
+      super options
+    end
   end
-end
 end

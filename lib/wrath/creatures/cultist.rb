@@ -1,12 +1,17 @@
 module Wrath
-class Cultist < Knight
-  def initialize(options = {})
-    options = {
-        animation: "cultist_8x8.png",
-        encumbrance: 0.4,
-    }.merge! options
+  class Cultist < Humanoid
+    DAMAGE = 10
 
-    super options
+    def hurts?(other); other.controlled_by_player?; end
+
+    def initialize(options = {})
+      options = {
+          favour: 8,
+          damage_per_hit: DAMAGE,
+          animation: "cultist_8x8.png",
+      }.merge! options
+
+      super options
+    end
   end
-end
 end

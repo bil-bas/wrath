@@ -18,7 +18,7 @@ class Lava < Water
 
       when Creature
         damage = filled? ? FILLED_DAMAGE : DAMAGE
-        object.health -= damage * parent.frame_time unless parent.client?
+        object.wound(damage * parent.frame_time, self, :over_time) unless parent.client?
 
       else
         object.destroy

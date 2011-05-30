@@ -10,7 +10,7 @@ module Wrath
 
       def update
         OVERLAY_COLOR.alpha = ((1.3 + Math::sin(milliseconds / 250.0)) * 90).to_i
-        owner.health -= DAMAGE * parent.frame_time
+        owner.wound(DAMAGE * parent.frame_time, self, :over_time)
         super
       end
       

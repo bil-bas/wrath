@@ -11,7 +11,10 @@ module Wrath
 
     def initialize(options = {})
       options = {
+          encumbrance: 0.4,
+          health: 30,
           speed: 1,
+          z_offset: -2,
           elasticity: 0.3,
           walk_duration: 2000,
           walk_interval: 2000,

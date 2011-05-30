@@ -1,10 +1,13 @@
 module Wrath
   # An object that can move around and be picked up and put into things.
   class DynamicObject < BaseObject
-    attr_reader :container, :thrown_by, :z_offset
+    MIN_ENCUMBRANCE_TO_KNOCK_DOWN = 0.2 # Enough weight to knock creatures over when hit by them.
+
+    attr_reader :container, :thrown_by, :z_offset, :damage_per_second, :damage_per_hit
     attr_reader :encumbrance
     attr_writer :encumbrance
 
+    def hurts?(other); @damage_per_hit > 0 or @damage_per_second > 0; end
     def can_be_dropped?; true; end
     def can_be_picked_up?(container)
       not @thrown_by.include? container # So you can't pick something up the moment you throw it.
@@ -20,12 +23,17 @@ module Wrath
     public
     def initialize(options = {})
       options = {
+          damage_per_hit: 0,
+          damage_per_second: 0,
           encumbrance: 0.2,
           z_offset: 0,
       }.merge! options
 
       @encumbrance = options[:encumbrance]
       @z_offset = options[:z_offset]
+
+      @damage_per_hit = options[:damage_per_hit]
+      @damage_per_second = options[:damage_per_second]
 
       @thrown_by = [] # These will be immune from colliding with the object.
 
@@ -35,8 +43,9 @@ module Wrath
     end
 
     public
+    # Can knock down something by just hitting it, rather than doing actual damage.
     def can_knock_down_creature?(creature)
-      encumbrance >= creature.encumbrance * 0.5 and
+      encumbrance >= MIN_ENCUMBRANCE_TO_KNOCK_DOWN and
       thrown? and not thrown_by.include? creature
     end
 
@@ -72,15 +81,43 @@ module Wrath
     end
 
     public
+    def can_hit?(other)
+      damage_per_hit > 0 and @container != other and other.container != self and
+          not thrown_by.include?(other) and not other.thrown_by.include?(self)
+    end
+
+    public
     def on_collision(other)
       case other
         when Wall
           # Everything, except carried objects, hit walls.
           (not (can_pick_up? and inside_container?))
 
+        when Creature
+          # Hurt things that we don't like in a big one-off strike.
+          if hurts?(other)
+            if can_hit?(other)
+              other.wound(damage_per_hit, self, :hit)
+            elsif damage_per_second > 0
+              # Hurt things that we don't like over time, for example by fire. Only happens if
+              # we didn't hit them.
+              other.wound(damage_per_second * parent.frame_time / 1000.0, self, :over_time)
+            end
+          end
+
+          false
+
         else
           false
       end
+    end
+
+    public
+    # You knocked someone (else) down, either by being thrown at them or by hitting them.
+    def knocked_someone_down(knockee)
+      thrown_by << knockee if thrown?
+
+      nil
     end
 
     public
