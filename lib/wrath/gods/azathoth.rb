@@ -1,8 +1,6 @@
 module Wrath
   # Cosmic evil.
   class Azathoth < God
-    def loved_objects; [Pirate, Amazon, Monkey, Parrot, TreasureChest]; end
-
     def update
       super
 
@@ -11,8 +9,6 @@ module Wrath
           Meteorite.create(position: spawn_position($window.retro_height), parent: parent)
         end
       end
-    rescue Exception => e
-      log.debug e
     end
   end
 end

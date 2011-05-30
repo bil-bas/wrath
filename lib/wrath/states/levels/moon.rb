@@ -1,5 +1,5 @@
 module Wrath
-  class Level
+  class Level < GameState
     # Yuggoth (Pluto), a bluish moon with low gravity. Clangers are out today, though.
     class Moon < Level
       DEFAULT_TILE = MoonDust
@@ -20,11 +20,6 @@ module Wrath
 
       def create_objects
         super(PLAYER_SPAWNS)
-
-        # Mobs.
-        SPAWNS.each_pair do |obj, number|
-          [number - 1, 1].max.times { obj.create }
-        end
 
         # Inanimate objects.
         12.times { Rock.create(color: Color::BLUE) }

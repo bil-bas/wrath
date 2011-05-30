@@ -1,5 +1,5 @@
 module Wrath
-class Level
+class Level < GameState
   class Ship < Level
     DEFAULT_TILE = Planking
 
@@ -21,12 +21,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      1.times { PirateCaptain.create }
-      5.times { Pirate.create }
-      2.times { Parrot.create }
-      1.times { Monkey.create }
 
       # Inanimate objects.
       7.times { Barrel.create(contents: BARREL_CONTENTS) }

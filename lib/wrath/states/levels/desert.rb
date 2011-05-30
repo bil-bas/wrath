@@ -1,12 +1,13 @@
 module Wrath
-class Level
+class Level < GameState
   class Desert < Level
     DEFAULT_TILE = Sand
 
     CHEST_CONTENTS = [Crown, FlyingCarpet]
     GOD = Storm
+
     SPAWNS = {
-        Sheep => 8,
+        Sheep => 4,
         Knight => 3,
         Cultist => 4
     }
@@ -18,11 +19,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      2.times { Sheep.create }
-      3.times { Cultist.create }
-      2.times { Knight.create }
 
       # Inanimate objects.
       5.times { Chest.create(contents: CHEST_CONTENTS) }

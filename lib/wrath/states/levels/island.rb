@@ -1,5 +1,5 @@
 module Wrath
-class Level
+class Level < GameState
   class Island < Level
     DEFAULT_TILE = Sand
 
@@ -22,14 +22,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      2.times { Pirate.create }
-      3.times { Amazon.create }
-      1.times { Chicken.create }
-      3.times { Parrot.create }
-      2.times { Monkey.create }
-      2.times { Mosquito.create }
 
       # Inanimate objects.
       7.times { Rock.create }

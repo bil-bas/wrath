@@ -1,5 +1,5 @@
 module Wrath
-class Level
+class Level < GameState
   class Facility < Level
     DEFAULT_TILE = Plastic
 
@@ -7,7 +7,7 @@ class Level
     SPAWNS = {
         CompanionCube => 5,
         TestSubject => 1,
-        Turret => 7,
+        Turret => 6,
     }
 
     # This is relative to the altar.
@@ -17,11 +17,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      4.times { CompanionCube.create }
-      1.times { TestSubject.create }
-      5.times { Turret.create }
 
       # Static objects.
       18.times { Block.create(stack: [1, 1, 1, 1, 2, 2, 3].sample) }

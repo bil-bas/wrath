@@ -1,13 +1,15 @@
 module Wrath
-class Level
+class Level < GameState
   class Cave < Level
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 
     CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet, Crown]
+
     SPAWNS = {
         Knight => 5,
         BlueMeanie => 4,
+        Mimic => 3,
     }
 
     # This is relative to the altar.
@@ -17,11 +19,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      4.times { Knight.create }
-      2.times { BlueMeanie.create }
-      (1 + rand(3)).times { Mimic.create }
 
       # Inanimate objects.
       8.times { Rock.create }

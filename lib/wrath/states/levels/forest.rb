@@ -1,5 +1,5 @@
 module Wrath
-class Level
+class Level < GameState
   class Forest < Level
     DEFAULT_TILE = Grass
     NUM_SHEEP = 5
@@ -27,13 +27,6 @@ class Level
 
     def create_objects
       super(PLAYER_SPAWNS)
-
-      # Mobs.
-      1.times { Virgin.create }
-      NUM_SHEEP.times { Sheep.create }
-      NUM_CHICKENS.times { Chicken.create }
-      1.times { Bard.create }
-      2.times { Knight.create }
 
       # Inanimate objects.
       4.times { Rock.create }

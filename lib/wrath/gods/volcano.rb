@@ -1,8 +1,6 @@
 module Wrath
   # Volcano god for the island level.
   class Volcano < God
-    def loved_objects; [Pirate, Amazon, Monkey, Parrot, TreasureChest]; end
-
     def update
       super
 

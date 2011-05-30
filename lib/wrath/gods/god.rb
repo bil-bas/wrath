@@ -92,7 +92,7 @@ module Wrath
 
       unless parent.client?
         after(1000) do
-          self.loves = (loved_objects - [old_loves]).select {|o| o.default_image }.sample
+          self.loves = (parent.class.const_get(:SPAWNS).keys - [old_loves]).select {|o| o.default_image }.sample
         end
       end
     end

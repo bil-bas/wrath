@@ -259,6 +259,11 @@ class Level < GameState
     player2 = Priest.create(name: @priest_names[1], local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
                             factor_x: -1)
     players[1].avatar = player2
+
+    # Mobs.
+    self.class.const_get(:SPAWNS).each_pair do |obj, number|
+      [number - 1, 1].max.times { obj.create }
+    end
   end
 
   def random_tiles(default_tile)
