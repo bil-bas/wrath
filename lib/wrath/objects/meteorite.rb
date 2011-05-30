@@ -1,31 +1,41 @@
 module Wrath
   class Meteorite < Rock
     IRRADIATED_DURATION = 6000
-    
-    def can_be_picked_up?(container); false; end
-    def ground_level; -2; end
-    def casts_shadow?; false; end
+
+    SPRITE_LANDING = 0
+    SPRITE_EMBEDDED = 1
+    SPRITE_FREE = 2
     
     def initialize(options = {})
       options = {
-          color: Color::GREEN.dup,
+          favor: 2,
+          animation: "meteorite_7x13.png",
           elasticity: 0,
-          encumbrance: 0.8, # Can be heavy, since it also gives strength.
+          encumbrance: 1.3, # Can be heavy, since it also gives strength via radiation.
       }.merge! options
-      
+
+      @landed = false
+
       super(options)
-      
-      image.outline # Force creation of an outline image.
+    end
+    
+    def on_stopped
+      unless @landed
+        @landed = true
+        Sample["objects/rock_sacrifice.ogg"].play
+        self.image = @frames[SPRITE_EMBEDDED]
+      end
+
+      super
     end
 
-    
-    def on_stopped 
-      Sample["objects/rock_sacrifice.ogg"].play
-      super
+    def on_being_picked_up(actor)
+      self.image = @frames[SPRITE_FREE]
     end
     
     def draw
       super
+
       intensity = ((parent.retro_height - z.to_f) / parent.retro_height) - 0.75
       color = Color::GREEN.dup
       color.alpha = 100
@@ -34,12 +44,17 @@ module Wrath
     end
     
     def draw_self
-      super 
-      image.outline.draw_rot x, y + 1 - z, zorder, 0, 0.5, 1.0, factor_x, factor_y, color, :additive
+      super
+
+      $window.clip_to(0, 0, 10000, y) do
+        color = Status::Irradiated::OVERLAY_COLOR
+        color.alpha = ((1.3 + Math::sin(milliseconds / 500.0)) * 90).to_i
+        image.outline.draw_rot x, y + 1 - z, zorder, 0, 0.5, 1.0, factor_x, factor_y, color, :additive
+      end
     end 
 
     def on_collision(other)
-      if not parent.client? and other.is_a? Creature
+      if other.is_a? Creature
         other.apply_status(:irradiated, duration: IRRADIATED_DURATION)
       end
       
