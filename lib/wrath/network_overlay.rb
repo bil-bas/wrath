@@ -14,6 +14,7 @@ module Wrath
 
     def initialize(network)
       @network = network
+      @network.reset_counters
 
       @clock = Clock.new
       @clock.every(1000) { count }
@@ -41,18 +42,21 @@ module Wrath
     end
 
     def draw
-      return if not @visible or @seconds.empty?
+      if @visible
+        @font.draw "Over(s)     Sent(b) Received(b)", 0, $window.height - 80, ZOrder::GUI, 1, 1, TEXT_COLOR
 
-      @font.draw "Over(s)     Sent(b) Received(b)", 0, $window.height - 80, ZOrder::GUI, 1, 1, TEXT_COLOR
-      average_over(1, $window.height - 60)
-      average_over(10, $window.height - 40)
-      average_over(60, $window.height - 20)
+        unless @seconds.empty?
+          average_over(1, $window.height - 60)
+          average_over(10, $window.height - 40)
+          average_over(60, $window.height - 20)
 
-      pixel = $window.pixel
-      @seconds.each_with_index do |data, i|
-        sent_height, received_height = data[:sent] / SCALE, data[:received] / SCALE
-        pixel.draw i, 200 - sent_height, ZOrder::GUI, 1, sent_height, SENT_COLOR
-        pixel.draw i, 400 - received_height, ZOrder::GUI, 1, received_height, RECEIVED_COLOR
+          pixel = $window.pixel
+          @seconds.each_with_index do |data, i|
+            sent_height, received_height = data[:sent] / SCALE, data[:received] / SCALE
+            pixel.draw i, 200 - sent_height, ZOrder::GUI, 1, sent_height, SENT_COLOR
+            pixel.draw i, 400 - received_height, ZOrder::GUI, 1, received_height, RECEIVED_COLOR
+          end
+        end
       end
     end
 
