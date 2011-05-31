@@ -45,7 +45,7 @@ module Wrath
           packer.label "Achievements", font_size: 32
           completed = achievement_manager.achievements.count {|a| a.complete? }
           ProgressBar.new(completed, achievement_manager.achievements.size,
-                                    parent: packer, width: 400, font_size: 32)
+                                    parent: packer, width: $window.width - 500, font_size: 32)
         end
 
         scroll_window width: $window.width - 50, height: $window.height - 150, background_color: WINDOW_BACKGROUND_COLOR do
@@ -66,12 +66,13 @@ module Wrath
     def achievement(achieve)
       horizontal padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
         label "", icon: ScaledImage.new(achieve.icon, sprite_scale * 1.5),
-          border_thickness: 4, border_color: Color::BLACK, padding: 0
+            border_thickness: 4, border_color: Color::BLACK, padding: 0
+
         vertical padding: 0, spacing: 0 do
           horizontal padding: 0, spacing: 0 do |packer|
             # title
             color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
-            packer.label achieve.title, width: 390, font_size: 20, color: color
+            packer.label achieve.title, width: 380, font_size: 20, color: color
 
             # Progress bar, if needed.
             if achieve.complete?
@@ -79,12 +80,12 @@ module Wrath
               packer.label completed_at, font_size: 15, padding_left: 0
             else
               ProgressBar.new(achieve.total, achieve.required,
-                      parent: packer, width: 185, height: 20, font_size: 15)
+                      parent: packer, width: $window.width - 625, height: 20, font_size: 15)
             end
           end
 
           # Description of what has been done.
-          text_area text: achieve.description, font_size: 15, width: $window.width - 175,
+          text_area text: achieve.description, font_size: 15, width: $window.width - 225,
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
 
           unless achieve.unlocks.empty?

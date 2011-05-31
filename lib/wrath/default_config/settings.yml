@@ -11,4 +11,5 @@
   :music_volume: 1.0
   :muted: false
 :video:
+  :window_scale: 4
   :full_screen: false

@@ -50,7 +50,8 @@ end
 class Game < Window
   include Log
 
-  DEFAULT_SIZE = [768, 480]
+  RETRO_WIDTH = 192
+  RETRO_HEIGHT = 120
 
   SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.
   STATISTICS_CONFIG_FILE = 'statistics.yml'
@@ -71,14 +72,27 @@ class Game < Window
 
   attr_reader :pixel, :sprite_scale, :achievement_manager
 
+  def retro_width; RETRO_WIDTH; end
+  def retro_height; RETRO_HEIGHT; end
 
-  def retro_width; width / @sprite_scale; end
-  def retro_height; height / @sprite_scale; end
+  def initialize
+    full_screen = false # settings[:video, :full_screen]
+
+    @sprite_scale = settings[:video, :window_scale]
+
+    width, height = if full_screen
+                      [screen_width, screen_height]
+                    else
+                      [RETRO_WIDTH * @sprite_scale, RETRO_HEIGHT * @sprite_scale]
+                    end
+
+    log.info { "Opened window at #{width}x#{height} (X#{@sprite_scale} zoom)" }
+
+    super(width, height, full_screen)
+  end
 
   # To change
   def setup
-    log.info { "Opening window" }
-
     media_dir = File.expand_path(File.join(EXTRACT_PATH, 'media'))
     Image.autoload_dirs.unshift File.join(media_dir, 'images')
     Sample.autoload_dirs.unshift File.join(media_dir, 'sounds')
@@ -86,7 +100,6 @@ class Game < Window
     Font.autoload_dirs.unshift File.join(media_dir, 'fonts')
 
     retrofy
-    @sprite_scale = 4
 
     @used_time = 0
     @last_time = milliseconds
@@ -160,9 +173,7 @@ class Game < Window
   end
 
   def self.run
-    full_screen = settings[:video, :full_screen]
-    size = (full_screen ? [screen_width, screen_height] : DEFAULT_SIZE)
-    new(*size, full_screen).show
+    new.show
   end
 end
 

@@ -6,7 +6,8 @@ v0.0.4alpha (unreleased)
   * Collects game-play statistics locally (for achievements).
   * Added achievements and unlocks system.
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
-  * Favour of object currently carried is indicated next to favour bars. 
+  * Favour of object currently carried is indicated next to favour bars.
+  * Can set sound volume and window size in options.
   * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
   * Added level in a tech facility (AI _are_ gods, aren't they?)
   * Added level in a desert (reused storm god, though, until unique one created)

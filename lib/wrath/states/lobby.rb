@@ -92,7 +92,7 @@ module Wrath
           end
         end
 
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.16), padding: 0
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
       end
     end
 
@@ -159,7 +159,7 @@ module Wrath
           end
         end
 
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], 1.16), padding: 0
+        label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
       end
 
       label player_name

@@ -2,7 +2,7 @@ module Wrath
   class Options < Gui
     PAGES = {
         OptionsAudio => "(A)udio",
-        #OptionsVideo => "(V)ideo",
+        OptionsVideo => "(V)ideo",
         OptionsControls => "(C)ontrols",
     }
 
@@ -12,6 +12,7 @@ module Wrath
       add_inputs(
         a: OptionsAudio,
         c: OptionsControls,
+        v: OptionsVideo,
         b: :pop_game_state,
         escape: :pop_game_state
         )
