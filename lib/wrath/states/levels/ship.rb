@@ -61,7 +61,7 @@ class Level < GameState
     end
 
     def create_altar
-      Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 2.5)
+      Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 3.5)
     end
   end
 end
