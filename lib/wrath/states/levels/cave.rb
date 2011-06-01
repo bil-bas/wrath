@@ -10,6 +10,7 @@ class Level < GameState
         Knight => 5,
         BlueMeanie => 4,
         Mimic => 3,
+        Snake => 1,
     }
 
     # This is relative to the altar.

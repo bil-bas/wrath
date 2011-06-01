@@ -7,7 +7,6 @@ module Wrath
 
     def hurts?(other); discovered? and not other.is_a?(Mimic); end
     def discovered?; @discovered; end
-    def can_pick_up?; discovered?; end
     def can_be_activated?(actor); actor.empty_handed?; end
 
     def initialize(options = {})
@@ -15,10 +14,11 @@ module Wrath
         damage_per_hit: DAMAGE,
         favor: 10,
         health: 30,
-        vertical_jump: 0.3,
-        horizontal_jump: 0.6,
+        vertical_jump: 0.6,
+        horizontal_jump: 1.2,
         elasticity: 0.1,
-        jump_delay: 1000,
+        move_interval: 1000,
+        move_type: :none, # Doesn't move until it is awakened.
         encumbrance: 0.4,
         z_offset: -2,
         animation: "mimic_8x8.png",
@@ -28,7 +28,6 @@ module Wrath
 
       # Make the mimic seem innocuous.
       @discovered = false
-      stop_timer(:jump)
     end
 
     def recreate_options
@@ -54,9 +53,10 @@ module Wrath
 
       self.z_velocity = 0.5
       self.image = @walking_animation[FRAME_DISCOVERED]
-
       @discovered = true
-      schedule_jump
+
+      self.move_type = :jump
+      schedule_move
     end
 
     def update

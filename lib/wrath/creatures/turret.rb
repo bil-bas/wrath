@@ -12,6 +12,7 @@ module Wrath
           favor: 6,
           health: 10,
           encumbrance: 0.2,
+          move_type: :none,
           animation: "turret_6x6.png",
           sacrifice_particle: Spark,
       }.merge! options
@@ -19,8 +20,12 @@ module Wrath
       super(options)
     end
 
-    def schedule_jump
+    def schedule_move
       # Do nothing.
+    end
+
+    def start_jump
+
     end
   end
 end

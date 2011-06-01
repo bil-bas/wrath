@@ -28,7 +28,6 @@ class Creature < Container
   FRAME_THROWN = 2
   FRAME_MOUNTED = 0
   FRAME_CARRIED = 2
-  FRAME_SLEEP = 3
   FRAME_DEAD = 3
 
   THROW_MOVING_SPEED_MULTIPLIER = 3 # Speed things are thrown at, compared to own speed.
@@ -54,14 +53,17 @@ class Creature < Container
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
   def facing=(angle); @facing = angle % 360; end
-  def controlled_by_player?; not @player.nil?; end
-  def can_be_picked_up?(container); ((@state == :lying) and (not hurts?(container))) or super; end
+  def controlled_by_player?; false; end
+  def can_be_picked_up?(container); ((@state == :lying) or (not hurts?(container))) and super; end
   def stand_up_delay; controlled_by_player? ? PLAYER_STAND_UP_DELAY : CREATURE_STAND_UP_DELAY; end
   def can_hit?(other)
     super(other) and [:standing, :walking, :mounted].include? @state
   end
 
   def ground_level; super + (([:lying, :thrown].include? @state) ? 0 : @flying_height); end
+  # Creatures don't bounce much if thrown. Usual elasticity only used in movement.
+  def elasticity; thrown? ? [0.3, super].min : super; end
+  def walking_to_do?; @walk_time_left > 0; end
 
   public
   def initialize(options = {})
@@ -72,26 +74,59 @@ class Creature < Container
         z_offset: -2,
         facing: 0,
         sacrifice_particle: BloodDroplet,
+        move_interval: 2000,
     }.merge! options
 
     super options
 
     @flying_height = options[:flying_height]
     @max_health = @health = options[:health]
-    @speed = options[:speed]
+
     @strength = options[:strength]
     @facing = options[:facing]
+
+    @move_interval = options[:move_interval]
+
+    # For walkers:
+    @walk_duration = options[:walk_duration]
+    @speed = options[:speed]
+    @walk_time_left = 0
+
+    # For jumpers:
+    @vertical_jump = options[:vertical_jump]
+    @horizontal_jump = options[:horizontal_jump]
+
+    self.move_type = options[:move_type]
 
     @death_explosion = Emitter.new(BloodDroplet, parent, number: ((favor / 5) + 4), h_speed: EXPLOSION_H_SPEED,
                                             z_velocity: EXPLOSION_Z_VELOCITY)
 
     @state = :standing
-    @player = nil
 
     @first_wounded_at = @last_wounded_at = nil
 
     @walking_animation = @frames[FRAME_WALK1..FRAME_WALK2]
     @walking_animation.delay = WALK_ANIMATION_DELAY
+
+    schedule_move
+  end
+
+  public
+  def move_type=(value)
+    @move_type = value
+
+    case @move_type
+      when :walk
+        raise ":walk_duration and :speed required for walkers" unless @walk_duration and @speed
+        raise ":move_interval required" unless @move_interval
+      when :jump
+        raise ":vertical_jump and :horizontal_jump required for walkers" unless @vertical_jump and @horizontal_jump
+        raise ":move_interval required" unless @move_interval
+      when :none
+        nil
+      else
+        raise "unknown :move_type: #{@move_type}"
+    end
   end
 
   public
@@ -112,13 +147,74 @@ class Creature < Container
   end
 
   protected
+  def schedule_move
+    if local? and not controlled_by_player?
+      after(@move_interval + (rand(@move_interval / 2.0) + rand(@move_interval / 2.0)), name: :move) do
+        if local? and not controlled_by_player?
+          if @state == :standing
+            start_moving
+          else
+            schedule_move
+          end
+        end
+      end
+    end
+  end
+
+  protected
+  def start_moving
+    case @move_type
+      when :walk then start_walking
+      when :jump then start_jumping
+      when :none then nil
+    end
+  end
+
+  protected
+  def start_jumping
+    self.facing = rand(360)
+    @z_velocity = random(@vertical_jump * 0.75, @vertical_jump * 1.25)
+    h_jump = random(@horizontal_jump * 0.75, @horizontal_jump * 1.25)
+    @y_velocity = Math::sin(facing) * h_jump
+    @x_velocity = Math::cos(facing) * h_jump
+  end
+
+  protected
+  def start_walking
+    self.state = :walking
+    self.facing = rand(360)
+    @walk_time_left = random(@walk_duration * 0.5, @walk_duration * 1.5)
+  end
+
+    protected
+  def on_wounded(sender, damage)
+     # Try to move away from pain.
+     if local? and not controlled_by_player? and [:standing, :walking].include? @state
+       if timer_exists? :move
+         stop_timer(:move)
+         start_moving
+       end
+     end
+  end
+
+  public
+  def halt
+    @walk_time_left = 0
+    self.state = :standing
+    schedule_move
+    super
+  end
+
+  protected
   def draw_self
     super
 
+    # Draw a red overlay to show when you are wounded.
     if @overlay_color
       image.silhouette.draw_rot(x, y - z, y, 0, center_x, center_y, factor_x, factor_y, @overlay_color)
     end
-    
+
+    # Draw a health bar, but only if injured.
     if health < max_health
       $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width, 1, Color::BLACK
       $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width * health / max_health.to_f, 0.5, Color::RED
@@ -227,6 +323,17 @@ class Creature < Container
 
   public
   def update
+    return unless exists?
+
+    if @move_type == :walk and local? and @state == :walking and not controlled_by_player?
+      if walking_to_do?
+        move(facing)
+        @walk_time_left -= frame_time
+      else
+        halt
+      end
+    end
+
     super
 
     # Ensure that state is updated remotely.
@@ -235,10 +342,6 @@ class Creature < Container
         @state = :walking if [x_velocity, y_velocity] != [0, 0]
       when :walking
         @state = :standing if velocity == [0, 0, 0]
-
-        # Turn if we are walking into a wall. 500 degrees/second.
-        @facing += 0.5 * parent.frame_time if position == @last_position
-        @last_position = position
     end
 
     update_color
@@ -264,8 +367,6 @@ class Creature < Container
                      @frames[FRAME_LIE]
                    when :thrown
                      @frames[FRAME_THROWN]
-                   when :sleeping
-                     @frames[FRAME_SLEEP]
                    else
                      raise "unknown state: #{state}"
                  end
@@ -285,31 +386,89 @@ class Creature < Container
     @state = :thrown
   end
 
-  protected
-  def reset_color
-    @overlay_color = nil
-  end
-
   public
   def move(angle)
+    self.state = :walking
     angle += status(:poisoned).displacement_angle if poisoned?
     set_body_velocity(angle, effective_speed)
   end
 
   public
   def on_collision(other)
-    collided = super(other)
+    case other
+      when Wall
+        if not inside_container? and not controlled_by_player?
+          case @move_type
+            when :walk then rotate_walker_at_wall(other)
+            when :jump, :none then rotate_jumper_at_wall(other)
+          end
+        end
 
-    # Make being hit with something heavy knock you over.
-    if not collided and
-        state != :thrown and
-        other.can_knock_down_creature?(self) and
-        other.thrown_by.any? {|o| o.is_a? Creature } # So items popping out of chests don't knock you down.
+        true
 
-      knocked_down_by(other)
+      when DynamicObject
+        # Make being hit with something heavy knock you over.
+        if not [:thrown, :lying].include?(state) and other.can_knock_down_creature?(self) and
+            other.thrown_by.any? {|o| o.is_a? Creature } # So items popping out of chests don't knock you down.
+
+          knocked_down_by(other)
+
+        elsif other.hurts?(self)
+          if other.can_hit?(self)
+            # Hurt things that we don't like in a big one-off strike.
+            wound(other.damage_per_hit, other, :hit)
+          elsif other.damage_per_second > 0
+            # Hurt things that we don't like over time, for example by fire. Only happens if
+            # we didn't hit them.
+            wound(other.damage_per_second * parent.frame_time / 1000.0, other, :over_time)
+          end
+        end
+
+        false
+
+      when StaticObject
+        # Turn if we are walking into a static. 1000 degrees/second.
+        @facing += 1 * parent.frame_time unless controlled_by_player?
+
+        true
+
+      else
+        super(other)
     end
+  end
 
-    collided
+
+  protected
+  def rotate_walker_at_wall(wall)
+    # Bounce back from the edge of the screen
+    case wall.side
+      when :right
+        self.facing = (360 - facing) if x_velocity > 0
+      when :left
+        self.facing = (360 - facing) if x_velocity < 0
+      when :top
+        self.facing = (180 - facing) if y_velocity < 0
+      when :bottom
+        self.facing = (180 - facing) if y_velocity > 0
+      else
+        raise "bad side"
+    end
+  end
+
+  protected
+  def rotate_jumper_at_wall(wall)
+    case wall.side
+      when :right
+        self.x_velocity = - self.x_velocity * elasticity * 0.5 if x_velocity > 0
+      when :left
+        self.x_velocity = - self.x_velocity * elasticity * 0.5 if x_velocity < 0
+      when :top
+        self.y_velocity = - self.y_velocity * elasticity * 0.5 if y_velocity < 0
+      when :bottom
+        self.y_velocity = - self.y_velocity * elasticity * 0.5 if y_velocity > 0
+      else
+        raise "bad side"
+    end
   end
 
   public
@@ -361,13 +520,13 @@ class Creature < Container
     # Reset colour if it was a while since we were wounded.
     if @first_wounded_at
       if milliseconds - @last_wounded_at > AFTER_WOUND_FLASH_DURATION
-        reset_color
+        @overlay_color = nil
         @first_wounded_at = @last_wounded_at = nil
       else
         if (milliseconds - @first_wounded_at).div(WOUND_FLASH_PERIOD) % 2 == 0
           @overlay_color = HURT_COLOR
         else
-          reset_color
+          @overlay_color = nil
         end
       end
     end
@@ -377,9 +536,12 @@ class Creature < Container
   def on_stopped
     case @state
       when :thrown
-        # Stand up if we were thrown.
+        # Lie down then stand up if we were thrown.
         @state = :lying
         after(stand_up_delay, name: :stand_up) { stand_up } unless parent.client?
+      else
+        # Has been jumping, but come to a stand-still.
+        schedule_move
     end
 
     super

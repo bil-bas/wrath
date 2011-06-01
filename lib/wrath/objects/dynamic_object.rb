@@ -91,21 +91,7 @@ module Wrath
       case other
         when Wall
           # Everything, except carried objects, hit walls.
-          (not (can_pick_up? and inside_container?))
-
-        when Creature
-          # Hurt things that we don't like in a big one-off strike.
-          if hurts?(other)
-            if can_hit?(other)
-              other.wound(damage_per_hit, self, :hit)
-            elsif damage_per_second > 0
-              # Hurt things that we don't like over time, for example by fire. Only happens if
-              # we didn't hit them.
-              other.wound(damage_per_second * parent.frame_time / 1000.0, self, :over_time)
-            end
-          end
-
-          false
+          not inside_container?
 
         else
           false

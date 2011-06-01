@@ -7,9 +7,9 @@ module Wrath
       options = {
           favor: 4,
           health: 10,
-          vertical_jump: 0.1,
-          horizontal_jump: 0.2,
-          jump_delay: 250,
+          vertical_jump: 0.6,
+          horizontal_jump: 0.8,
+          move_interval: 250,
           encumbrance: 0.1,
           z_offset: -1,
           animation: "chicken_6x6.png",

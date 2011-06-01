@@ -8,7 +8,9 @@ module Wrath
     def initialize(options = {})
       options = {
           flying_height: 4,
-          walk_interval: 0,
+          move_interval: 0,
+          walk_duration: 400,
+          speed: 1.5,
           damage_per_hit: DAMAGE,
           favor: 12,
           health: 20,

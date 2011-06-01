@@ -10,10 +10,11 @@ module Wrath
           flying_height: 3,
           damage_per_second: DPS,
           health: 50, # Difficult to kill, but not really too relevant.
-          vertical_jump: 0.1,
-          horizontal_jump: 0.1,
-          elasticity: 0.9,
-          jump_delay: 0,
+          walk_duration: 200,
+          move_interval: 0,
+          speed: 0.5,
+          move_type: :walk,
+          move_interval: 0,
           animation: "mosquito_8x8.png",
       }.merge! options
 

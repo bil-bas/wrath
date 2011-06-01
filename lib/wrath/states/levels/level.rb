@@ -130,14 +130,12 @@ class Level < GameState
   
   def replay
     log.info { "Replaying #{self.class}" }
-    pop_game_state
-    push_game_state(self.class.new(@network, @player_names, @priest_names))
+    switch_game_state self.class.new(@network, @player_names, @priest_names)
   end
 
   def play_next_level
     log.info { "Moving on to next level from #{self.class}" }
-    pop_game_state
-    push_game_state(self.class.next_level.new(@network, @player_names, @priest_names))
+    switch_game_state self.class.next_level.new(@network, @player_names, @priest_names)
   end
 
   def accept_message?(message)
@@ -231,7 +229,7 @@ class Level < GameState
 
     # Objects collide with static objects, unless they are being carried or heights are different.
     @space.on_collision(:object, :static) do |a, b|
-      not ((a.can_pick_up? and a.inside_container?) or (a.z > b.z + b.height) or (b.z > a.z + a.height))
+      not (a.inside_container? or (a.z > b.z + b.height) or (b.z > a.z + a.height))
     end
 
     # Objects collide with the wall, unless they are being carried.

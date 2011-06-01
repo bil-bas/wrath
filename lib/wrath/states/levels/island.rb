@@ -13,6 +13,7 @@ class Level < GameState
         Parrot => 4,
         Monkey => 2,
         Mosquito => 2,
+        Snake => 2,
     }
 
     # This is relative to the altar.

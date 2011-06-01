@@ -24,7 +24,6 @@ class BaseObject < GameObject
   def zorder; y; end
   def controlled_by_player?; false; end
   def casts_shadow?; @casts_shadow; end
-  def can_pick_up?; false; end
   def affected_by_gravity?; true; end
   def remote?; not @local; end
   def local?; @local; end
@@ -55,6 +54,8 @@ class BaseObject < GameObject
   def velocity=(vector); @x_velocity, @y_velocity, @z_velocity = vector; end
 
   def self.default_image; @@default_images[self]; end
+
+  def to_s; "#{self.class.name[/[^:]+$/]}##{networked? ? @id : "local"}"; end
 
   public
   def initialize(options = {})

@@ -6,6 +6,7 @@ module Wrath
     def full?; not empty?; end
     def on_having_dropped(object); end
     def on_having_picked_up(object); end
+    def can_be_picked_up?(container); super and empty?; end
 
     public
     def initialize(options = {})

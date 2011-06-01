@@ -9,7 +9,7 @@ module Wrath
       options = {
           damage_per_hit: DAMAGE,
           health: 1000000,
-          walk_interval: 100,
+          move_interval: 100,
           elasticity: 0,
           encumbrance: Float::INFINITY,
           animation: "ent_16x16.png",

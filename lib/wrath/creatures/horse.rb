@@ -9,10 +9,10 @@ module Wrath
       options = {
           favor: 0,
           health: 30,
-          vertical_jump: 0.2,
-          horizontal_jump: 1.2,
+          vertical_jump: 0.4,
+          horizontal_jump: 2.4,
           elasticity: 0.6,
-          jump_delay: 600,
+          move_interval: 600,
           encumbrance: 0.4, # Relevant for the corpse.
           z_offset: -3, # Relevant for the corpse.
           speed: 4,

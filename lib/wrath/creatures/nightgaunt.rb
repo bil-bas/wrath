@@ -5,7 +5,7 @@ module Wrath
     def initialize(options = {})
       options = {
           favor: 8,
-          walk_interval: 0,
+          move_interval: 0,
           flying_height: 6,
           animation: "nightgaunt_10x9.png",
       }.merge! options

@@ -8,8 +8,9 @@ class Level < GameState
 
     SPAWNS = {
         Sheep => 4,
-        Knight => 3,
-        Cultist => 4
+        Knight => 1,
+        Cultist => 4,
+        Snake => 3,
     }
 
     # This is relative to the altar.
