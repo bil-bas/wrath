@@ -58,6 +58,13 @@ class Level < GameState
   def started?; @started; end
   def gravity; GRAVITY; end
   def self.icon; Image["levels/#{name[/[^:]+$/].downcase}.png"]; end
+  def self.next_level
+    if self == LEVELS.last
+      nil
+    else
+      LEVELS[LEVELS.index(self) + 1]
+    end
+  end
 
   # network: Server, Client, nil
   def initialize(network = nil, player_names, priest_names)
@@ -125,6 +132,12 @@ class Level < GameState
     log.info { "Replaying #{self.class}" }
     pop_game_state
     push_game_state(self.class.new(@network, @player_names, @priest_names))
+  end
+
+  def play_next_level
+    log.info { "Moving on to next level from #{self.class}" }
+    pop_game_state
+    push_game_state(self.class.next_level.new(@network, @player_names, @priest_names))
   end
 
   def accept_message?(message)
