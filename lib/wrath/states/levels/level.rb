@@ -45,7 +45,7 @@ class Level < GameState
     RIGHT = 0
   end
   
-  LEVELS = [Forest, Cave, Island, Ship, Desert, Facility, Moon]
+  LEVELS = [Forest, Cave, Island, Ship, Undersea, Desert, Facility, Moon]
 
   def_delegators :@map, :tile_at_coordinate
 

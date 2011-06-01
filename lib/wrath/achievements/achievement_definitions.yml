@@ -99,10 +99,22 @@
   :unlocks:
     -
       :type: :level
-      :name: :Desert
+      :name: :Undersea
     -
       :type: :priest
       :name: :priestess
+
+-
+  :name: :played_undersea
+  :title: Aquamarina
+  :description: Played the Undersea level with visible string.
+  :statistics:
+    - [:levels, :Undersea, :played]
+  :required: 1
+  :unlocks:
+    -
+      :type: :level
+      :name: :Desert
       
 -
   :name: :played_desert
