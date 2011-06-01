@@ -1,6 +1,8 @@
 module Wrath
   class Level
     class Undersea < Level
+      trait :timer
+
       DEFAULT_TILE = Sand
 
       FILTER_COLOR = Color.rgba(0, 100, 200, 100)
@@ -21,6 +23,10 @@ module Wrath
 
       def gravity; super * 0.3; end
 
+      def pushed
+        every(Seaweed::ANIMATION_DELAY) { Seaweed.all.each(&:animate) }
+      end
+
       def create_objects
         super(PLAYER_SPAWNS)
 
@@ -31,7 +37,17 @@ module Wrath
         5.times { Rock.create }
 
         # Static objects.
-        5.times { Boulder.create }
+        3.times { Boulder.create }
+        12.times { Seaweed.create }
+
+        # Top "blockers", not really tangible, so don't update/sync them.
+        [10, 16].each do |y|
+          x = -14
+          while x < $window.retro_width + 20
+            Seaweed.create(x: x, y: rand(4) + y)
+            x += 6 + rand(6)
+          end
+        end
       end
 
       def random_tiles
