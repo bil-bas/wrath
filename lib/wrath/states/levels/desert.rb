@@ -16,7 +16,7 @@ class Level < GameState
     # This is relative to the altar.
     PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
-    def self.to_s; "Desert of Warm Doom"; end
+    def self.to_s; "Desert of Dehydrated Doom"; end
 
     def create_objects
       super(PLAYER_SPAWNS)
