@@ -50,6 +50,5 @@ module Chingu
 
       nil
     end
-
   end
 end

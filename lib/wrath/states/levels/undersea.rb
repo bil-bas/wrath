@@ -1,6 +1,6 @@
 module Wrath
   class Level
-    class Undersea < Level
+    class Undersea < AirlessLevel
       trait :timer
 
       DEFAULT_TILE = Sand
@@ -24,6 +24,7 @@ module Wrath
       def gravity; super * 0.3; end
 
       def pushed
+        super
         every(Seaweed::ANIMATION_DELAY) { Seaweed.all.each(&:animate) }
       end
 
@@ -67,6 +68,15 @@ module Wrath
             object.x_velocity *= multiplier
             object.y_velocity *= multiplier
             object.z_velocity *= multiplier
+          end
+        end
+
+        if milliseconds.div(500).modulo(5) == 0
+          Priest.each do |priest|
+            if [:standing, :walking, :mounted].include? priest.state
+              offset_x = priest.factor_x > 0 ? 2 : -2
+              Bubble.create(x: priest.x + offset_x + random(-1.5, 1.5), y: priest.y - priest.z - random(4, 4.5), zorder: priest.zorder + 0.01)
+            end
           end
         end
 
