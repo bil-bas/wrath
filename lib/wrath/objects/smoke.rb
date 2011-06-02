@@ -15,8 +15,9 @@ class Smoke < GameObject
   end
 
   def update
-    self.y -= 0.007 * parent.frame_time
-    @alpha_float -= 0.3
+    time = parent.frame_time
+    self.y -= 0.003 * time
+    @alpha_float -= 0.01 * time
     self.alpha = @alpha_float.to_i
     if alpha <= 0
       destroy

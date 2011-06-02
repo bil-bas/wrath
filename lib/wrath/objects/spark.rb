@@ -1,10 +1,10 @@
 module Wrath
   class Spark < Droplet
-    SMOKE_COLOR = Color.rgba(50, 50, 50, 125) # Bit thicker than normal smoke.
+    SMOKE_COLOR = Color.rgb(0, 0, 0)
 
     def on_stopped
       color = SMOKE_COLOR.dup
-      color.alpha += rand(50)
+      color.alpha = random(50, 100).to_i
       Smoke.create(parent: parent, x: x, y: y - z, color: color)
       destroy
     end

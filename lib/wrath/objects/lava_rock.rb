@@ -4,7 +4,13 @@ module Wrath
     EXPLOSION_Z_VELOCITY = 0.5..1.4
     FIRE_EXPLOSION_NUMBER = 1..3
 
+    COLOR = Color.rgb(255, 150, 100)
+
     def initialize(options = {})
+      options = {
+          color: COLOR.dup,
+      }.merge! options
+
       super(options)
 
       @@fire_explosion ||= Emitter.new(Fire, parent, number: FIRE_EXPLOSION_NUMBER, h_speed: EXPLOSION_H_SPEED,
