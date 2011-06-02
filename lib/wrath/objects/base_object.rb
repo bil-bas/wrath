@@ -230,7 +230,7 @@ class BaseObject < GameObject
       end
     end
 
-    @image.draw_rot(x, y - z, zorder, 0, 0.5, 1, @factor_x, @factor_y, @color, @mode)
+    @image.draw_rot(x, y - z, zorder, 0, center_x, center_y, @factor_x, @factor_y, @color, @mode)
   end
 
   protected

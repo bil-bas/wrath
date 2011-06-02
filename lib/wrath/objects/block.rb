@@ -7,14 +7,19 @@ module Wrath
     }
     def initialize(options = {})
       options = {
-        animation: "block_10x10.png",
         factor_x: 1, # All should be aligned identically.
-        stack: 1,
       }.merge! options
 
-      super options
+      @stack = options[:stack]
+      options[:animation] ||= "block_#{SPRITES[@stack]}.png"
 
-      self.image = "objects/block_#{SPRITES[options[:stack]]}.png"
+      super options
     end
+
+  def recreate_options
+    {
+        stack: @stack,
+    }.merge! super
+  end
   end
 end

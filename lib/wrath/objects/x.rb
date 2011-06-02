@@ -5,11 +5,12 @@ module Wrath
     public
     def initialize(options = {})
       options = {
-        animation: "x_8x8.png",
-        hide_contents: true,
-        drop_velocity: [0, 0, 1.5],
-        casts_shadow: false,
-        scale: 0.7,
+          animation: "x_8x8.png",
+          hide_contents: true,
+          drop_velocity: [0, 0, 1.5],
+          casts_shadow: false,
+          scale: 0.7,
+          rotation_center: :center_center,
       }.merge! options
       super options
     end

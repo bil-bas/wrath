@@ -12,6 +12,7 @@ class Altar < StaticObject
     actor.carrying? and
         not actor.mount? and
         not actor.contents.controlled_by_player? and
+        actor.contents.favor != 0 and
         not @sacrifice
   end
 
