@@ -9,6 +9,7 @@ class Water < AnimatedTile
   EMPTY_SPEED  = 0.25
 
   def filled?; @filled; end
+  def edge_type; :hard_curve; end
   
   def filled=(value)
     @filled = value
@@ -16,13 +17,13 @@ class Water < AnimatedTile
     @speed = @filled ? FULL_SPEED : EMPTY_SPEED
   end
 
-  def initialize(options = {})
+  def initialize(map, grid_x, grid_y, options = {})
     options = {
         ground_level: EMPTY_LEVEL,
         speed: EMPTY_SPEED,
     }.merge! options
 
-    super options
+    super(map, grid_x, grid_y, options)
 
     @splasher = Emitter.new(WaterDroplet, parent, h_speed: 0.05..0.1,
         z_velocity: 0.1..0.2)

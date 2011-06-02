@@ -4,6 +4,8 @@ module Wrath
 
     def can_be_picked_up?(other); false; end
 
+    def can_spawn_onto?(tile); tile.is_a? Sand; end
+
     def initialize(options = {})
       options = {
           animation: "seaweed_8x18.png",

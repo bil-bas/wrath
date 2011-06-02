@@ -54,6 +54,15 @@ module Wrath
       def random_tiles
         num_columns, num_rows, grid = super(DEFAULT_TILE)
 
+      # Add rocky bits.
+      (rand(5) + 3).times do
+        pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
+        grid[pos[1]][pos[0]] = Gravel
+        Tile::ADJACENT_OFFSETS.sample(rand(5) + 2).each do |offset_x, offset_y|
+          grid[pos[1] + offset_x][pos[0] + offset_y] = Gravel
+        end
+      end
+
         grid
       end
 

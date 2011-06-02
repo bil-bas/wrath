@@ -16,13 +16,15 @@ module Wrath
         tile_row = []
         @tiles << tile_row
         class_row.each_with_index do |type, x|
-          tile = type.new(grid: [x, y])
+          tile = type.new(self, x, y)
 
           @animated_tiles << tile if tile.is_a? AnimatedTile
 
           tile_row << tile
         end
       end
+
+      @tiles.flatten.each(&:render_edges)
 
       # Cache all the images into a big image, to save drawing them separately.
       @background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height)
@@ -31,6 +33,8 @@ module Wrath
       end
 
       every(AnimatedTile::ANIMATION_PERIOD, &method(:update_animations).to_proc)
+
+      update_animations
 
       log.info { "Created map of #{@tiles[0].size}x#{@tiles.size} tiles" }
     end
@@ -76,8 +80,10 @@ module Wrath
       end
 
       grid_x, grid_y = (x / Tile::WIDTH).floor, (y / Tile::HEIGHT).floor
-      tile = type.new(grid: [grid_x, grid_y])
+      tile = type.new(self, grid_x, grid_y)
       @tiles[grid_y][grid_x] = tile
+
+      ([tile] + tile.adjacent_tiles(directions: :orthogonal)).each(&:render_edges)
 
       if tile.is_a? AnimatedTile
         @animated_tiles << tile

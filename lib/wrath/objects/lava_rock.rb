@@ -28,10 +28,12 @@ module Wrath
     end
 
     def destroy
-      Sample["objects/rock_sacrifice.ogg"].play
+      if exists?
+        Sample["objects/rock_sacrifice.ogg"].play
 
-      tile = parent.map.replace_tile(x, y, Lava)
-      tile.filled = true
+        tile = parent.map.replace_tile(x, y, Lava)
+        tile.filled = true
+      end
 
       super
     end

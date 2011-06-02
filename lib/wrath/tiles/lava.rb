@@ -8,6 +8,8 @@ class Lava < Water
   GLOW_COLOR = Color.rgba(255, 100, 0, 20)
   GLOW_SIZE = 0.65
 
+  def edge_type; :hard_curve; end
+
   def touched_by(object)
     case object
       when Rock

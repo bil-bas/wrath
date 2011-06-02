@@ -61,7 +61,9 @@ class Level < GameState
       num_columns, num_rows, grid = super(DEFAULT_TILE)
 
       # Add forest floor.
-      num_rows.times {|i| grid[0][i] = grid[1][i] = ForestFloor }
+      num_columns.times do |i|
+        grid[0][i] = grid[1][i] = ForestFloor
+      end
 
       # Add water-features.
       (rand(2) + 1).times do

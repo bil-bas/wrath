@@ -53,25 +53,16 @@ class Level < GameState
         grid[num_rows - 1][x] = Water
 
         # Gravel at the top
-        (0..1).each do |y|
+        (0..0).each do |y|
           grid[y][x] = Gravel
         end
         
         # Grass at the top
-        (2..4).each do |y|
+        (1..4).each do |y|
           grid[y][x] = Grass
         end
-         grid[5][x] = Grass if rand() < 0.75
-         grid[6][x] = Grass if rand() < 0.5 and grid[5][x] == Grass
-      end
-
-      # Add water-features.
-      (rand(3)).times do
-        pos = [rand((num_rows / 2) - 4) + 2 + (num_rows / 2), rand(num_rows - 7) + 5]
-        grid[pos[1]][pos[0]] = Water
-        (rand(3) + 1).times do
-          grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = Water
-        end
+        grid[5][x] = Grass if rand() < 0.75
+        grid[6][x] = Grass if rand() < 0.5 and grid[5][x] == Grass
       end
 
       # Put Sand under the altar.
