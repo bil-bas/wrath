@@ -42,7 +42,7 @@ module Wrath
 
     # Tile at screen coordinates.
     def tile_at_coordinate(x, y)
-      @tiles[y / Tile::HEIGHT][x / Tile::WIDTH]
+      @tiles[y / Tile::HEIGHT][x / Tile::WIDTH] rescue nil
     end
 
     def draw

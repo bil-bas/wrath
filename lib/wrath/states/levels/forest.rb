@@ -64,11 +64,11 @@ class Level < GameState
       num_rows.times {|i| grid[0][i] = grid[1][i] = ForestFloor }
 
       # Add water-features.
-      (rand(5) + 1).times do
+      (rand(2) + 1).times do
         pos = [rand(num_columns - 4) + 2, rand(num_rows - 7) + 5]
         grid[pos[1]][pos[0]] = Water
-        (rand(5) + 2).times do
-          grid[pos[1] - 1 + rand(3)][pos[0] - 1 + rand(3)] = [Water, Water, Earth].sample
+        Tile::ADJACENT_OFFSETS.sample(rand(4) + 3).each do |offset_x, offset_y|
+          grid[pos[1] + offset_x][pos[0] + offset_y] = [Water, Water, Earth].sample
         end
       end
 
