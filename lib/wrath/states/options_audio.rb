@@ -39,7 +39,7 @@ module Wrath
           @effects_percentage = label "100%"
           @effects_slider.value = Sample.volume
 
-          button("Play") { Sample["objects/rock_sacrifice.ogg"].play }
+          button("Play") { Sample["objects/explosion.ogg"].play }
 
           # MUSIC
           label "Music"

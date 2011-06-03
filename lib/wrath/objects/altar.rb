@@ -43,11 +43,16 @@ class Altar < StaticObject
         @sacrifice = lamb
         @blood_drip_animation.reset
         @facing = lamb.factor_x
-
+        sound = Sample["creatures/sacrifice.ogg"]
       else
+
+        sound = lamb.favor > 0 ? Sample["creatures/sacrifice.ogg"] : Sample["objects/bad_sacrifice.ogg"]
+
         # Instant gratification for inanimate objects.
         actor.player.favor += lamb.favor
     end
+
+    sound.play_at_x(x, [[lamb.favor.abs, 20].min, 5].max / 20.0)
 
     if actor.local?
       parent.statistics.increment(:sacrifices, :type, lamb.class.name[/[^:]+$/].to_sym)

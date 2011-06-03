@@ -16,7 +16,7 @@ module Wrath
 
       super options
 
-      Sample["objects/rock_sacrifice.ogg"].play
+      Sample["objects/explosion.ogg"].play_at_x(x)
       @frames.delay = ANIMATION_DELAY
 
       unless parent.client?

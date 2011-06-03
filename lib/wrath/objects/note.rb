@@ -23,9 +23,9 @@ class Note < StaticObject
       collision_type: :scenery,
     }.merge! options
 
-    Sample["objects/note_#{index + 1}.ogg"].play(VOLUME)
-
     super options
+
+    Sample["objects/note_#{index + 1}.ogg"].play_at_x(x, VOLUME)
 
     @alpha_float = alpha
   end

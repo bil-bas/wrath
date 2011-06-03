@@ -47,7 +47,7 @@ module Wrath
     end
 
     def wake_up
-      Sample["objects/chest_close.ogg"].play
+      Sample["objects/chest_close.ogg"].play_at_x(x)
 
       parent.send_message(Message::PerformAction.new(self, self)) if parent.host?
 

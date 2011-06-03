@@ -16,7 +16,6 @@ class Chest < Container
 
   CHEST_OPEN_SOUND = "objects/chest_close.ogg"
   CHEST_CLOSED_SOUND = "objects/chest_close.ogg"
-  CHEST_SACRIFICED_SOUND = "objects/rock_sacrifice.ogg"
 
   alias_method :open?, :empty?
   alias_method :closed?, :full?
@@ -72,22 +71,16 @@ class Chest < Container
   def on_having_dropped(object)
     super(object)
     open
-    Sample[CHEST_CLOSED_SOUND].play
+    Sample[CHEST_CLOSED_SOUND].play_at_x(x)
     stop_timer :bounce
     object.position = [x, y, z + 6] # So the object pops out the top of the chest.
-  end
-
-  public
-  def sacrificed(actor, altar)
-    Sample[CHEST_SACRIFICED_SOUND].play
-    super(actor, altar)
   end
 
   def on_having_picked_up(object)
     super(object)
     close
 
-    Sample[CHEST_CLOSED_SOUND].play if parent.started? # Don't make noises before game starts!
+    Sample[CHEST_CLOSED_SOUND].play_at_x(x) if parent.started? # Don't make noises before game starts!
 
     unless parent.client?
       if object.is_a? Creature and object.encumbrance >= MIN_BOUNCE_ENCUMBRANCE

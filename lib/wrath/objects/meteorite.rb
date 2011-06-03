@@ -22,7 +22,7 @@ module Wrath
     def on_stopped
       unless @landed
         @landed = true
-        Sample["objects/rock_sacrifice.ogg"].play
+        Sample["objects/explosion.ogg"].play_at_x(x)
         self.image = @frames[SPRITE_EMBEDDED]
         Crater.create(position: position) if not parent.client?
       end

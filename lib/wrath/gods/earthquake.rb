@@ -6,7 +6,7 @@ module Wrath
     def self.to_s; "The Earthshaker"; end
 
     def on_disaster_start(sender)
-      Sample["objects/rock_sacrifice.ogg"].play
+      Sample["objects/explosion.ogg"].play_at_x(x)
     end
 
     def update

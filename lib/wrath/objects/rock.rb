@@ -31,8 +31,6 @@ class Rock < DynamicObject
   end
 
   def sacrificed(actor, altar)
-    Sample["objects/rock_sacrifice.ogg"].play
-
     actor.health += EXPLOSION_HEALTH unless parent.client?
 
     super

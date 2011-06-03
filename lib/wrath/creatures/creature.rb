@@ -190,15 +190,20 @@ class Creature < Container
     @walk_time_left = random(@walk_duration * 0.5, @walk_duration * 1.5)
   end
 
-    protected
+  protected
   def on_wounded(sender, damage)
-     # Try to move away from pain.
-     if local? and not controlled_by_player? and [:standing, :walking].include? @state
-       if timer_exists? :move
-         stop_timer(:move)
-         start_moving
-       end
-     end
+    if controlled_by_player? and damage >= 2
+      # TODO: Need a better way to avoid making sound for DOT.
+      Sample["creatures/hurt.ogg"].play_at_x(x)
+    end
+
+    # Try to move away from pain.
+    if local? and not controlled_by_player? and [:standing, :walking].include? @state
+      if timer_exists? :move
+        stop_timer(:move)
+        start_moving
+      end
+    end
   end
 
   public

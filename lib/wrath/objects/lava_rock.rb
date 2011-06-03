@@ -29,7 +29,7 @@ module Wrath
 
     def destroy
       if exists?
-        Sample["objects/rock_sacrifice.ogg"].play
+        Sample["objects/explosion.ogg"].play_at_x(x)
 
         tile = parent.map.replace_tile(x, y, Lava)
         tile.filled = true
