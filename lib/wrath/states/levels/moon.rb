@@ -26,6 +26,8 @@ module Wrath
 
         # Static objects.
         6.times { Boulder.create(color: Color::BLUE) }
+        6.times { Crater.create }
+        2.times { Crater.create(has_lid: true) }
 
         # Top "blockers", not really tangible, so don't update/sync them.
         [10, 16].each do |y|
@@ -39,10 +41,6 @@ module Wrath
 
       def random_tiles
         num_columns, num_rows, grid = super(DEFAULT_TILE)
-        
-        (12 + rand(5)).times do
-          grid[rand(num_rows)][rand(num_columns)] = MoonCrater
-        end
         
         grid
       end

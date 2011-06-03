@@ -24,6 +24,7 @@ module Wrath
         @landed = true
         Sample["objects/rock_sacrifice.ogg"].play
         self.image = @frames[SPRITE_EMBEDDED]
+        Crater.create(position: position) if not parent.client?
       end
 
       super
