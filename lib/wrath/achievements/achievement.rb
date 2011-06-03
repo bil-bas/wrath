@@ -21,7 +21,7 @@ module Wrath
       @required = definition[:required]
 
       @unlocks = definition[:unlocks].map do |definition|
-        Unlock.new(definition[:type], definition[:name], @manager, unlocked: @complete)
+        Unlock.new(definition[:type], definition[:name], @manager, unlocked: @complete, title: definition[:title])
       end
 
       check_statistics

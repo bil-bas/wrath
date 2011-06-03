@@ -1,6 +1,8 @@
 module Wrath
   # Cosmic evil.
   class Azathoth < God
+    def self.to_s; "The Spawn of Azathoth"; end
+
     def update
       super
 

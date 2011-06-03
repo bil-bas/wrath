@@ -26,7 +26,7 @@ module Wrath
       add_inputs(
         escape:  ->{ pop_until_game_state Play },
         b: ->{ pop_game_state },
-        s: ->{ new_game @level_picker.value if @start_button.enabled? }
+        s: ->{ new_game(@level_picker.value, @god_picker.value) if @start_button.enabled? }
        )
 
       heading = case @network
@@ -65,7 +65,7 @@ module Wrath
           label "Wait for host to start a game"
         else
           @start_button = button("(S)tart", enabled: local?) do
-            new_game @level_picker.value
+            new_game(@level_picker.value, @god_picker.value)
           end
         end
       end
@@ -85,14 +85,28 @@ module Wrath
 
     protected
     def level_picker
-      horizontal spacing: 0 do
-        @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
-          subscribe :changed do |sender, level|
-            send_message(Message::UpdateLobby.new(:level, level)) if host?
+      grid num_columns: 2 do
+        label "Map"
+        horizontal spacing: 0,  padding: 0 do
+          @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
+            subscribe :changed do |sender, level|
+              send_message(Message::UpdateLobby.new(:level, level)) if host?
+              @god_picker.value = level::GOD
+            end
           end
+
+          label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
         end
 
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
+        label "God"
+        horizontal spacing: 0,  padding: 0 do
+          @god_picker = combo_box value: @level_picker.value::GOD, width: $window.width * 0.75 do
+            subscribe :changed do |sender, god|
+              send_message(Message::UpdateLobby.new(:god, god)) if host?
+            end
+          end
+          label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
+        end
       end
     end
 
@@ -125,12 +139,17 @@ module Wrath
 
     protected
     def update_level_picker
-      old_value = @level_picker.value # Preserve the previous setting.
+      old_level_value = @level_picker.value # Preserve the previous setting.
+      @god_picker.clear
       @level_picker.clear
       Level::LEVELS.each do |level|
+        @god_picker.item(level::GOD.to_s, level::GOD, enabled: level.unlocked?)
         @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
       end
-      @level_picker.value = old_value if old_value
+      @level_picker.value = old_level_value if old_level_value
+      # God will be selected based on the level.
+
+      @god_picker.enabled = God.unlocked_picking? and not client?
     end
 
     protected
@@ -173,7 +192,7 @@ module Wrath
 
     public
     # Start a new game. Also called from Message::NewGame.
-    def new_game(level)
+    def new_game(level, god)
       if @network
         # Turn off the ready indicators, in case we come back to this state.
         2.times {|i| update_ready(i, false) }
@@ -184,7 +203,7 @@ module Wrath
         combo.value
       end
 
-      push_game_state level.new(@network, @player_names, priest_names)
+      push_game_state level.new(@network, god, @player_names, priest_names)
     end
 
     public
@@ -217,6 +236,11 @@ module Wrath
     public
     def update_level(level)
       @level_picker.value = level
+    end
+
+    public
+    def update_god(god)
+      @god_picker.value = god
     end
 
     public

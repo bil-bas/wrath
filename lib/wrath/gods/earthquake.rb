@@ -3,9 +3,7 @@ module Wrath
   class Earthquake < God
     attr_reader :quake_offset
 
-    def setup
-      @quake_offset = 0
-    end
+    def self.to_s; "The Earthshaker"; end
 
     def on_disaster_start(sender)
       Sample["objects/rock_sacrifice.ogg"].play
@@ -16,7 +14,7 @@ module Wrath
 
       if in_disaster?
         intensity = Math::log(@num_disasters * 100)
-        @quake_offset = intensity / 6
+        parent.screen_offset_y = intensity / 6 * Math::sin(milliseconds / 50.0)
 
         if not parent.client? and rand(100) < ((intensity * parent.frame_time) / 8000)
           Rock.create(position: spawn_position($window.retro_height), parent: parent)

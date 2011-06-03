@@ -4,7 +4,7 @@ class Level < GameState
     DEFAULT_TILE = Sand
 
     CHEST_CONTENTS = [Crown, FlyingCarpet]
-    GOD = Storm
+    GOD = Mummy
 
     SPAWNS = {
         Sheep => 4,

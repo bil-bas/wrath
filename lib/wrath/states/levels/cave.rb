@@ -76,17 +76,9 @@ class Level < GameState
       if started?
         # Draw overlay to make it look dark.
         $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, DARKNESS_COLOR)
-
-        if @god.quake_offset == 0
-          super
-        else
-          $window.translate(0, Math::sin(milliseconds / 50.0) * @god.quake_offset) do
-            super
-          end
-        end
-      else
-        super
       end
+
+      super
     end
   end
 end

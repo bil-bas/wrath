@@ -19,6 +19,10 @@ module Wrath
     event :on_disaster_start
     event :on_disaster_end
 
+    # Whether you can pick gods separate to levels.
+    def self.unlocked_picking?; $window.achievement_manager.unlocked?(:general, :choose_god); end
+    def self.icon; Image["gods/#{name[/[^:]+$/].downcase}_portrait.png"]; end
+
     def loves=(loves)
       @loves = loves
       @loves_object.image = @loves.default_image if @loves

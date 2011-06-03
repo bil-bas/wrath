@@ -20,6 +20,11 @@ module Wrath
             raise "Bad level update data: #{level}" unless level != Level and level.ancestors.include? Level
             state.update_level level
 
+          when :god
+            god = @data[0]
+            raise "Bad god update data: #{god}" unless god != God and god.ancestors.include? God
+            state.update_god god
+
           when :ready
             player_number, value = @data
             raise "Bad player_number update data: #{player_number}" unless player_number.is_a? Fixnum

@@ -3,6 +3,8 @@ module Wrath
   class Ai < God
     DISASTER_DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
 
+    def self.to_s; "The Rogue AI"; end
+
     def on_disaster_start(sender)
       schedule_gas unless parent.client?
     end

@@ -154,6 +154,10 @@
     -
       :type: :priest
       :name: :shaman
+    -
+      :type: :general
+      :name: :choose_god
+      :title: Choose your own diety
 
 # ---------------------------------------
 # Sacrifices (general).

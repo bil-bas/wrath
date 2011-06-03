@@ -50,6 +50,7 @@ class Level < GameState
   def_delegators :@map, :tile_at_coordinate
 
   attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at
+  attr_accessor :screen_offset_y
 
   def networked?; !!@network; end
   def host?; @network.is_a? Server; end
@@ -67,7 +68,7 @@ class Level < GameState
   end
 
   # network: Server, Client, nil
-  def initialize(network = nil, player_names, priest_names)
+  def initialize(network = nil, god, player_names, priest_names)
     BaseObject.reset_object_ids
 
     @@glow = make_glow
@@ -91,7 +92,7 @@ class Level < GameState
       end
     end
 
-    send_message(Message::NewGame.new(self.class)) if host?
+    send_message(Message::NewGame.new(self.class, god)) if host?
 
     @last_sync = milliseconds
 
@@ -102,6 +103,7 @@ class Level < GameState
     @objects = []
     @players = []
     @started = false
+    @screen_offset_y = 0
 
     @font = Font["pixelated.ttf", 32]
 
@@ -119,7 +121,7 @@ class Level < GameState
 
     Spawner.create(self.class.const_get(:SPAWNS)) unless client?
 
-    @god = self.class.const_get(:GOD).create
+    @god = god.create
 
     send_message(Message::StartGame.new) if host?
   end
@@ -328,7 +330,13 @@ class Level < GameState
 
   def draw
     if started?
-      super
+      if screen_offset_y == 0
+        super
+      else
+        $window.translate(0, screen_offset_y) do
+          super
+        end
+      end
     else
       @font.draw_rel("Loading...", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)
     end

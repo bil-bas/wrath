@@ -5,6 +5,8 @@ module Wrath
     DISASTER_DARKNESS_COLOR = Color.rgba(0, 0, 0, 140)
     LIGHTNING_COLOR = Color.rgba(255, 255, 255, 50)
 
+    def self.to_s; "The Storm God"; end
+
     def on_disaster_start(sender)
       after(500) { Lightning.create(position: spawn_position(0), parent: parent) }
       schedule_lightning unless parent.client?
