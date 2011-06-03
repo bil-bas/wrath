@@ -132,12 +132,12 @@ class Level < GameState
   
   def replay
     log.info { "Replaying #{self.class}" }
-    switch_game_state self.class.new(@network, @player_names, @priest_names)
+    switch_game_state self.class.new(@network, @god.class, @player_names, @priest_names)
   end
 
   def play_next_level
     log.info { "Moving on to next level from #{self.class}" }
-    switch_game_state self.class.next_level.new(@network, @player_names, @priest_names)
+    switch_game_state(self.class.next_level.new(@network, @god.class, @player_names, @priest_names))
   end
 
   def accept_message?(message)
