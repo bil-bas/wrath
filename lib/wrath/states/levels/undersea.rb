@@ -7,13 +7,13 @@ module Wrath
 
       FILTER_COLOR = Color.rgba(0, 100, 200, 100)
 
-      GOD = Volcano
+      GOD = Squid
 
       SPAWNS = {
           DeepOne => 4,
           Snake => 1,
           Pirate => 1,
-          Shark => 2,
+          Shark => 1,
       }
 
       # This is relative to the altar.
