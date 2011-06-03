@@ -143,7 +143,7 @@ module Wrath
       @god_picker.clear
       @level_picker.clear
       Level::LEVELS.each do |level|
-        @god_picker.item(level::GOD.to_s, level::GOD, enabled: level.unlocked?)
+        @god_picker.item(level::GOD.to_s, level::GOD, icon: ScaledImage.new(level::GOD.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
         @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
       end
       @level_picker.value = old_level_value if old_level_value
