@@ -41,6 +41,10 @@ class Creature < Container
   PLAYER_STAND_UP_DELAY = 750 # Don't annoy the player.
   CREATURE_STAND_UP_DELAY = 2000 # Give the player time to grab the creature.
 
+  HEALTH_BAR_BACKGROUND = Color.rgba(0, 0, 0 ,100)
+  HEALTH_BAR_FOREGROUND = Color::RED
+  HEALTH_BAR_THICKNESS = 0.5
+
   attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
   attr_reader :flying_height
 
@@ -216,8 +220,11 @@ class Creature < Container
 
     # Draw a health bar, but only if injured.
     if health < max_health
-      $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width, 1, Color::BLACK
-      $window.pixel.draw_rot x, y - z - (height + 2), y, 0, 0.5, 0.5, width * health / max_health.to_f, 0.5, Color::RED
+      bar_x = x - (width / 2)
+      bar_y =  y - z - height - 2
+      health_width = width * health / max_health.to_f
+      $window.pixel.draw_rot bar_x, bar_y, y, 0, 0, 1, width, HEALTH_BAR_THICKNESS, HEALTH_BAR_BACKGROUND
+      $window.pixel.draw_rot bar_x, bar_y, y, 0, 0, 1, health_width, HEALTH_BAR_THICKNESS, HEALTH_BAR_FOREGROUND
     end    
   end
 
