@@ -142,8 +142,8 @@ class Game < Window
     @used_time += milliseconds - draw_started
     
     @overlays.each(&:draw)
-  rescue Exception => ex
-    log.error "DRAW: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
+  rescue => ex
+    log.error "#draw: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
     raise ex
   end
 
@@ -159,9 +159,21 @@ class Game < Window
     @used_time += milliseconds - update_started
 
     recalculate_cpu_load
-  rescue Exception => ex
-    log.error "UPDATE: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
+  rescue => ex
+    log.error "#update: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
     raise ex
+  end
+
+  # Ensure that all Gosu call-backs catch errors properly.
+  %w(needs_redraw? needs_cursor? lose_focus button_down button_up).each do |callback|
+    define_method callback do |*args|
+      begin
+        super(*args)
+      rescue => ex
+        log.error "##{callback}: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
+        raise ex
+      end
+    end
   end
 
   def recalculate_cpu_load
