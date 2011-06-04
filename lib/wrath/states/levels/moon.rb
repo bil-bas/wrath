@@ -22,21 +22,11 @@ module Wrath
         super(PLAYER_SPAWNS)
 
         # Inanimate objects.
-        12.times { Rock.create(color: Color::BLUE) }
+        15.times { MoonRock.create }
 
         # Static objects.
-        6.times { Boulder.create(color: Color::BLUE) }
-        6.times { Crater.create }
-        2.times { Crater.create(has_lid: true) }
-
-        # Top "blockers", not really tangible, so don't update/sync them.
-        [10, 16].each do |y|
-          x = -14
-          while x < $window.retro_width + 20
-            Boulder.create(x: x, y: rand(4) + y, paused: true, color: Color::BLUE)
-            x += 6 + rand(6)
-          end
-        end
+        8.times { Crater.create }
+        3.times { CraterWithLid.create }
       end
 
       def random_tiles
