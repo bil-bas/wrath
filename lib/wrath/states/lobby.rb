@@ -149,7 +149,7 @@ module Wrath
       @level_picker.value = old_level_value if old_level_value
       # God will be selected based on the level.
 
-      @god_picker.enabled = God.unlocked_picking? and not client?
+      @god_picker.enabled = (God.unlocked_picking? and not client?)
     end
 
     protected
