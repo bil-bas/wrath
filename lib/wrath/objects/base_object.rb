@@ -240,13 +240,14 @@ class BaseObject < GameObject
 
   public
   def update
+    return unless exists?
+
     # Check which tile we start on.
     @old_tile = @tile
 
-    begin
-      @tile = parent.tile_at_coordinate(x, y)
-    rescue
-      log.warn { "#{self.class} at [#{x}, #{y}] - destroyed" }
+    @tile = parent.tile_at_coordinate(x, y)
+    if @tile.nil?
+      log.warn { "#{self.class} found outside the map, at [#{x}, #{y}] - destroyed" }
       destroy
       return
     end
