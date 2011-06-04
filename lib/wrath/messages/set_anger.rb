@@ -9,12 +9,13 @@ module Wrath
 
       protected
       def action(state)
+        raise "Anger must be a float" unless @anger.is_a? Float
         state.god.anger = @anger
       end
 
       # Optimise dump to produce little data, since this data is sent very often.
       public
-      def marshal_dump; @anger.to_i; end
+      def marshal_dump; @anger; end
       def marshal_load(data); @anger = data; end
     end
   end
