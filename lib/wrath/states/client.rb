@@ -44,7 +44,9 @@ class Client < GameStates::NetworkClient
 
   def draw
     $window.scale(1.0 / $window.sprite_scale) do
-      @font.draw("Connecting to host...", 10, 10, ZOrder::GUI)
+      dots = '.' * ((milliseconds / 500.0) % 7).to_i
+      @font.draw("Connecting to host#{dots}", 10, 10, ZOrder::GUI)
+      @font.draw("Address: #{address}:#{port}", 10, 100, ZOrder::GUI, 0.5, 0.5)
     end
   end
 

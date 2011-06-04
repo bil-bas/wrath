@@ -48,7 +48,9 @@ class Server < GameStates::NetworkServer
 
   def draw
     $window.scale(1.0 / $window.sprite_scale) do
-      @font.draw("Waiting for player...", 10, 10, ZOrder::GUI)
+      dots = '.' * ((milliseconds / 500.0) % 7).to_i
+      @font.draw("Waiting for player#{dots}", 10, 10, ZOrder::GUI)
+      @font.draw("Port: #{port}", 10, 100, ZOrder::GUI, 0.5, 0.5)
     end
   end
 
