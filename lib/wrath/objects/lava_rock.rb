@@ -21,21 +21,15 @@ module Wrath
       unless parent.client?
         pos = position
         pos[2] += height
+
         @@fire_explosion.emit(pos, thrown_by: [self])
+
+        Sample["objects/explosion.ogg"].play_at_x(x)
+        tile = parent.map.replace_tile(x, y, Lava)
+        tile.filled = true
 
         destroy
       end
-    end
-
-    def destroy
-      if exists?
-        Sample["objects/explosion.ogg"].play_at_x(x)
-
-        tile = parent.map.replace_tile(x, y, Lava)
-        tile.filled = true
-      end
-
-      super
     end
   end
 end

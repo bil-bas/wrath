@@ -110,5 +110,14 @@ module Wrath
         ]
       end
     end
+
+    public
+    def destroy
+      if exists?
+        drop unless empty?
+      end
+
+      super
+    end
   end
 end

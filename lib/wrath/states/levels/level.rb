@@ -389,7 +389,7 @@ class Level < GameState
   end
 
   def popped
-    game_objects.each(&:destroy)
+    game_objects.each {|obj| obj.class.instances.delete obj }
     $window.remove_overlay @network_overlay if @network_overlay
   end
 end

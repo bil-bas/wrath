@@ -104,7 +104,7 @@ module Chingu
       # Activate the game state "below" current one with a simple Array.pop
       #
       @game_states.pop
-            
+
       # So BasicGameObject#create connects object to new state in its setup()
       # Is this doubled in GameState.initialize() ?
       self.inside_state = current_game_state
