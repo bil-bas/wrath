@@ -1,21 +1,23 @@
 === CHANGELOG ===
 
-v0.0.4alpha (unreleased)
+v0.0.4alpha (2011-06-04)
 
   * Changed default online player controls to same as player 1. Reset everyone's settings to default.
   * Collects game-play statistics locally (for achievements).
   * Added achievements and unlocks system.
+  * Added some more sound effects (but nowhere near enough).
+  * Knocked back when hit by a monster, rather than taking damage-over time (fire still burns slowly, however).
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
   * Favour of object currently carried is indicated next to favour bars.
-  * Can set sound volume and window size in options.
+  * Can set sound volume and window size in options (sorry, no full-screen mode yet).
   * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
-  * Added level under the sea (reused volcano god, though, until unique one created)
-  * Added level in a tech facility (AI _are_ gods, aren't they?)
-  * Added level in a desert (reused storm god, though, until unique one created)
-  * Added level on a moon with meteors.
+  * Added level under the sea.
+  * Added level in a tech facility (AI _are_ gods, aren't they?).
+  * Added level in a desert (reused lighting storm disaster effect, though, until unique one created)
+  * Added level on a moon with radioactive meteors.
   * Network stats overlay (Ctrl-N).
   * FIXED: Poison/growth status effects are not properly synchronised in network play.
-  * Countless other stuff I forgot to write down.
+  * Countless other things I forgot to write down.
 
 v0.0.3alpha (2011-05-17)
 

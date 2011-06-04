@@ -17,34 +17,21 @@ h3. Windows
 
 If running <tt>wrath.exe</tt>, there are no other requirements.
 
-h3. OS X [executable only works on 10.6!]
+h3. OS X
 
-If running OS X 10.6, use the executable. If not, the only option is running from source (details below).
-
-If running <tt>wrath.app</tt>, there are no other requirements.
-
-NOTE: there is no .app file available for the current version of the game!
+If running OS X 10.6, use the executable (<tt>Wrath.app</tt>), which has no dependencies. If not, the only option is running from source (details below).
 
 h3. Source for Linux (or Windows/OS X if not using the executable)
 
-If using OS X 10.6, use the executable version (see above), otherwise you will need:
+If running from source, users must install the Ruby interpreter and some rubygems. Linux users must also install some "extra dependencies":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux for Gosu.
+
+h4. Dependencies
 
 * Ruby 1.9.2 (Install via package manager or rvm)
 ** Gosu gem 0.7.32 (Dependencies: "Linux only":https://github.com/jlnr/gosu/wiki/Getting-Started-on-Linux)
-** Chingu gem 0.9rc5
-** Chipmunk gem 5.2.2.0
-** Fidgit gem 0.0.5alpha
-** Texplay gem 0.3.5
-
-Both Gosu and Chipmunk _must_ be that exact version (not newer or older), or the game may not work.
+** A number of other rubygems, which can be installed automatically using Bundler (see below).
 
 h4. Using Bundler to install gems
-
-In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to automatically install the correct gem versions:
-
-<pre>
-    bundle install
-</pre>
 
 If the Bundler gem isn't already installed, that can be installed with:
 
@@ -52,7 +39,13 @@ If the Bundler gem isn't already installed, that can be installed with:
     gem install bundler --no-ri --no-rdoc
 </pre>
 
-h3. Running the game
+In the game's main directory (with <tt>Gemfile</tt> in it), use Bundler to automatically install the correct gem versions:
+
+<pre>
+    bundle install
+</pre>
+
+h4. Running the game
 
 May need to use <tt>ruby19</tt> rather than <tt>ruby</tt>. Depends how you installed Ruby 1.9.2!
 
