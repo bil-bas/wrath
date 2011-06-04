@@ -118,8 +118,8 @@ module Wrath
       @unlocked_priests = Priest::FREE_UNLOCKS.dup
       (Priest::NAMES - Priest::FREE_UNLOCKS).each do |priest|
         @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
-        @unlocked_priests.sort!
       end
+      @unlocked_priests.sort!
 
       # Ensure that any unlocks are updated.
       update_level_picker
@@ -134,7 +134,7 @@ module Wrath
       Priest::NAMES.each do |name|
         combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale * 0.75)
       end
-      combo.value = old_value || @unlocked_priests[combo_index]
+      combo.value = old_value || Priest::FREE_UNLOCKS[combo_index] # Default 2 will be picked, since they are always playable.
     end
 
     protected
