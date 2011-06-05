@@ -140,7 +140,8 @@ class Level < GameState
 
   def play_next_level
     log.info { "Moving on to next level from #{self.class}" }
-    switch_game_state(self.class.next_level.new(@network, @god.class, @player_names, @priest_names))
+    next_level = self.class.next_level
+    switch_game_state(next_level.new(@network, next_level::GOD, @player_names, @priest_names))
   end
 
   def accept_message?(message)
