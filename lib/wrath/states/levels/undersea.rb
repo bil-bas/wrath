@@ -7,6 +7,8 @@ module Wrath
 
       FILTER_COLOR = Color.rgba(0, 100, 200, 100)
 
+      CLAM_CONTENTS = [Pearl, Snake]
+
       GOD = Squid
 
       SPAWNS = {
@@ -34,7 +36,7 @@ module Wrath
         # Inanimate objects.
         1.times { OgreSkull.create }
         2.times { TreasureChest.create }
-        2.times { Clam.create }
+        2.times { Clam.create(possible_contents: CLAM_CONTENTS) }
         5.times { Rock.create }
 
         # Static objects.

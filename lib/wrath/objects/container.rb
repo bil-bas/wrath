@@ -20,26 +20,19 @@ module Wrath
       @drop_velocity = options[:drop_velocity]
       @hide_contents = options[:hide_contents]
 
-      # Pick one of the contents objects, creating if it is a class rather than an object.
-      to_be_contents = if options[:contents]
-                    possible_objects = Array(options[:contents])
-                    object = possible_objects.sample
-                    object = object.create(x: -100 * rand(100), y: -100 * rand(100)) if object.is_a? Class
-                    object
-
-                  elsif options[:contents_id]
-                    parent = options[:parent] || $window.current_game_state
-                    parent.object_by_id(options[:contents_id])
-
-                  else
-                    nil
-                  end
-
       super(options)
 
       @contents = nil
 
-      pick_up(to_be_contents) if to_be_contents
+      if options[:contents_id]
+        parent = options[:parent] || $window.current_game_state
+        to_be_contents = parent.object_by_id(options[:contents_id])
+        pick_up(to_be_contents)
+      elsif options[:contents]
+        pick_up(options[:contents])
+      else
+        nil
+      end
     end
 
     public

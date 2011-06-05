@@ -30,7 +30,7 @@ class Level < GameState
 
       # Inanimate objects.
       4.times { Rock.create }
-      5.times { Sack.create(contents: SACK_CONTENTS) }
+      5.times { Sack.create(contents: SACK_CONTENTS.sample.create) }
       2.times { Fire.create }
       1.times { Cauldron.create }
       

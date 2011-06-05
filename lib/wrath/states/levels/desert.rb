@@ -23,7 +23,7 @@ class Level < GameState
       super(PLAYER_SPAWNS)
 
       # Inanimate objects.
-      5.times { Chest.create(contents: CHEST_CONTENTS) }
+      5.times { Chest.create(possible_contents: CHEST_CONTENTS) }
       1.times { OgreSkull.create }
 
       # Static objects.

@@ -23,7 +23,7 @@ class Level < GameState
 
       # Inanimate objects.
       8.times { Rock.create }
-      (5 + rand(3)).times { Chest.create(contents: CHEST_CONTENTS) }
+      (5 + rand(3)).times { Chest.create(possible_contents: CHEST_CONTENTS) }
       4.times { Fire.create }
       8.times { Mushroom.create }
       1.times { OgreSkull.create }

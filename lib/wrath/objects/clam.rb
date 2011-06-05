@@ -4,7 +4,6 @@ module Wrath
       options = {
           animation: "clam_12x13.png",
           elasticity: 0.2,
-          contents: Pearl,
           encumbrance: 0.4,
           z_offset: -2,
       }.merge! options

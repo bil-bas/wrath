@@ -23,9 +23,9 @@ class Level < GameState
       super(PLAYER_SPAWNS)
 
       # Inanimate objects.
-      7.times { Barrel.create(contents: BARREL_CONTENTS) }
+      7.times { Barrel.create(possible_contents: BARREL_CONTENTS) }
       2.times { TreasureChest.create }
-      2.times { Chest.create(contents: CHEST_CONTENTS) }
+      2.times { Chest.create(possible_contents: CHEST_CONTENTS) }
       3.times { Grog.create }
       2.times { Rope.create }
 

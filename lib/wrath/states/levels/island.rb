@@ -26,9 +26,9 @@ class Level < GameState
 
       # Inanimate objects.
       7.times { Rock.create }
-      3.times { Barrel.create(contents: BARREL_CONTENTS) }
+      3.times { Barrel.create(possible_contents: BARREL_CONTENTS) }
       1.times { OgreSkull.create }
-      3.times { X.create(contents: CHEST_CONTENTS) }
+      3.times { X.create(contents: CHEST_CONTENTS.sample.create) }
 
       # Static objects.
       12.times { PalmTree.create }

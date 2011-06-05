@@ -31,12 +31,34 @@ class Chest < Container
       animation: "chest_8x8.png",
       hide_contents: true,
       drop_velocity: [0, 0.15, 0.5],
+      possible_contents: nil,
+      spawn_delay: 15000,
     }.merge! options
+
+    @possible_contents = Array(options[:possible_contents])
+    @spawn_delay = options[:spawn_delay]
 
     super options
 
+    refill
+    schedule_spawn
+
     # Ensure our initial state is correct.
     open? ? open : close
+  end
+
+  def refill
+    if empty? and @possible_contents and not parent.client?
+      klass = @possible_contents.sample
+      object = klass.create(x: -100 * rand(100), y: -100 * rand(100), y: 100)
+      pick_up(object)
+    end
+  end
+
+  def schedule_spawn
+    if empty? and @possible_contents and not parent.client?
+      after(random(@spawn_delay * 0.75, @spawn_delay * 1.25), name: :spawn_contents) { refill }
+    end
   end
 
   public
@@ -73,6 +95,8 @@ class Chest < Container
     Sample[CHEST_CLOSED_SOUND].play_at_x(x)
     stop_timer :bounce
     object.position = [x, y, z + 6] # So the object pops out the top of the chest.
+
+    schedule_spawn
   end
 
   def on_having_picked_up(object)
@@ -89,7 +113,19 @@ class Chest < Container
       if contents.controlled_by_player?
         after(PLAYER_TRAPPED_DURATION) { drop if contents == object }
       end
+
+      stop_timer :spawn_contents
     end
+  end
+
+  def on_being_picked_up(actor)
+    super
+    stop_timer :spawn_contents
+  end
+
+  def on_being_dropped(actor)
+    super
+    schedule_spawn
   end
 
   protected

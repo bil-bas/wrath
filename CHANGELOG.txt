@@ -11,7 +11,8 @@ v0.0.4alpha (unreleased)
   * Favour of object currently carried is indicated next to favour bars.
   * Can set sound volume and window size in options (sorry, no full-screen mode yet).
   * Added 2 new playable priests.
-  * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
+  * Added creature spawning (how could I not have put it in yet?) and reduced favour value of most objects.
+  * Containers, such as chests, spawn items if left empty.
   * Added level under the sea.
   * Added level in a tech facility (AI _are_ gods, aren't they?).
   * Added level in a desert (reused lighting storm disaster effect, though, until unique one created)
