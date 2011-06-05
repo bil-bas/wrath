@@ -8,6 +8,8 @@ class Priest < Humanoid
   FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 
+  def breathes?; @name != :cutie; end
+
   def self.animation_file(name)
     "players/#{name}_8x8.png"
   end
