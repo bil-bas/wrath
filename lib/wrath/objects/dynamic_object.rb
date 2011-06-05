@@ -113,10 +113,8 @@ module Wrath
 
     public
     def destroy
-      if exists?
-        @container.drop if inside_container?
-        parent.objects.delete self
-      end
+      @container.drop if inside_container? and exists?
+      parent.objects.delete self if exists?
 
       super
     end
