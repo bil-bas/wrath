@@ -45,6 +45,11 @@ class Creature < Container
   HEALTH_BAR_FOREGROUND = Color::RED
   HEALTH_BAR_THICKNESS = 0.5
 
+  DAZED_STAR_SIZE = 0.75
+  DAZED_STAR_ANGLE = 60
+  DAZED_STAR_SPEED = 0.1
+  DAZED_STAR_COLOR = Color.rgba(255, 255, 0, 150)
+
   attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
   attr_reader :flying_height
 
@@ -214,6 +219,8 @@ class Creature < Container
     super
   end
 
+
+
   protected
   def draw_self
     super
@@ -230,7 +237,23 @@ class Creature < Container
       health_width = width * health / max_health.to_f
       $window.pixel.draw_rot bar_x, bar_y, y, 0, 0, 1, width, HEALTH_BAR_THICKNESS, HEALTH_BAR_BACKGROUND
       $window.pixel.draw_rot bar_x, bar_y, y, 0, 0, 1, health_width, HEALTH_BAR_THICKNESS, HEALTH_BAR_FOREGROUND
-    end    
+    end
+
+    draw_dazed if state == :lying
+  end
+
+  protected
+  # Draw dazed stars.
+  def draw_dazed
+    offset = (milliseconds * DAZED_STAR_SPEED) % DAZED_STAR_ANGLE
+    pixel = $window.pixel
+    radius = [width, height].min * 0.3
+    ((0 + offset)...(360 + offset)).step(DAZED_STAR_ANGLE) do |angle|
+      star_x = x + offset_x(angle, radius) + ((factor_x > 0) ? dazed_offset_x : -dazed_offset_x)
+      star_y = y + offset_y(angle, radius) * 0.5
+      star_z = z + height
+      pixel.draw star_x, star_y - star_z, star_y, DAZED_STAR_SIZE, DAZED_STAR_SIZE, DAZED_STAR_COLOR
+    end
   end
 
   public

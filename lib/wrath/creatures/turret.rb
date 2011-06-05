@@ -4,6 +4,7 @@ module Wrath
     DAMAGE = 10
 
     def hurts?(other); not other.is_a?(Turret); end
+    def dazed_offset_x; 0; end
 
     public
     def initialize(options = {})

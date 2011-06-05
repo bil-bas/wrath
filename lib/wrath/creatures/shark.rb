@@ -3,6 +3,7 @@ module Wrath
     DAMAGE = 20
 
     def hurts?(other); other.controlled_by_player?; end
+    def dazed_offset_x; width * -0.375; end
 
     def initialize(options = {})
       options = {

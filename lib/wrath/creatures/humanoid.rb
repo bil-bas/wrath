@@ -10,6 +10,7 @@ module Wrath
     def breathes?(medium); true; end
 
     def controlled_by_player?; not @player.nil?; end
+    def dazed_offset_x; width * -0.25; end
 
     def initialize(options = {})
       options = {

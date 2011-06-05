@@ -8,6 +8,7 @@ module Wrath
     def hurts?(other); discovered? and not other.is_a?(Mimic); end
     def discovered?; @discovered; end
     def can_be_activated?(actor); actor.empty_handed?; end
+    def dazed_offset_x; width * 0.125; end
 
     def initialize(options = {})
       options = {
