@@ -9,7 +9,7 @@ module Wrath
 
       protected
       def action(state)
-        raise "Anger must be a float" unless @anger.is_a? Float
+        raise "Anger must be a number" unless @anger.is_a? Numeric
         state.god.anger = @anger
       end
 
