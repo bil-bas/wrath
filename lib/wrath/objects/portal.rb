@@ -69,11 +69,10 @@ module Wrath
         stored_velocity_y = offset_y(direction, speed)
       end
 
-      pick_up(other)
-      drop
-
       other.position = position
       other.velocity = [stored_velocity_x, stored_velocity_y, EJECT_UP_SPEED]
+
+      Sample["objects/teleport.ogg"].play
     end
 
     def on_collision(other)
@@ -85,9 +84,16 @@ module Wrath
 
           elsif container.nil? and not other.thrown_by.include?(self) and
               not thrown_by.include?(other) and
-              other.z <= 0 and partnered? and partner.empty?
+              other.z <= 0 and partnered?
 
-            partner.teleport(other)
+            partner.pick_up(other)
+            partner.drop
+
+            if other.local?
+              partner.teleport(other)
+            else
+              parent.send_message(Message::Teleport.new(other, partner))
+            end
           end
       end
 

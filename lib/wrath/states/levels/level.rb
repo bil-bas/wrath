@@ -24,6 +24,7 @@ class Level < GameState
       Message::RequestAction,
       Message::StandUp,
       Message::Sync,
+      Message::Teleport,
       Message::SetAnger, Message::SetFavor, Message::SetHealth
   ]
 
