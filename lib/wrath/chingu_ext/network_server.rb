@@ -153,7 +153,7 @@ module Chingu
 
       def handle_incoming_connections
         begin
-          while @sockets.size < @max_connections and socket = @socket.accept_nonblock
+          while @sockets.size < @max_connections and @socket and socket = @socket.accept_nonblock
             @sockets << socket
             @packet_buffers[socket] = PacketBuffer.new
             on_connect(socket)
