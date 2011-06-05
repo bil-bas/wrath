@@ -14,7 +14,7 @@ module Wrath
         if actor and destination and destination.respond_to? :teleport
           destination.teleport(actor)
         else
-          log.error { "Failed to make object ##{@id} get up" }
+          log.error { "Failed to make object ##{@actor_id} teleport to ##{@destination_id}" }
         end
       end
     end
