@@ -10,8 +10,9 @@ begin
 rescue LoadError
 end
 
-require 'bundler/setup' unless defined? OSX_EXECUTABLE
+require 'bundler/setup' unless defined? OSX_EXECUTABLE or ENV['OCRA_EXECUTABLE']
 
+require 'gosu'
 require 'chingu'
 require 'texplay'
 require 'fidgit'
