@@ -55,7 +55,7 @@ class BaseObject < GameObject
 
   def self.default_image; @@default_images[self]; end
 
-  def to_s; "#{self.class.name[/[^:]+$/]}##{networked? ? @id : "local"}"; end
+  def to_s; "#{self.class.name[/[^:]+$/]}##{networked? ? @id : object_id}"; end
 
   public
   def initialize(options = {})
@@ -133,7 +133,7 @@ class BaseObject < GameObject
       end
     end
 
-    log.debug { "Created network object #{self.class}##{id}" } if @id
+    log.debug { "Created network object #{self}" } if @id
 
     @tile = nil
 
@@ -379,9 +379,9 @@ class BaseObject < GameObject
   def destroy
     unless exists?
       if networked?
-        log.warn { "Attempting to destroy an already destroyed network object #{self.class}##{id}" }
+        log.warn { "Attempting to destroy an already destroyed network object #{self}" }
       else
-        log.warn { "Attempting to destroy an already destroyed object #{self.class}##{__object_id__}" }
+        log.warn { "Attempting to destroy an already destroyed object #{self}" }
       end
 
       return
@@ -389,7 +389,7 @@ class BaseObject < GameObject
 
     super
 
-    log.debug { "Destroyed network object #{self.class}##{id}" } if @id
+    log.debug { "Destroyed network object #{self}" } if @id
 
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body

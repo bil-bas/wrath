@@ -23,7 +23,6 @@ module Wrath
       raise ArgumentError("Owner must be networked") unless owner.networked?
 
       @owner = owner
-      
 
       super options
 
@@ -35,8 +34,8 @@ module Wrath
       publish :on_applied, @owner
 
       log.debug do
-        duration = @duration ? "for #{@duration}ms" : "indefinitely"
-        "Applied status #{type} to #{@owner.class}##{@owner.id} #{duration}"
+        duration = options[:duration] ? "for #{@duration}ms" : "indefinitely"
+        "Applied status #{type} to #{@owner} #{duration}"
       end
     end
     
@@ -74,7 +73,7 @@ module Wrath
       old_owner = @owner
       @owner = nil
       old_owner.remove_status(type)
-      log.debug { "Removed status #{type} from #{old_owner.class}##{old_owner.id}" }
+      log.debug { "Removed status #{type} from #{old_owner}" }
       publish :on_removed, old_owner
     end
   end

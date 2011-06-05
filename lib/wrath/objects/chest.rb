@@ -1,4 +1,5 @@
 module Wrath
+# The basic "thing that contains stuff that you can put stuff in or take it out"
 class Chest < Container
   trait :timer
 
@@ -25,7 +26,7 @@ class Chest < Container
     options = {
       favor: -10,
       encumbrance: 0.5,
-      elasticity: 0.6,
+      elasticity: 0.3,
       z_offset: -2,
       animation: "chest_8x8.png",
       hide_contents: true,
@@ -41,7 +42,7 @@ class Chest < Container
   public
   def can_be_activated?(actor)
     if actor.empty_handed?
-      closed?
+      true
     else      
       open? and actor.contents.can_be_dropped?
     end
@@ -54,16 +55,14 @@ class Chest < Container
     if closed?
       # Open the chest and spit out its contents.
       drop
-    else
-      item = actor.contents
-      if item
-        # Put object into chest.
-        actor.drop
-        pick_up(item)
-      else
+    elsif actor.empty_handed?
         # Pick up the empty chest.
         actor.pick_up(self)
-      end
+    else
+      # Put object into chest.
+      item = actor.contents
+      actor.drop
+      pick_up(item)
     end
   end
 
