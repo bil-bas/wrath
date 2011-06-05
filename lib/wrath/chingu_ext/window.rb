@@ -1,6 +1,6 @@
 module Chingu
   class Window
-    DEFAULT_VOLUME = 0.5 # Because volume = 1.0 is REALLY loud.
+    DEFAULT_VOLUME = 1.0 # However, 0.5 is a better value for real usage.
 
     def volume=(value)
       raise "Bad volume setting" unless value.is_a? Numeric
