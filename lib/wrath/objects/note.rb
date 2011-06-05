@@ -1,5 +1,5 @@
 module Wrath
-class Note < StaticObject
+class Note < DynamicObject
   VOLUME = 0.6
   INITIAL_ALPHA = 200
 
