@@ -30,7 +30,7 @@ module Wrath
       @creatures.keys.shuffle.each do |klass|
         max_of_class = @creatures[klass]
         if klass.all.size < max_of_class
-          klass.create(z_velocity: 1.5)
+          klass.create(z_velocity: 1.5, parent: parent)
           break
         end
       end
