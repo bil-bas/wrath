@@ -50,8 +50,10 @@ class Level < GameState
   def_delegators :@map, :tile_at_coordinate
 
   attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at
+
   attr_accessor :screen_offset_y
 
+  def altar=(altar); @objects << altar; @altar = altar; end
   def medium; :air; end
   def networked?; !!@network; end
   def host?; @network.is_a? Server; end

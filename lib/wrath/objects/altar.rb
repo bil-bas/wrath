@@ -12,8 +12,7 @@ class Altar < StaticObject
     actor.carrying? and
         not actor.mount? and
         not actor.contents.controlled_by_player? and
-        actor.contents.favor != 0 and
-        not @sacrifice
+        actor.contents.favor != 0
   end
 
   public
@@ -39,7 +38,6 @@ class Altar < StaticObject
     case lamb
       when Creature
         @blood = 100
-        @player = actor.player
         @sacrifice = lamb
         @blood_drip_animation.reset
         @facing = lamb.factor_x
@@ -47,11 +45,9 @@ class Altar < StaticObject
       else
 
         sound = lamb.favor > 0 ? Sample["creatures/sacrifice.ogg"] : Sample["objects/bad_sacrifice.ogg"]
-
-        # Instant gratification for inanimate objects.
-        actor.player.favor += lamb.favor
     end
 
+    actor.player.favor += lamb.favor
     sound.play_at_x(x, [[lamb.favor.abs, 20].min, 5].max / 20.0)
 
     if actor.local?
@@ -90,7 +86,6 @@ class Altar < StaticObject
     if @blood > 0
       change = frame_time / 20.0
       @blood -= change
-      @player.favor += parent.god.favor_for(@sacrifice) * change / 100.0
 
       if @blood <= 0
         self.image = @frames[0]
