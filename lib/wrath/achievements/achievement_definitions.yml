@@ -115,6 +115,9 @@
     -
       :type: :level
       :name: :Desert
+    -
+      :type: :priest
+      :name: :acolyte
       
 -
   :name: :played_desert

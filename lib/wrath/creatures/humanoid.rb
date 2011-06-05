@@ -7,6 +7,8 @@ module Wrath
     PORTRAIT_CROP = [1, 0, 5, 4]
     PORTRAIT_PADDING = 1
 
+    def breathes?(medium); true; end
+
     def controlled_by_player?; not @player.nil?; end
 
     def initialize(options = {})
@@ -21,6 +23,8 @@ module Wrath
       }.merge! options
 
       @player = nil
+
+      @@bubble_helmet ||= Animation.new(file: "bubble_helmet_10x9.png")
 
       super(options)
     end
@@ -47,5 +51,23 @@ module Wrath
 
       @portrait
     end
+
+    public
+    def draw_self
+      super
+
+      unless breathes?(parent.medium)
+        index = case state
+                  when :standing, :walking, :mounted  then 0
+                  when :lying, :thrown, :carried      then 1
+                  else
+                    raise "Unknown state #{state.inspect}"
+                end
+
+        @@bubble_helmet[index].draw_rot x, y - z, zorder, 0, 0.5, 1.0,
+                                       factor_x, factor_y
+      end
+    end
+
   end
 end

@@ -1,7 +1,7 @@
 module Wrath
   class Level < GameState
     # Yuggoth (Pluto), a bluish moon with low gravity. Clangers are out today, though.
-    class Moon < AirlessLevel
+    class Moon < Level
       DEFAULT_TILE = MoonDust
 
       GOD = Azathoth
@@ -14,6 +14,7 @@ module Wrath
       # This is relative to the altar.
       PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
+      def medium; :space; end
       def gravity; super * 0.6; end
       
       def self.to_s; "Yuggoth"; end

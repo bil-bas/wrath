@@ -61,7 +61,7 @@ class Menu < Gui
 
     @right_priests.clear
     @right_priests.with do
-       icons[5..8].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i + 5]) }
+       icons[5..9].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i + 5]) }
     end
 
     log.info "Viewing main menu"

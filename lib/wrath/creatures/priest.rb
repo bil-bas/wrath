@@ -4,11 +4,22 @@ class Priest < Humanoid
   MAX_HEALTH = 100
   CHEER_SPRITE = 4
 
-  NAMES = [:cutie, :druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
+  NAMES = [:acolyte, :cutie, :druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
   FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 
-  def breathes?; @name != :cutie; end
+  def breathes?(substance)
+    case substance
+      when :air
+        @name != :shaman
+      when :water
+        [:cutie, :acolyte].include? @name
+      when :space
+        [:cutie, :shaman].include? @name
+      else
+        "unknown substance #{substance}"
+    end
+  end
 
   def self.animation_file(name)
     "players/#{name}_8x8.png"

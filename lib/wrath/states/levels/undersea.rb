@@ -1,6 +1,6 @@
 module Wrath
   class Level
-    class Undersea < AirlessLevel
+    class Undersea < Level
       trait :timer
 
       DEFAULT_TILE = Sand
@@ -19,12 +19,12 @@ module Wrath
       # This is relative to the altar.
       PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
+      def medium; :water; end
       def self.to_s; "Davey Jones' Locker (of Doom)"; end
 
       def gravity; super * 0.3; end
 
       def pushed
-        super
         every(Seaweed::ANIMATION_DELAY) { Seaweed.all.each(&:animate) }
       end
 
@@ -82,7 +82,7 @@ module Wrath
 
         if milliseconds.div(500).modulo(5) == 0
           Priest.each do |priest|
-            if priest.breathes? and [:standing, :walking, :mounted].include? priest.state
+            if not priest.breathes?(:water) and [:standing, :walking, :mounted].include? priest.state
               offset_x = priest.factor_x > 0 ? 2 : -2
               Bubble.create(x: priest.x + offset_x + random(-1.5, 1.5), y: priest.y - priest.z - random(4, 4.5), zorder: priest.zorder + 0.01)
             end

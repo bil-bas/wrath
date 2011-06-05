@@ -4,6 +4,8 @@ module Wrath
 
     def hurts?(other); other.controlled_by_player?; end
 
+    def breathes?(medium); medium == :air; end
+
     def initialize(options = {})
       options = {
           favour: 8,
