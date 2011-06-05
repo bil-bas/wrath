@@ -9,6 +9,7 @@ class StaticObject < BaseObject
     options = {
       collision_type: :static,
       mass: Float::INFINITY,
+      paused: true,
     }.merge! options
 
     super options
