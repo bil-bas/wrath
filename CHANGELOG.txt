@@ -1,6 +1,6 @@
 === CHANGELOG ===
 
-v0.0.4alpha (2011-06-04)
+v0.0.4alpha (unreleased)
 
   * Changed default online player controls to same as player 1. Reset everyone's settings to default.
   * Collects game-play statistics locally (for achievements).
@@ -10,6 +10,7 @@ v0.0.4alpha (2011-06-04)
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
   * Favour of object currently carried is indicated next to favour bars.
   * Can set sound volume and window size in options (sorry, no full-screen mode yet).
+  * Added 2 new playable priests.
   * Added spawning (how could I not have put it in yet?) and reduced favour value of most objects.
   * Added level under the sea.
   * Added level in a tech facility (AI _are_ gods, aren't they?).
