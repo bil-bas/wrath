@@ -4,7 +4,7 @@ class Priest < Humanoid
   MAX_HEALTH = 100
   CHEER_SPRITE = 4
 
-  NAMES = [:druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
+  NAMES = [:cutie, :druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
   FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 

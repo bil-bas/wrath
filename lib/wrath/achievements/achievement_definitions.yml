@@ -142,6 +142,9 @@
     -
       :type: :level
       :name: :Moon
+    -
+      :type: :priest
+      :name: :cutie
        
 -
   :name: :played_moon
