@@ -14,7 +14,7 @@ module Wrath
       SPAWNS = {
           DeepOne => 4,
           Snake => 1,
-          Pirate => 1,
+          ZombiePirate => 1,
           Shark => 1,
       }
 
