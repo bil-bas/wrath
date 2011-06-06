@@ -1,5 +1,7 @@
 module Wrath
 class Corpse < DynamicObject
+  include Disintegrates
+
   # Corpses are created from the Creature#die! method, simultaneously on all machines.
   def network_create?; false; end
 
