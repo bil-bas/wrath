@@ -58,6 +58,10 @@ module Wrath
 
         horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
+
+          toggle_button("Disable unlocks", value: achievement_manager.unlocks_disabled?) do |sender, value|
+            achievement_manager.unlocks_disabled = value
+          end
         end
       end
     end

@@ -9,6 +9,9 @@ module Wrath
 
     attr_reader :statistics, :achievements
 
+    def unlocks_disabled?; @unlocks_disabled; end
+    def unlocks_disabled=(value); @unlocks_disabled = value; end
+
     public
     def initialize(achievements_settings_file, statistics)
       @achievements_settings = Settings.new(achievements_settings_file, auto_save: false)
@@ -29,6 +32,8 @@ module Wrath
         already_done = @achievements_settings[definition[:name], :achieved] || false
         @achievements << Achievement.new(definition, self, already_done)
       end
+
+      @unlocks_disabled = false # Used in debugging to unlock all temporarily.
     end
 
     public
@@ -55,7 +60,8 @@ module Wrath
     def unlocked?(type, name)
       unlock = @unlocks[[type, name]]
       raise "undefined unlock, #{type.inspect} / #{name.inspect}" unless unlock
-      return unlock.unlocked?
+
+      unlock.unlocked? or @unlocks_disabled
     end
 
     def completion_time(name)
