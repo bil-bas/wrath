@@ -2,7 +2,7 @@ module Wrath
   class Parrot < Animal
     def initialize(options = {})
       options = {
-          flying_height: 4,
+          flying_height: 7,
           health: 10,
           favor: 4,
           walk_duration: 3000,

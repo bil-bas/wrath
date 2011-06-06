@@ -3,14 +3,8 @@ module Wrath
     trait :timer
 
     LEVITATE_HEIGHT = 15
-    LEVITATE_SPEED = 0.05
+    EXTRA_SPEED = 1
     FAVOUR_COST = 1 / 1000.0 # Minimal cost.
-
-
-    # Speeds the user up while flying, but not on the ground.
-    def encumbrance
-      (empowered? and container.z > container.ground_level) ? -0.25 : 0.5
-    end
 
     def empowered?
       inside_container? and container.controlled_by_player? and
@@ -25,7 +19,8 @@ module Wrath
       options = {
         elasticity: 0.2,
         z_offset: -10,
-        encumbrance: -0.25,
+        encumbrance: 0.5,
+        elasticity: 0,
         animation: "carpet_12x3.png",
       }.merge! options
 
@@ -33,22 +28,32 @@ module Wrath
     end
 
     def on_being_dropped(actor)
+      if actor.is_a? Creature
+        actor.speed -= EXTRA_SPEED
+        actor.flying_height -= LEVITATE_HEIGHT
+      end
+
       self.image = @frames[0]
       stop_timer :flying_carpet
     end
 
     def on_being_picked_up(actor)
-      self.image = @frames[1]
-      every(500, name: :flying_carpet) do
-        index = (image == @frames[1] and empowered?) ? 2 : 1
-        self.image = @frames[index]
+      if actor.is_a? Creature
+        actor.speed += EXTRA_SPEED
+        actor.flying_height += LEVITATE_HEIGHT
+
+        self.image = @frames[1]
+
+        every(500, name: :flying_carpet) do
+          index = (image == @frames[1] and empowered?) ? 2 : 1
+          self.image = @frames[index]
+        end
       end
     end
 
     def update
       if inside_container? and not parent.client?
         if empowered?
-          container.z_velocity = [LEVITATE_HEIGHT - container.z, 0].max * LEVITATE_SPEED
           container.player.favor -= FAVOUR_COST * frame_time
         else
           container.drop

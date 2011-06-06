@@ -51,12 +51,14 @@ class Creature < Container
   DAZED_STAR_COLOR = Color.rgba(255, 255, 0, 150)
 
   attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
-  attr_reader :flying_height
+  attr_reader :flying_rise_speed, :flying_height
 
-  attr_writer :player, :state, :facing, :strength
+  attr_writer :player, :state, :facing, :strength, :speed, :flying_rise_speed, :flying_height
+
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
 
+  def affected_by_gravity?; super and (state != :walking or flying_height == 0) end
   def media_folder; 'creatures'; end
   def mount?; false; end
   def alive?; @health > 0; end
@@ -69,7 +71,6 @@ class Creature < Container
     super(other) and [:standing, :walking, :mounted].include? @state
   end
 
-  def ground_level; super + (([:lying, :thrown].include? @state) ? 0 : @flying_height); end
   # Creatures don't bounce much if thrown. Usual elasticity only used in movement.
   def elasticity; thrown? ? [0.3, super].min : super; end
   def walking_to_do?; @walk_time_left > 0; end
@@ -78,6 +79,7 @@ class Creature < Container
   def initialize(options = {})
     options = {
         flying_height: 0,
+        flying_rise_speed: 0.5,
         health: 10000,
         strength: 1.0,
         z_offset: -2,
@@ -89,6 +91,7 @@ class Creature < Container
     super options
 
     @flying_height = options[:flying_height]
+    @flying_rise_speed = options[:flying_rise_speed]
     @max_health = @health = options[:health]
 
     @strength = options[:strength]
@@ -116,6 +119,9 @@ class Creature < Container
 
     @walking_animation = @frames[FRAME_WALK1..FRAME_WALK2]
     @walking_animation.delay = WALK_ANIMATION_DELAY
+
+    # Start flying if possible, otherwise find ground level.
+    self.z = (@flying_height > 0) ? @flying_height : ground_level
 
     schedule_move
   end
@@ -369,6 +375,12 @@ class Creature < Container
       end
     end
 
+    # Float upwards if flying.
+    if flying_height > 0 and not [:lying, :thrown].include? state
+
+      self.z_velocity = [[flying_height - z, 0].max, 2].min * 0.5 * flying_rise_speed
+    end
+
     super
 
     # Ensure that state is updated remotely.
@@ -391,7 +403,7 @@ class Creature < Container
 
     self.image = case state
                    when :walking
-                     z <= ground_level ? @walking_animation.next : @frames[FRAME_WALK1]
+                     @walking_animation.next
                    when :standing
                      @frames[FRAME_WALK1]
                    when :carried

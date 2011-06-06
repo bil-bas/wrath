@@ -4,13 +4,14 @@ module Wrath
 
     ANIMATION_DELAY = 500
     GLOW_COLOR = Color.rgb(255, 255, 50)
+    EXTRA_SPEED = 1
     DPS = 5
 
     def initialize(options = {})
       options = {
           damage_per_second: DPS,
           favor: 2,
-          encumbrance: -0.5,
+          encumbrance: 0,
           elasticity: 0.2,
           z_offset: -2,
           animation: "fire_8x8.png",
@@ -21,6 +22,14 @@ module Wrath
       super options
 
       @frames.delay = ANIMATION_DELAY
+    end
+
+    def on_being_picked_up(container)
+      container.speed += EXTRA_SPEED if container.is_a? Creature
+    end
+
+    def on_being_dropped(container)
+      container.speed -= EXTRA_SPEED if container.is_a? Creature
     end
 
     def update
