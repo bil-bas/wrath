@@ -12,22 +12,26 @@ module Wrath
 
         @how_to_play = YAML.load(File.read(HOW_TO_PLAY))
 
-        @tabs_group = group do
-          horizontal padding: 0, spacing: 0 do
-            @how_to_play.each_with_index do |page, i|
-              radio_button(page[:title], i)
+        vertical spacing: 0, padding: 0 do
+          @tabs_group = group do
+            @tab_buttons = horizontal padding: 0, spacing: 5 do
+              @how_to_play.each_with_index do |page, i|
+                radio_button(page[:title], i, border_thickness: 0)
+              end
+            end
+
+            subscribe :changed do |sender, value|
+              @body_text.text = @how_to_play[value][:body]
+              current = @tab_buttons.find {|elem| elem.value == value }
+              @tab_buttons.each {|t| t.enabled = (t != current) }
             end
           end
 
-          subscribe :changed do |sender, value|
-            @body_text.text = @how_to_play[value][:body]
-          end
+          @body_text = text_area font_size: 22, padding: 10, enabled: false,
+                                 width: $window.width - 50, height: $window.height - 180
+
+          @tabs_group.value = 0
         end
-
-        @body_text = text_area font_size: 20, padding: 10, enabled: false,
-                               width: $window.width - 50, height: $window.height - 200
-
-        @tabs_group.value = 0
 
         button(shortcut("Back")) { pop_game_state }
       end
