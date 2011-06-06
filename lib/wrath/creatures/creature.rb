@@ -58,7 +58,6 @@ class Creature < Container
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
 
-  def affected_by_gravity?; super and (state != :walking or flying_height == 0) end
   def media_folder; 'creatures'; end
   def mount?; false; end
   def alive?; @health > 0; end
@@ -291,6 +290,7 @@ class Creature < Container
     if @state == :lying
       parent.send_message(Message::StandUp.new(self)) if parent.host?
       @state = :standing
+      schedule_move unless parent.client?
     end
   end
 
@@ -377,7 +377,6 @@ class Creature < Container
 
     # Float upwards if flying.
     if flying_height > 0 and not [:lying, :thrown].include? state
-
       self.z_velocity = [[flying_height - z, 0].max, 2].min * 0.5 * flying_rise_speed
     end
 
@@ -425,6 +424,7 @@ class Creature < Container
     @state = (container.is_a?(Creature) and container.mount?) ? :mounted : :carried
     drop
     stop_timer :stand_up
+    stop_timer :move
   end
 
   protected
@@ -557,6 +557,7 @@ class Creature < Container
     angle = Gosu::angle(knocker.x, knocker.y, x, y)
     self.velocity = [offset_x(angle, KNOCK_DOWN_SPEED_H), offset_y(angle, KNOCK_DOWN_SPEED_H), KNOCK_DOWN_SPEED_V]
 
+    stop_timer :move
     knocker.knocked_someone_down(self)
 
     nil
