@@ -34,8 +34,8 @@ module Wrath
       publish :on_applied, @owner
 
       log.debug do
-        duration = options[:duration] ? "for #{@duration}ms" : "indefinitely"
-        "Applied status #{type} to #{@owner} #{duration}"
+        duration = options[:duration] ? "for #{options[:duration]}ms" : "indefinitely"
+        "Applied status #{type.inspect} to #{@owner} #{duration}"
       end
     end
     
@@ -73,7 +73,7 @@ module Wrath
       old_owner = @owner
       @owner = nil
       old_owner.remove_status(type)
-      log.debug { "Removed status #{type} from #{old_owner}" }
+      log.debug { "Removed status #{type.inspect} from #{old_owner}" }
       publish :on_removed, old_owner
     end
   end
