@@ -23,22 +23,27 @@ module Wrath
       vertical do
         label "Options  |  Controls", font_size: 32
 
-        # Choose control group.
-        @tabs_group = group do
-          horizontal padding: 0, spacing: 0 do
-            GROUPS.each_pair do |symbol, options|
-              radio_button(options[:title], symbol, tip: options[:tip].to_s)
+        vertical spacing: 0, padding: 0 do
+          # Choose control group.
+          @tabs_group = group do
+            @tab_buttons = horizontal padding: 0, spacing: 5 do
+              GROUPS.each_pair do |symbol, options|
+                radio_button(options[:title], symbol, tip: options[:tip].to_s, border_thickness: 0)
+              end
+            end
+
+            subscribe :changed do |sender, value|
+              @control_waiting_for_key = nil
+              list_keys
+
+              current = @tab_buttons.find {|elem| elem.value == value }
+              @tab_buttons.each {|t| t.enabled = (t != current) }
             end
           end
 
-          subscribe :changed do |sender, value|
-            @control_waiting_for_key = nil
-            list_keys
+          scroll_window height: 300, width: 600 do
+            @key_grid = grid num_columns: 2, padding: 10, spacing: 10
           end
-        end
-
-        scroll_window height: 250, width: 600 do
-          @key_grid = grid num_columns: 2, padding: 10, spacing: 10
         end
 
         horizontal padding: 0 do
