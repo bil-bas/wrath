@@ -20,9 +20,10 @@ module Wrath
       vertical do
         label "Options", font_size: 32
 
-        horizontal padding: 0 do
+        vertical padding: 0, spacing: 10 do
           PAGES.each_pair do |state, label|
-            button(label) { push_game_state state }
+            image = Image["gui/#{Chingu::Inflector.underscore(Inflector.demodulize(state.name))}.png"]
+            button(label, icon: ScaledImage.new(image, $window.sprite_scale), width: 300) { push_game_state state }
           end
         end
 

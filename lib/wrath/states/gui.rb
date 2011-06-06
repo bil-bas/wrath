@@ -2,7 +2,7 @@ class Gui < Fidgit::GuiState
   def initialize
     super
 
-    self.cursor.image = Image["cursor_6x6.png"]
+    self.cursor.image = Image["gui/cursor.png"]
     self.cursor.factor = $window.sprite_scale
   end
 
