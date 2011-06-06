@@ -17,23 +17,37 @@ module Wrath
       @achievements_settings = Settings.new(achievements_settings_file, auto_save: false)
       @statistics = statistics
 
-      @achievements = []
-      @unlocks = {}
-
-      @monitors = Hash.new {|hash, key| hash[key] = [] }
-
       # Every time statistics are updated, force all achievements to be re-calculated.
       @statistics.subscribe(:on_changed) do |sender, keys, value|
         @monitors[keys].each {|achievement| achievement.monitor_updated }
       end
+
+      @unlocks_disabled = false # Used in debugging to unlock all temporarily.
+
+      load
+    end
+
+    protected
+    def load
+      @achievements = []
+      @unlocks = {}
+
+      @monitors = Hash.new {|hash, key| hash[key] = [] }
 
       definitions = YAML.load(File.read(DEFINITIONS_FILE))
       definitions.each do |definition|
         already_done = @achievements_settings[definition[:name], :achieved] || false
         @achievements << Achievement.new(definition, self, already_done)
       end
+    end
 
-      @unlocks_disabled = false # Used in debugging to unlock all temporarily.
+    public
+    # Clear ALL statistics and achievements!
+    def reset
+      @statistics.reset_to_default
+      @statistics.save
+      save
+      load
     end
 
     public

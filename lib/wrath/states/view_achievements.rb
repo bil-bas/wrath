@@ -59,8 +59,13 @@ module Wrath
         horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
 
-          toggle_button("Disable unlocks", value: achievement_manager.unlocks_disabled?) do |sender, value|
+          toggle_button("Disable unlocks", tip: "Allow use of all features, even if they are locked, until game is restarted", value: achievement_manager.unlocks_disabled?) do |sender, value|
             achievement_manager.unlocks_disabled = value
+          end
+
+          button "Reset statistics", tip: "Resets all statistics, achievements and unlocks PERMANENTLY" do |sender|
+            achievement_manager.reset
+            switch_game_state self.class
           end
         end
       end

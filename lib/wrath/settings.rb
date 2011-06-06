@@ -31,6 +31,12 @@ module Wrath
       load
     end
 
+    def reset_to_default
+      FileUtils.cp @default_file, @user_file
+      load
+      nil
+    end
+
     public
     # Read a settings value.
     #
