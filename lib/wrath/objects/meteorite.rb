@@ -2,14 +2,16 @@ module Wrath
   class Meteorite < Rock
     IRRADIATED_DURATION = 6000
 
-    SPRITE_LANDING = 0
+    SPRITE_FREE = 0
     SPRITE_EMBEDDED = 1
-    SPRITE_FREE = 2
+    SPRITE_FLAME = 2
+
+    FLAME_COLOR = Color.rgba(255, 255, 255, 175)
     
     def initialize(options = {})
       options = {
           favor: 2,
-          animation: "meteorite_7x13.png",
+          animation: "meteorite_7x7.png",
           elasticity: 0,
           encumbrance: 1.3, # Can be heavy, since it also gives strength via radiation.
       }.merge! options
@@ -17,6 +19,8 @@ module Wrath
       @landed = false
 
       super(options)
+
+      self.image = @frames[SPRITE_FREE] # Rock picks a random image to start with.
     end
     
     def on_stopped
@@ -24,7 +28,8 @@ module Wrath
         @landed = true
         Sample["objects/explosion.ogg"].play_at_x(x)
         self.image = @frames[SPRITE_EMBEDDED]
-        Crater.create(position: position) if not parent.client?
+        Crater.create(position: position) unless parent.client?
+        # TODO: Splash and smoke?
       end
 
       super
@@ -45,13 +50,15 @@ module Wrath
     end
     
     def draw_self
+      unless @landed
+        @frames[SPRITE_FLAME].draw_rot x, y - z - height / 2, zorder, 0, 0.5, 1, 1, 2.5, FLAME_COLOR
+      end
+
       super
 
-      $window.clip_to(0, 0, 10000, y) do
-        color = Status::Irradiated::OVERLAY_COLOR
-        color.alpha = ((1.3 + Math::sin(milliseconds / 500.0)) * 90).to_i
-        image.outline.draw_rot x, y + 1 - z, zorder, 0, 0.5, 1.0, factor_x, factor_y, color, :additive
-      end
+      color = Status::Irradiated::OVERLAY_COLOR
+      color.alpha = ((1.3 + Math::sin(milliseconds / 500.0)) * 90).to_i
+      image.outline.draw_rot x, y + 1 - z, zorder, 0, 0.5, 1.0, factor_x, factor_y, color, :additive
     end 
 
     def on_collision(other)
