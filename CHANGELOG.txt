@@ -6,6 +6,7 @@ v0.0.4alpha (unreleased)
   * Collects game-play statistics locally (for achievements).
   * Added achievements and unlocks system.
   * Added some more sound effects (but nowhere near enough).
+  * Can't pick up creatures that can hurt you, or the other player, unless they are knocked down first.
   * Knocked back when hit by a monster, rather than taking damage-over time (fire still burns slowly, however).
   * Gods love certain sacrifices at any given time, which will net greatly increased favour.
   * Favour of object currently carried is indicated next to favour bars.

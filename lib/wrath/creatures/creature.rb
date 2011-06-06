@@ -63,7 +63,7 @@ class Creature < Container
   def dead?; @health <= 0; end
   def facing=(angle); @facing = angle % 360; end
   def controlled_by_player?; false; end
-  def can_be_picked_up?(container); ((@state == :lying) or (not hurts?(container))) and super; end
+  def can_be_picked_up?(container); ((@state == :lying) or (not hurts?(container) and not controlled_by_player?)) and super; end
   def stand_up_delay; controlled_by_player? ? PLAYER_STAND_UP_DELAY : CREATURE_STAND_UP_DELAY; end
   def can_hit?(other)
     super(other) and [:standing, :walking, :mounted].include? @state
