@@ -8,8 +8,7 @@ class Menu < Gui
         i: Instructions,
         a: ViewAchievements,
         o: Options,
-        x: :close,
-        escape: :close
+        x: :close
     )
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
@@ -23,11 +22,11 @@ class Menu < Gui
         label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
         vertical spacing: 8, padding_top: 30, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
-          button("(P)lay", options.merge(tip: 'Play the game, on- or off-line')) { push_game_state Play }
-          button("(I)nstructions", options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
-          button("(A)chievements", options.merge(tip: 'Review your achievements')) { push_game_state ViewAchievements }
-          button("(O)ptions", options.merge(tip: "View and change game settings")) { push_game_state Options }
-          button("E(x)it", options) { close }
+          button(shortcut("Play"), options.merge(tip: 'Play the game, on- or off-line')) { push_game_state Play }
+          button(shortcut("Instructions"), options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
+          button(shortcut("Achievements"), options.merge(tip: 'Review your achievements')) { push_game_state ViewAchievements }
+          button(shortcut("Options"), options.merge(tip: "View and change game settings")) { push_game_state Options }
+          button(shortcut("Exit", 'x'), options) { close }
         end
 
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width

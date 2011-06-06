@@ -50,7 +50,7 @@ module Wrath
       end
 
       horizontal do
-        button "(B)ack" do
+        button shortcut("Back") do
           pop_until_game_state Play
         end
 
@@ -64,7 +64,7 @@ module Wrath
         if client?
           label "Wait for host to start a game"
         else
-          @start_button = button("(S)tart", enabled: local?) do
+          @start_button = button(shortcut("Start"), enabled: local?) do
             new_game(@level_picker.value, @god_picker.value)
           end
         end

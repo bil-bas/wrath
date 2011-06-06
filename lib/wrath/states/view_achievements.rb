@@ -57,7 +57,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button("(B)ack") { pop_game_state }
+          button(shortcut("Back")) { pop_game_state }
 
           toggle_button("Disable unlocks", tip: "Allow use of all features, even if they are locked, until game is restarted", value: achievement_manager.unlocks_disabled?) do |sender, value|
             achievement_manager.unlocks_disabled = value

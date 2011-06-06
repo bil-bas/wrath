@@ -29,7 +29,7 @@ module Wrath
 
         @tabs_group.value = 0
 
-        button("(B)ack") { pop_game_state }
+        button(shortcut("Back")) { pop_game_state }
       end
     end
   end

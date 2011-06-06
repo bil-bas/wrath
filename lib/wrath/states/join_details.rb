@@ -16,7 +16,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button "(B)ack" do
+          button shortcut("Back") do
             pop_game_state
           end
 

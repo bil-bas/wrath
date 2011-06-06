@@ -42,7 +42,7 @@ module Wrath
         @warning_label = label " "
 
         horizontal padding: 0, spacing: 20 do
-          button("(B)ack") { pop_game_state }
+          button(shortcut("Back")) { pop_game_state }
           button("Defaults", tip: "Reset to default values") do
             @window_scale_combo.value = DEFAULT_SCALE
           end
