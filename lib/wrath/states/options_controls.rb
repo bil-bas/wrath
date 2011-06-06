@@ -43,6 +43,11 @@ module Wrath
 
         horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
+
+          button("Defaults", tip: "Reset all controls to their default values") do
+            controls.reset_to_default
+            switch_game_state self.class
+          end
         end
       end
 

@@ -43,6 +43,10 @@ module Wrath
 
         horizontal padding: 0, spacing: 20 do
           button("(B)ack") { pop_game_state }
+          button("Defaults", tip: "Reset to default values") do
+            @window_scale_combo.value = DEFAULT_SCALE
+          end
+
           @exit_button = button("Exit", enabled: false) do
             pop_until_game_state Menu
             current_game_state.close

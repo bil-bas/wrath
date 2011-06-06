@@ -58,7 +58,7 @@ module Wrath
 
         horizontal padding: 0 do
           button("(B)ack") { pop_game_state }
-          button("Defaults") do
+          button("Defaults", tip: "Reset to default values") do
             @master_slider.value = 0.5
             @effects_slider.value = 1.0
             @music_slider.value = 1.0
