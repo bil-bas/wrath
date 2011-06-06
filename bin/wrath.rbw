@@ -47,7 +47,7 @@ rescue Exception => ex
   $stderr.puts "FATAL ERROR - #{ex.class}: #{ex.message}\n#{ex.backtrace.join("\n")}"
   raise ex # Just to make sure that the user sees the error in the CLI/IDE too.
 ensure
-  $stderr.reopen(original_stderr) if defined? original_stderr
+  $stderr.reopen(original_stderr) if defined?(original_stderr) and original_stderr
   $stderr.puts exit_message if exit_message
-  $stdout.reopen(original_stdout) if defined? original_stdout
+  $stdout.reopen(original_stdout) if defined?(original_stdout) and original_stdout
 end
