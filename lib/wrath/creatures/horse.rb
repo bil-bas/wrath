@@ -36,7 +36,7 @@ module Wrath
 
       self.local = (not parent.client?) # Revert to owned by host.
 
-      schedule_jump if object.controlled_by_player?
+      schedule_move if object.controlled_by_player?
 
       # Buck after the horse drops someone.
       self.z_velocity = 0.8 if self.z == ground_level
