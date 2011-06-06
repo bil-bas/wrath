@@ -87,25 +87,18 @@ module Wrath
     def level_picker
       grid num_columns: 2 do
         label "Map"
-        horizontal spacing: 0,  padding: 0 do
-          @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
-            subscribe :changed do |sender, level|
-              send_message(Message::UpdateLobby.new(:level, level)) if host?
-              @god_picker.value = level::GOD
-            end
+        @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
+          subscribe :changed do |sender, level|
+            send_message(Message::UpdateLobby.new(:level, level)) if host?
+            @god_picker.value = level::GOD
           end
-
-          label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
         end
 
         label "God"
-        horizontal spacing: 0,  padding: 0 do
-          @god_picker = combo_box value: @level_picker.value::GOD, width: $window.width * 0.75 do
-            subscribe :changed do |sender, god|
-              send_message(Message::UpdateLobby.new(:god, god)) if host?
-            end
+        @god_picker = combo_box value: @level_picker.value::GOD, width: $window.width * 0.75 do
+          subscribe :changed do |sender, god|
+            send_message(Message::UpdateLobby.new(:god, god)) if host?
           end
-          label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
         end
       end
     end
@@ -169,16 +162,12 @@ module Wrath
       @player_sprite_combos ||= {}
 
       is_local = ((player_number == @player_number) or local?)
-      horizontal spacing: 0, padding: 0 do
-        @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
-          subscribe :changed do |sender, name|
-            enable_priest_options
+      @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
+        subscribe :changed do |sender, name|
+          enable_priest_options
 
-            send_message(Message::UpdateLobby.new(:player, player_number, name)) unless local?
-          end
+          send_message(Message::UpdateLobby.new(:player, player_number, name)) unless local?
         end
-
-        label "", icon: ScaledImage.new(Image["combo_arrow.png"], $window.sprite_scale * 1.16 / 4.0), padding: 0
       end
 
       label player_name
