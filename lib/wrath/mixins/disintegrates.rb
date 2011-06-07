@@ -2,24 +2,26 @@ module Wrath
   # Makes an object fade out after it has been destroyed.
   module Disintegrates
     # Object that does the fading.
-    class Disintegration < GameObject
+    class Disintegration < BaseObject
       trait :timer
 
-      COPIED_ATTRIBUTES = [:x, :y, :zorder, :color, :factor_x, :factor_y, :parent, :image]
+      def can_be_picked_up?; false; end
+
+      COPIED_ATTRIBUTES = [:x, :y, :z, :zorder, :color, :factor_x, :factor_y, :parent]
       FADE_SPEED = 255 / 1000.0 # Takes 1s to disappear.
 
       def initialize(original)
-        options = { rotation_center: :bottom_center }
+        options = {
+            rotation_center: :bottom_center,
+            collision_type: :scenery,
+            animation: Animation.new(frames: [original.image]),
+        }
 
         COPIED_ATTRIBUTES.each do |attribute|
           value = original.send(attribute)
           value = value.dup if value.is_a? Color
           options[attribute] = value
         end
-
-        options[:y] -= original.z
-
-        $window.log.debug options.inspect
 
         super(options)
 
