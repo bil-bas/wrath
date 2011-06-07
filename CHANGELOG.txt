@@ -23,7 +23,6 @@ v0.1.0 (2011-06-07)
   * Countless other things I forgot to write down.
 
   Significant issues:
-    * Trying to connect before the host is listening can prevent connection.
     * Possible to juggle (continually pick up and throw) the other player, so they never get to act.
     * Possible to get killed by being continually hit into a wall.
     * Enemies don't care if they are getting killed in lava, etc.
