@@ -40,20 +40,21 @@ module Wrath
           escape: :pop_game_state
       )
 
+      # Store the current achievements, so we can add them in #update.
+      complete, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
+      @achievements_to_add = complete + incomplete
+
       vertical do
         horizontal padding: 0 do |packer|
           packer.label "Achievements", font_size: 32
           completed = achievement_manager.achievements.count {|a| a.complete? }
-          ProgressBar.new(completed, achievement_manager.achievements.size,
+          Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
                                     parent: packer, width: $window.width - 500, font_size: 32)
         end
 
         scroll_window width: $window.width - 50, height: $window.height - 150, background_color: WINDOW_BACKGROUND_COLOR do
-          vertical spacing: 5 do
-            complete, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
-            complete.each {|achieve| achievement(achieve) }
-            incomplete.each {|achieve| achievement(achieve) }
-          end
+          # List will be populated in #update.
+          @achievements_list = vertical spacing: 5
         end
 
         horizontal padding: 0 do
@@ -70,10 +71,20 @@ module Wrath
         end
       end
     end
+
+    public
+    def update
+      # Add a couple of achievements each frame, so we don't freeze up the GUI.
+      unless @achievements_to_add.empty?
+        @achievements_to_add.shift(2).each {|a| add_achievement(a, @achievements_list) }
+      end
+
+      super
+    end
     
     protected
-    def achievement(achieve)
-      horizontal padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
+    def add_achievement(achieve, packer)
+      horizontal parent: packer, padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
         label "", icon: ScaledImage.new(achieve.icon, sprite_scale * 1.5),
             border_thickness: 4, border_color: Color::BLACK, padding: 0
 
