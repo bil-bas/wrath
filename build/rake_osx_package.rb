@@ -78,7 +78,6 @@ END_TEXT
   puts "--- Editing init"
   info = File.read(TMP_OSX_INFO_FILE)
   info.sub!('org.libgosu.UntitledGame', GAME_URL)
-  info.sub!('10.6.0', '10.9.0') # FUDGE because 64-bit gosu text rendering is broken.
   File.open(TMP_OSX_INFO_FILE, "w") {|f| f.puts info }
 
   # Ensure execute access to the startup file.
