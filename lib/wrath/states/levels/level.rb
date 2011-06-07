@@ -204,13 +204,12 @@ class Level < GameState
     @space.damping = 0
 
     # Wall around the play-field.
-    thickness = 100 # Try to prevent things falling off the edge!
     y_margin = 16
     [
-      [-thickness, -thickness, 0, $window.retro_height + thickness, :left], # Taller than needed.
-      [0, $window.retro_height, $window.retro_width, $window.retro_height + thickness, :bottom],
-      [$window.retro_width, -thickness, $window.retro_width + thickness, $window.retro_height + thickness, :right], # Taller than needed.
-      [0, -thickness, $window.retro_width, y_margin, :top]
+      [0, 0, 0, $window.retro_height, :left],
+      [0, $window.retro_height, $window.retro_width, $window.retro_height, :bottom],
+      [$window.retro_width, 0, $window.retro_width, $window.retro_height, :right],
+      [0, y_margin, $window.retro_width, y_margin, :top]
     ].each do |x1, y1, x2, y2, side|
       Wall.create(x1, y1, x2, y2, side)
     end

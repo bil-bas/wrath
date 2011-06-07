@@ -12,11 +12,8 @@ class Wall < BasicGameObject
 
     @side = side
 
-       # vertices = [CP::Vec2.new(-width / 2, -depth), CP::Vec2.new(-width / 2, depth),
-       #             CP::Vec2.new(width / 2, depth), CP::Vec2.new(width / 2, -depth)]
     @@body ||= CP::StaticBody.new # Can share a body quite happily.
-    vertices = [CP::Vec2.new(x1, y1), CP::Vec2.new(x1, y2), CP::Vec2.new(x2, y2), CP::Vec2.new(x2, y1)]
-    @shape = CP::Shape::Poly.new(@@body, vertices, CP::Vec2.new(0, 0))
+    @shape = CP::Shape::Segment.new(@@body, vec2(x1, y1), vec2(x2, y2), 0.0)
     @shape.e = ELASTICITY
     @shape.u = FRICTION
     @shape.collision_type = :wall
