@@ -171,6 +171,15 @@ class BaseObject < GameObject
     @shape.e = 0
     @shape.u = 0.5
     @shape.collision_type = collision_type
+    case collision_type
+      when :scenery
+        @shape.layers = 0 # Doesn't interact with anything.
+      when :static
+        @shape.group = CollisionGroup::STATIC
+      when :particle
+        @shape.group = CollisionGroup::PARTICLE
+    end
+
     @shape.object = self
   end
 

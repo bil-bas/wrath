@@ -220,12 +220,6 @@ class Level < GameState
     # :object - players, mobs and carriable objects.
     # :scenery - Doesn't collide with anything at all.
 
-    @space.on_collision(:static, [:static, :wall]) { false }
-    @space.on_collision(:scenery, [:particle, :static, :object, :wall, :scenery]) { false }
-    @space.on_collision(:particle, :particle) { false }
-    @space.on_collision(:particle, :wall) do |particle, wall|
-      true
-    end
 
     @space.on_collision(:particle, [:static, :object]) do |a, b|
       if (a.z > b.z + b.height) or (b.z > a.z + a.height)

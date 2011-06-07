@@ -20,6 +20,7 @@ class Wall < BasicGameObject
     @shape.e = ELASTICITY
     @shape.u = FRICTION
     @shape.collision_type = :wall
+    @shape.group = CollisionGroup::STATIC
     @shape.object = self
 
     @parent.space.add_shape @shape # Body not needed, since we don't want to be affected by gravity et al.

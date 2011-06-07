@@ -49,6 +49,13 @@ Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
 
 
 module Wrath
+
+# Objects within a collision group will never collide with each other.
+module CollisionGroup
+  STATIC = 1 # statics and walls
+  PARTICLE = 2 # particles
+end
+
 module ZOrder
   BACKGROUND = -Float::INFINITY
   TILES = -3
