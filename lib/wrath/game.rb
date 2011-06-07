@@ -26,6 +26,8 @@ begin
 rescue LoadError
 end
 
+TexPlay.set_options(caching: false)
+
 include Gosu
 include Chingu
 
