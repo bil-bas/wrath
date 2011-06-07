@@ -598,8 +598,6 @@ class Creature < Container
         # Has been jumping or walking, but come to a stand-still.
         stop_timer :move if timer_exists? :move
         schedule_move
-
-        log.warn { "Unexpected #halt on #{self} in state #{state.inspect}" } if state != :walking
     end
 
     super
