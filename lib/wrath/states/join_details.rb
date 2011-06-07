@@ -3,6 +3,8 @@ module Wrath
     def initialize
       super
 
+      on_input(:b) { pop_game_state unless @player_name.focused? or @port.focused? or @address.focused? }
+
       vertical do
         label "Joining a Game", font_size: 32
 

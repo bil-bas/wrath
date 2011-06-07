@@ -3,7 +3,7 @@ module Wrath
     def initialize
       super
 
-      on_input([:escape, :b]) { pop_game_state }
+      on_input(:escape) { pop_game_state }
     end
 
     protected
