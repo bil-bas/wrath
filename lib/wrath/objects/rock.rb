@@ -15,7 +15,7 @@ class Rock < DynamicObject
         damage_per_hit: DAMAGE,
         favor: -10,
         encumbrance: 0.6,
-        elasticity: 0.4,
+        elasticity: 0.5,
         z_offset: -2,
         animation: "rock_6x6.png",
     }.merge! options

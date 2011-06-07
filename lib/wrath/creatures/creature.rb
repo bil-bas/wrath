@@ -30,10 +30,8 @@ class Creature < Container
   FRAME_CARRIED = 2
   FRAME_DEAD = 3
 
-  THROW_MOVING_SPEED_MULTIPLIER = 5 # Speed things are thrown at, compared to own speed.
-  THROW_STATIONARY_SPEED = 1.5 # Speed you throw stuff if you aren't moving at all.
-  THROW_UP_SPEED = 0
-  MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
+  THROW_BASE_SPEED = 1.5
+  THROW_MOVING_SPEED_MULTIPLIER = 3.5 # Speed things are thrown at, compared to own speed.
 
   KNOCK_DOWN_SPEED_V  = 0.75
   KNOCK_DOWN_SPEED_H = 3
@@ -295,20 +293,16 @@ class Creature < Container
 
   public
   def on_having_dropped(object)
-    if alive?
-      object.x_velocity = x_velocity * THROW_MOVING_SPEED_MULTIPLIER
-      # Give a little push if you are stationary, so that it doesn't just land at their feet.
-      object.x_velocity += factor_x * THROW_STATIONARY_SPEED if (x_velocity == 0 and y_velocity == 0)
-
-      object.y_velocity = y_velocity * THROW_MOVING_SPEED_MULTIPLIER
-      object.z_velocity = z_velocity + THROW_UP_SPEED
-
-      # Cap the thrown speed.
-      h_speed = Math::sqrt(object.x_velocity ** 2 + object.y_velocity ** 2)
-      if h_speed > MAX_THROW_SPEED
-        object.x_velocity *= MAX_THROW_SPEED / h_speed
-        object.y_velocity *= MAX_THROW_SPEED / h_speed
+    if alive?                                      #
+      if (x_velocity == 0 and y_velocity == 0)
+        # Give a little push if you are stationary, so that it doesn't just land at their feet.
+        object.x_velocity = factor_x * THROW_BASE_SPEED
+      else
+        object.x_velocity = x_velocity * THROW_MOVING_SPEED_MULTIPLIER
+        object.y_velocity = y_velocity * THROW_MOVING_SPEED_MULTIPLIER
       end
+
+      object.z_velocity = z_velocity
     end
 
     nil
@@ -471,7 +465,7 @@ class Creature < Container
           elsif other.damage_per_second > 0
             # Hurt things that we don't like over time, for example by fire. Only happens if
             # we didn't hit them.
-            wound(other.damage_per_second * parent.frame_time / 1000.0, other, :over_time)
+            wound(other.damage_per_second * Level::IDEAL_PHYSICS_STEP, other, :over_time)
           end
         end
 
@@ -479,7 +473,7 @@ class Creature < Container
 
       when StaticObject
         # Turn if we are walking into a static. 1000 degrees/second.
-        @facing += 1 * parent.frame_time unless controlled_by_player?
+        @facing += 0.001 * Level::IDEAL_PHYSICS_STEP unless controlled_by_player?
 
         true
 

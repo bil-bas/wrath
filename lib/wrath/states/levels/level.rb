@@ -2,11 +2,11 @@ module Wrath
 class Level < GameState
   extend Forwardable
 
-  GRAVITY = -5 / 1000.0 # Acceleration per second.
+  GRAVITY = -4 / 1000.0 # Acceleration per second.
     
   SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
   SYNC_DELAY = 0 # 1000.0 / SYNCS_PER_SECOND
-  IDEAL_PHYSICS_STEP = 1.0 / 120.0 # Physics frame-rate.
+  IDEAL_PHYSICS_STEP = 1.0 / 240.0 # Physics frame-rate.
   DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
   GLOW_WIDTH = 64
   MIN_DISTANCE_FROM_PLAYER_TO_SPAWN = 28
@@ -200,6 +200,9 @@ class Level < GameState
   def init_physics
     log.info "Initiating physics"
 
+
+    @physics_time = 0.0 # Time to use for calculating physics.
+
     @space = CP::Space.new
     @space.damping = 0
 
@@ -305,11 +308,11 @@ class Level < GameState
       objects.each {|o| o.update_forces }
 
       # Ensure that we have one or more physics steps that run at around the same interval.
-      total_time = frame_time / 1000.0
-      num_steps = total_time.div IDEAL_PHYSICS_STEP
-      step = total_time / num_steps
+      @physics_time += frame_time / 1000.0
+      num_steps = (@physics_time / IDEAL_PHYSICS_STEP).round
+      @physics_time -= num_steps * IDEAL_PHYSICS_STEP
       num_steps.times do
-        @space.step step
+        @space.step IDEAL_PHYSICS_STEP
       end
 
       # Move carried objects to appropriate positions to prevent desync in movement.

@@ -8,6 +8,7 @@ class BaseObject < GameObject
   extend Forwardable
 
   TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.
+  FORCE_MODIFIER = 1440000.0 * Level::IDEAL_PHYSICS_STEP * 1.25
 
   @@next_object_id = 0
   @@animation_cache = {}
@@ -311,15 +312,14 @@ class BaseObject < GameObject
   public
   def update_forces
     @body.reset_forces
-
     return if paused?
+
     # Apply a pushing force if the object is moving.
     if [@x_velocity, @y_velocity] != [0, 0]
-      modifier = 2000
+      modifier = FORCE_MODIFIER
       modifier *= @tile.speed if z <= 0 and @tile
-
-      @body.apply_force(CP::Vec2.new(@x_velocity * modifier, @y_velocity * modifier),
-                        CP::Vec2.new(0, 0))
+      @body.apply_force(vec2(@x_velocity * modifier, @y_velocity * modifier),
+                        vec2(0, 0))
     end
   end
 
