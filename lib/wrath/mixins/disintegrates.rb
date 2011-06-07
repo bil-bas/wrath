@@ -15,7 +15,7 @@ module Wrath
             rotation_center: :bottom_center,
             collision_type: :scenery,
             animation: Animation.new(frames: [original.image]),
-            local: true,
+            id: nil,
         }
 
         COPIED_ATTRIBUTES.each do |attribute|
