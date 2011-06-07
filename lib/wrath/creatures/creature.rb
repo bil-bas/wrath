@@ -30,7 +30,7 @@ class Creature < Container
   FRAME_CARRIED = 2
   FRAME_DEAD = 3
 
-  THROW_MOVING_SPEED_MULTIPLIER = 4 # Speed things are thrown at, compared to own speed.
+  THROW_MOVING_SPEED_MULTIPLIER = 5 # Speed things are thrown at, compared to own speed.
   THROW_STATIONARY_SPEED = 1.5 # Speed you throw stuff if you aren't moving at all.
   THROW_UP_SPEED = 0
   MAX_THROW_SPEED = 5.0 # Try to prevent fast objects falling off the screen.
