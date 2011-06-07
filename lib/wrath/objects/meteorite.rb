@@ -23,7 +23,7 @@ module Wrath
       self.image = @frames[SPRITE_FREE] # Rock picks a random image to start with.
     end
     
-    def on_stopped
+    def on_stopped(sender)
       unless @landed
         @landed = true
         Sample["objects/explosion.ogg"].play_at_x(x)
@@ -31,8 +31,6 @@ module Wrath
         Crater.create(position: position) unless parent.client?
         # TODO: Splash and smoke?
       end
-
-      super
     end
 
     def on_being_picked_up(actor)

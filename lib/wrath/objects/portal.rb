@@ -35,7 +35,7 @@ module Wrath
 
       every(ANIMATION_INTERVAL) { animate }
 
-      on_stopped
+      halt
     end
 
     def animate
@@ -50,12 +50,11 @@ module Wrath
       super
     end
 
-    def on_stopped
+    def on_stopped(sender)
       @current_animation = @frames[GROUND_ANIM]
       animate
       @on_ground = true
       self.rotation_center =  :center_center
-      super
     end
 
     def teleport(other)
@@ -80,7 +79,7 @@ module Wrath
         when DynamicObject
           if other == partner
             self.position = parent.next_spawn_position(self) if thrown?
-            on_stopped
+            stop
 
           elsif container.nil? and not other.thrown_by.include?(self) and
               not thrown_by.include?(other) and

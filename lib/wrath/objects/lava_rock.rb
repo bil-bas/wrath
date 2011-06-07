@@ -9,6 +9,7 @@ module Wrath
     def initialize(options = {})
       options = {
           color: COLOR.dup,
+          elasticity: 0,
       }.merge! options
 
       super(options)
@@ -17,7 +18,7 @@ module Wrath
                                              z_velocity: EXPLOSION_Z_VELOCITY)
     end
 
-    def on_bounced
+    def on_stopped(sender)
       unless parent.client?
         pos = position
         pos[2] += height

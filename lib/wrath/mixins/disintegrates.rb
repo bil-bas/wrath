@@ -49,11 +49,15 @@ module Wrath
     def initialize(options = {})
       super(options)
 
+      subscribe :on_stopped do
+        schedule_disintegration
+      end
+
       schedule_disintegration
     end
 
     def schedule_disintegration
-      after(disintegrate_delay, name: :disintegrate) { disintegrate } unless parent.client?
+      after(disintegrate_delay, name: :disintegrate) { destroy } unless parent.client?
     end
 
     def on_being_picked_up(container)
@@ -61,14 +65,9 @@ module Wrath
       stop_timer :disintegrate
     end
 
-    def on_stopped
-      super
-      schedule_disintegration
-    end
-
-    def disintegrate
+    def destroy
       Disintegration.create(self)
-      destroy
+      super
     end
   end
 end

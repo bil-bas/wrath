@@ -10,7 +10,7 @@ class WaterDroplet < Droplet
     super options
   end
 
-  def on_stopped
+  def on_stopped(sender)
     destroy
   end
 end

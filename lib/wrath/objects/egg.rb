@@ -19,8 +19,7 @@ class Egg < DynamicObject
     super options
   end
 
-  def on_stopped
-    super
+  def on_stopped(sender)
     after(GESTATION_DELAY, name: :gestation) { hatch } unless parent.client?
   end
 

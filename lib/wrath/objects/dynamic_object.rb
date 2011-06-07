@@ -54,12 +54,6 @@ module Wrath
       actor.pick_up(self)
     end
 
-    protected
-    def on_stopped
-      super
-      @thrown_by.clear
-    end
-
     public
     def dropped
       dropper = @container
@@ -108,7 +102,9 @@ module Wrath
 
     public
     def halt
+      @thrown_by.clear
       set_body_velocity(0, 0)
+      super
     end
 
     public

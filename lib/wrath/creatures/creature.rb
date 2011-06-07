@@ -67,12 +67,16 @@ class Creature < Container
   def can_be_picked_up?(container); ((@state == :lying) or (not hurts?(container) and not controlled_by_player?)) and super; end
   def stand_up_delay; controlled_by_player? ? PLAYER_STAND_UP_DELAY : CREATURE_STAND_UP_DELAY; end
   def can_hit?(other)
-    super(other) and [:standing, :walking, :mounted].include? @state
+    super(other) and upright?
   end
 
   # Creatures don't bounce much if thrown. Usual elasticity only used in movement.
   def elasticity; thrown? ? [0.3, super].min : super; end
   def walking_to_do?; @walk_time_left > 0; end
+
+  def affected_by_gravity?; super and not (flying_height > 0 and upright?); end
+  def prone?; [:lying, :thrown].include? state; end
+  def upright?; not prone?; end
 
   public
   def initialize(options = {})
@@ -208,23 +212,11 @@ class Creature < Container
     end
 
     # Try to move away from pain.
-    if local? and not controlled_by_player? and [:standing, :walking].include? @state
-      if timer_exists? :move
-        stop_timer(:move)
-        start_moving
-      end
+    if timer_exists? :move
+      stop_timer(:move)
+      start_moving
     end
   end
-
-  public
-  def halt
-    @walk_time_left = 0
-    self.state = :standing
-    schedule_move
-    super
-  end
-
-
 
   protected
   def draw_self
@@ -291,6 +283,8 @@ class Creature < Container
       parent.send_message(Message::StandUp.new(self)) if parent.host?
       @state = :standing
       schedule_move unless parent.client?
+    else
+      log.warn "#{self} told to stand up when not lying down (#{state.inspect})"
     end
   end
 
@@ -362,6 +356,17 @@ class Creature < Container
     end
   end
 
+  protected
+  def sync_state
+    # Ensure that state is updated remotely.
+    case @state
+      when :standing
+        @state = :walking if [x_velocity, y_velocity] != [0, 0]
+      when :walking
+        halt if [x_velocity, y_velocity] == [0, 0]
+    end
+  end
+
   public
   def update
     return unless exists?
@@ -376,19 +381,18 @@ class Creature < Container
     end
 
     # Float upwards if flying.
-    if flying_height > 0 and not [:lying, :thrown].include? state
-      self.z_velocity = [[flying_height - z, 0].max, 2].min * 0.5 * flying_rise_speed
+    if flying_height > 0 and upright?
+      if z >= flying_height
+        self.z = flying_height
+        self.z_velocity = 0
+      else
+        self.z_velocity = [[flying_height - z, 0].max, 2].min * 0.5 * flying_rise_speed
+      end
     end
 
     super
 
-    # Ensure that state is updated remotely.
-    case @state
-      when :standing
-        @state = :walking if [x_velocity, y_velocity] != [0, 0]
-      when :walking
-        @state = :standing if velocity == [0, 0, 0]
-    end
+    sync_state
 
     update_color
 
@@ -455,7 +459,7 @@ class Creature < Container
 
       when DynamicObject
         # Make being hit with something heavy knock you over.
-        if not [:thrown, :lying].include?(state) and other.can_knock_down_creature?(self) and
+        if upright? and other.can_knock_down_creature?(self) and
             other.thrown_by.any? {|o| o.is_a? Creature } # So items popping out of chests don't knock you down.
 
           knocked_down_by(other)
@@ -580,16 +584,22 @@ class Creature < Container
     end
   end
 
-  protected
-  def on_stopped
+  public
+  def halt
     case @state
       when :thrown
         # Lie down then stand up if we were thrown.
         @state = :lying
         after(stand_up_delay, name: :stand_up) { stand_up } unless parent.client?
       else
-        # Has been jumping, but come to a stand-still.
+        @walk_time_left = 0
+        self.state = :standing
+
+        # Has been jumping or walking, but come to a stand-still.
+        stop_timer :move if timer_exists? :move
         schedule_move
+
+        log.warn { "Unexpected #halt on #{self} in state #{state.inspect}" } if state != :walking
     end
 
     super

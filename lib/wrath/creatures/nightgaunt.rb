@@ -16,7 +16,7 @@ module Wrath
     end
     
     def on_collision(other)
-      if empty_handed? and not [:thrown, :lying].include? state and not @container and
+      if empty_handed? and upright? and not @container and
          (milliseconds - @last_picked_up_at) > MIN_PICK_UP_DELAY and
           other.is_a? Priest and other.can_be_picked_up?(self) and
           not other.inside_container?

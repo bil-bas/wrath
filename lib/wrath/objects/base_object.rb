@@ -4,6 +4,7 @@ require 'forwardable'
 
 class BaseObject < GameObject
   include Log
+  include Fidgit::Event
   extend Forwardable
 
   TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.
@@ -11,6 +12,8 @@ class BaseObject < GameObject
   @@next_object_id = 0
   @@animation_cache = {}
   @@default_images = {}
+
+  event :on_stopped # Has stopped bouncing.
 
   attr_reader :frames, :elasticity
   attr_writer :local
@@ -51,6 +54,8 @@ class BaseObject < GameObject
   def position; [x, y, @z]; end
   def position=(coordinates); @body_position.x, @body_position.y, @z = coordinates; end
   def velocity; [@x_velocity, @y_velocity, @z_velocity]; end
+  def stationary?; velocity == [0, 0, 0]; end
+  def moving?; velocity != [0, 0, 0]; end
   def velocity=(vector); @x_velocity, @y_velocity, @z_velocity = vector; end
 
   def self.default_image; @@default_images[self]; end
@@ -259,9 +264,11 @@ class BaseObject < GameObject
     @z = ground_level if z <= ground_level
 
     # Deal with vertical physics manually.
-    if affected_by_gravity? and (@z_velocity != 0 or @z > ground_level)
-      @z_velocity += parent.gravity * frame_time
-      @z_velocity = [@z_velocity, TERMINAL_VELOCITY].max
+    if @z_velocity != 0 or @z > ground_level
+      if affected_by_gravity?
+        @z_velocity += parent.gravity * frame_time
+        @z_velocity = [@z_velocity, TERMINAL_VELOCITY].max
+      end
 
       @z += @z_velocity
 
@@ -271,9 +278,7 @@ class BaseObject < GameObject
 
         if @z_velocity < 0.2
           self.velocity = [0, 0, 0]
-          on_stopped
-        else
-          on_bounced
+          halt
         end
       end
     end
@@ -337,16 +342,12 @@ class BaseObject < GameObject
     super
   end
 
-  protected
-  # Object has come to a halt.
-  def on_stopped
-
-  end
-
-  protected
-  # Object has bounced off the ground.
-  def on_bounced
-
+  public
+  # Called when the object stops moving.
+  def halt
+    #parent.send_message(Message::Stop.new(self)) if networked? and parent.host?
+    self.velocity = [0, 0, 0]
+    publish :on_stopped
   end
 
   # Shatter the object into its component pixel fragments.

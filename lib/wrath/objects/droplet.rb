@@ -11,7 +11,7 @@ class Droplet < Wrath::Particle
     super options
   end
 
-  def on_stopped
+  def on_stopped(sender)
     parent.map.set_color(x, y, color)
     destroy
   end

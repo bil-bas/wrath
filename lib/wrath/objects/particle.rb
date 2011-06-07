@@ -23,7 +23,7 @@ class Particle < BaseObject
   end
 
 
-  def on_stopped
+  def on_stopped(sender)
     @z = ground_level
     @body.reset_forces
     pause!

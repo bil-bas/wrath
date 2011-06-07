@@ -17,7 +17,7 @@ module Wrath
     def on_collision(other)
       case other
         when Portal
-          if empty_handed? and [:standing, :walking].include?(state) and not other.thrown? and rand() < 0.5
+          if empty_handed? and upright? and not other.thrown? and rand() < 0.5
             pick_up(other)
             stop_timer(:drop_portal)
             after(random(2000, 3000), name: :drop_portal) { drop unless empty_handed? }
