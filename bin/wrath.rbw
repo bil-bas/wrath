@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 
-CONSOLE = (ARGV[0] and ARGV[0] == "--console")
-  
-
 begin
+  CONSOLE = (not (ENV['OCRA_EXECUTABLE'] or defined?(OSX_EXECUTABLE) or (ARGV[0] == '--logfile'))) or (ARGV[0] == '--console')
+
   EXTRACT_PATH = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
   ROOT_PATH = if ENV['OCRA_EXECUTABLE']
@@ -43,7 +42,7 @@ begin
 
   exit_message = Wrath::Game.run unless defined? Ocra
 
-rescue Exception => ex
+rescue => ex
   $stderr.puts "FATAL ERROR - #{ex.class}: #{ex.message}\n#{ex.backtrace.join("\n")}"
   raise ex # Just to make sure that the user sees the error in the CLI/IDE too.
 ensure

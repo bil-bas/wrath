@@ -10,7 +10,16 @@ begin
 rescue LoadError
 end
 
-require 'bundler/setup' unless defined? OSX_EXECUTABLE or ENV['OCRA_EXECUTABLE']
+begin
+  require 'bundler/setup' unless defined?(OSX_EXECUTABLE) or ENV['OCRA_EXECUTABLE']
+
+rescue LoadError
+  $stderr.puts "Bundler gem not installed. To install:\n  gem install bundler"
+  exit
+rescue Exception
+  $stderr.puts "Gem dependencies not met. To install:\n  bundle install"
+  exit
+end
 
 require 'gosu'
 require 'chingu'
