@@ -108,10 +108,10 @@ module Chingu
               @socket.connect_nonblock(@sockaddr)
             rescue Errno::EINPROGRESS   #rescue IO::WaitWritable
             rescue Errno::EALREADY
-              if IO.select([@socket],nil,nil,0.1).nil?
-                @socket = nil
-                on_connection_refused
-              end
+#              if IO.select([@socket],nil,nil,0.1).nil?
+#                @socket = nil
+#                on_connection_refused
+#              end
             rescue Errno::EISCONN
               @connected = true
               on_connect
