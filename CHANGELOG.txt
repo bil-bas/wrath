@@ -2,6 +2,8 @@
 
 Next release
   * Slowed down preparation of level, so neither host nor client gets overwhelmed and freezes up.
+  * Added i18n support.
+  * Fixed: Completion times for all achievements already gained, are set to the current time whenever the application is started.
 
 v0.1.0 (2011-06-07)
 

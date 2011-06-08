@@ -36,7 +36,7 @@ module Wrath
 
       definitions = YAML.load(File.read(DEFINITIONS_FILE))
       definitions.each do |definition|
-        already_done = @achievements_settings[definition[:name], :achieved] || false
+        already_done = (@achievements_settings[definition[:name], :complete] || false)
         @achievements << Achievement.new(definition, self, already_done)
       end
     end
