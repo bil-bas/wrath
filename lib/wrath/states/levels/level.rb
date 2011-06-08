@@ -54,6 +54,10 @@ class Level < GameState
 
   attr_accessor :screen_offset_y
 
+  def self.t; R18n.get.t.level[Inflector.underscore(Inflector.demodulize(name))]; end
+  def t; self.class.t; end
+
+  def self.to_s; t.name; end
   def altar=(altar); @objects << altar; @altar = altar; end
   def medium; :air; end
   def networked?; !!@network; end

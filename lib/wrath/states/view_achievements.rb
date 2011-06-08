@@ -29,16 +29,9 @@ module Wrath
     INCOMPLETE_TITLE_COLOR = Color.rgb(150, 150, 150)
     COMPLETE_TITLE_COLOR = Color.rgb(0, 255, 0)
     UNLOCK_BACKGROUND_COLOR = Color.rgb(50, 50, 50)
-    
-    TIME_FORMAT = "%F %H:%M" # 2007-11-19 08:37
 
     def initialize
       super
-
-      add_inputs(
-          b: :pop_game_state,
-          escape: :pop_game_state
-      )
 
       # Store the current achievements, so we can add them in #update.
       complete, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
@@ -46,7 +39,7 @@ module Wrath
 
       vertical do
         horizontal padding: 0 do |packer|
-          packer.label "Achievements", font_size: 32
+          packer.label t.title, font_size: 32
           completed = achievement_manager.achievements.count {|a| a.complete? }
           Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
                                     parent: packer, width: $window.width - 500, font_size: 32)
@@ -58,13 +51,13 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(shortcut("Back")) { pop_game_state }
+          button(shortcut(t.button.back.text)) { pop_game_state }
 
-          toggle_button("Unlock all", tip: "Allow use of all features, even if they are locked, until game is restarted", value: achievement_manager.unlocks_disabled?) do |sender, value|
+          toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
             achievement_manager.unlocks_disabled = value
           end
 
-          button "Reset statistics", tip: "Resets all statistics, achievements and unlocks PERMANENTLY" do |sender|
+          button t.button.reset.text, tip: t.button.reset.tip do |sender|
             achievement_manager.reset
             switch_game_state self.class
           end
@@ -76,7 +69,7 @@ module Wrath
     def update
       # Add a couple of achievements each frame, so we don't freeze up the GUI.
       unless @achievements_to_add.empty?
-        @achievements_to_add.shift(2).each {|a| add_achievement(a, @achievements_list) }
+        @achievements_to_add.shift(1).each {|a| add_achievement(a, @achievements_list) }
       end
 
       super
@@ -96,7 +89,7 @@ module Wrath
 
             # Progress bar, if needed.
             if achieve.complete?
-              completed_at = achievement_manager.completion_time(achieve.name).strftime(TIME_FORMAT)
+              completed_at = R18n.get.l achievement_manager.completion_time(achieve.name)
               packer.label completed_at, font_size: 15, padding_left: 0
             else
               ProgressBar.new(achieve.total, achieve.required,
@@ -105,14 +98,14 @@ module Wrath
           end
 
           # Description of what has been done.
-          text_area text: achieve.description, font_size: 15, width: $window.width - 225,
+          text_area text: achieve.description, font_size: 15, width: $window.width - 215,
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
 
           unless achieve.unlocks.empty?
             horizontal padding: 0, spacing: 4 do
               achieve.unlocks.each do |unlock|
               icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
-              title = unlock.unlocked? ? "Unlocked" : "Locked"
+              title = unlock.unlocked? ? t.unlocked : t.locked
               label "", icon: icon, tip: "#{title}: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
               end
             end

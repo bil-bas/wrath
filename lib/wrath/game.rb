@@ -26,6 +26,7 @@ require 'chingu'
 require 'texplay'
 require 'fidgit'
 require 'chipmunk'
+require 'r18n-desktop'
 
 begin
   # If this isn't the exe, allow dropping into a pry session.
@@ -45,8 +46,7 @@ RequireAll.require_all File.dirname(__FILE__)
 SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
 Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
 
-
-
+R18n.from_env File.join(EXTRACT_PATH, 'config/lang/')
 
 module Wrath
 
@@ -77,8 +77,6 @@ class Game < Window
   CONTROLS_CONFIG_FILE = 'controls.yml'
   ACHIEVEMENTS_CONFIG_FILE = 'achievements.yml'
 
-  TITLE = "-=- Wrath: Appease or Die! -=- by Spooner -=-"
-
   @@settings = Settings.new(SETTINGS_CONFIG_FILE)
   @@controls = Settings.new(CONTROLS_CONFIG_FILE)
   @@statistics = Settings.new(STATISTICS_CONFIG_FILE, auto_save: false)
@@ -93,6 +91,8 @@ class Game < Window
 
   def retro_width; RETRO_WIDTH; end
   def retro_height; RETRO_HEIGHT; end
+
+  def t; R18n.get.t.game; end
 
   def initialize
     full_screen = false # settings[:video, :full_screen]
@@ -173,7 +173,7 @@ class Game < Window
 
     super
 
-    self.caption = "#{TITLE} [FPS: #{fps} (#{@potential_fps})]"
+    self.caption = "#{t.title} [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
 

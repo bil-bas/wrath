@@ -6,20 +6,17 @@ module Wrath
     def initialize
       super
 
-      on_input([:b, :escape], :pop_game_state)
-
       vertical do
-        label "Options  |  Video", font_size: 32
+        label t.title, font_size: 32
 
         horizontal padding: 0 do
-          label "Window size"
+          label t.label.window_size
 
           @window_scale_combo = combo_box value: settings[:video, :window_scale], width: 250 do
             SCALE_RANGE.each do |scale|
               w, h = retro_width * scale, retro_height * scale
               if w <= max_window_width and h <= max_window_height
-                default = (scale == DEFAULT_SCALE ? '<default>' : '')
-                item "#{w}x#{h} (X#{scale} zoom) #{default}", scale
+                item "#{w}x#{h} #{t.zoom(scale)}", scale
               end
             end
 
@@ -42,12 +39,12 @@ module Wrath
         @warning_label = label " "
 
         horizontal padding: 0, spacing: 20 do
-          button(shortcut("Back")) { pop_game_state }
-          button("Defaults", tip: "Reset to default values") do
+          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.default.text, tip: t.button.default.tip) do
             @window_scale_combo.value = DEFAULT_SCALE
           end
 
-          @exit_button = button("Exit", enabled: false) do
+          @exit_button = button(t.button.exit.text, enabled: false) do
             pop_until_game_state Menu
             current_game_state.close
           end
@@ -63,7 +60,7 @@ module Wrath
         @warning_label.text = ""
       else
         @exit_button.enabled = true
-        @warning_label.text = "Changes require that the game be restarted"
+        @warning_label.text = t.label.warning
       end
     end
   end

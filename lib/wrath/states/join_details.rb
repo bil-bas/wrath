@@ -3,26 +3,24 @@ module Wrath
     def initialize
       super
 
-      on_input(:b) { pop_game_state unless @player_name.focused? or @port.focused? or @address.focused? }
-
       vertical do
-        label "Joining a Game", font_size: 32
+        label t.title, font_size: 32
 
         grid num_columns: 2, padding: 0 do
           name_entry
 
-          label "Host address"
+          label t.label.address
           @address = text_area text: settings[:network, :address], max_height: 30, width: $window.width / 2
 
           port_entry
         end
 
         horizontal padding: 0 do
-          button shortcut("Back") do
+          button shortcut(t.button.back.text) do
             pop_game_state
           end
 
-          button("Connect") do
+          button shortcut(t.button.join.text) do
             settings[:player, :name] = @player_name.text
             push_game_state Client.new(address: @address.text, port: @port.text.to_i)
           end

@@ -8,8 +8,6 @@ module Wrath
 
       def medium; :space; end
       def gravity; super * 0.6; end
-      
-      def self.to_s; "Yuggoth"; end
 
       def random_tiles
         num_columns, num_rows, grid = super(DEFAULT_TILE)

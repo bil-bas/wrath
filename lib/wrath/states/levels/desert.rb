@@ -5,8 +5,6 @@ class Level < GameState
 
     GOD = Mummy
 
-    def self.to_s; "Desert of Dehydrated Doom"; end
-
     def create_objects
       super
 

@@ -5,6 +5,8 @@ require 'forwardable'
 class BaseObject < GameObject
   include Log
   include Fidgit::Event
+  include R18n::Helpers
+  extend R18n::Helpers
   extend Forwardable
 
   TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.

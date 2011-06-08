@@ -4,8 +4,6 @@ class Level < GameState
     DEFAULT_TILE = Sand
     GOD = Volcano
 
-    def self.to_s; "Island of Utter Doom"; end
-
     def create_objects
       super
 

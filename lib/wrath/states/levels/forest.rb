@@ -5,8 +5,6 @@ class Level < GameState
     GOD = Dryad
     STANDING_STONES_RADIUS = 18
     NUM_STANDING_STONES = 5
-
-    def self.to_s; "Forest of Doom"; end
     
     def self.unlocked?; true; end # First level, so is unlocked by default.
 

@@ -1,34 +1,25 @@
 module Wrath
   class OptionsControls < Gui
 
-    GROUPS = {
-        offline_player_1:
-            { title: "Player 1", tip: "Controls for player 1 (left side) when sharing the keyboard" },
-        offline_player_2:
-            { title: "Player 2", tip: "Controls for player 2 (right side) when sharing the keyboard" },
-        online_player:
-            { title: "Online player", tip: "Controls for the player in a network game" },
-    }
+    TABS = [:offline_player_1, :offline_player_2, :online_player]
 
     public
     def initialize
       super
-
-      on_input([:escape, :b]) { pop_game_state }
 
       @control_waiting_for_key = nil
 
       init_key_codes
 
       vertical do
-        label "Options  |  Controls", font_size: 32
+        label t.title, font_size: 32
 
         vertical spacing: 0, padding: 0 do
           # Choose control group.
           @tabs_group = group do
             @tab_buttons = horizontal padding: 0, spacing: 5 do
-              GROUPS.each_pair do |symbol, options|
-                radio_button(options[:title], symbol, tip: options[:tip].to_s, border_thickness: 0)
+              TABS.each do |name|
+                radio_button(t.tab[name].text, name, tip: t.tab[name].tip, border_thickness: 0)
               end
             end
 
@@ -47,16 +38,16 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(shortcut("Back")) { pop_game_state }
+          button(shortcut(t.button.back.text)) { pop_game_state }
 
-          button("Defaults", tip: "Reset all controls to their default values") do
+          button(t.button.default.text, tip: t.button.default.tip) do
             controls.reset_to_default
             switch_game_state self.class
           end
         end
       end
 
-      @tabs_group.value = GROUPS.keys.first
+      @tabs_group.value = TABS.first
     end
 
     public

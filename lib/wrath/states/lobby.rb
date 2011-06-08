@@ -24,21 +24,19 @@ module Wrath
       @player_number = host? ? 0 : 1
 
       add_inputs(
-        escape:  ->{ pop_until_game_state Play },
-        b: ->{ pop_game_state },
         s: ->{ new_game(@level_picker.value, @god_picker.value) if @start_button.enabled? }
        )
 
       heading = case @network
         when Server
-          "Host"
+          t.title.host
 
         when Client
           @network.send_msg(Message::ClientReady.new(settings[:player, :name]))
-          "Client"
+          t.title.client
 
         else
-          "Lobby"
+          t.title.offline
       end
 
       vertical spacing: 0 do
@@ -50,21 +48,21 @@ module Wrath
       end
 
       horizontal do
-        button shortcut("Back") do
+        button shortcut(t.button.back.text) do
           pop_until_game_state Play
         end
 
         if @network
-          @ready_button = toggle_button("Ready") do |sender, value|
+          @ready_button = toggle_button(t.button.ready.text) do |sender, value|
             update_ready @player_number, value
             send_message(Message::UpdateLobby.new(:ready, @player_number, value))
           end
         end
 
         if client?
-          label "Wait for host to start a game"
+          label t.label.wait_for_start
         else
-          @start_button = button(shortcut("Start"), enabled: local?) do
+          @start_button = button(shortcut(t.button.start.text), enabled: local?) do
             new_game(@level_picker.value, @god_picker.value)
           end
         end
@@ -86,7 +84,7 @@ module Wrath
     protected
     def level_picker
       grid num_columns: 2 do
-        label "Map"
+        label t.label.map
         @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
@@ -94,7 +92,7 @@ module Wrath
           end
         end
 
-        label "God"
+        label t.label.god
         @god_picker = combo_box value: @level_picker.value::GOD, width: $window.width * 0.75 do
           subscribe :changed do |sender, god|
             send_message(Message::UpdateLobby.new(:god, god)) if host?
@@ -173,7 +171,7 @@ module Wrath
       label player_name
 
       if @network
-        @ready_indicators << label('Ready', color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)
+        @ready_indicators << label(t.label.ready, color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)
       else
         label ''
       end

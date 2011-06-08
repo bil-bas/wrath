@@ -6,7 +6,7 @@ APP = "wrath"
 RELEASE_VERSION = Wrath::VERSION
 
 EXECUTABLE = "#{APP}.exe"
-SOURCE_FOLDERS = %w[bin lib media build]
+SOURCE_FOLDERS = %w[bin config lib media build]
 SOURCE_FOLDER_FILES = FileList[SOURCE_FOLDERS.map {|f| "#{f}/**/*"}]
 EXTRA_SOURCE_FILES = %w[.gitignore Rakefile README.textile Gemfile Gemfile.lock]
 
@@ -35,7 +35,7 @@ file EXECUTABLE => :ocra
 
 desc "Use Ocra to generate #{EXECUTABLE} (Windows only) v#{RELEASE_VERSION}"
 task ocra: SOURCE_FOLDER_FILES do
-  system "ocra bin/#{APP}.rbw --windows --icon media/icon.ico lib/**/*.yml media/**/*.* bin/**/*.*"
+  system "ocra bin/#{APP}.rbw --windows --icon media/icon.ico lib/**/*.yml config/**/*.* media/**/*.* bin/**/*.*"
 end
 
 # Making a release.

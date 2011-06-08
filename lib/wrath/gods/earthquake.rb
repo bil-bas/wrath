@@ -3,8 +3,6 @@ module Wrath
   class Earthquake < God
     attr_reader :quake_offset
 
-    def self.to_s; "Earthshaker"; end
-
     def on_disaster_start(sender)
       Sample["objects/explosion.ogg"].play_at_x(x)
     end

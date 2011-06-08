@@ -4,8 +4,6 @@ module Wrath
     NUM_ENTS = 4
     MIN_TREES = 6
 
-    def self.to_s; "Dryad"; end
-
     def disaster_duration; 0; end
 
     def on_disaster_start(sender)

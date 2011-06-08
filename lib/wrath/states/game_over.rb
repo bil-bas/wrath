@@ -35,17 +35,17 @@ class GameOver < Gui
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
 
     horizontal spacing: 10, padding_top: $window.height - 75, padding_left: $window.width / 2 - 200 do
-      button "Lobby", z: ZOrder::GUI, tip: "Return to the game lobby" do
+      button t.button.lobby.text, z: ZOrder::GUI, tip: t.button.lobby.tip do
         return_to_lobby
       end
 
       unless client?
-        button "Play again", z: ZOrder::GUI, tip: "Replay this level with the same priests" do
+        button t.button.play_again.text, z: ZOrder::GUI, tip: t.button.play_again.tip do
           replay
         end
 
         if previous_game_state.class.next_level
-          button "Play next", z: ZOrder::GUI, tip: "Play the next level with the same priests" do
+          button t.button.play_next.text, z: ZOrder::GUI, tip: t.button.play_next.tip do
             play_next
           end
         end

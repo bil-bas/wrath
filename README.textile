@@ -101,3 +101,4 @@ h2. Third party assets used
 * "Fidgit":https://github.com/Spooner/fidgit gui library (extending Chingu)
 * "Texplay":http://banisterfiend.wordpress.com/2008/08/23/texplay-an-image-manipulation-tool-for-ruby-and-gosu/ image manipulation library for Gosu.
 * "Chipmunk":http://github.com/beoran/chipmunk 2D physics library
+* "R18n":http://r18n.rubyforge.org/ i18n library

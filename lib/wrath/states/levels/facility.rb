@@ -5,8 +5,6 @@ class Level < GameState
 
     GOD = Ai
 
-    def self.to_s; "D.O.O.M. Test Facility"; end
-
     def create_objects
       super
 

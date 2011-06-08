@@ -4,7 +4,6 @@ class Level < GameState
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 
-    def self.to_s; "Cave of Considerable Doom"; end
 
     def create_objects
       super

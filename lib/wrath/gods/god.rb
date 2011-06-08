@@ -19,6 +19,11 @@ module Wrath
     event :on_disaster_start
     event :on_disaster_end
 
+    def self.t; R18n.get.t.god[Inflector.underscore(Inflector.demodulize(name))]; end
+    def t; self.class.t; end
+
+    def self.to_s; t.name; end
+
     # Whether you can pick gods separate to levels.
     def self.unlocked_picking?; $window.achievement_manager.unlocked?(:general, :choose_god); end
     def self.icon; Image["gods/#{name[/[^:]+$/].downcase}_portrait.png"]; end

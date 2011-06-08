@@ -18,15 +18,15 @@ class Menu < Gui
     horizontal padding_left: ($window.width - 680) / 2, padding_top: ($window.height - 475) / 2, spacing: 0 do
       @left_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
       vertical spacing: 0, padding: 0 do
-        heading = label "Wrath", font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
-        label "Appease or Die!", font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
+        heading = label t.title, font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
+        label t.subtitle, font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
         vertical spacing: 8, padding_top: 30, padding_left: 80 do
           options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
-          button(shortcut("Play"), options.merge(tip: 'Play the game, on- or off-line')) { push_game_state Play }
-          button(shortcut("Instructions"), options.merge(tip: 'Learn how to play the game')) { push_game_state Instructions }
-          button(shortcut("Achievements"), options.merge(tip: 'Review your achievements')) { push_game_state ViewAchievements }
-          button(shortcut("Options"), options.merge(tip: "View and change game settings")) { push_game_state Options }
-          button(shortcut("Exit", 'x'), options) { close }
+          button(shortcut(t.button.play.text), options.merge(tip: t.button.play.tip)) { push_game_state Play }
+          button(shortcut(t.button.instructions.text), options.merge(tip: t.button.instructions.tip)) { push_game_state Instructions }
+          button(shortcut(t.button.achievements.text), options.merge(tip: t.button.achievements.tip)) { push_game_state ViewAchievements }
+          button(shortcut(t.button.options.text), options.merge(tip: t.button.options.tip)) { push_game_state Options }
+          button(shortcut(t.button.exit.text), options.merge(tip: t.button.exit.tip)) { close }
         end
 
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width

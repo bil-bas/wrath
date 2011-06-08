@@ -7,8 +7,6 @@ class Level < GameState
 
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
 
-    def self.to_s; "Ship of Doomed Fools"; end
-
     def create_objects
       super
 

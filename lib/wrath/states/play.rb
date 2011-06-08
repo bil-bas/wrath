@@ -1,28 +1,25 @@
 module Wrath
   class Play < Gui
+    BUTTONS = [:offline, :join, :host]
+
     def initialize
       super
 
-      add_inputs(
-          o: :local_game,
-          j: :join_game,
-          h: :host_game,
-          b: :pop_game_state,
-          escape: :pop_game_state
-      )
+      BUTTONS.each do |name|
+        on_input(t.button[name].text[0].downcase.to_sym) { send("#{name}_game")}
+      end
 
       vertical do
-        label "Play Wrath", font_size: 32
+        label t.title, font_size: 32
 
         vertical padding: 0, spacing: 10 do
-          width = 320
-          button(shortcut("Offline game"), icon: icon('offline'), width: width, tip: 'Both players on the same keyboard') { local_game }
-          button(shortcut("Join Game"), icon: icon('join'), width: width, tip: 'Connect to a network game someone else is hosting') { join_game }
-          button(shortcut("Host Game"), icon: icon('host'), width: width, tip: 'Host a network game that that another player can join') { host_game }
+          BUTTONS.each do |name|
+            button(shortcut(t.button[name].text), icon: icon(name), width: 320, tip: t.button[name].tip) { send("#{name}_game") }
+          end
         end
 
         horizontal padding: 0 do
-          button(shortcut("Back")) { pop_game_state }
+          button(shortcut(t.button.back.text)) { pop_game_state }
         end
       end
     end
@@ -31,7 +28,7 @@ module Wrath
       ScaledImage.new(Image["gui/play_#{type}.png"], $window.sprite_scale)
     end
 
-    def local_game
+    def offline_game
       push_game_state Lobby.new(nil, "Player2",  "Player1")
     end
 

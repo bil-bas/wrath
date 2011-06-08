@@ -5,14 +5,12 @@ module Wrath
     def initialize
       super
 
-      on_input([:escape, :b], :pop_game_state)
-
       vertical do
-        label "Options  |  Audio", font_size: 32
+        label t.title, font_size: 32
 
         grid num_columns: 4, padding: 0 do
           # MASTER
-          label "Master"
+          label t.label.master
           @master_slider = slider width: SLIDER_WIDTH,  range: 0.0..1.0 do |sender, value|
             $window.volume = value
             settings[:audio, :master_volume] = value
@@ -20,7 +18,7 @@ module Wrath
           end
           @master_percentage = label "100%"
           @master_slider.value = $window.volume
-          @mute_button = toggle_button("Mute", value: $window.muted?) do |sender, value|
+          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?) do |sender, value|
             if value
               $window.mute
             else
@@ -30,7 +28,7 @@ module Wrath
           end
 
           # EFFECTS
-          label "Effects"
+          label t.label.effects
           @effects_slider = slider width: SLIDER_WIDTH, range: 0.0..1.0 do |sender, value|
             Sample.volume = value
             settings[:audio, :effects_volume] = value
@@ -39,10 +37,10 @@ module Wrath
           @effects_percentage = label "100%"
           @effects_slider.value = Sample.volume
 
-          button("Play") { Sample["objects/explosion.ogg"].play }
+          button(t.button.play_sample.text) { Sample["objects/explosion.ogg"].play }
 
           # MUSIC
-          label "Music"
+          label t.label.music
           @music_slider = slider width: SLIDER_WIDTH, range: 0.0..1.0 do |sender, value|
             Song.volume = value
             settings[:audio, :music_volume] = value
@@ -57,8 +55,8 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(shortcut("Back")) { pop_game_state }
-          button("Defaults", tip: "Reset to default values") do
+          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.default.text, tip: t.button.default.tip) do
             @master_slider.value = 0.5
             @effects_slider.value = 1.0
             @music_slider.value = 1.0

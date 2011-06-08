@@ -1,8 +1,6 @@
 module Wrath
   # Volcano god for the island level.
   class Volcano < God
-    def self.to_s; "The Volcano"; end
-
     def update
       super
 

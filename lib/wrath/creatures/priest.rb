@@ -37,7 +37,7 @@ class Priest < Humanoid
     icon
   end
 
-  def self.title(name); name.to_s.capitalize; end
+  def self.title(name); t.priest[name].name; end
 
   def initialize(options = {})
     options = {

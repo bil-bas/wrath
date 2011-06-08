@@ -3,6 +3,9 @@ module Chingu
     include Wrath::Log
     extend Forwardable
 
+    def self.t; R18n.get.t.game_state[Inflector.underscore(Inflector.demodulize(name)).to_sym]; end
+    def t; self.class.t; end
+
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
     def_delegators :$window, :settings, :controls, :statistics, :achievement_manager, :pixel

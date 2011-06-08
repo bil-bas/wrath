@@ -8,8 +8,6 @@ module Wrath
       GOD = Squid
 
       def medium; :water; end
-      def self.to_s; "Davey Jones' Locker (of Doom)"; end
-
       def gravity; super * 0.3; end
 
       def pushed
