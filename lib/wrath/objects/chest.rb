@@ -31,7 +31,7 @@ class Chest < Container
       animation: "chest_8x8.png",
       hide_contents: true,
       drop_velocity: [0, 0.15, 0.5],
-      possible_contents: nil,
+      possible_contents: [],
       spawn_delay: 15000,
     }.merge! options
 
@@ -48,7 +48,7 @@ class Chest < Container
   end
 
   def refill
-    if empty? and @possible_contents and not parent.client?
+    if empty? and not @possible_contents.empty? and not parent.client?
       klass = @possible_contents.sample
       object = klass.create(x: -100 * rand(100), y: -100 * rand(100), y: 100)
       pick_up(object)
@@ -56,7 +56,7 @@ class Chest < Container
   end
 
   def schedule_spawn
-    if empty? and @possible_contents and not parent.client?
+    if empty? and @possible_contents.empty? and not parent.client?
       after(random(@spawn_delay * 0.75, @spawn_delay * 1.25), name: :spawn_contents) { refill }
     end
   end

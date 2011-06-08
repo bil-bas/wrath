@@ -1,0 +1,22 @@
+---
+:objects:
+  :Chest:
+    :initial: 5
+    :contents:
+      - :FlyingCarpet
+      - :Crown
+  :OgreSkull:
+    :initial: 1
+
+  :Cultist:
+    :initial: 2
+    :cap: 4
+  :Knight:
+    :initial: 0
+    :cap: 2
+  :Snake:
+    :initial: 2
+    :cap: 3
+  :Sheep:
+    :initial: 4
+    :cap: 6

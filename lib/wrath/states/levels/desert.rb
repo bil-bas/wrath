@@ -3,30 +3,12 @@ class Level < GameState
   class Desert < Level
     DEFAULT_TILE = Sand
 
-    CHEST_CONTENTS = [Crown, FlyingCarpet]
     GOD = Mummy
-
-    SPAWNS = {
-        Sheep => 4,
-        Knight => 1,
-        Cultist => 4,
-        Snake => 3,
-    }
-
-    # This is relative to the altar.
-    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
-
 
     def self.to_s; "Desert of Dehydrated Doom"; end
 
     def create_objects
-      super(PLAYER_SPAWNS)
-
-      # Inanimate objects.
-      5.times { Chest.create(possible_contents: CHEST_CONTENTS) }
-      1.times { OgreSkull.create }
-
-      # Static objects.
+      super
 
       map.tiles.flatten.select {|t| t.is_a? Sand }.each do |tile|
         if tile.adjacent_tiles(directions: :orthogonal).any? {|t| t.is_a? Water }

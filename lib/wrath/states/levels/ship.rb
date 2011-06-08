@@ -3,31 +3,14 @@ class Level < GameState
   class Ship < Level
     DEFAULT_TILE = Planking
 
-    CHEST_CONTENTS = [Crown, Fire, Rope]
-    BARREL_CONTENTS = [Chicken, Grog]
     GOD = Storm
-    SPAWNS = {
-        PirateCaptain => 1,
-        Pirate => 6,
-        Parrot => 3,
-        Monkey => 2,
-    }
 
-    # This is relative to the altar.
-    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
     MAST_SPAWNS = [[-50, 0], [+50, 0]]
 
     def self.to_s; "Ship of Doomed Fools"; end
 
     def create_objects
-      super(PLAYER_SPAWNS)
-
-      # Inanimate objects.
-      7.times { Barrel.create(possible_contents: BARREL_CONTENTS) }
-      2.times { TreasureChest.create }
-      2.times { Chest.create(possible_contents: CHEST_CONTENTS) }
-      3.times { Grog.create }
-      2.times { Rope.create }
+      super
 
       # Static objects.
       MAST_SPAWNS.each do |pos|

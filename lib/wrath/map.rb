@@ -5,38 +5,58 @@ module Wrath
     include Log
 
     attr_reader :tiles
+    attr_reader :number_of_tiles_to_create
+
+    def tiles_to_create?; @number_of_tiles_to_create > 0; end # Any more tiles to create?
+    def incomplete?; not @tile_classes.nil?; end # Does the map need generating?
 
     def initialize(tile_classes)
       super()
 
-      @tiles = [] # Grid of all tiles.
+      @tile_classes = tile_classes
+      @x, @y = 0, -1
+      @number_of_tiles_to_create = @tile_classes.size * @tile_classes.first.size
+      @tiles = Array.new(@tile_classes.size) { Array.new(@tile_classes.first.size) } # Grid of all tiles.
       @animated_tiles = [] # Tiles that require animating and drawing every frame.
+    end
 
-      tile_classes.each_with_index do |class_row, y|
-        tile_row = []
-        @tiles << tile_row
-        class_row.each_with_index do |type, x|
-          tile = type.new(self, x, y)
+    def generate_background
+      @tile_classes = nil
 
-          @animated_tiles << tile if tile.is_a? AnimatedTile
-
-          tile_row << tile
-        end
-      end
-
-      @tiles.flatten.each(&:render_edges)
+      all_tiles = @tiles.flatten
+      all_tiles.each(&:render_edges)
 
       # Cache all the images into a big image, to save drawing them separately.
       @background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height)
       $window.render_to_image(@background_image) do
-        @tiles.flatten.each(&:draw)
+        all_tiles.each(&:draw)
       end
 
       every(AnimatedTile::ANIMATION_PERIOD, &method(:update_animations).to_proc)
 
       update_animations
 
-      log.info { "Created map of #{@tiles[0].size}x#{@tiles.size} tiles" }
+      log.info { "Created map of #{@tiles.first.size}x#{@tiles.size} tiles" }
+    end
+
+    def create_tiles(number)
+      number.times do
+        return unless @number_of_tiles_to_create >= 1
+
+        @number_of_tiles_to_create -= 1
+
+        @y += 1
+        if @y == @tiles.size
+          @y = 0
+          @x += 1
+        end
+
+        tile = @tile_classes[@y][@x].new(self, @x, @y)
+
+        @animated_tiles << tile if tile.is_a? AnimatedTile
+
+        @tiles[@y][@x] = tile
+      end
     end
 
     # Tile at grid coordinates.

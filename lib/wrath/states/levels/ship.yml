@@ -1,0 +1,38 @@
+---
+:objects:
+  :Barrel:
+    :initial: 7
+    :contents:
+      - :Chicken
+      - :Grog
+  :Chest:
+    :initial: 2
+    :contents:
+      - :Crown
+      - :Fire
+      - :Rope
+  :TreasureChest:
+    :initial: 2
+  :Grog:
+    :initial: 3
+  :Rope:
+    :initial: 2
+
+  :PirateCaptain:
+    :initial: 1
+    :cap: 1
+  :Pirate:
+    :initial: 4
+    :cap: 6
+  :Pirate:
+    :initial: 2
+    :cap: 3
+  :Parrot:
+    :initial: 1
+    :cap: 2
+  :Monkey:
+    :initial: 1
+    :cap: 2
+
+
+

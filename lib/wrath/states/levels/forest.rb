@@ -2,22 +2,7 @@ module Wrath
 class Level < GameState
   class Forest < Level
     DEFAULT_TILE = Grass
-    NUM_SHEEP = 5
-    NUM_CHICKENS = 2
-    SACK_CONTENTS = [Crown, Chicken, FlyingCarpet]
     GOD = Dryad
-
-    SPAWNS = {
-        Knight => 3,
-        Virgin => 1,
-        Sheep => 3,
-        Chicken => 6,
-        Bard => 1,
-    }
-
-    # This is relative to the altar.
-    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
-
     STANDING_STONES_RADIUS = 18
     NUM_STANDING_STONES = 5
 
@@ -26,15 +11,7 @@ class Level < GameState
     def self.unlocked?; true; end # First level, so is unlocked by default.
 
     def create_objects
-      super(PLAYER_SPAWNS)
-
-      # Inanimate objects.
-      4.times { Rock.create }
-      5.times { Sack.create(contents: SACK_CONTENTS.sample.create) }
-      2.times { Fire.create }
-      1.times { Cauldron.create }
-      
-      5.times { Mushroom.create }
+      super
 
       # Static objects.
       16.times { Tree.create(can_wake: true) } # May become ents!

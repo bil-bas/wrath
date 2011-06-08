@@ -1,5 +1,8 @@
 === CHANGELOG ===
 
+Next release
+  * Slowed down preparation of level, so neither host nor client gets overwhelmed and freezes up.
+
 v0.1.0 (2011-06-07)
 
   * Changed default online player controls to same as player 1. Reset everyone's settings to default.

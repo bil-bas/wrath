@@ -4,22 +4,8 @@ module Wrath
       trait :timer
 
       DEFAULT_TILE = Sand
-
       FILTER_COLOR = Color.rgba(0, 100, 200, 100)
-
-      CLAM_CONTENTS = [Pearl, Snake]
-
       GOD = Squid
-
-      SPAWNS = {
-          DeepOne => 4,
-          Snake => 1,
-          ZombiePirate => 1,
-          Shark => 1,
-      }
-
-      # This is relative to the altar.
-      PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
       def medium; :water; end
       def self.to_s; "Davey Jones' Locker (of Doom)"; end
@@ -31,17 +17,7 @@ module Wrath
       end
 
       def create_objects
-        super(PLAYER_SPAWNS)
-
-        # Inanimate objects.
-        1.times { OgreSkull.create }
-        2.times { TreasureChest.create }
-        2.times { Clam.create(possible_contents: CLAM_CONTENTS) }
-        5.times { Rock.create }
-
-        # Static objects.
-        3.times { Boulder.create }
-        12.times { Seaweed.create }
+        super
 
         # Top "blockers", not really tangible, so don't update/sync them.
         [10, 16].each do |y|
@@ -97,7 +73,7 @@ module Wrath
       def draw
         super
 
-        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, FILTER_COLOR)
+        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, FILTER_COLOR) if started?
       end
     end
   end

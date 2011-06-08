@@ -1,0 +1,14 @@
+---
+:objects:
+  :Portal:
+    :initial: 2
+
+  :CompanionCube:
+    :initial: 4
+    :cap: 6
+  :TestSubject:
+    :initial: 1
+    :cap: 2
+  :Turret:
+    :initial: 5
+    :cap: 5

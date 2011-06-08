@@ -50,7 +50,7 @@ class Level < GameState
 
   def_delegators :@map, :tile_at_coordinate
 
-  attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at
+  attr_reader :objects, :god, :map, :players, :network, :space, :altar, :winner, :started_at, :spawner
 
   attr_accessor :screen_offset_y
 
@@ -72,12 +72,13 @@ class Level < GameState
   end
 
   # network: Server, Client, nil
-  def initialize(network = nil, god, player_names, priest_names)
+  def initialize(network = nil, god_class, player_names, priest_names)
     BaseObject.reset_object_ids
 
     @@glow = make_glow
 
-    @network, @player_names, @priest_names = network, player_names, priest_names
+    @network, @god_class, @player_names, @priest_names =
+        network, god_class, player_names, priest_names
 
     super()
 
@@ -96,7 +97,7 @@ class Level < GameState
       end
     end
 
-    send_message(Message::NewGame.new(self.class, god)) if host?
+    send_message(Message::NewGame.new(self.class, @god_class)) if host?
 
     @last_sync = milliseconds
 
@@ -117,17 +118,9 @@ class Level < GameState
       tiles = random_tiles
       create_map(tiles)
       send_message(Message::Map.new(tiles)) if host?
-
-      create_objects
-
-      start_game
     end
 
-    Spawner.create(self.class.const_get(:SPAWNS)) unless client?
-
-    @god = god.create
-
-    send_message(Message::StartGame.new) if host?
+    log.info "Initiated '#{self}'"
   end
   
   def self.unlocked?
@@ -136,7 +129,7 @@ class Level < GameState
   
   def replay
     log.info { "Replaying #{self.class}" }
-    switch_game_state self.class.new(@network, @god.class, @player_names, @priest_names)
+    switch_game_state self.class.new(@network, @god_class, @player_names, @priest_names)
   end
 
   def play_next_level
@@ -178,6 +171,8 @@ class Level < GameState
 
   # Start the game, after sending all the init data.
   def start_game
+    log.info "Started game on #{self}"
+    @god = @god_class.create
     @started = true
     @started_at = Time.now
   end
@@ -259,26 +254,23 @@ class Level < GameState
     Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
   end
 
-  def create_objects(player_spawns)
+  def create_objects
     log.info "Creating objects"
 
     @altar = create_altar
     @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
-    player1 = Priest.create(name: @priest_names[0], local: true, x: altar.x + player_spawns[0][0], y: altar.y + player_spawns[0][1],
+    player1 = Priest.create(name: @priest_names[0], local: true, x: altar.x - 12, y: altar.y,
                             factor_x: 1)
     players[0].avatar = player1
 
     # Player 2.
-    player2 = Priest.create(name: @priest_names[1], local: @network.nil?, x: altar.x + player_spawns[1][0], y: altar.y + player_spawns[1][1],
+    player2 = Priest.create(name: @priest_names[1], local: @network.nil?, x: altar.x + 12, y: altar.y,
                             factor_x: -1)
     players[1].avatar = player2
 
-    # Mobs.
-    self.class.const_get(:SPAWNS).each_pair do |obj, number|
-      [number - 1, 1].max.times { obj.create }
-    end
+    @spawner = Spawner.create(self.class)
   end
 
   def random_tiles(default_tile)
@@ -321,6 +313,25 @@ class Level < GameState
           object.update_contents_position
         end
       end
+    else
+      if map
+        if map.tiles_to_create? # Create a couple of tiles.
+          map.create_tiles(5)
+        elsif map.incomplete? # All the tiles have been created, splice them onto the background.
+          map.generate_background
+        elsif not client? # Create some objects!
+          # Create objects until we are ready to start the level.
+          # Don't update at this point, since we don't want them interacting yet.
+          if Altar.all.empty?
+            create_objects
+          elsif @spawner.initial_spawns_left?
+            @spawner.spawn_initial(5)
+          else
+            send_message(Message::StartGame.new) if host?
+            start_game
+          end
+        end
+      end
     end
 
     # Ensure that any network objects are synced over the network.
@@ -340,7 +351,8 @@ class Level < GameState
         end
       end
     else
-      @font.draw_rel("Loading...", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)
+      dots = '.' * ((milliseconds / 500.0) % 7).to_i
+      @font.draw_rel("Loading#{dots}", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)
     end
   end
 

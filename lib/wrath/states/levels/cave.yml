@@ -1,0 +1,33 @@
+---
+:objects:
+  :Chest:
+    :initial: 6
+    :contents:
+      - :Chicken
+      - :StrengthPotion
+      - :Fire
+      - :FlyingCarpet
+      - :Crown
+  :Rock:
+    :initial: 8
+  :Fire:
+    :initial: 4
+  :Mushroom:
+    :initial: 8
+  :OgreSkull:
+    :initial: 1
+  :Boulder:
+    :initial: 12
+
+  :Knight:
+    :initial: 3
+    :cap: 6
+  :BlueMeanie:
+    :initial: 3
+    :cap: 4
+  :Mimic:
+    :initial: 3
+    :cap: 3
+  :Snake:
+    :initial: 0
+    :cap: 1

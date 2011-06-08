@@ -1,0 +1,33 @@
+---
+:objects:
+  :Sack:
+    :initial: 5
+    :contents:
+      - :Chicken
+      - :FlyingCarpet
+      - :Crown
+  :Rock:
+    :initial: 4
+  :Cauldron:
+    :initial: 1
+  :Mushroom:
+    :initial: 5
+  :Fire:
+    :initial: 2
+
+  :Bard:
+    :initial: 0
+    :cap: 1
+  :Chicken:
+    :initial: 4
+    :cap: 6
+  :Knight:
+    :initial: 2
+    :cap: 3
+  :Sheep:
+    :initial: 3
+    :cap: 3
+  :Virgin:
+    :initial: 1
+    :cap: 1
+

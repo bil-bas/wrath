@@ -4,32 +4,10 @@ class Level < GameState
     DEFAULT_TILE = Gravel
     GOD = Earthquake
 
-    CHEST_CONTENTS = [Chicken, StrengthPotion, Fire, FlyingCarpet, Crown]
-
-    SPAWNS = {
-        Knight => 5,
-        BlueMeanie => 4,
-        Mimic => 3,
-        Snake => 1,
-    }
-
-    # This is relative to the altar.
-    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
-
     def self.to_s; "Cave of Considerable Doom"; end
 
     def create_objects
-      super(PLAYER_SPAWNS)
-
-      # Inanimate objects.
-      8.times { Rock.create }
-      (5 + rand(3)).times { Chest.create(possible_contents: CHEST_CONTENTS) }
-      4.times { Fire.create }
-      8.times { Mushroom.create }
-      1.times { OgreSkull.create }
-
-      # Static objects.
-      12.times { Boulder.create }
+      super
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|

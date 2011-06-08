@@ -1,0 +1,30 @@
+---
+:objects:
+  :Clam:
+    :initial: 3
+    :contents:
+      - :Pearl
+      - :Snake
+  :TreasureChest:
+    :initial: 2
+  :OgreSkull:
+    :initial: 1
+  :Rock:
+    :initial: 5
+  :Boulder:
+    :initial: 3
+  :Seaweed:
+    :initial: 12
+
+  :DeepOne:
+    :initial: 3
+    :cap: 4
+  :ZombiePirate:
+    :initial: 1
+    :cap: 2
+  :Shark:
+    :initial: 1
+    :cap: 1
+
+
+

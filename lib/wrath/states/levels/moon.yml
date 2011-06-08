@@ -1,0 +1,18 @@
+---
+:objects:
+  :MoonRock:
+    :initial: 15
+  :Crater:
+    :initial: 8
+  :CraterWithLid:
+    :initial: 3
+
+  :MiGo:
+    :initial: 3
+    :cap: 5
+  :Nightgaunt:
+    :initial: 2
+    :cap: 3
+  :Cultist:
+    :initial: 1
+    :cap: 2

@@ -1,0 +1,42 @@
+---
+:objects:
+  :Barrel:
+    :initial: 3
+    :contents:
+      - :Mushroom
+      - :Chicken
+      - :Pirate
+  :X:
+    :initial: 3
+    :contents:
+      - :TreasureChest
+      - :FlyingCarpet
+      - :Crown
+  :Rock:
+    :initial: 7
+  :PalmTree:
+    :initial: 12
+  :OgreSkull:
+    :initial: 1
+
+  :Amazon:
+    :initial: 1
+    :cap: 2
+  :Chicken:
+    :initial: 1
+    :cap: 1
+  :Pirate:
+    :initial: 2
+    :cap: 3
+  :Parrot:
+    :initial: 2
+    :cap: 4
+  :Monkey:
+    :initial: 1
+    :cap: 2
+  :Snake:
+    :initial: 1
+    :cap: 2
+  :Mosquito:
+    :initial: 2
+    :cap: 2

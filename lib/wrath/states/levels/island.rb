@@ -2,36 +2,12 @@ module Wrath
 class Level < GameState
   class Island < Level
     DEFAULT_TILE = Sand
-
-    CHEST_CONTENTS = [TreasureChest, Crown, FlyingCarpet]
-    BARREL_CONTENTS = [Mushroom, Chicken, Pirate]
     GOD = Volcano
-    SPAWNS = {
-        Pirate => 3,
-        Amazon => 1,
-        Chicken => 1,
-        Parrot => 4,
-        Monkey => 2,
-        Mosquito => 2,
-        Snake => 2,
-    }
-
-    # This is relative to the altar.
-    PLAYER_SPAWNS = [[-12, 0], [12, 0]]
 
     def self.to_s; "Island of Utter Doom"; end
 
     def create_objects
-      super(PLAYER_SPAWNS)
-
-      # Inanimate objects.
-      7.times { Rock.create }
-      3.times { Barrel.create(possible_contents: BARREL_CONTENTS) }
-      1.times { OgreSkull.create }
-      3.times { X.create(contents: CHEST_CONTENTS.sample.create) }
-
-      # Static objects.
-      12.times { PalmTree.create }
+      super
 
       # Top "blockers", not really tangible, so don't update/sync them.
       [10, 16].each do |y|
