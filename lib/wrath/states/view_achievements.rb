@@ -29,13 +29,20 @@ module Wrath
     INCOMPLETE_TITLE_COLOR = Color.rgb(150, 150, 150)
     COMPLETE_TITLE_COLOR = Color.rgb(0, 255, 0)
     UNLOCK_BACKGROUND_COLOR = Color.rgb(50, 50, 50)
+    MAX_HUMAN_TIME = 60*60*24*7 # Max time to show human-readable, rather than regular time format.
+
+    trait :timer
 
     def initialize
       super
 
       # Store the current achievements, so we can add them in #update.
-      complete, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
-      @achievements_to_add = complete + incomplete
+      @completed, incomplete = achievement_manager.achievements.partition {|a| a.complete?}
+      @achievements_to_add = @completed + incomplete
+
+      @achieved_time_labels = []
+
+      every(5000) { update_time_labels }
 
       vertical do
         horizontal padding: 0 do |packer|
@@ -70,9 +77,20 @@ module Wrath
       # Add a couple of achievements each frame, so we don't freeze up the GUI.
       unless @achievements_to_add.empty?
         @achievements_to_add.shift(1).each {|a| add_achievement(a, @achievements_list) }
+        update_time_labels
       end
 
       super
+    end
+
+    protected
+    def update_time_labels
+      @completed[0...@achieved_time_labels.size].each_with_index do |achieve, i|
+        completed_at = achievement_manager.completion_time(achieve.name)
+        completed_at = R18n.get.l completed_at, ((Time.now - completed_at) < MAX_HUMAN_TIME) ? :human : nil
+        label = @achieved_time_labels[i]
+        label.text = completed_at unless label.text == completed_at
+      end
     end
     
     protected
@@ -89,8 +107,7 @@ module Wrath
 
             # Progress bar, if needed.
             if achieve.complete?
-              completed_at = R18n.get.l achievement_manager.completion_time(achieve.name)
-              packer.label completed_at, font_size: 15, padding_left: 0
+              @achieved_time_labels << packer.label('', font_size: 15, padding_left: 0)
             else
               ProgressBar.new(achieve.total, achieve.required,
                       parent: packer, width: $window.width - 625, height: 20, font_size: 15)
