@@ -2,14 +2,16 @@ module Wrath
 class Level < GameState
   extend Forwardable
 
-  GRAVITY = -4 / 1000.0 # Acceleration per second.
-    
-  SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
-  SYNC_DELAY = 0 # 1000.0 / SYNCS_PER_SECOND
-  IDEAL_PHYSICS_STEP = 1.0 / 240.0 # Physics frame-rate.
-  DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
-  GLOW_WIDTH = 64
-  MIN_DISTANCE_FROM_PLAYER_TO_SPAWN = 28
+  unless defined? GRAVITY
+    GRAVITY = -4 / 1000.0 # Acceleration per second.
+
+    SYNCS_PER_SECOND = 10.0 # Desired speed for sync updates.
+    SYNC_DELAY = 0 # 1000.0 / SYNCS_PER_SECOND
+    IDEAL_PHYSICS_STEP = 1.0 / 240.0 # Physics frame-rate.
+    DARKNESS_COLOR = Color.rgba(0, 0, 0, 120)
+    GLOW_WIDTH = 64
+    MIN_DISTANCE_FROM_PLAYER_TO_SPAWN = 28
+  end
 
   # Messages accepted after the game has started.
   GAME_STARTED_MESSAGES = [

@@ -9,8 +9,10 @@ class BaseObject < GameObject
   extend R18n::Helpers
   extend Forwardable
 
-  TERMINAL_VELOCITY = -3 # Max velocity of a dropped item.
-  FORCE_MODIFIER = 1440000.0 * Level::IDEAL_PHYSICS_STEP * 1.25
+  unless defined? TERMINAL_VELOCITY
+    TERMINAL_VELOCITY = -3  # Max velocity of a dropped item.
+    FORCE_MODIFIER = 1440000.0 * Level::IDEAL_PHYSICS_STEP * 1.25
+  end
 
   @@next_object_id = 0
   @@animation_cache = {}
