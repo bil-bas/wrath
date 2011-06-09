@@ -5,9 +5,13 @@ module Wrath
 
     event :on_achieved
 
-    attr_reader :name, :description, :title, :unlocks, :total, :progress, :required
+    attr_reader :name, :unlocks, :total, :progress, :required
 
     def complete?; @complete; end
+
+    def t; R18n.get.t.achievement; end
+    def title; t[name].title; end
+    def description; t[name].description; end
 
     public
     def initialize(definition, manager, already_done)
@@ -15,8 +19,6 @@ module Wrath
       @manager = manager
 
       @name = definition[:name]
-      @title = definition[:title]
-      @description = definition[:description]
       @statistics = definition[:statistics]
       @required = definition[:required]
 

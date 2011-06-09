@@ -70,6 +70,7 @@ level:
 
 # Gui screens.
 gui:
+  # View Achievements
   view_achievements:
     title: Achievements
     locked: Locked
@@ -83,6 +84,7 @@ gui:
         text: Reset statistics
         tip: Resets all statistics, achievements and unlocks PERMANENTLY
 
+  # Host details
   host_details:
     title: Hosting a Game
 
@@ -95,6 +97,7 @@ gui:
       host:
         text: Host
 
+  # Instructions
   instructions:
     title: Instructions
     button:
@@ -135,6 +138,7 @@ gui:
           * Favour can also be used to power magical items (e.g. magic carpets).
 
 
+  # Join Details
   join_details:
     title: Joining a Game
     label:
@@ -147,6 +151,7 @@ gui:
       join:
         text: Join
 
+  # Lobby
   lobby:
     title:
       host: Host lobby
@@ -166,6 +171,7 @@ gui:
       ready: Ready
       wait_for_start: Wait for host to start game
 
+  # Main Menu
   menu:
     title: Wrath
     subtitle: Appease or Die!
@@ -186,6 +192,7 @@ gui:
         text: Exit
         tip: Leave game
 
+  # Options.
   options:
     title: Options
     button:
@@ -200,6 +207,7 @@ gui:
         text: Default all options
         tip: Reset all options (audio, video and controls) to their default values
 
+  # Options - Audio.
   options_audio:
     title: Options | Audio
     label:
@@ -216,6 +224,7 @@ gui:
         text: Defaults
         tip: Reset volumes to default values and remove muting
 
+  # Options - Video.
   options_video:
     title: Options | Video
     zoom: (X%1 zoom)
@@ -230,6 +239,7 @@ gui:
       exit:
         text: Exit
 
+  # Options - Controls.
   options_controls:
     title: Options | Controls
     button:
@@ -248,6 +258,7 @@ gui:
         text: Online player
         tip: Controls for the player in a network game
 
+  # Play
   play:
     title: Play Wrath
 
@@ -263,6 +274,7 @@ gui:
         text: Host Game
         tip: Host a network game that another player can join
 
+  # Game over
   game_over:
     button:
       lobby:
@@ -274,3 +286,110 @@ gui:
       play_next:
         text: Next
         tip: Play the next level with the same priests
+
+achievement:
+  # ---------------------------------------
+  # Number of times played and time played.
+  # ---------------------------------------
+  played_online:
+    title: Paranoid
+    description: Played an online game, not letting anyone touch my precious keyboard. Just have to worry about the alien mind-control lasers now!
+
+  played_offline:
+    title: War of elbows
+    description: Played an offline game, in which there should have been lots of frantic elbowing action.
+
+  long_play_1:
+    title: Waster of time
+    description: Played for an hour; time which won't ever be got back.
+
+
+  long_play_2:
+    title: Methuselah
+    description: Played for 10 hours, which is very nearly a thousand years.
+
+  # ---------------------------------------
+  # Number of times played each level.
+  # ---------------------------------------
+  played_forest:
+    title: Forester
+    description: Played the Forest level with an eye to rapid deforestation.
+
+  played_cave:
+    title: Spelunker
+    description: Played the Cave level in the dark.
+
+  played_island:
+    title: Castaway
+    description: Played the Island level with a friend who doesn't talk much.
+
+  played_ship:
+    title: All in the eye-liner
+    description: Played the Ship level with a mockney accent and a bit too much eye-makeup.
+
+  played_undersea:
+    title: Aquamarina
+    description: Played the Undersea level with visible string.
+
+  played_desert:
+    title: Sand got in the sandwiches
+    description: Played the Desert level without Tupperware.
+
+  played_facility:
+    title: Tested
+    description: Played the Facility level while being overseen by a benevolent AI.
+
+  played_moon:
+    title: Cosmic Horror
+    description: Played the Yuggoth level without much sanity left.
+  # ---------------------------------------
+  # Sacrifices (general).
+  # ---------------------------------------
+  sacrificed_object:
+    title: Wrecker
+    description: Sacrificed 100 inanimate objects.
+
+  sacrificed_animal:
+    title: Animal sacrifice
+    description: Sacrificed 10 defenceless animals.
+
+  sacrificed_humanoid:
+    title: The sun will come up tomorrow
+    description: Indulged in human(oid) sacrifice. The Aztecs swore by it!
+
+  sacrificed_everything:
+    title: High Priest
+    description: Made 1000 sacrifices, just to make sure.
+
+  # ---------------------------------------
+  # Sacrifices (by type).
+  # ---------------------------------------
+  sacrificed_knight:
+    title: Knightmare
+    description: Sacrificed brave Sir Robin, who didn't get to run away.
+
+  sacrificed_monkey:
+    title: 12 Monkeys
+    description: Sacrificed twelve monkeys.
+  sacrificed_test_subject:
+    title: Slave to the Machine
+    description: Sacrificed the life of the innocent test subject for Science.
+
+  sacrificed_sheep:
+    title: Butcher
+    description: Sacrificed 100 sheep.
+
+  # Deaths
+  death_fire:
+    title: Charcoal briquette
+    description: Burned to death.
+
+  # Damage levels.
+  damage_1:
+    title: Black and blue
+    description: Took 10,000 damage.
+
+  # Status effects.
+  status_irradiated:
+    title: Nightlight
+    description: Irradiated for a minute.

@@ -4,8 +4,6 @@
 # ---------------------------------------
 -
   :name: :played_online
-  :title: Paranoid
-  :description: Played an online game, not letting anyone touch my precious keyboard. Just have to worry about the alien mind-control lasers now!
   :statistics:
     - [:played, :online, :times]
   :required: 1
@@ -13,8 +11,6 @@
 
 -
   :name: :played_offline
-  :title: War of elbows
-  :description: Played an offline game, in which there should have been lots of frantic elbowing action.
   :statistics:
     - [:played, :offline, :times]
   :required: 1
@@ -22,8 +18,6 @@
 
 -
   :name: :long_play_1
-  :title: Waster of time
-  :description: Played for an hour; time which won't ever be got back.
   :statistics:
     - [:played, :offline, :duration]
     - [:played, :online, :duration]
@@ -32,8 +26,6 @@
 
 -
   :name: :long_play_2
-  :title: Methuselah
-  :description: Played for 10 hours, which is very nearly a thousand years.
   :statistics:
     - [:played, :offline, :duration]
     - [:played, :online, :duration]
@@ -46,8 +38,6 @@
 # ---------------------------------------
 -
   :name: :played_forest
-  :title: Forester
-  :description: Played the Forest level with an eye to rapid deforestation.
   :statistics:
     - [:levels, :Forest, :played]
   :required: 1
@@ -61,8 +51,6 @@
 
 -
   :name: :played_cave
-  :title: Spelunker
-  :description: Played the Cave level in the dark.
   :statistics:
     - [:levels, :Cave, :played]
   :required: 1
@@ -76,8 +64,6 @@
 
 -
   :name: :played_island
-  :title: Castaway
-  :description: Played the Island level with a friend who doesn't talk much.
   :statistics:
     - [:levels, :Island, :played]
   :required: 1
@@ -91,8 +77,6 @@
 
 -
   :name: :played_ship
-  :title: All in the eye-liner
-  :description: Played the Ship level with a mockney accent and a bit too much eye-makeup.
   :statistics:
     - [:levels, :Ship, :played]
   :required: 1
@@ -106,8 +90,6 @@
 
 -
   :name: :played_undersea
-  :title: Aquamarina
-  :description: Played the Undersea level with visible string.
   :statistics:
     - [:levels, :Undersea, :played]
   :required: 1
@@ -121,8 +103,6 @@
       
 -
   :name: :played_desert
-  :title: Sand got in the sandwiches
-  :description: Played the Desert level without Tupperware.
   :statistics:
     - [:levels, :Desert, :played]
   :required: 1
@@ -136,8 +116,6 @@
 
 -
   :name: :played_facility
-  :title: Tested
-  :description: Played the Facility level while being overseen by a benevolent AI.
   :statistics:
     - [:levels, :Facility, :played]
   :required: 1
@@ -151,8 +129,6 @@
        
 -
   :name: :played_moon
-  :title: Cosmic Horror
-  :description: Played the Yuggoth level without much sanity left.
   :statistics:
     - [:levels, :Moon, :played]
   :required: 1
@@ -170,8 +146,6 @@
 # ---------------------------------------
 -
   :name: :sacrificed_object
-  :title: Wrecker
-  :description: Sacrificed 100 inanimate objects.
   :statistics:
     - [:sacrifices, :totals, :objects]
   :required: 100
@@ -179,8 +153,6 @@
 
 -
   :name: :sacrificed_animal
-  :title: Animal sacrifice
-  :description: Sacrificed 10 defenceless animals.
   :statistics:
     - [:sacrifices, :totals, :animals]
   :required: 10
@@ -188,8 +160,6 @@
 
 -
   :name: :sacrificed_humanoid
-  :title: The sun will come up tomorrow
-  :description: Indulged in human(oid) sacrifice. The Aztecs swore by it!
   :statistics:
     - [:sacrifices, :totals, :humanoids]
   :required: 1
@@ -197,8 +167,6 @@
 
 -
   :name: :sacrificed_everything
-  :title: High Priest
-  :description: Made 1000 sacrifices, just to make sure.
   :statistics:
     - [:sacrifices, :totals, :objects]
     - [:sacrifices, :totals, :animals]
@@ -211,8 +179,6 @@
 # ---------------------------------------
 -
   :name: :sacrificed_knight
-  :title: Knightmare
-  :description: Sacrificed brave Sir Robin, who didn't get to run away.
   :statistics:
     - [:sacrifices, :type, :Knight]
   :required: 1
@@ -220,8 +186,6 @@
 
 -
   :name: :sacrificed_monkey
-  :title: 12 Monkeys
-  :description: Sacrificed twelve monkeys.
   :statistics:
     - [:sacrifices, :type, :Monkey]
   :required: 12
@@ -229,8 +193,6 @@
 
 -
   :name: :sacrificed_test_subject
-  :title: Slave to the Machine
-  :description: Sacrificed the life of the innocent test subject for Science.
   :statistics:
     - [:sacrifices, :type, :TestSubject]
   :required: 1
@@ -238,8 +200,6 @@
 
 -
   :name: :sacrificed_sheep
-  :title: Butcher
-  :description: Sacrificed 100 sheep.
   :statistics:
     - [:sacrifices, :type, :Sheep]
   :required: 100
@@ -248,8 +208,6 @@
 # Deaths
 -
   :name: :death_fire
-  :title: Charcoal briquette
-  :description: Burned to death.
   :statistics:
     - [:deaths, :type, :Fire]
   :required: 1
@@ -258,8 +216,6 @@
 # Damage
 -
   :name: :damage_1
-  :title: Black and blue
-  :description: Took 10,000 damage.
   :statistics:
     - [:damage, :total]
   :required: 10000
@@ -268,8 +224,6 @@
 # Status effects
 -
   :name: :status_irradiated
-  :title: Nightlight
-  :description: Irradiated for a minute.
   :statistics:
     - [:status, :irradiated]
   :required: 60.0
