@@ -25,16 +25,23 @@ class Priest < Humanoid
     "players/#{name}_8x8.png"
   end
 
-  @@sprites = {} # Cache of sprite images (first sprite on sheet).
+  @@icons = {} # Icons for denoting locked and unlocked states.
 
   def self.icon(name)
-    icon = SpriteSheet.new(animation_file(name), 8, 8)[0]
-    manager = $window.achievement_manager
-    unless FREE_UNLOCKS.include?(name) or (manager and manager.unlocked?(:priest, name))
-      icon = icon.silhouette
-      icon.clear color: LOCKED_COLOR, dest_ignore: :transparent
+    unless @@icons[name]
+      unlocked_icon = SpriteSheet.new(animation_file(name), 8, 8)[0]
+
+      locked_icon = unlocked_icon.silhouette
+      locked_icon.clear color: LOCKED_COLOR, dest_ignore: :transparent
+      @@icons[name] = { unlocked: unlocked_icon, locked: locked_icon }
     end
-    icon
+
+    manager = $window.achievement_manager
+    if FREE_UNLOCKS.include?(name) or (manager and manager.unlocked?(:priest, name))
+      @@icons[name][:unlocked]
+    else
+      @@icons[name][:locked]
+    end
   end
 
   def self.title(name); t.priest[name].name; end
