@@ -18,7 +18,7 @@ module Wrath
           end
           @master_percentage = label "100%"
           @master_slider.value = $window.volume
-          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?) do |sender, value|
+          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: true) do |sender, value|
             if value
               $window.mute
             else
@@ -51,11 +51,11 @@ module Wrath
 
           #@song = Song["Simply dance - Libra @4_00.ogg"]
 
-          #@play_song_button = button("Play") { @song.playing? ? @song.stop : @song.play }
+          #@play_song_button = button(t.button.play_song.text) { @song.playing? ? @song.stop : @song.play }
         end
 
         horizontal padding: 0 do
-          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.back.text, shortcut: true) { pop_game_state }
           button(t.button.default.text, tip: t.button.default.tip) do
             @master_slider.value = 0.5
             @effects_slider.value = 1.0

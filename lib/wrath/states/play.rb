@@ -5,21 +5,17 @@ module Wrath
     def initialize
       super
 
-      BUTTONS.each do |name|
-        on_input(t.button[name].text[0].downcase.to_sym) { send("#{name}_game")}
-      end
-
       vertical do
         label t.title, font_size: 32
 
         vertical padding: 0, spacing: 10 do
           BUTTONS.each do |name|
-            button(shortcut(t.button[name].text), icon: icon(name), width: 320, tip: t.button[name].tip) { send("#{name}_game") }
+            button(t.button[name].text, icon: icon(name), width: 320, shortcut: true, tip: t.button[name].tip) { send("#{name}_game") }
           end
         end
 
         horizontal padding: 0 do
-          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.back.text, shortcut: true) { pop_game_state }
         end
       end
     end

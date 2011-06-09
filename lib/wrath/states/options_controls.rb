@@ -38,7 +38,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.back.text, shortcut: true) { pop_game_state }
 
           button(t.button.default.text, tip: t.button.default.tip) do
             controls.reset_to_default

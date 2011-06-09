@@ -5,8 +5,6 @@ module Wrath
     def initialize
       super
 
-      on_input([:escape, :b], :pop_game_state)
-
       vertical do
         label t.title, font_size: 32
 
@@ -36,7 +34,7 @@ module Wrath
           @tabs_group.value = TABS.first
         end
 
-        button(shortcut(t.button.back.text)) { pop_game_state }
+        button(t.button.back.text, shortcut: true) { pop_game_state }
       end
     end
   end

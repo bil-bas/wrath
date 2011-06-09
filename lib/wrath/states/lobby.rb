@@ -23,10 +23,6 @@ module Wrath
 
       @player_number = host? ? 0 : 1
 
-      add_inputs(
-        s: ->{ new_game(@level_picker.value, @god_picker.value) if @start_button.enabled? }
-       )
-
       heading = case @network
         when Server
           t.title.host
@@ -48,23 +44,25 @@ module Wrath
       end
 
       horizontal do
-        button shortcut(t.button.back.text) do
+        button t.button.back.text, shortcut: true do
           pop_until_game_state Play
         end
 
         if @network
-          @ready_button = toggle_button(t.button.ready.text) do |sender, value|
+          @ready_button = toggle_button(t.button.ready.text, shortcut: true) do |sender, value|
             update_ready @player_number, value
             send_message(Message::UpdateLobby.new(:ready, @player_number, value))
           end
+
         end
 
         if client?
           label t.label.wait_for_start
         else
-          @start_button = button(shortcut(t.button.start.text), enabled: local?) do
+          @start_button = button(t.button.start.text, enabled: local?, shortcut: true) do
             new_game(@level_picker.value, @god_picker.value)
           end
+
         end
       end
     end

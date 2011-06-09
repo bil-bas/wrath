@@ -9,17 +9,11 @@ class Gui < Fidgit::GuiState
     self.cursor.factor = $window.sprite_scale
 
     if t.button.back.text.translated?
-      on_input(:escape, :pop_game_state)
-      on_input(t.button.back.text[0].downcase.to_sym) { pop_game_state unless focus }
+      on_input(:escape) { pop_game_state }
     end
   end
 
   def draw
     $window.scale(1.0 / $window.sprite_scale) { super }
-  end
-
-  def shortcut(string, shortcut = string[0])
-    before, after = string.split(shortcut)
-    "#{before}<c=88bbff>#{shortcut}</c>#{after}"
   end
 end

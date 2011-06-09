@@ -58,7 +58,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(shortcut(t.button.back.text)) { pop_game_state }
+          button(t.button.back.text, shortcut: true) { pop_game_state }
 
           toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
             achievement_manager.unlocks_disabled = value

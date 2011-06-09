@@ -1,15 +1,15 @@
 module Wrath
 class Menu < Gui
+  ACTIONS = {
+    play: Play,
+    instructions: Instructions,
+    achievements: ViewAchievements,
+    options: Options,
+    exit: :close,
+  }
+
   def initialize
     super
-
-    add_inputs(
-        p: Play,
-        i: Instructions,
-        a: ViewAchievements,
-        o: Options,
-        x: :close
-    )
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
@@ -21,12 +21,15 @@ class Menu < Gui
         heading = label t.title, font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
         label t.subtitle, font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
         vertical spacing: 8, padding_top: 30, padding_left: 80 do
-          options = { width: heading.width - 15 - 160, font_size: 28, justify: :center }
-          button(shortcut(t.button.play.text), options.merge(tip: t.button.play.tip)) { push_game_state Play }
-          button(shortcut(t.button.instructions.text), options.merge(tip: t.button.instructions.tip)) { push_game_state Instructions }
-          button(shortcut(t.button.achievements.text), options.merge(tip: t.button.achievements.tip)) { push_game_state ViewAchievements }
-          button(shortcut(t.button.options.text), options.merge(tip: t.button.options.tip)) { push_game_state Options }
-          button(shortcut(t.button.exit.text), options.merge(tip: t.button.exit.tip)) { close }
+          options = { width: heading.width - 15 - 160, font_size: 28, justify: :center, shortcut: true }
+          ACTIONS.each_pair do |name, action|
+            button(t.button[name].text, options.merge(tip: t.button[name].tip)) do
+              case action
+                when Class then push_game_state(action)
+                when Symbol then send(action)
+              end
+            end
+          end
         end
 
         label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
