@@ -25,9 +25,12 @@ class Gui < Fidgit::GuiState
   def create_background
     unless defined? @@background_image
       @@background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height, color: Color.rgb(0, 0, 40))
-      500.times do
-        @@background_image.set_pixel(rand($window.retro_width), rand($window.retro_height),
-                                    color: Color.rgba(255, 255, 255, 75 + rand(50)))
+      $window.render_to_image(@@background_image) do
+        color = Color.rgb(255, 255, 255)
+        500.times do
+          color.alpha = 75 + rand(50)
+          pixel.draw(rand($window.retro_width), rand($window.retro_height), 0, 1, 1, color)
+        end
       end
     end
   end

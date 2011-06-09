@@ -3,6 +3,7 @@ require 'forwardable'
 require 'yaml'
 require 'fileutils'
 require 'logger'
+require 'benchmark'
 
 # Gems
 begin
@@ -40,6 +41,7 @@ TexPlay.set_options(caching: false)
 
 include Gosu
 include Chingu
+
 
 RequireAll.require_all File.dirname(__FILE__)
 
@@ -86,11 +88,6 @@ class Game < Window
   def controls; self.class.controls; end
   def statistics; self.class.statistics; end
 
-  # Load up locales.
-  RequireAll.require_all File.join(LANG_DIR, 'locales')
-  R18n.extension_places << R18n::Loader::YAML.new(File.join(LANG_DIR, 'base'))
-  R18n.from_env LANG_DIR, @@settings[:locale]
-
   attr_reader :pixel, :sprite_scale, :achievement_manager
 
   def retro_width; RETRO_WIDTH; end
@@ -129,19 +126,27 @@ class Game < Window
     @potential_fps = 0
     @overlays = []
 
-    @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
-
-    log.info "Reading achievement/stats"
-    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)    
-    add_overlay AchievementOverlay.new(@achievement_manager)
-
     log.info "Reading sound settings"
     self.volume = settings[:audio, :master_volume]
     mute if settings[:audio, :muted]
     Sample.volume = settings[:audio, :effects_volume]
     Song.volume = settings[:audio, :music_volume]
 
-    push_game_state Menu
+    push_game_state Preload
+  end
+
+  public
+  # Extra init called from the pre-load state, that isn't immediately required..
+  def preload_init
+    @pixel = TexPlay.create_image($window, 1, 1, color: :white) # Used to draw with.
+
+    # Load up locales.
+    RequireAll.require_all File.join(LANG_DIR, 'locales')
+    R18n.from_env LANG_DIR, @@settings[:locale]
+
+    log.info "Reading achievement/stats"
+    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
+    add_overlay AchievementOverlay.new(@achievement_manager)
   end
 
   def add_overlay(overlay)
@@ -177,7 +182,7 @@ class Game < Window
 
     super
 
-    self.caption = "#{t.title} [FPS: #{fps} (#{@potential_fps})]"
+    self.caption = "Wrath: Appease or Die!          [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
 
