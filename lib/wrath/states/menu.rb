@@ -13,8 +13,6 @@ class Menu < Gui
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
-    create_background
-
     horizontal padding_left: ($window.width - 680) / 2, padding_top: ($window.height - 475) / 2, spacing: 0 do
       @left_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
       vertical spacing: 0, padding: 0 do
@@ -37,19 +35,6 @@ class Menu < Gui
 
       @right_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
     end
-  end
-
-  def create_background
-    @background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height, color: Color.rgb(0, 0, 40))
-    500.times do
-      @background_image.set_pixel(rand($window.retro_width), rand($window.retro_height),
-                                  color: Color.rgba(255, 255, 255, 150 + rand(50)))
-    end
-  end
-
-  def draw
-    @background_image.draw 0, 0, 0
-    super
   end
 
   def setup

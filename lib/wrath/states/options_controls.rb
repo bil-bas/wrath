@@ -1,6 +1,5 @@
 module Wrath
   class OptionsControls < Gui
-
     TABS = [:offline_player_1, :offline_player_2, :online_player]
 
     public
@@ -32,7 +31,7 @@ module Wrath
             end
           end
 
-          scroll_window height: 300, width: 600 do
+          scroll_window height: 300, width: 600, background_color: BACKGROUND_COLOR do
             @key_grid = grid num_columns: 2, padding: 10, spacing: 10
           end
         end

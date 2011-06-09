@@ -24,7 +24,6 @@ module Wrath
 
   class ViewAchievements  < Gui
     ACHIEVEMENT_BACKGROUND_COLOR = Color.rgb(0, 0, 50)
-    WINDOW_BACKGROUND_COLOR = Color.rgb(0, 0, 100)
 
     INCOMPLETE_TITLE_COLOR = Color.rgb(150, 150, 150)
     COMPLETE_TITLE_COLOR = Color.rgb(0, 255, 0)
@@ -52,7 +51,7 @@ module Wrath
                                     parent: packer, width: $window.width - 500, font_size: 32)
         end
 
-        scroll_window width: $window.width - 50, height: $window.height - 150, background_color: WINDOW_BACKGROUND_COLOR do
+        scroll_window width: $window.width - 50, height: $window.height - 150, background_color: BACKGROUND_COLOR do
           # List will be populated in #update.
           @achievements_list = vertical spacing: 5
         end

@@ -26,7 +26,7 @@ module Wrath
             end
           end
 
-          @scroll_window = scroll_window width: $window.width - 50, height: $window.height - 180, background_color: Color.rgb(0, 0, 100) do
+          @scroll_window = scroll_window width: $window.width - 50, height: $window.height - 180, background_color: BACKGROUND_COLOR do
             @body_text = text_area padding: 10, enabled: false,
                                    width: $window.width - 75
           end
