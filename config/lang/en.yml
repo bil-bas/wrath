@@ -1,0 +1,276 @@
+---
+# Aliases.
+back: &back_button
+  text: Back
+
+# Game window.
+game:
+  title: "-=- Wrath: Appease or Die! -=- by Spooner -=-"
+
+# Gods.
+god:
+  ai:
+    name: SadOS
+  azathoth:
+    name: Spawn of Azathoth
+  dryad:
+    name: Dryad
+  earthquake:
+    name: Earthshaker
+  mummy:
+    name: Muhazateptephotep
+  squid:
+    name: The Kraken
+  storm:
+    name: Poseidon
+  volcano:
+    name: The Great Volcano
+
+# Priests.
+priest:
+  acolyte:
+    name: Acolyte
+  cutie:
+    name: Cutie
+  druidess:
+    name: Druidess
+  monk:
+    name: Monk
+  priestess:
+    name: Priestess
+  prophet:
+    name: Prophet
+  seer:
+    name: Seer
+  shaman:
+    name: Shaman
+  thaumaturge:
+    name: Thaumaturge
+  witch:
+    name: Witch
+
+# Levels.
+level:
+  cave:
+    name: Cave of Considerable Doom
+  desert:
+    name: Desert of Dehydrated Doom
+  facility:
+    name: D.O.O.M. Test Facility
+  forest:
+    name: Forest of Doom
+  island:
+    name: Island of Utter Doom
+  moon:
+    name: Yuggoth
+  ship:
+    name: Ship of Doomed Fools
+  undersea:
+    name: Davey Jones' Doom
+
+# Gui screens.
+gui:
+  view_achievements:
+    title: Achievements
+    locked: Locked
+    unlocked: Unlocked
+    button:
+      back: *back_button
+      unlock:
+        text: Unlock all
+        tip: Allow use of all features, even if they are locked, until game is restarted
+      reset:
+        text: Reset statistics
+        tip: Resets all statistics, achievements and unlocks PERMANENTLY
+
+  host_details:
+    title: Hosting a Game
+
+    label:
+      player_name: Player name
+      port: Port
+
+    button:
+      back: *back_button
+      host:
+        text: Host
+
+  instructions:
+    title: Instructions
+    button:
+      back: *back_button
+
+    tab:
+      gods:
+        title: The Gods
+        body: |
+          * Gods are wrathful and enjoy smiting more than anything else (well, except seducing mortals)!
+
+          * Each map has a local deity that you must appease, such as the god of earthquakes or storms.
+
+          * Gods slowly become angry then they rain down disasters until they become bored (anger bar fills then empties).
+
+          * As you make sacrifices, it reduces the anger of the god as well as giving you Holy Favour.
+
+      priests:
+        title: Priests
+        body: |
+           * Each player picks one of eight priests. All priests are identical in play, but some look cooler than others.
+
+           * Your priest can pick up, use or throw objects or creatures. They do this with a single "action" key.
+
+           * A priest's current health is shown as a red bar next to her portrait.
+
+           * Dying will mean the other player wins by default!
+
+      favour:
+        title: Holy Favour
+        body: |
+          * Accumulate favour by making sacrifices at the altar (priests start standing next to the altar).
+
+          * The gods like animals, people and treasures as sacrifices, but dislike mundane things, like rocks.
+
+          * Your holy favour is shown as a white bar. Fill the bar before the other priest to win!
+
+          * Favour can also be used to power magical items (e.g. magic carpets).
+
+
+  join_details:
+    title: Joining a Game
+    label:
+      player_name: Player name
+      address: Host address
+      port: Host port
+
+    button:
+      back: *back_button
+      join:
+        text: Join
+
+  lobby:
+    title:
+      host: Host lobby
+      client: Client lobby
+      offline: Lobby
+
+    button:
+      back: *back_button
+      ready:
+        text: Ready
+      start:
+        text: Start
+
+    label:
+      god: God
+      map: Map
+      ready: Ready
+      wait_for_start: Wait for host to start game
+
+  menu:
+    title: Wrath
+    subtitle: Appease or Die!
+    button:
+      play:
+        text: Play
+        tip: Play the game, on- or off-line
+      instructions:
+        text: Instructions
+        tip: Learn how to play the game
+      achievements:
+        text: Achievements
+        tip: Review your achievements
+      options:
+        text: Options
+        tip: View and change game settings
+      exit:
+        text: Exit
+        tip: Leave game
+
+  options:
+    title: Options
+    button:
+      back: *back_button
+      audio:
+        text: Audio
+      video:
+        text: Video
+      controls:
+        text: Controls
+      default:
+        text: Default all options
+        tip: Reset all options (audio, video and controls) to their default values
+
+  options_audio:
+    title: Options | Audio
+    label:
+      master: Master
+      effects: Effects
+      music: Music
+    button:
+      back: *back_button
+      mute:
+        text: Mute
+      play_sample:
+        text: Play
+      default:
+        text: Defaults
+        tip: Reset volumes to default values and remove muting
+
+  options_video:
+    title: Options | Video
+    zoom: (X%1 zoom)
+    label:
+      window_size: Window size
+      warning: Changes require that the game be restarted
+    button:
+      back: *back_button
+      default:
+        text: Defaults
+        tip: Reset to default values
+      exit:
+        text: Exit
+
+  options_controls:
+    title: Options | Controls
+    button:
+      back: *back_button
+      default:
+        text: Defaults
+        tip: Reset all controls to their default values
+    tab:
+      offline_player_1:
+        text: Player 1
+        tip: Controls for player 1 (left side) when sharing the keyboard
+      offline_player_2:
+        text: Player 2
+        tip: Controls for player 2 (right side) when sharing the keyboard
+      online_player:
+        text: Online player
+        tip: Controls for the player in a network game
+
+  play:
+    title: Play Wrath
+
+    button:
+      back: *back_button
+      offline:
+        text: Offline game
+        tip: Both players on the same keyboard
+      join:
+        text: Join Game
+        tip: Connect to a network game someone else is hosting
+      host:
+        text: Host Game
+        tip: Host a network game that another player can join
+
+  game_over:
+    button:
+      lobby:
+        text: Lobby
+        tip: Return to the game lobby
+      play_again:
+        text: Again
+        tip: Replay this level with the same god and priests
+      play_next:
+        text: Next
+        tip: Play the next level with the same priests
