@@ -46,6 +46,8 @@ module Wrath
     def reset
       @statistics.reset_to_default
       @statistics.save
+      @achievements_settings.reset_to_default
+      @achievements_settings.save
       save
       load
     end
