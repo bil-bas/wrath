@@ -102,7 +102,7 @@ task :translate do
     lang_dir = File.join(File.dirname(__FILE__), "/config/lang/#{dir}")
     en = File.join(lang_dir, 'en.yml')
 
-    [Pirate, PigLatin, Leet].each do |lang|
+    [Pirate, Leet].each do |lang|
       dest = File.join(lang_dir, "en-#{lang::NAME}.yml")
       puts "Created #{dest}"
       lang.translate_yaml_file(en, dest)

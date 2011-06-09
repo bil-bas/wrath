@@ -173,6 +173,8 @@ gui:
         text: V1D30
       controls: 
         text: C0N7R015
+      general: 
+        text: 63N3R41
       default: 
         text: D3F4U17 411 0P710N5
         tip: R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35
@@ -191,6 +193,14 @@ gui:
       default: 
         text: D3F4U175
         tip: R3537 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6
+  options_general: 
+    title: 0P710N5 | 63N3R41
+    default_locale: D3F4U17
+    label: 
+      locale: 10C413
+      warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
+    button: 
+      back: *id001
   options_video: 
     title: 0P710N5 | V1D30
     zoom: (X%1 200M)

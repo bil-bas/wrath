@@ -43,16 +43,11 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
-SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
-Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
-
-# Load up locales.
-lang_dir = File.join(EXTRACT_PATH, 'config/lang')
-RequireAll.require_all File.join(lang_dir, 'locales')
-R18n.extension_places << R18n::Loader::YAML.new(File.join(lang_dir, 'base'))
-R18n.from_env lang_dir, 'en-pirate'
+Fidgit::Element.schema.merge_schema! YAML.load(File.read(File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')))
 
 module Wrath
+
+LANG_DIR = File.join(EXTRACT_PATH, 'config/lang')
 
 # Objects within a collision group will never collide with each other.
 module CollisionGroup
@@ -90,6 +85,11 @@ class Game < Window
   def settings; self.class.settings; end
   def controls; self.class.controls; end
   def statistics; self.class.statistics; end
+
+  # Load up locales.
+  RequireAll.require_all File.join(LANG_DIR, 'locales')
+  R18n.extension_places << R18n::Loader::YAML.new(File.join(LANG_DIR, 'base'))
+  R18n.from_env LANG_DIR, @@settings[:locale]
 
   attr_reader :pixel, :sprite_scale, :achievement_manager
 

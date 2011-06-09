@@ -173,6 +173,8 @@ gui:
         text: Video
       controls: 
         text: Controls
+      general: 
+        text: General
       default: 
         text: Default all riggin'
         tip: Reset all riggin' (audio, video an' controls) t' their default values
@@ -191,6 +193,14 @@ gui:
       default: 
         text: Defaults
         tip: Reset volumes t' default values an' remove mutin'
+  options_general: 
+    title: Riggin' | General
+    default_locale: Default
+    label: 
+      locale: Locale
+      warning: Changes require that th' game be restarted
+    button: 
+      back: *id001
   options_video: 
     title: Riggin' | Video
     zoom: (X%1 zoom)

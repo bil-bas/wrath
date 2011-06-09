@@ -2,7 +2,7 @@
 
 Next release
   * Slowed down preparation of level, so neither host nor client gets overwhelmed and freezes up.
-  * Added i18n support.
+  * Added i18n support, including translations of the game into 1337 and Piratical English.
   * Fixed: Completion times for all achievements already gained, are set to the current time whenever the application is started.
 
 v0.1.0 (2011-06-07)

@@ -4,6 +4,7 @@ module Wrath
         OptionsAudio => :audio,
         OptionsVideo => :video,
         OptionsControls => :controls,
+        OptionsGeneral => :general,
     }
 
     def initialize
@@ -25,6 +26,12 @@ module Wrath
           button(t.button.default.text, tip: t.button.default.tip) do
             settings.reset_to_default
             controls.reset_to_default
+
+            # Just in case we reset the language.
+            R18n.from_env LANG_DIR, settings[:locale]
+            pop_until_game_state Menu
+            switch_game_state Menu
+            push_game_state self.class
           end
         end
       end

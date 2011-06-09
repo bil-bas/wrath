@@ -3,6 +3,7 @@
 :network:
   :address: 127.0.0.1
   :port: 60000
+:locale: ''
 :player:
   :name: Player
 :audio:

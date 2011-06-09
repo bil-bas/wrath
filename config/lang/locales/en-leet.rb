@@ -1,6 +1,7 @@
 module R18n
   class Locales::EnLeet < Locale
-    set :title => '1337',
+    set :title => '1337 English',
+        :code => 'en-leet',
         :sublocales => %w{en},
         
         :week_start => :sunday,

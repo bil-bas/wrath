@@ -203,6 +203,8 @@ gui:
         text: Video
       controls:
         text: Controls
+      general:
+        text: General
       default:
         text: Default all options
         tip: Reset all options (audio, video and controls) to their default values
@@ -223,6 +225,16 @@ gui:
       default:
         text: Defaults
         tip: Reset volumes to default values and remove muting
+
+  # Options - General.
+  options_general:
+    title: Options | General
+    default_locale: Default
+    label:
+      locale: Locale
+      warning: Changes require that the game be restarted
+    button:
+      back: *back_button
 
   # Options - Video.
   options_video:

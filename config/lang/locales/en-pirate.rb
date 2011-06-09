@@ -1,6 +1,7 @@
 module R18n
   class Locales::EnPirate < Locale
-    set :title => 'Pirate',
+    set :title => 'Piratical English',
+        :code => 'en-pirate',
         :sublocales => %w{en},
         
         :week_start => :sunday,
