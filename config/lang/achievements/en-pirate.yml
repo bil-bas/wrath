@@ -1,0 +1,71 @@
+--- 
+achievement: 
+  played_online: 
+    title: Paranoid
+    description: Played an online game, not lettin' anyone touch me precious keyboard. Just have t' worry about th' alien mind-control lasers now!
+  played_offline: 
+    title: War o' elbows
+    description: Played an offline game, in which thar should have been lots o' frantic elbowin' action.
+  long_play_1: 
+    title: Waster o' time
+    description: Played for an hour; time which won't e'er be got belay.
+  long_play_2: 
+    title: Methuselah
+    description: Played for 10 hours, which be very nearly a thousand years.
+  played_forest: 
+    title: Forester
+    description: Played th' Forest level with an eye t' rapid deforestation.
+  played_cave: 
+    title: Spelunker
+    description: Played th' Cave level in th' dark.
+  played_island: 
+    title: Castaway
+    description: Played th' Island level with a friend who doesn't talk much.
+  played_ship: 
+    title: All in th' eye-liner
+    description: Played th' Ship level with a mockney accent an' a bit too much eye-makeup.
+  played_undersea: 
+    title: Aquamarina
+    description: Played th' Undersea level with visible strin'.
+  played_desert: 
+    title: Sand got in th' sandwiches
+    description: Played th' Desert level without Tupperware.
+  played_facility: 
+    title: Tested
+    description: Played th' Facility level while bein' overseen by a benevolent AI.
+  played_moon: 
+    title: Cosmic Horror
+    description: Played th' Yuggoth level without much sanity left.
+  sacrificed_object: 
+    title: Wrecker
+    description: Sacrificed 100 inanimate objects.
+  sacrificed_animal: 
+    title: Animal sacrifice
+    description: Sacrificed 10 defenceless animals.
+  sacrificed_humanoid: 
+    title: Th' sun will come up tomorrow
+    description: Indulged in human(oid) sacrifice. Th' Aztecs swore by it!
+  sacrificed_everything: 
+    title: High Buccaneer
+    description: Made 1000 sacrifices, just t' make sure.
+  sacrificed_knight: 
+    title: Knightmare
+    description: Sacrificed brave Sir Robin, who didn't get t' run away.
+  sacrificed_monkey: 
+    title: 12 Monkeys
+    description: Sacrificed twelve monkeys.
+  sacrificed_test_subject: 
+    title: Slave t' th' Machine
+    description: Sacrificed th' life o' th' innocent test subject for Science.
+  sacrificed_sheep: 
+    title: Butcher
+    description: Sacrificed 100 sheep.
+  death_fire: 
+    title: Charcoal briquette
+    description: Burned t' death.
+  damage_1: 
+    title: Black an' blue
+    description: Took 10,000 damage.
+  status_irradiated: 
+    title: Nightlight
+    description: Irradiated for a minute.

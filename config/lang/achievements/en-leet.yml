@@ -1,0 +1,71 @@
+--- 
+achievement: 
+  played_online: 
+    title: P4R4N01D
+    description: P14Y3D 4N 0N11N3 64M3, N07 13771N6 4NY0N3 70UCH MY PR3C10U5 K3Y804RD. JU57 H4V3 70 W0RRY 480U7 7H3 4113N M1ND-C0N7R01 1453R5 N0W!
+  played_offline: 
+    title: W4R 0F 3180W5
+    description: P14Y3D 4N 0FF11N3 64M3, 1N WH1CH 7H3R3 5H0U1D H4V3 833N 1075 0F FR4N71C 3180W1N6 4C710N.
+  long_play_1: 
+    title: W4573R 0F 71M3
+    description: P14Y3D F0R 4N H0UR; 71M3 WH1CH W0N'7 3V3R 83 607 84X.
+  long_play_2: 
+    title: M37HU5314H
+    description: P14Y3D F0R 10 H0UR5, WH1CH 15 V3RY N34R1Y 4 7H0U54ND Y34R5.
+  played_forest: 
+    title: F0R3573R
+    description: P14Y3D 7H3 F0R357 13V31 W17H 4N 3Y3 70 R4P1D D3F0R3574710N.
+  played_cave: 
+    title: 5P31UNK3R
+    description: P14Y3D 7H3 C4V3 13V31 1N 7H3 D4RK.
+  played_island: 
+    title: C4574W4Y
+    description: P14Y3D 7H3 1514ND 13V31 W17H 4 FR13ND WH0 D035N'7 741K MUCH.
+  played_ship: 
+    title: 411 1N 7H3 3Y3-11N3R
+    description: P14Y3D 7H3 5H1P 13V31 W17H 4 M0XN3Y 4CC3N7 4ND 4 817 700 MUCH 3Y3-M4K3UP.
+  played_undersea: 
+    title: 4QU4M4R1N4
+    description: P14Y3D 7H3 UND3R534 13V31 W17H V151813 57R1N6.
+  played_desert: 
+    title: 54ND 607 1N 7H3 54NDW1CH35
+    description: P14Y3D 7H3 D353R7 13V31 W17H0U7 7UPP3RW4R3.
+  played_facility: 
+    title: 73573D
+    description: P14Y3D 7H3 F4C1117Y 13V31 WH113 831N6 0V3R533N 8Y 4 83N3V013N7 41.
+  played_moon: 
+    title: C05M1C H0RR0R
+    description: P14Y3D 7H3 YU6607H 13V31 W17H0U7 MUCH 54N17Y 13F7.
+  sacrificed_object: 
+    title: WR3X3R
+    description: 54CR1F1C3D 100 1N4N1M473 08J3C75.
+  sacrificed_animal: 
+    title: 4N1M41 54CR1F1C3
+    description: 54CR1F1C3D 10 D3F3NC31355 4N1M415.
+  sacrificed_humanoid: 
+    title: 7H3 5UN W111 C0M3 UP 70M0RR0W
+    description: 1NDU163D 1N HUM4N(01D) 54CR1F1C3. 7H3 4273C5 5W0R3 8Y 17!
+  sacrificed_everything: 
+    title: H16H N008
+    description: M4D3 1000 54CR1F1C35, JU57 70 M4K3 5UR3.
+  sacrificed_knight: 
+    title: KN16H7M4R3
+    description: 54CR1F1C3D 8R4V3 51R R081N, WH0 D1DN'7 637 70 RUN 4W4Y.
+  sacrificed_monkey: 
+    title: 12 M0NK3Y5
+    description: 54CR1F1C3D 7W31V3 M0NK3Y5.
+  sacrificed_test_subject: 
+    title: 514V3 70 7H3 M4CH1N3
+    description: 54CR1F1C3D 7H3 11F3 0F 7H3 1NN0C3N7 7357 5U8J3C7 F0R 5C13NC3.
+  sacrificed_sheep: 
+    title: 8U7CH3R
+    description: 54CR1F1C3D 100 5H33P.
+  death_fire: 
+    title: CH4RC041 8R1QU3773
+    description: 8URN3D 70 D347H.
+  damage_1: 
+    title: 814X 4ND 81U3
+    description: 700K 10,000 D4M463.
+  status_irradiated: 
+    title: N16H7116H7
+    description: 1RR4D1473D F0R 4 M1NU73.

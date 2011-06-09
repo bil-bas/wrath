@@ -1,0 +1,247 @@
+--- 
+back: &id001 
+  text: 84X
+game: 
+  title: "-=- WR47H: 4PP3453 0R D13! -=- 8Y 5P00N3R -=-"
+god: 
+  ai: 
+    name: 54D05
+  azathoth: 
+    name: 5P4WN 0F 4247H07H
+  dryad: 
+    name: DRY4D
+  earthquake: 
+    name: 34R7H5H4K3R
+  mummy: 
+    name: MUH42473P73PH073P
+  squid: 
+    name: 7H3 KR4K3N
+  storm: 
+    name: P0531D0N
+  volcano: 
+    name: 7H3 6R347 V01C4N0
+priest: 
+  acolyte: 
+    name: 4C01Y73
+  cutie: 
+    name: CU713
+  druidess: 
+    name: DRU1D355
+  monk: 
+    name: M0NK
+  priestess: 
+    name: N008355
+  prophet: 
+    name: PR0PH37
+  seer: 
+    name: 533R
+  shaman: 
+    name: 5H4M4N
+  thaumaturge: 
+    name: 7H4UM47UR63
+  witch: 
+    name: W17CH
+level: 
+  cave: 
+    name: C4V3 0F C0N51D3R4813 D00M
+  desert: 
+    name: D353R7 0F D3HYDR473D D00M
+  facility: 
+    name: D.0.0.M. 7357 F4C1117Y
+  forest: 
+    name: F0R357 0F D00M
+  island: 
+    name: 1514ND 0F U773R D00M
+  moon: 
+    name: YU6607H
+  ship: 
+    name: 5H1P 0F D00M3D F0015
+  undersea: 
+    name: D4V3Y J0N35' D00M
+gui: 
+  view_achievements: 
+    title: 4CH13V3M3N75
+    locked: 10X3D
+    unlocked: UN10X3D
+    button: 
+      back: *id001
+      unlock: 
+        text: UN10X 411
+        tip: 4110W U53 0F 411 F347UR35, 3V3N 1F 7H3Y 4R3 10X3D, UN711 64M3 15 R3574R73D
+      reset: 
+        text: R3537 57471571C5
+        tip: R35375 411 57471571C5, 4CH13V3M3N75 4ND UN10X5 P3RM4N3N71Y
+  host_details: 
+    title: H0571N6 4 64M3
+    label: 
+      player_name: P14Y3R N4M3
+      port: P0R7
+    button: 
+      back: *id001
+      host: 
+        text: H057
+  instructions: 
+    title: 1N57RUC710N5
+    button: 
+      back: *id001
+    tab: 
+      gods: 
+        title: 7H3 60D5
+        body: |
+          * 60D5 4R3 WR47HFU1 4ND 3NJ0Y 5M171N6 M0R3 7H4N 4NY7H1N6 3153 (W311, 3XC3P7 53DUC1N6 M0R7415)!
+          
+          * 34CH M4P H45 4 10C41 D317Y 7H47 Y0U MU57 4PP3453, 5UCH 45 7H3 60D 0F 34R7HQU4K35 0R 570RM5.
+          
+          * 60D5 510W1Y 83C0M3 4N6RY 7H3N 7H3Y R41N D0WN D154573R5 UN711 7H3Y 83C0M3 80R3D (4N63R 84R F1115 7H3N 3MP7135).
+          
+          * 45 Y0U M4K3 54CR1F1C35, 17 R3DUC35 7H3 4N63R 0F 7H3 60D 45 W311 45 61V1N6 Y0U H01Y F4V0UR.
+
+      priests: 
+        title: N0085
+        body: |
+          * 34CH P14Y3R P1X5 0N3 0F 316H7 N0085. 411 N0085 4R3 1D3N71C41 1N P14Y, 8U7 50M3 100K C0013R 7H4N 07H3R5.
+          
+          * Y0UR N008 C4N P1X UP, U53 0R 7HR0W 08J3C75 0R CR347UR35. 7H3Y D0 7H15 W17H 4 51N613 "4C710N" K3Y.
+          
+          * 4 N008'5 CURR3N7 H3417H 15 5H0WN 45 4 R3D 84R N3X7 70 H3R P0R7R417.
+          
+          * DY1N6 W111 M34N 7H3 07H3R P14Y3R W1N5 8Y D3F4U17!
+
+      favour: 
+        title: H01Y F4V0UR
+        body: |
+          * 4CCUMU1473 F4V0UR 8Y M4K1N6 54CR1F1C35 47 7H3 4174R (N0085 574R7 574ND1N6 N3X7 70 7H3 4174R).
+          
+          * 7H3 60D5 11K3 4N1M415, P30P13 4ND 7R345UR35 45 54CR1F1C35, 8U7 D1511K3 MUND4N3 7H1N65, 11K3 R0X5.
+          
+          * Y0UR H01Y F4V0UR 15 5H0WN 45 4 WH173 84R. F111 7H3 84R 83F0R3 7H3 07H3R N008 70 W1N!
+          
+          * F4V0UR C4N 4150 83 U53D 70 P0W3R M461C41 173M5 (3.6. M461C C4RP375).
+
+  join_details: 
+    title: J01N1N6 4 64M3
+    label: 
+      player_name: P14Y3R N4M3
+      address: H057 4DDR355
+      port: H057 P0R7
+    button: 
+      back: *id001
+      join: 
+        text: J01N
+  lobby: 
+    title: 
+      host: H057 1088Y
+      client: C113N7 1088Y
+      offline: 1088Y
+    button: 
+      back: *id001
+      ready: 
+        text: R34DY
+      start: 
+        text: 574R7
+    label: 
+      god: 60D
+      map: M4P
+      ready: R34DY
+      wait_for_start: W417 F0R H057 70 574R7 64M3
+  menu: 
+    title: WR47H
+    subtitle: 4PP3453 0R D13!
+    button: 
+      play: 
+        text: P14Y
+        tip: P14Y 7H3 64M3, 0N- 0R 0FF-11N3
+      instructions: 
+        text: 1N57RUC710N5
+        tip: 134RN H0W 70 P14Y 7H3 64M3
+      achievements: 
+        text: 4CH13V3M3N75
+        tip: R3V13W Y0UR 4CH13V3M3N75
+      options: 
+        text: 0P710N5
+        tip: V13W 4ND CH4N63 64M3 53771N65
+      exit: 
+        text: 3X17
+        tip: 134V3 64M3
+  options: 
+    title: 0P710N5
+    button: 
+      back: *id001
+      audio: 
+        text: 4UD10
+      video: 
+        text: V1D30
+      controls: 
+        text: C0N7R015
+      default: 
+        text: D3F4U17 411 0P710N5
+        tip: R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35
+  options_audio: 
+    title: 0P710N5 | 4UD10
+    label: 
+      master: M4573R
+      effects: 3FF3C75
+      music: MU51C
+    button: 
+      back: *id001
+      mute: 
+        text: MU73
+      play_sample: 
+        text: P14Y
+      default: 
+        text: D3F4U175
+        tip: R3537 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6
+  options_video: 
+    title: 0P710N5 | V1D30
+    zoom: (X%1 200M)
+    label: 
+      window_size: W1ND0W 5123
+      warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
+    button: 
+      back: *id001
+      default: 
+        text: D3F4U175
+        tip: R3537 70 D3F4U17 V41U35
+      exit: 
+        text: 3X17
+  options_controls: 
+    title: 0P710N5 | C0N7R015
+    button: 
+      back: *id001
+      default: 
+        text: D3F4U175
+        tip: R3537 411 C0N7R015 70 7H31R D3F4U17 V41U35
+    tab: 
+      offline_player_1: 
+        text: P14Y3R 1
+        tip: C0N7R015 F0R P14Y3R 1 (13F7 51D3) WH3N 5H4R1N6 7H3 K3Y804RD
+      offline_player_2: 
+        text: P14Y3R 2
+        tip: C0N7R015 F0R P14Y3R 2 (R16H7 51D3) WH3N 5H4R1N6 7H3 K3Y804RD
+      online_player: 
+        text: 0N11N3 P14Y3R
+        tip: C0N7R015 F0R 7H3 P14Y3R 1N 4 N37W0RK 64M3
+  play: 
+    title: P14Y WR47H
+    button: 
+      back: *id001
+      offline: 
+        text: 0FF11N3 64M3
+        tip: 807H P14Y3R5 0N 7H3 54M3 K3Y804RD
+      join: 
+        text: J01N 64M3
+        tip: C0NN3C7 70 4 N37W0RK 64M3 50M30N3 3153 15 H0571N6
+      host: 
+        text: H057 64M3
+        tip: H057 4 N37W0RK 64M3 7H47 4N07H3R P14Y3R C4N J01N
+  game_over: 
+    button: 
+      lobby: 
+        text: 1088Y
+        tip: R37URN 70 7H3 64M3 1088Y
+      play_again: 
+        text: 4641N
+        tip: R3P14Y 7H15 13V31 W17H 7H3 54M3 60D 4ND N0085
+      play_next: 
+        text: N3X7
+        tip: P14Y 7H3 N3X7 13V31 W17H 7H3 54M3 N0085

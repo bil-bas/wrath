@@ -1,0 +1,31 @@
+ok: 'Arrrr'
+save: 'Save'
+cancel: 'Cancel'
+'yes': 'Aye'
+'no': 'Nay'
+exit: 'Exit'
+delete: 'Delete'
+
+human_time:
+  after_days: !!pl
+    1: 'after %1 day'
+    n: 'after %1 days'
+  tomorrow: 'tomorrow'
+  after_hours: !!pl
+    1: 'after %1 hour'
+    n: 'after %1 hours'
+  after_minutes: !!pl
+    1: 'after %1 minute'
+    n: 'after %1 minutes'
+  now: 'now'
+  today: 'this day'
+  minutes_ago: !!pl
+    1: '%1 minute afor'
+    n: '%1 minutes afor'
+  hours_ago: !!pl
+    1: '%1 hour afor'
+    n: '%1 hours afor'
+  yesterday: 'yesterday'
+  days_ago: !!pl
+    1: '%1 day afor'
+    n: '%1 days afor'

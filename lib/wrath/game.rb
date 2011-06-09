@@ -46,7 +46,11 @@ RequireAll.require_all File.dirname(__FILE__)
 SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')
 Fidgit::Element.schema.merge_schema! YAML.load(File.read(SCHEMA_FILE))
 
-R18n.from_env File.join(EXTRACT_PATH, 'config/lang/')
+# Load up locales.
+lang_dir = File.join(EXTRACT_PATH, 'config/lang')
+RequireAll.require_all File.join(lang_dir, 'locales')
+R18n.extension_places << R18n::Loader::YAML.new(File.join(lang_dir, 'base'))
+R18n.from_env lang_dir, 'en-pirate'
 
 module Wrath
 

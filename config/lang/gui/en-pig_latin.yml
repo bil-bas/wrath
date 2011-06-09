@@ -1,0 +1,247 @@
+--- 
+back: &id001 
+  text: Ackbay
+game: 
+  title: "-=- Athwray: Appeaseway orway Ieday! -=- Byay Oonerspay -=-"
+god: 
+  ai: 
+    name: Adossay
+  azathoth: 
+    name: Awnspay ofway Azathothway
+  dryad: 
+    name: Addryay
+  earthquake: 
+    name: Earthshakerway
+  mummy: 
+    name: Uhazateptephotepmay
+  squid: 
+    name: Ethay Akenkray
+  storm: 
+    name: Oseidonpay
+  volcano: 
+    name: Ethay Eatgray Olcanovay
+priest: 
+  acolyte: 
+    name: Acolyteway
+  cutie: 
+    name: Utiecay
+  druidess: 
+    name: Uidessdray
+  monk: 
+    name: Onkmay
+  priestess: 
+    name: Iestesspray
+  prophet: 
+    name: Ophetpray
+  seer: 
+    name: Eersay
+  shaman: 
+    name: Amanshay
+  thaumaturge: 
+    name: Aumaturgethay
+  witch: 
+    name: Itchway
+level: 
+  cave: 
+    name: Avecay ofway Onsiderablecay Oomday
+  desert: 
+    name: Esertday ofway Ehydratedday Oomday
+  facility: 
+    name: D.O.O.M. Esttay Acilityfay
+  forest: 
+    name: Orestfay ofway Oomday
+  island: 
+    name: Islandway ofway Utterway Oomday
+  moon: 
+    name: Uggothyay
+  ship: 
+    name: Ipshay ofway Oomedday Oolsfay
+  undersea: 
+    name: Aveyday Onesjay' Oomday
+gui: 
+  view_achievements: 
+    title: Achievementsway
+    locked: Ockedlay
+    unlocked: Unlockedway
+    button: 
+      back: *id001
+      unlock: 
+        text: Unlockway allway
+        tip: Allowway useway ofway allway Eaturesfay, evenway ifway Eythay areway Ockedlay, untilway Amegay isway Estartedray
+      reset: 
+        text: Esetray Atisticsstay
+        tip: Esetsray allway Atisticsstay, achievementsway andway unlocksway Ermanentlypay
+  host_details: 
+    title: Ostinghay a Amegay
+    label: 
+      player_name: Ayerplay Amenay
+      port: Ortpay
+    button: 
+      back: *id001
+      host: 
+        text: Osthay
+  instructions: 
+    title: Instructionsway
+    button: 
+      back: *id001
+    tab: 
+      gods: 
+        title: Ethay Odsgay
+        body: |
+          * Odsgay areway Athfulwray andway enjoyway Itingsmay Oremay Anthay anythingway elseway (Ellway, exceptway Educingsay Ortalsmay)!
+          
+          * Eachway Apmay Ashay a Ocallay Eityday Atthay Ouyay Ustmay appeaseway, Uchsay asway Ethay Odgay ofway earthquakesway orway Ormsstay.
+          
+          * Odsgay Owlyslay Ecomebay angryway Enthay Eythay Ainray Ownday Isastersday untilway Eythay Ecomebay Oredbay (angerway Arbay Illsfay Enthay emptiesway).
+          
+          * Asway Ouyay Akemay Acrificessay, itway Educesray Ethay angerway ofway Ethay Odgay asway Ellway asway Ivinggay Ouyay Olyhay Avourfay.
+
+      priests: 
+        title: Iestspray
+        body: |
+          * Eachway Ayerplay Ickspay oneway ofway eightway Iestspray. Allway Iestspray areway identicalway inway play, Utbay Omesay Ooklay Oolercay Anthay othersway.
+          
+          * Ouryay Iestpray Ancay Ickpay upway, useway orway Owthray objectsway orway Eaturescray. Eythay Oday Isthay Ithway a Inglesay "actionway" Eykay.
+          
+          * A Iestpray's Urrentcay Ealthhay isway Ownshay asway a Edray Arbay Extnay Otay Erhay Ortraitpay.
+          
+          * Ingdyay Illway Eanmay Ethay otherway Ayerplay Insway Byay Efaultday!
+
+      favour: 
+        title: Olyhay Avourfay
+        body: |
+          * Accumulateway Avourfay Byay Akingmay Acrificessay atway Ethay altarway (Iestspray Artstay Andingstay Extnay Otay Ethay altarway).
+          
+          * Ethay Odsgay Ikelay animalsway, Eoplepay andway Easurestray asway Acrificessay, Utbay Islikeday Undanemay Ingsthay, Ikelay Ocksray.
+          
+          * Ouryay Olyhay Avourfay isway Ownshay asway a Itewhay Arbay. Illfay Ethay Arbay Eforebay Ethay otherway Iestpray Otay Inway!
+          
+          * Avourfay Ancay alsoway Ebay usedway Otay Owerpay Agicalmay itemsway (e.g. Agicmay Arpetscay).
+
+  join_details: 
+    title: Oiningjay a Amegay
+    label: 
+      player_name: Ayerplay Amenay
+      address: Osthay addressway
+      port: Osthay Ortpay
+    button: 
+      back: *id001
+      join: 
+        text: Oinjay
+  lobby: 
+    title: 
+      host: Osthay Obbylay
+      client: Ientclay Obbylay
+      offline: Obbylay
+    button: 
+      back: *id001
+      ready: 
+        text: Eadyray
+      start: 
+        text: Artstay
+    label: 
+      god: Odgay
+      map: Apmay
+      ready: Eadyray
+      wait_for_start: Aitway Orfay Osthay Otay Artstay Amegay
+  menu: 
+    title: Athwray
+    subtitle: Appeaseway orway Ieday!
+    button: 
+      play: 
+        text: Play
+        tip: Play Ethay Amegay, onway- orway offway-Inelay
+      instructions: 
+        text: Instructionsway
+        tip: Earnlay Owhay Otay play Ethay Amegay
+      achievements: 
+        text: Achievementsway
+        tip: Eviewray Ouryay achievementsway
+      options: 
+        text: Optionsway
+        tip: Iewvay andway Angechay Amegay Ettingssay
+      exit: 
+        text: Exitway
+        tip: Eavelay Amegay
+  options: 
+    title: Optionsway
+    button: 
+      back: *id001
+      audio: 
+        text: Audioway
+      video: 
+        text: Ideovay
+      controls: 
+        text: Ontrolscay
+      default: 
+        text: Efaultday allway optionsway
+        tip: Esetray allway optionsway (audioway, Ideovay andway Ontrolscay) Otay Eirthay Efaultday Aluesvay
+  options_audio: 
+    title: Optionsway | Audioway
+    label: 
+      master: Astermay
+      effects: Effectsway
+      music: Usicmay
+    button: 
+      back: *id001
+      mute: 
+        text: Utemay
+      play_sample: 
+        text: Play
+      default: 
+        text: Efaultsday
+        tip: Esetray Olumesvay Otay Efaultday Aluesvay andway Emoveray Utingmay
+  options_video: 
+    title: Optionsway | Ideovay
+    zoom: (X%1 Oomzay)
+    label: 
+      window_size: Indowway Izesay
+      warning: Angeschay Equireray Atthay Ethay Amegay Ebay Estartedray
+    button: 
+      back: *id001
+      default: 
+        text: Efaultsday
+        tip: Esetray Otay Efaultday Aluesvay
+      exit: 
+        text: Exitway
+  options_controls: 
+    title: Optionsway | Ontrolscay
+    button: 
+      back: *id001
+      default: 
+        text: Efaultsday
+        tip: Esetray allway Ontrolscay Otay Eirthay Efaultday Aluesvay
+    tab: 
+      offline_player_1: 
+        text: Ayerplay 1
+        tip: Ontrolscay Orfay Ayerplay 1 (Eftlay Idesay) Enwhay Aringshay Ethay Eyboardkay
+      offline_player_2: 
+        text: Ayerplay 2
+        tip: Ontrolscay Orfay Ayerplay 2 (Ightray Idesay) Enwhay Aringshay Ethay Eyboardkay
+      online_player: 
+        text: Onlineway Ayerplay
+        tip: Ontrolscay Orfay Ethay Ayerplay inway a Etworknay Amegay
+  play: 
+    title: Play Athwray
+    button: 
+      back: *id001
+      offline: 
+        text: Offlineway Amegay
+        tip: Othbay Ayersplay onway Ethay Amesay Eyboardkay
+      join: 
+        text: Oinjay Amegay
+        tip: Onnectcay Otay a Etworknay Amegay Omeonesay elseway isway Ostinghay
+      host: 
+        text: Osthay Amegay
+        tip: Osthay a Etworknay Amegay Atthay anotherway Ayerplay Ancay Oinjay
+  game_over: 
+    button: 
+      lobby: 
+        text: Obbylay
+        tip: Eturnray Otay Ethay Amegay Obbylay
+      play_again: 
+        text: Againway
+        tip: Replay Isthay Evellay Ithway Ethay Amesay Odgay andway Iestspray
+      play_next: 
+        text: Extnay
+        tip: Play Ethay Extnay Evellay Ithway Ethay Amesay Iestspray

@@ -1,0 +1,31 @@
+ok: '0K'
+save: '54V3'
+cancel: 'C4NC31'
+'yes': 'Y35'
+'no': 'N0'
+exit: '3X17'
+delete: 'D3L373'
+
+human_time:
+  after_days: !!pl
+    1: '4F73R %1 D4Y'
+    n: '4F73R %1 D4Y5'
+  tomorrow: '70M0RR0W'
+  after_hours: !!pl
+    1: '4F73R %1 H0UR'
+    n: '4F73R %1 H0UR5'
+  after_minutes: !!pl
+    1: '4F73R %1 M1NU73'
+    n: '4F73R %1 M1NU735'
+  now: 'N0W'
+  today: '70D4Y'
+  minutes_ago: !!pl
+    1: '%1 M1NU73 460'
+    n: '%1 M1NU735 460'
+  hours_ago: !!pl
+    1: '%1 H0UR 460'
+    n: '%1 H0UR5 460'
+  yesterday: 'Y3573RD4Y'
+  days_ago: !!pl
+    1: '%1 D4Y 460'
+    n: '%1 D4Y5 460'

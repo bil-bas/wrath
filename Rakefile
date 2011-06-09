@@ -24,6 +24,7 @@ CLEAN.include("*.log")
 CLOBBER.include("doc/**/*", "wrath.exe", RELEASE_FOLDER, README_HTML)
 
 require_relative 'build/rake_osx_package'
+require_relative "build/translation"
 
 desc "Generate Yard docs."
 task :yard do
@@ -92,6 +93,20 @@ task :readme => README_TEXTILE do
   puts "Converting readme to HTML"
   File.open(README_HTML, "w") do |file|
     file.write RedCloth.new(File.read(README_TEXTILE)).to_html
+  end
+end
+
+desc "Translate locale files"
+task :translate do
+  %w[gui achievements].each do |dir|
+    lang_dir = File.join(File.dirname(__FILE__), "/config/lang/#{dir}")
+    en = File.join(lang_dir, 'en.yml')
+
+    [Pirate, PigLatin, Leet].each do |lang|
+      dest = File.join(lang_dir, "en-#{lang::NAME}.yml")
+      puts "Created #{dest}"
+      lang.translate_yaml_file(en, dest)
+    end
   end
 end
 
