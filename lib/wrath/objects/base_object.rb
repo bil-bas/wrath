@@ -1,7 +1,5 @@
 module Wrath
 
-require 'forwardable'
-
 class BaseObject < GameObject
   include Log
   include Fidgit::Event
@@ -9,10 +7,8 @@ class BaseObject < GameObject
   extend R18n::Helpers
   extend Forwardable
 
-  unless defined? TERMINAL_VELOCITY
-    TERMINAL_VELOCITY = -3  # Max velocity of a dropped item.
-    FORCE_MODIFIER = 1440000.0 * Level::IDEAL_PHYSICS_STEP * 1.25
-  end
+  TERMINAL_VELOCITY = -3 unless defined? TERMINAL_VELOCITY # Max velocity of a dropped item.
+  FORCE_MODIFIER = 1440000.0 * Level::IDEAL_PHYSICS_STEP * 1.25 unless defined? FORCE_MODIFIER
 
   @@next_object_id = 0
   @@animation_cache = {}
