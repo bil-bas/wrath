@@ -1,6 +1,6 @@
 module Wrath
   class OptionsControls < Gui
-    TABS = [:offline_player_1, :offline_player_2, :online_player]
+    TABS = [:offline_player_1, :offline_player_2, :online_player, :general]
 
     public
     def initialize
@@ -31,7 +31,7 @@ module Wrath
             end
           end
 
-          scroll_window height: 300, width: 600, background_color: BACKGROUND_COLOR do
+          scroll_window height: 300, width: 728, background_color: BACKGROUND_COLOR do
             @key_grid = grid num_columns: 2, padding: 10, spacing: 10
           end
         end
@@ -42,6 +42,7 @@ module Wrath
           button(t.button.default.text, tip: t.button.default.tip) do
             controls.reset_to_default
             switch_game_state self.class
+            $window.publish :on_options_changed
           end
         end
       end
@@ -86,9 +87,10 @@ module Wrath
         clear
 
         controls.keys(@tabs_group.value).each do |control|
-          key_label = label control.to_s.capitalize.tr('_', ' ')
-          key_name = controls[@tabs_group.value, control]
-          button(key_name.to_s.tr('_', ' '), width: 400) { choose_key control, key_label }
+          key_label = label t.label[control], width: 270
+          key = controls[@tabs_group.value, control]
+          button_label = key.to_s.tr('_', ' ')
+          button(button_label, width: 400) { choose_key control, key_label }
         end
       end
     end

@@ -19,3 +19,7 @@
   :up: :w
   :down: :s
   :action: :space
+
+:general:
+  :toggle_fps: :f
+  :toggle_network: :n

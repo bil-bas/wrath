@@ -69,6 +69,9 @@ end
 
 class Game < Window
   include Log
+  include Fidgit::Event
+
+  event :on_options_changed
 
   RETRO_WIDTH = 192
   RETRO_HEIGHT = 120
@@ -88,7 +91,7 @@ class Game < Window
   def controls; self.class.controls; end
   def statistics; self.class.statistics; end
 
-  attr_reader :pixel, :sprite_scale, :achievement_manager
+  attr_reader :pixel, :sprite_scale, :achievement_manager, :potential_fps
 
   def retro_width; RETRO_WIDTH; end
   def retro_height; RETRO_HEIGHT; end
@@ -109,10 +112,7 @@ class Game < Window
     log.info { "Opened window at #{width}x#{height} (X#{@sprite_scale} zoom)" }
 
     super(width, height, full_screen)
-  end
 
-  # To change
-  def setup
     media_dir = File.expand_path(File.join(EXTRACT_PATH, 'media'))
     Image.autoload_dirs.unshift File.join(media_dir, 'images')
     Sample.autoload_dirs.unshift File.join(media_dir, 'sounds')
@@ -132,6 +132,8 @@ class Game < Window
     Sample.volume = settings[:audio, :effects_volume]
     Song.volume = settings[:audio, :music_volume]
 
+    self.caption = "Loading..."
+
     push_game_state Preload
   end
 
@@ -147,6 +149,13 @@ class Game < Window
     log.info "Reading achievement/stats"
     @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
     add_overlay AchievementOverlay.new(@achievement_manager)
+
+    publish :on_options_changed
+  end
+
+  def on_options_changed(sender)
+    # If locale has changes, then title may have changed too.
+    self.caption = t.title
   end
 
   def add_overlay(overlay)
@@ -169,7 +178,7 @@ class Game < Window
 
     @used_time += milliseconds - draw_started
     
-    @overlays.each(&:draw)
+    @overlays.each {|o| o.draw if o.visible? }
   rescue => ex
     log.error "#draw: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
     raise ex
@@ -181,8 +190,6 @@ class Game < Window
     @overlays.each(&:update)
 
     super
-
-    self.caption = "Wrath: Appease or Die!          [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
 

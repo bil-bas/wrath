@@ -28,6 +28,7 @@ module Wrath
               switch_game_state Menu
               push_game_state Options
               push_game_state self.class
+              $window.publish :on_options_changed
             end
           end
         end

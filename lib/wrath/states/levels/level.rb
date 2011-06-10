@@ -88,19 +88,10 @@ class Level < GameState
 
     super()
 
-    on_input(:escape) do
-      send_message(Message::EndGame.new) if networked?
-      pop_until_game_state Lobby
-    end
-
-    if networked?
-      # control-N to show/hide network stats.
-      on_input(:n) do
-        if holding_any? :left_control, :right_control
-          @network_overlay ||= $window.add_overlay NetworkOverlay.new(@network)
-          @network_overlay.toggle
-        end
-      end
+    setup_inputs
+    $window.subscribe :on_options_changed do
+      setup_inputs
+      players.each(&:setup_inputs)
     end
 
     send_message(Message::NewGame.new(self.class, @god_class)) if host?
@@ -127,6 +118,27 @@ class Level < GameState
     end
 
     log.info "Initiated '#{self}'"
+  end
+
+  def setup_inputs
+    input.clear
+
+    on_input(:escape) do
+      send_message(Message::EndGame.new) if networked?
+      pop_until_game_state Lobby
+    end
+
+    if networked?
+      on_input(controls[:general, :toggle_network]) do
+        @network_overlay ||= $window.add_overlay NetworkOverlay.new(@network)
+        @network_overlay.toggle
+      end
+    end
+
+    on_input(controls[:general, :toggle_fps]) do
+      @fps_overlay ||= $window.add_overlay FPSOverlay.new
+      @fps_overlay.toggle
+    end
   end
   
   def self.unlocked?

@@ -254,6 +254,15 @@ gui:
   # Options - Controls.
   options_controls:
     title: Options | Controls
+    label:
+      up: Up
+      down: Down
+      left: Left
+      right: Right
+      action: Action
+      toggle_network: Network overlay
+      toggle_fps: FPS overlay
+      chat: Chat
     button:
       back: *back_button
       default:
@@ -269,6 +278,9 @@ gui:
       online_player:
         text: Online player
         tip: Controls for the player in a network game
+      general:
+        text: General
+        tip: General controls, such as diplaying FPS or chatting in network play.
 
   # Play
   play:
