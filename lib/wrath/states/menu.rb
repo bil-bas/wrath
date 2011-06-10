@@ -16,8 +16,8 @@ class Menu < Gui
     horizontal spacing: 0, align: :center do
       @left_priests = vertical padding: 0, spacing: 14
       vertical spacing: 0, padding: 0 do
-        label t.title, font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
-        label t.subtitle, font_size: 40, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
+        label t.title, font_size: 30 * sprite_scale, color: Color.rgb(50, 120, 255), width: 125 * sprite_scale, justify: :center
+        label t.subtitle, font_size: 10 * sprite_scale, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
         vertical spacing: 8, align: :center do
           options = { width: 300, font_size: 28, justify: :center, shortcut: :auto }
           ACTIONS.each_pair do |name, action|
