@@ -120,9 +120,9 @@ module Wrath
           unless achieve.unlocks.empty?
             horizontal padding: 0, spacing: 4 do
               achieve.unlocks.each do |unlock|
-              icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
-              title = unlock.unlocked? ? t.unlocked : t.locked
-              label "", icon: icon, tip: "#{title}: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
+                icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
+                title = unlock.unlocked? ? t.unlocked : t.locked
+                label "", icon: icon, tip: "#{title}: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
               end
             end
           end

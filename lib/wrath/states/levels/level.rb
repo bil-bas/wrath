@@ -68,7 +68,11 @@ class Level < GameState
   def local?; @network.nil?; end
   def started?; @started; end
   def gravity; GRAVITY; end
-  def self.icon; Image["levels/#{name[/[^:]+$/].downcase}.png"]; end
+  def self.icon
+    short_name = Inflector.underscore(Inflector.demodulize(name))
+    unlocked? ? Image["levels/#{short_name}.png"] : Image["levels/locked/#{short_name}.png"]
+  end
+
   def self.next_level
     if self == LEVELS.last
       nil

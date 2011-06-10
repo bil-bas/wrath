@@ -43,7 +43,10 @@ module Wrath
       case @type
         when :priest  then Priest.icon(@name)
         when :level   then Level.const_get(@name).icon
-        when :general then Image["unlocks/#{@name}.png"]
+        when :general
+          @icon ||= Image["unlocks/#{name}.png"]
+          @locked_icon||= Image["unlocks/locked/#{name}.png"]
+          unlocked? ? @icon : @locked_icon
         else
           raise "Unknown unlock type: #{@type.inspect}"
       end

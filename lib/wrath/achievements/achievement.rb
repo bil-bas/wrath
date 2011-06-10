@@ -48,6 +48,8 @@ module Wrath
     
     def icon
       @icon ||= Image["achievements/#{name}.png"]
+      @locked_icon||= Image["achievements/locked/#{name}.png"]
+      complete? ? @icon : @locked_icon
     end
 
     protected
