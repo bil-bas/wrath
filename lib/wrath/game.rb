@@ -92,19 +92,30 @@ class Game < Window
 
   def retro_width; RETRO_WIDTH; end
   def retro_height; RETRO_HEIGHT; end
+  def width; @effective_width; end
+  def height; @effective_height; end
 
   def t; R18n.get.t.game; end
 
   def initialize
-    full_screen = false # settings[:video, :full_screen]
-
-    @sprite_scale = settings[:video, :window_scale]
-
-    width, height = if full_screen
-                      [screen_width, screen_height]
-                    else
-                      [RETRO_WIDTH * @sprite_scale, RETRO_HEIGHT * @sprite_scale]
-                    end
+    full_screen = settings[:video, :full_screen]
+    if full_screen
+      # Run at desktop resolution; saves infinite headaches!
+      width, height = [screen_width, screen_height]
+      @sprite_scale = [width / RETRO_WIDTH.to_f, height / RETRO_HEIGHT.to_f].min
+      @effective_width, @effective_height = (RETRO_WIDTH * @sprite_scale).to_i, (RETRO_HEIGHT * @sprite_scale).to_i
+      @correct_aspect = (@effective_width == screen_width) and (@effective_height == screen_height)
+      unless @correct_aspect
+        @offset_x = (screen_width - @effective_width) / 2
+        @offset_y = (screen_height - @effective_height) / 2
+      end
+    else
+      # Run in a window at an integer scaling up factor.
+      @sprite_scale = settings[:video, :window_scale]
+      width, height = [RETRO_WIDTH * @sprite_scale, RETRO_HEIGHT * @sprite_scale]
+      @effective_width, @effective_height = width, height
+      @correct_aspect = true
+    end
 
     log.info { "Opened window at #{width}x#{height} (X#{@sprite_scale} zoom)" }
 
@@ -174,9 +185,15 @@ class Game < Window
   def draw
     draw_started = milliseconds
 
-    # Draw sprites at the retrofied scale.
-    scale(@sprite_scale) do
-      super
+    # Draw sprites at the retrofied scale. If in full-screen at an odd aspect ratio, then cry.
+    if @correct_aspect
+      scale(@sprite_scale) { super }
+    else
+      translate(@offset_x, @offset_y) do
+        clip_to(0, 0, @effective_width, @effective_height) do
+          scale(@sprite_scale) { super }
+        end
+      end
     end
 
     @used_time += milliseconds - draw_started

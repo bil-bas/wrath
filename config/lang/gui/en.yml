@@ -253,10 +253,15 @@ gui:
     title: Options | Video
     zoom: (X%1 zoom)
     label:
-      window_size: Window size
       warning: Changes require that the game be restarted
     button:
       back: *back_button
+      windowed:
+        text: Windowed
+        tip: Run the game in a window
+      full_screen:
+        text: Full-screen
+        tip: Run the game in a full screen at desktop resolution
       default:
         text: Defaults
         tip: Reset to default values

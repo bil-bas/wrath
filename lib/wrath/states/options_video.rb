@@ -10,32 +10,41 @@ module Wrath
         label t.title, font_size: 32
 
         horizontal padding: 0 do
-          label t.label.window_size
+          group do
+            grid num_columns: 2, padding: 0 do
+              # Windowed options.
+              radio_button t.button.windowed.text, false, width: 250, tip: t.button.windowed.tip
 
-          @window_scale_combo = combo_box value: settings[:video, :window_scale], width: 250 do
-            SCALE_RANGE.each do |scale|
-              w, h = retro_width * scale, retro_height * scale
-              if w <= max_window_width and h <= max_window_height
-                item "#{w}x#{h} #{t.zoom(scale)}", scale
+              @window_scale_combo = combo_box value: settings[:video, :window_scale], width: 250 do
+                SCALE_RANGE.each do |scale|
+                  w, h = retro_width * scale, retro_height * scale
+                  if w <= max_window_width and h <= max_window_height
+                    item "#{w}x#{h} #{t.zoom(scale)}", scale
+                  end
+                end
+
+                subscribe :changed do |sender, scale|
+                  settings[:video, :window_scale] = scale
+                  require_restart
+                end
               end
+
+              # full-screen options.
+              radio_button t.button.full_screen.text, true, width: 250, tip: t.button.full_screen.tip
+
+              label "(#{screen_width}x#{screen_height})"
             end
 
-            subscribe :changed do |sender, scale|
-              settings[:video, :window_scale] = scale
+            self.value = settings[:video, :full_screen]
+
+            subscribe :changed do |sender, value|
+              settings[:video, :full_screen] = value
+              @window_scale_combo.enabled = (not value)
               require_restart
             end
           end
         end
-=begin
-        horizontal padding: 0 do
-          toggle_button "Fullscreen?", value: settings[:video, :full_screen] do |sender, value|
-            settings[:video, :full_screen] = value
-            require_restart
-          end
 
-          label "(#{screen_width}x#{screen_height})"
-        end
-=end
         @warning_label = label " "
 
         horizontal padding: 0, spacing: 20 do

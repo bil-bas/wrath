@@ -1,6 +1,7 @@
 === CHANGELOG ===
 
 Next release
+  * Game will now run in fullscreen (at desktop resolution only; there will be black edging unless screen has a 16:10 aspect ratio).
   * Network stats and fps overlays now on 'n' and 'f' respectively and can be configured (FPS no longer in title bar).
   * Slowed down preparation of level, so neither host nor client gets overwhelmed and freezes up.
   * Added i18n support, including translations of the game into 1337 and Piratical English.
