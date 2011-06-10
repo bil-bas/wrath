@@ -59,18 +59,11 @@ module Wrath
           end
         end
       end
-
-      require_restart # Probably not necessary.
     end
 
     def require_restart
-      if @window_scale_combo.value == sprite_scale
-        @exit_button.enabled = false
-        @warning_label.text = ""
-      else
-        @exit_button.enabled = true
-        @warning_label.text = t.label.warning
-      end
+      @exit_button.enabled = true
+      @warning_label.text = t.label.warning
     end
   end
 end
