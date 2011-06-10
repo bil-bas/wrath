@@ -1,6 +1,12 @@
 --- 
 back: &id001 
   text: 84X
+instructions: &id002 
+  text: 1N57RUC710N5
+  tip: 134RN H0W 70 P14Y 7H3 64M3
+options: &id003 
+  text: 0P710N5
+  tip: V13W 4ND CH4N63 64M3 53771N65
 game: 
   title: "-=- WR47H: 4PP3453 0R D13! -=- 8Y 5P00N3R -=-"
 god: 
@@ -71,6 +77,15 @@ gui:
       reset: 
         text: R3537 57471571C5
         tip: R35375 411 57471571C5, 4CH13V3M3N75 4ND UN10X5 P3RM4N3N71Y
+  game_menu: 
+    button: 
+      resume: 
+        text: R35UM3
+        tip: R35UM3 P14Y1N6 7H3 CURR3N7 64M3
+      instructions: *id002
+      options: *id003
+      quit: 
+        text: QU17
   host_details: 
     title: H0571N6 4 64M3
     label: 
@@ -151,15 +166,11 @@ gui:
       play: 
         text: P14Y
         tip: P14Y 7H3 64M3, 0N- 0R 0FF-11N3
-      instructions: 
-        text: 1N57RUC710N5
-        tip: 134RN H0W 70 P14Y 7H3 64M3
+      instructions: *id002
       achievements: 
         text: 4CH13V3M3N75
         tip: R3V13W Y0UR 4CH13V3M3N75
-      options: 
-        text: 0P710N5
-        tip: V13W 4ND CH4N63 64M3 53771N65
+      options: *id003
       exit: 
         text: 3X17
         tip: 134V3 64M3
@@ -216,6 +227,16 @@ gui:
         text: 3X17
   options_controls: 
     title: 0P710N5 | C0N7R015
+    label: 
+      up: UP
+      down: D0WN
+      left: 13F7
+      right: R16H7
+      action: 4C710N
+      toggle_network: N37W0RK 57475 (0N11N3)
+      toggle_fps: FP5
+      chat: CH47 (0N11N3)
+      menu: M3NU
     button: 
       back: *id001
       default: 
@@ -231,6 +252,9 @@ gui:
       online_player: 
         text: 0N11N3 P14Y3R
         tip: C0N7R015 F0R 7H3 P14Y3R 1N 4 N37W0RK 64M3
+      general: 
+        text: 63N3R41
+        tip: 63N3R41 C0N7R015, 5UCH 45 D1P14Y1N6 FP5 0R CH4771N6 1N N37W0RK P14Y.
   play: 
     title: P14Y WR47H
     button: 

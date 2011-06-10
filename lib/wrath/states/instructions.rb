@@ -2,7 +2,7 @@ module Wrath
   class Instructions < Gui
     TABS = [:gods, :priests, :favour]
 
-    def initialize
+    def setup
       super
 
       vertical do

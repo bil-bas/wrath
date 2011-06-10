@@ -2,7 +2,7 @@ module Wrath
   class OptionsAudio < Gui
     SLIDER_WIDTH = 300
 
-    def initialize
+    def setup
       super
 
       vertical do

@@ -88,12 +88,6 @@ class Level < GameState
 
     super()
 
-    setup_inputs
-    $window.subscribe :on_options_changed do
-      setup_inputs
-      players.each(&:setup_inputs)
-    end
-
     send_message(Message::NewGame.new(self.class, @god_class)) if host?
 
     @last_sync = milliseconds
@@ -120,13 +114,8 @@ class Level < GameState
     log.info "Initiated '#{self}'"
   end
 
-  def setup_inputs
-    input.clear
-
-    on_input(:escape) do
-      send_message(Message::EndGame.new) if networked?
-      pop_until_game_state Lobby
-    end
+  def setup
+    super
 
     if networked?
       on_input(controls[:general, :toggle_network]) do
@@ -135,10 +124,23 @@ class Level < GameState
       end
     end
 
+    on_input(controls[:general, :menu]) do
+      push_game_state GameMenu
+    end
+
     on_input(controls[:general, :toggle_fps]) do
       @fps_overlay ||= $window.add_overlay FPSOverlay.new
       @fps_overlay.toggle
     end
+
+    players.each(&:setup_inputs)
+
+    log.info "Started playing"
+  end
+
+  def finalize
+    input.clear
+    log.info "Stopped playing"
   end
   
   def self.unlocked?
@@ -297,15 +299,6 @@ class Level < GameState
     grid = Array.new(num_rows) { Array.new(num_columns, default_tile) }
 
     [num_columns, num_rows, grid]
-  end
-
-  def setup
-    super
-    log.info "Started playing"
-  end
-
-  def finalize
-    log.info "Stopped playing"
   end
 
   def update

@@ -22,9 +22,11 @@ module Fidgit
       @shortcut_color = options[:shortcut_color].dup
 
       if options[:shortcut] and not text.empty?
-        shortcut = text[0]
+        shortcut = text[0].downcase.to_sym
         state = $window.game_state_manager.inside_state || $window.current_game_state
-        state.on_input(shortcut.downcase.to_sym) { activate unless state.focus }
+        unless state.input.has_key? shortcut
+          state.on_input(shortcut) { activate unless state.focus }
+        end
         self.text = text.sub(/#{shortcut}/i) {|char| "<c=#{@shortcut_color.to_hex}>#{char}</c>" }
       end
     end

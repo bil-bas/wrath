@@ -1,6 +1,12 @@
 --- 
 back: &id001 
   text: Belay
+instructions: &id002 
+  text: Instructions
+  tip: Learn how t' play th' game
+options: &id003 
+  text: Riggin'
+  tip: View an' change game settings
 game: 
   title: "-=- Wrath: Appease or Die! -=- by Spooner -=-"
 god: 
@@ -71,6 +77,15 @@ gui:
       reset: 
         text: Reset statistics
         tip: Resets all statistics, deeds an' unlocks PERMANENTLY
+  game_menu: 
+    button: 
+      resume: 
+        text: Resume
+        tip: Resume playin' th' current game
+      instructions: *id002
+      options: *id003
+      quit: 
+        text: Quit
   host_details: 
     title: Hostin' a Game
     label: 
@@ -151,15 +166,11 @@ gui:
       play: 
         text: Play
         tip: Play th' game, on- or off-line
-      instructions: 
-        text: Instructions
-        tip: Learn how t' play th' game
+      instructions: *id002
       achievements: 
         text: Deeds
         tip: Review yer deeds
-      options: 
-        text: Riggin'
-        tip: View an' change game settings
+      options: *id003
       exit: 
         text: Exit
         tip: Leave game
@@ -216,6 +227,16 @@ gui:
         text: Exit
   options_controls: 
     title: Riggin' | Controls
+    label: 
+      up: Up
+      down: Down
+      left: Left
+      right: Right
+      action: Action
+      toggle_network: Network stats (online)
+      toggle_fps: FPS
+      chat: Chat (online)
+      menu: Menu
     button: 
       back: *id001
       default: 
@@ -231,6 +252,9 @@ gui:
       online_player: 
         text: Online pirate
         tip: Controls for th' pirate in a network game
+      general: 
+        text: General
+        tip: General controls, such as diplayin' FPS or chattin' in network play.
   play: 
     title: Play Wrath
     button: 

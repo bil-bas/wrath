@@ -2,7 +2,7 @@ module Wrath
   class Play < Gui
     BUTTONS = [:offline, :join, :host]
 
-    def initialize
+    def setup
       super
 
       vertical do

@@ -2,13 +2,17 @@ module Wrath
   class OptionsControls < Gui
     TABS = [:offline_player_1, :offline_player_2, :online_player, :general]
 
-    public
     def initialize
       super
 
       @control_waiting_for_key = nil
 
       init_key_codes
+    end
+
+    public
+    def setup
+      super
 
       vertical do
         label t.title, font_size: 32
@@ -41,8 +45,7 @@ module Wrath
 
           button(t.button.default.text, tip: t.button.default.tip) do
             controls.reset_to_default
-            switch_game_state self.class
-            $window.publish :on_options_changed
+            $window.options_changed
           end
         end
       end

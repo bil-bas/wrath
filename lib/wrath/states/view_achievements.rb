@@ -32,7 +32,7 @@ module Wrath
 
     trait :timer
 
-    def initialize
+    def setup
       super
 
       # Store the current achievements, so we can add them in #update.

@@ -49,16 +49,22 @@ class Player < BasicGameObject
 
     super(options)
 
+    setup_inputs
+  end
+  
+  def setup_inputs
     if local?
+      input.clear
+      
       group = parent.networked? ? :online_player : :"offline_player_#{@number + 1}"
-      @keys_left = parent.controls[group, :left]
-      @keys_right = parent.controls[group, :right]
-      @keys_up = parent.controls[group, :up]
-      @keys_down = parent.controls[group, :down]
-      @keys_action = parent.controls[group, :action]
+      @key_left = parent.controls[group, :left]
+      @key_right = parent.controls[group, :right]
+      @key_up = parent.controls[group, :up]
+      @key_down = parent.controls[group, :down]
+      @key_action = parent.controls[group, :action]
 
-      on_input(@keys_action, :action)
-    end
+      on_input(@key_action, :action)
+    end    
   end
 
   def win!
@@ -148,32 +154,32 @@ class Player < BasicGameObject
 
     case avatar.state
       when :standing, :walking, :mounted
-        if holding_any? *@keys_left
-          if holding_any? *@keys_up
+        if holding? @key_left
+          if holding? @key_up
             # NW
             moving.move(315)
-          elsif holding_any? *@keys_down
+          elsif holding? @key_down
             # SW
             moving.move(225)
           else
             # W
             moving.move(270)
           end
-        elsif holding_any? *@keys_right
-          if holding_any? *@keys_up
+        elsif holding? @key_right
+          if holding? @key_up
             # NE
             moving.move(45)
-          elsif holding_any? *@keys_down
+          elsif holding? @key_down
             # SE
             moving.move(135)
           else
             # E
             moving.move(90)
           end
-        elsif holding_any? *@keys_up
+        elsif holding? @key_up
           # N
           moving.move(0)
-        elsif holding_any? *@keys_down
+        elsif holding? @key_down
           # S
           moving.move(180)
         else

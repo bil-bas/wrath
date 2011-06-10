@@ -3,7 +3,7 @@ module Wrath
     SCALE_RANGE = 4..12
     DEFAULT_SCALE = 4
 
-    def initialize
+    def setup
       super
 
       vertical do

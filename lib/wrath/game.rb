@@ -69,9 +69,6 @@ end
 
 class Game < Window
   include Log
-  include Fidgit::Event
-
-  event :on_options_changed
 
   RETRO_WIDTH = 192
   RETRO_HEIGHT = 120
@@ -150,12 +147,18 @@ class Game < Window
     @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
     add_overlay AchievementOverlay.new(@achievement_manager)
 
-    publish :on_options_changed
+    options_changed
   end
 
-  def on_options_changed(sender)
-    # If locale has changes, then title may have changed too.
+  def options_changed
+    R18n.from_env LANG_DIR, settings[:locale]
+
+    # If locale has changed, then title may have changed too.
     self.caption = t.title
+
+    state = game_state_manager.current_game_state
+    state.finalize if state.respond_to? :finalize
+    state.setup if state.respond_to? :setup
   end
 
   def add_overlay(overlay)

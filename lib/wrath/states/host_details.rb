@@ -1,6 +1,6 @@
 module Wrath
   class HostDetails < NetworkDetails
-    def initialize
+    def setup
       super
 
       vertical do

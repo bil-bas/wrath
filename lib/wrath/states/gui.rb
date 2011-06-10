@@ -3,6 +3,7 @@ class Gui < Fidgit::GuiState
 
   def self.t; R18n.get.t.gui[Inflector.underscore(Inflector.demodulize(name))]; end
   def t; self.class.t; end
+  def draw_background?; true; end
 
   def initialize
     super
@@ -10,15 +11,21 @@ class Gui < Fidgit::GuiState
     self.cursor.image = Image["gui/cursor.png"]
     self.cursor.factor = $window.sprite_scale
 
+    create_background
+
     if t.button.back.text.translated?
       on_input(:escape) { pop_game_state }
     end
+  end
 
-    create_background
+  def finalize
+    super
+
+    container.clear
   end
 
   def draw
-    @@background_image.draw 0, 0, -Float::INFINITY
+    @@background_image.draw 0, 0, -Float::INFINITY if draw_background?
     $window.scale(1.0 / $window.sprite_scale) { super }
   end
 

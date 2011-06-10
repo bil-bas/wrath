@@ -1,6 +1,6 @@
 module Wrath
   class OptionsGeneral < Gui
-    def initialize
+    def setup
       super
 
       vertical do
@@ -22,13 +22,8 @@ module Wrath
 
             subscribe :changed do |sender, locale|
               settings[:locale] = locale
-              R18n.from_env LANG_DIR, locale
 
-              pop_until_game_state Menu
-              switch_game_state Menu
-              push_game_state Options
-              push_game_state self.class
-              $window.publish :on_options_changed
+              $window.options_changed
             end
           end
         end

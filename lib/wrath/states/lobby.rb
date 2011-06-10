@@ -22,6 +22,10 @@ module Wrath
       @player_names[1] += DISAMBIGUATION_SUFFIX if @player_names[1] == @player_names[0]
 
       @player_number = host? ? 0 : 1
+    end
+
+    def setup
+      super
 
       heading = case @network
         when Server
@@ -62,9 +66,20 @@ module Wrath
           @start_button = button(t.button.start.text, enabled: local?, shortcut: true) do
             new_game(@level_picker.value, @god_picker.value)
           end
-
         end
       end
+
+      # Work out which priests can be played.
+      @unlocked_priests = Priest::FREE_UNLOCKS.dup
+      (Priest::NAMES - Priest::FREE_UNLOCKS).each do |priest|
+        @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
+      end
+      @unlocked_priests.sort!
+
+      # Ensure that any unlocks are updated.
+      update_level_picker
+      2.times {|i| update_priests(i) }
+      enable_priest_options
     end
 
     def host?; @network.is_a? Server; end
@@ -97,23 +112,6 @@ module Wrath
           end
         end
       end
-    end
-
-    public
-    def setup
-      super
-
-      # Work out which priests can be played.
-      @unlocked_priests = Priest::FREE_UNLOCKS.dup
-      (Priest::NAMES - Priest::FREE_UNLOCKS).each do |priest|
-        @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
-      end
-      @unlocked_priests.sort!
-
-      # Ensure that any unlocks are updated.
-      update_level_picker
-      2.times {|i| update_priests(i) }
-      enable_priest_options
     end
 
     def update_priests(combo_index)

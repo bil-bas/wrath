@@ -1,6 +1,6 @@
 module Wrath
   class JoinDetails < NetworkDetails
-    def initialize
+    def setup
       super
 
       vertical do

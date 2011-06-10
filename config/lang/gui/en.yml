@@ -2,6 +2,12 @@
 # Aliases.
 back: &back_button
   text: Back
+instructions: &instructions_button
+  text: Instructions
+  tip: Learn how to play the game
+options: &options_button
+  text: Options
+  tip: View and change game settings
 
 # Game window.
 game:
@@ -83,6 +89,16 @@ gui:
       reset:
         text: Reset statistics
         tip: Resets all statistics, achievements and unlocks PERMANENTLY
+
+  game_menu:
+    button:
+      resume:
+        text: Resume
+        tip: Resume playing the current game
+      instructions: *instructions_button
+      options: *options_button
+      quit:
+        text: Quit
 
   # Host details
   host_details:
@@ -179,15 +195,11 @@ gui:
       play:
         text: Play
         tip: Play the game, on- or off-line
-      instructions:
-        text: Instructions
-        tip: Learn how to play the game
+      instructions: *instructions_button
       achievements:
         text: Achievements
         tip: Review your achievements
-      options:
-        text: Options
-        tip: View and change game settings
+      options: *options_button
       exit:
         text: Exit
         tip: Leave game
@@ -260,9 +272,11 @@ gui:
       left: Left
       right: Right
       action: Action
-      toggle_network: Network overlay
-      toggle_fps: FPS overlay
-      chat: Chat
+      toggle_network: Network stats (online)
+      toggle_fps: FPS
+      chat: Chat (online)
+      menu: Menu
+
     button:
       back: *back_button
       default:

@@ -12,6 +12,7 @@ class GameOver < Gui
       Message::EndGame
   ]
 
+  def draw_background?; false; end
   def accept_message?(message); ACCEPTED_MESSAGES.find {|m| message.is_a? m }; end
 
   def initialize(winner)

@@ -8,7 +8,7 @@ class Menu < Gui
     exit: :close,
   }
 
-  def initialize
+  def setup
     super
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
@@ -35,10 +35,6 @@ class Menu < Gui
 
       @right_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
     end
-  end
-
-  def setup
-    super
 
     icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), 9) }
     @left_priests.clear
