@@ -17,15 +17,15 @@ module Wrath
 
       vertical background_color: BACKGROUND_COLOR, align: :center do
         options = { width: 300, justify: :center }
-        button t.button.resume.text, options.merge(tip: t.button.resume.tip, shortcut: true) do
+        button t.button.resume.text, options.merge(tip: t.button.resume.tip, shortcut: :auto) do
           pop_game_state
         end
 
-        button t.button.instructions.text, options.merge(tip: t.button.instructions.tip, shortcut: true) do
+        button t.button.instructions.text, options.merge(tip: t.button.instructions.tip, shortcut: :auto) do
           push_game_state Instructions
         end
 
-        button t.button.options.text, options.merge(tip: t.button.options.tip, shortcut: true) do
+        button t.button.options.text, options.merge(tip: t.button.options.tip, shortcut: :auto) do
           push_game_state Options
         end
 

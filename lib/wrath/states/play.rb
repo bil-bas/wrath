@@ -10,12 +10,12 @@ module Wrath
 
         vertical padding: 0, spacing: 10 do
           BUTTONS.each do |name|
-            button(t.button[name].text, icon: icon(name), width: 320, shortcut: true, tip: t.button[name].tip) { send("#{name}_game") }
+            button(t.button[name].text, icon: icon(name), width: 320, shortcut: :auto, tip: t.button[name].tip) { send("#{name}_game") }
           end
         end
 
         horizontal padding: 0 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
         end
       end
     end

@@ -35,13 +35,13 @@ module Wrath
             end
           end
 
-          scroll_window height: 300, width: 728, background_color: BACKGROUND_COLOR do
+          scroll_window height: 300, width: $window.width - 40, background_color: BACKGROUND_COLOR do
             @key_grid = grid num_columns: 2, padding: 10, spacing: 10
           end
         end
 
         horizontal padding: 0 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
 
           button(t.button.default.text, tip: t.button.default.tip) do
             controls.reset_to_default
@@ -93,7 +93,7 @@ module Wrath
           key_label = label t.label[control], width: 270
           key = controls[@tabs_group.value, control]
           button_label = key.to_s.tr('_', ' ')
-          button(button_label, width: 400) { choose_key control, key_label }
+          button(button_label, width: 350) { choose_key control, key_label }
         end
       end
     end

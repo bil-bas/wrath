@@ -13,13 +13,13 @@ class Menu < Gui
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
-    horizontal padding_left: ($window.width - 680) / 2, padding_top: ($window.height - 475) / 2, spacing: 0 do
-      @left_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
+    horizontal spacing: 0, align: :center do
+      @left_priests = vertical padding: 0, spacing: 14
       vertical spacing: 0, padding: 0 do
-        heading = label t.title, font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
-        label t.subtitle, font_size: 40, color: Color.rgb(90, 180, 255), width: heading.width, padding_top: 0, justify: :center
-        vertical spacing: 8, padding_top: 30, padding_left: 80 do
-          options = { width: heading.width - 15 - 160, font_size: 28, justify: :center, shortcut: true }
+        label t.title, font_size: 120, color: Color.rgb(50, 120, 255), width: 500, justify: :center
+        label t.subtitle, font_size: 40, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
+        vertical spacing: 8, align: :center do
+          options = { width: 300, font_size: 28, justify: :center, shortcut: :auto }
           ACTIONS.each_pair do |name, action|
             button(t.button[name].text, options.merge(tip: t.button[name].tip)) do
               case action
@@ -30,13 +30,13 @@ class Menu < Gui
           end
         end
 
-        label "v#{VERSION}", font_size: 18, justify: :center, width: heading.width
+        label "v#{VERSION}", font_size: 18, justify: :center, align: :center
       end
 
-      @right_priests = vertical padding_top: 15, padding_left: 0, padding_right: 0, spacing: 14
+      @right_priests = vertical padding: 0, spacing: 14
     end
 
-    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), 9) }
+    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), $window.sprite_scale * 2.3) }
     @left_priests.clear
     @left_priests.with do
       icons[0..4].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i]) }

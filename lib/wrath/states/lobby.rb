@@ -45,26 +45,26 @@ module Wrath
         player_grid
 
         level_picker
-      end
 
-      horizontal do
-        button t.button.back.text, shortcut: true do
-          pop_until_game_state Play
-        end
-
-        if @network
-          @ready_button = toggle_button(t.button.ready.text, shortcut: true) do |sender, value|
-            update_ready @player_number, value
-            send_message(Message::UpdateLobby.new(:ready, @player_number, value))
+        horizontal padding: 0 do
+          button t.button.back.text, shortcut: :auto do
+            pop_until_game_state Play
           end
 
-        end
+          if @network
+            @ready_button = toggle_button(t.button.ready.text, shortcut: :auto) do |sender, value|
+              update_ready @player_number, value
+              send_message(Message::UpdateLobby.new(:ready, @player_number, value))
+            end
 
-        if client?
-          label t.label.wait_for_start
-        else
-          @start_button = button(t.button.start.text, enabled: local?, shortcut: true) do
-            new_game(@level_picker.value, @god_picker.value)
+          end
+
+          if client?
+            label t.label.wait_for_start
+          else
+            @start_button = button(t.button.start.text, enabled: local?, shortcut: :auto) do
+              new_game(@level_picker.value, @god_picker.value)
+            end
           end
         end
       end
@@ -96,7 +96,7 @@ module Wrath
 
     protected
     def level_picker
-      grid num_columns: 2 do
+      grid num_columns: 2, padding_h: 0 do
         label t.label.map
         @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
           subscribe :changed do |sender, level|
@@ -144,7 +144,7 @@ module Wrath
       @ready_indicators = []
       @num_readies = 0
 
-      grid num_columns: 3, spacing: 4 do
+      grid num_columns: 3, padding_h: 0 do
         @player_names.each_with_index do |player_name, player_number|
           player_row player_name, player_number
         end

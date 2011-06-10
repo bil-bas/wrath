@@ -39,7 +39,7 @@ module Wrath
         @warning_label = label " "
 
         horizontal padding: 0, spacing: 20 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
           button(t.button.default.text, tip: t.button.default.tip) do
             @window_scale_combo.value = DEFAULT_SCALE
           end

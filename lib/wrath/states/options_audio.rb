@@ -18,7 +18,7 @@ module Wrath
           end
           @master_percentage = label "100%"
           @master_slider.value = $window.volume
-          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: true) do |sender, value|
+          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: :auto) do |sender, value|
             if value
               $window.mute
             else
@@ -55,7 +55,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
           button(t.button.default.text, tip: t.button.default.tip) do
             @master_slider.value = 0.5
             @effects_slider.value = 1.0

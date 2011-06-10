@@ -29,7 +29,7 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
         end
       end
     end

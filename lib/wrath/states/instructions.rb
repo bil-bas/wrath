@@ -26,7 +26,7 @@ module Wrath
             end
           end
 
-          @scroll_window = scroll_window width: $window.width - 50, height: $window.height - 180, background_color: BACKGROUND_COLOR do
+          @scroll_window = scroll_window width: $window.width - 40, height: $window.height - 180, background_color: BACKGROUND_COLOR do
             @body_text = text_area padding: 10, enabled: false,
                                    width: $window.width - 75
           end
@@ -34,7 +34,7 @@ module Wrath
           @tabs_group.value = TABS.first
         end
 
-        button(t.button.back.text, shortcut: true) { pop_game_state }
+        button(t.button.back.text, shortcut: :auto) { pop_game_state }
       end
     end
   end

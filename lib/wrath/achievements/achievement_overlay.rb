@@ -58,7 +58,7 @@ module Wrath
     def initialize(manager, options = {})
       super(options)
 
-      @popups = Fidgit::VerticalPacker.new(padding: 0, spacing: 4, width: $window.width, height: $window.height)
+      @popups = Fidgit::Vertical.new(padding: 0, spacing: 4, width: $window.width, height: $window.height)
       
       manager.subscribe :on_achievement_gained do |sender, achievement|
         add_popup("Complete!", achievement.title, achievement.icon, ACHIEVEMENT_COLOR)

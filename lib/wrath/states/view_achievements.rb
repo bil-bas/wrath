@@ -23,7 +23,7 @@ module Wrath
   end
 
   class ViewAchievements  < Gui
-    ACHIEVEMENT_BACKGROUND_COLOR = Color.rgb(0, 0, 50)
+    ACHIEVEMENT_BACKGROUND_COLOR = Color.rgb(0, 0, 20)
 
     INCOMPLETE_TITLE_COLOR = Color.rgb(150, 150, 150)
     COMPLETE_TITLE_COLOR = Color.rgb(0, 255, 0)
@@ -48,16 +48,16 @@ module Wrath
           packer.label t.title, font_size: 32
           completed = achievement_manager.achievements.count {|a| a.complete? }
           Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
-                                    parent: packer, width: $window.width - 500, font_size: 32)
+                                    parent: packer, width: $window.width - 450, font_size: 32)
         end
 
-        scroll_window width: $window.width - 50, height: $window.height - 150, background_color: BACKGROUND_COLOR do
+        scroll_window width: $window.width - 40, height: $window.height - 150, background_color: BACKGROUND_COLOR do
           # List will be populated in #update.
           @achievements_list = vertical spacing: 5
         end
 
         horizontal padding: 0 do
-          button(t.button.back.text, shortcut: true) { pop_game_state }
+          button(t.button.back.text, shortcut: :auto) { pop_game_state }
 
           toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
             achievement_manager.unlocks_disabled = value
@@ -102,19 +102,19 @@ module Wrath
           horizontal padding: 0, spacing: 0 do |packer|
             # title
             color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
-            packer.label achieve.title, width: 380, font_size: 20, color: color
+            packer.label achieve.title, width: 400, font_size: 20, color: color
 
             # Progress bar, if needed.
             if achieve.complete?
               @achieved_time_labels << packer.label('', font_size: 15, padding_left: 0)
             else
               ProgressBar.new(achieve.total, achieve.required,
-                      parent: packer, width: $window.width - 625, height: 20, font_size: 15)
+                      parent: packer, width: $window.width - 590, height: 20, font_size: 15)
             end
           end
 
           # Description of what has been done.
-          text_area text: achieve.description, font_size: 15, width: $window.width - 215,
+          text_area text: achieve.description, font_size: 15, width: $window.width - 180,
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
 
           unless achieve.unlocks.empty?

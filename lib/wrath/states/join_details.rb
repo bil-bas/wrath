@@ -16,11 +16,11 @@ module Wrath
         end
 
         horizontal padding: 0 do
-          button t.button.back.text, shortcut: true do
+          button t.button.back.text, shortcut: :auto do
             pop_game_state
           end
 
-          button t.button.join.text, shortcut: true do
+          button t.button.join.text, shortcut: :auto do
             settings[:player, :name] = @player_name.text
             push_game_state Client.new(address: @address.text, port: @port.text.to_i)
           end
