@@ -7,7 +7,7 @@ module Wrath
     def initialize(options = {})
       options = {
           damage_per_hit: DAMAGE,
-          favour: 10,
+          favor: 10,
           health: 40,
           animation: "amazon_8x8.png",
       }.merge! options

@@ -6,7 +6,7 @@ module Wrath
 
     def initialize(options = {})
       options = {
-          favour: 10,
+          favor: 10,
           health: 40,
           damage_per_hit: DAMAGE,
           animation: "deep_one_10x10.png",

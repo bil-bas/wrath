@@ -8,7 +8,7 @@ module Wrath
 
     def initialize(options = {})
       options = {
-          favour: 8,
+          favor: 8,
           damage_per_hit: DAMAGE,
           animation: "cultist_8x8.png",
       }.merge! options

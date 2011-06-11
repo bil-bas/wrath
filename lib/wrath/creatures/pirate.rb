@@ -6,7 +6,7 @@ module Wrath
 
     def initialize(options = {})
       options = {
-          favour: 10,
+          favor: 10,
           health: 30,
           damage_per_hit: DAMAGE,
           animation: "pirate_8x8.png",
