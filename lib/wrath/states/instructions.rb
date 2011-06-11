@@ -21,6 +21,7 @@ module Wrath
             @body_text.text = t.tab[value].body.gsub('*', '&bullet;')
             current = @tab_buttons.find {|elem| elem.value == value }
             @tab_buttons.each {|t| t.enabled = (t != current) }
+            current.color, current.background_color = current.background_color, current.color
             @scroll_window.offset_y = 0
           end
         end
