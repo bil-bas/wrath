@@ -70,6 +70,8 @@ end
 class Game < Window
   include Log
 
+  FONT = "04B_03__.TTF"
+
   REAL_WIDTH, REAL_HEIGHT = 192, 120 # Actual rendering size.
 
   SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.

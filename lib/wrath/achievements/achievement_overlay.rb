@@ -21,7 +21,7 @@ module Wrath
       
       def initialize(title, body, icon, options = {})
         options = {
-          font: "pixelated.ttf",
+          font: $window.class::FONT,
           font_size: BODY_FONT_SIZE,
           border_color: BORDER_COLOR,
           border_thickness: 2,

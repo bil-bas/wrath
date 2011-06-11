@@ -40,7 +40,7 @@ class Player < BasicGameObject
     @number, @local = number, local
 
     @gui_pos = [[30, 1], [130 + Humanoid::PORTRAIT_WIDTH, 1]][@number]
-    @font = Font["pixelated.ttf", 32]
+    @font = Font[$window.class::FONT, 32]
     @visible = true
 
     @health_bar = Bar.new(x: @gui_pos[0] + PADDING, y: @gui_pos[1] + PADDING, color: HEALTH_BAR_COLOR)

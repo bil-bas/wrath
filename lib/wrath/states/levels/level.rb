@@ -105,7 +105,7 @@ class Level < GameState
     @started = false
     @screen_offset_y = 0
 
-    @font = Font["pixelated.ttf", 32]
+    @font = Font[$window.class::FONT, 9]
 
     create_players
 
@@ -367,7 +367,7 @@ class Level < GameState
       end
     else
       dots = '.' * ((milliseconds / 500.0) % 7).to_i
-      @font.draw_rel("Loading#{dots}", 0, 0, ZOrder::GUI, 0, 0, 0.25, 0.25)
+      @font.draw("Loading#{dots}", 2.5, 2.5, ZOrder::GUI)
     end
   end
 

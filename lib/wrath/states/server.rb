@@ -13,7 +13,7 @@ class Server < GameStates::NetworkServer
         max_connections: 1,
     }.merge! options
 
-    @font = Font["pixelated.ttf", 48]
+    @font = Font[$window.class::FONT, 36]
 
     super options
 
