@@ -18,6 +18,37 @@ class Gui < Fidgit::GuiState
     end
   end
 
+  def title
+    t.title
+  end
+
+  def back_button_pressed
+    pop_game_state
+  end
+
+  def setup
+    super
+
+    if respond_to? :body
+      vertical spacing: 0, do
+        horizontal padding: 0 do
+          label title, font_size: 8, padding_left: 0, color: Color.rgb(90, 180, 255)
+
+          extra_title if respond_to? :extra_title
+        end
+
+        vertical padding: 0, height: 90, width: $window.width - 10 do
+          body
+        end
+
+        horizontal padding: 0 do
+          button(t.button.back.text, shortcut: :auto) { back_button_pressed }
+          extra_buttons if respond_to? :extra_buttons
+        end
+      end
+    end
+  end
+
   def finalize
     super
 

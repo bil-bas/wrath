@@ -24,10 +24,8 @@ module Wrath
       @player_number = host? ? 0 : 1
     end
 
-    def setup
-      super
-
-      heading = case @network
+    def title
+      case @network
         when Server
           t.title.host
 
@@ -38,38 +36,16 @@ module Wrath
         else
           t.title.offline
       end
+    end
 
-      vertical spacing: 0 do
-        label heading, font_size: 8
+    def back_button_pressed
+      pop_until_game_state Play
+    end
 
-        player_grid
+    def setup
+      super
 
-        level_picker
-
-        horizontal padding: 0 do
-          button t.button.back.text, shortcut: :auto do
-            pop_until_game_state Play
-          end
-
-          if @network
-            @ready_button = toggle_button(t.button.ready.text, shortcut: :auto) do |sender, value|
-              update_ready @player_number, value
-              send_message(Message::UpdateLobby.new(:ready, @player_number, value))
-            end
-
-          end
-
-          if client?
-            label t.label.wait_for_start
-          else
-            @start_button = button(t.button.start.text, enabled: local?, shortcut: :auto) do
-              new_game(@level_picker.value, @god_picker.value)
-            end
-          end
-        end
-      end
-
-      # Work out which priests can be played.
+     # Work out which priests can be played.
       @unlocked_priests = Priest::FREE_UNLOCKS.dup
       (Priest::NAMES - Priest::FREE_UNLOCKS).each do |priest|
         @unlocked_priests << priest if achievement_manager.unlocked?(:priest, priest)
@@ -80,6 +56,29 @@ module Wrath
       update_level_picker
       2.times {|i| update_priests(i) }
       enable_priest_options
+    end
+
+    def body
+      player_grid
+
+      level_picker
+    end
+
+    def extra_buttons
+      if @network
+        @ready_button = toggle_button(t.button.ready.text, shortcut: :auto) do |sender, value|
+          update_ready @player_number, value
+          send_message(Message::UpdateLobby.new(:ready, @player_number, value))
+        end
+      end
+
+      if client?
+        label t.label.wait_for_start
+      else
+        @start_button = button(t.button.start.text, enabled: local?, shortcut: :auto) do
+          new_game(@level_picker.value, @god_picker.value)
+        end
+      end
     end
 
     def host?; @network.is_a? Server; end

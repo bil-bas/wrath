@@ -11,47 +11,40 @@ module Wrath
     end
 
     public
-    def setup
-      super
-
-      vertical do
-        label t.title, font_size: 8
-
-        vertical spacing: 0, padding: 0 do
-          # Choose control group.
-          @tabs_group = group do
-            @tab_buttons = horizontal padding: 0, spacing: 2 do
-              TABS.each do |name|
-                radio_button(t.tab[name].text, name, tip: t.tab[name].tip, border_thickness: 0)
-              end
-            end
-
-            subscribe :changed do |sender, value|
-              @control_waiting_for_key = nil
-              list_keys
-
-              current = @tab_buttons.find {|elem| elem.value == value }
-              @tab_buttons.each {|t| t.enabled = (t != current) }
+    def body
+      vertical spacing: 0, padding: 0 do
+        # Choose control group.
+        @tabs_group = group do
+          @tab_buttons = horizontal padding: 0, spacing: 2 do
+            TABS.each do |name|
+              radio_button(t.tab[name].text, name, tip: t.tab[name].tip, border_thickness: 0)
             end
           end
 
-          scroll_window height: 75, width: $window.width - 10, background_color: BACKGROUND_COLOR do
-            @key_grid = grid num_columns: 2, padding: 2.5, spacing: 2.5
+          subscribe :changed do |sender, value|
+            @control_waiting_for_key = nil
+            list_keys
+
+            current = @tab_buttons.find {|elem| elem.value == value }
+            @tab_buttons.each {|t| t.enabled = (t != current) }
           end
         end
 
-        horizontal padding: 0 do
-          button(t.button.back.text, shortcut: :auto) { pop_game_state }
-
-          button(t.button.default.text, tip: t.button.default.tip) do
-            controls.reset_to_default
-            $window.options_changed
-          end
+        scroll_window height: 75, width: $window.width - 10, background_color: BACKGROUND_COLOR do
+          @key_grid = grid num_columns: 2, padding: 2.5, spacing: 2.5
         end
       end
 
       @tabs_group.value = TABS.first
     end
+
+    def extra_buttons
+      button(t.button.default.text, tip: t.button.default.tip) do
+        controls.reset_to_default
+        $window.options_changed
+      end
+    end
+
 
     public
     def update

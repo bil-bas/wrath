@@ -44,32 +44,29 @@ module Wrath
       @achieved_time_labels = []
 
       every(5000) { update_time_labels }
+    end
 
-      vertical do
-        horizontal padding: 0 do |packer|
-          packer.label t.title, font_size: 8
-          completed = achievement_manager.achievements.count {|a| a.complete? }
-          Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
-                                    parent: packer, width: $window.width - 112, font_size: 8)
-        end
+    def extra_title
+      completed = achievement_manager.achievements.count {|a| a.complete? }
+      Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
+                             parent: self, width: $window.width - 112, font_size: 6, align_v: :center)
+    end
 
-        scroll_window width: $window.width - 10, height: $window.height - 37, background_color: BACKGROUND_COLOR do
-          # List will be populated in #update.
-          @achievements_list = vertical spacing: 1.25
-        end
+    def body
+      scroll_window width: width, height: 85, background_color: BACKGROUND_COLOR do
+        # List will be populated in #update.
+        @achievements_list = vertical spacing: 1.25
+      end
+    end
 
-        horizontal padding: 0 do
-          button(t.button.back.text, shortcut: :auto) { pop_game_state }
+    def extra_buttons
+      toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
+        achievement_manager.unlocks_disabled = value
+      end
 
-          toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
-            achievement_manager.unlocks_disabled = value
-          end
-
-          button t.button.reset.text, tip: t.button.reset.tip do |sender|
-            achievement_manager.reset
-            switch_game_state self.class
-          end
-        end
+      button t.button.reset.text, tip: t.button.reset.tip do |sender|
+        achievement_manager.reset
+        switch_game_state self.class
       end
     end
 
