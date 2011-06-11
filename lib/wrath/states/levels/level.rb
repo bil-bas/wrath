@@ -228,10 +228,10 @@ class Level < GameState
     # Wall around the play-field.
     y_margin = 16
     [
-      [0, 0, 0, $window.retro_height, :left],
-      [0, $window.retro_height, $window.retro_width, $window.retro_height, :bottom],
-      [$window.retro_width, 0, $window.retro_width, $window.retro_height, :right],
-      [0, y_margin, $window.retro_width, y_margin, :top]
+      [0, 0, 0, $window.height, :left],
+      [0, $window.height, $window.width, $window.height, :bottom],
+      [$window.width, 0, $window.width, $window.height, :right],
+      [0, y_margin, $window.width, y_margin, :top]
     ].each do |x1, y1, x2, y2, side|
       Wall.create(x1, y1, x2, y2, side)
     end
@@ -275,7 +275,7 @@ class Level < GameState
 
   def create_altar
     # The altar is all-important!
-    Altar.create(x: $window.retro_width / 2, y: ($window.retro_height + Margin::TOP) / 2)
+    Altar.create(x: $window.width / 2, y: ($window.height + Margin::TOP) / 2)
   end
 
   def create_objects
@@ -299,7 +299,7 @@ class Level < GameState
 
   def random_tiles(default_tile)
     # Fill the grid with grass to start with.
-    num_columns, num_rows = ($window.retro_width / Tile::WIDTH).ceil, ($window.retro_height / Tile::HEIGHT).ceil
+    num_columns, num_rows = ($window.width / Tile::WIDTH).ceil, ($window.height / Tile::HEIGHT).ceil
     grid = Array.new(num_rows) { Array.new(num_columns, default_tile) }
 
     [num_columns, num_rows, grid]

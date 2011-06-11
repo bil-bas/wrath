@@ -4,11 +4,11 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         horizontal padding: 0 do
           label t.label.locale
-          @locale_combo = combo_box value: settings[:locale], width: 250 do
+          @locale_combo = combo_box value: settings[:locale], width: 120, align: :center do
             default = R18n::Locale.load(R18n::I18n.system_locale).title
             item "#{t.default_locale} (#{default})", ''
 

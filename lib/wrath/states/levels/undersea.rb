@@ -20,7 +20,7 @@ module Wrath
         # Top "blockers", not really tangible, so don't update/sync them.
         [10, 16].each do |y|
           x = -14
-          while x < $window.retro_width + 20
+          while x < $window.width + 20
             Seaweed.create(x: x, y: rand(4) + y)
             x += 6 + rand(6)
           end

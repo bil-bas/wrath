@@ -1,17 +1,17 @@
 module Wrath
   class OptionsAudio < Gui
-    SLIDER_WIDTH = 300
+    SLIDER_OPTIONS = { width: 75, height: 6, groove_thickness: 2, align_v: :center, range: 0.0..1.0 }
 
     def setup
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         grid num_columns: 4, padding: 0 do
           # MASTER
           label t.label.master
-          @master_slider = slider width: SLIDER_WIDTH,  range: 0.0..1.0 do |sender, value|
+          @master_slider = slider SLIDER_OPTIONS do |sender, value|
             $window.volume = value
             settings[:audio, :master_volume] = value
             @master_percentage.text = "#{(value * 100).round}%"
@@ -29,7 +29,7 @@ module Wrath
 
           # EFFECTS
           label t.label.effects
-          @effects_slider = slider width: SLIDER_WIDTH, range: 0.0..1.0 do |sender, value|
+          @effects_slider = slider SLIDER_OPTIONS do |sender, value|
             Sample.volume = value
             settings[:audio, :effects_volume] = value
             @effects_percentage.text = "#{(value * 100).round}%"
@@ -41,7 +41,7 @@ module Wrath
 
           # MUSIC
           label t.label.music
-          @music_slider = slider width: SLIDER_WIDTH, range: 0.0..1.0 do |sender, value|
+          @music_slider = slider SLIDER_OPTIONS do |sender, value|
             Song.volume = value
             settings[:audio, :music_volume] = value
             @music_percentage.text = "#{(value * 100).round}%"

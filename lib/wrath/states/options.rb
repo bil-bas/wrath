@@ -11,12 +11,12 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
-        vertical padding: 0, spacing: 10 do
+        vertical padding: 0, spacing: 2.5 do
           PAGES.each_pair do |state, button|
             image = Image["gui/#{Chingu::Inflector.underscore(Inflector.demodulize(state.name))}.png"]
-            button(t.button[button].text, shortcut: :auto, icon: ScaledImage.new(image, $window.sprite_scale), width: 300) { push_game_state state }
+            button(t.button[button].text, shortcut: :auto, icon: image, width: 75) { push_game_state state }
           end
         end
 

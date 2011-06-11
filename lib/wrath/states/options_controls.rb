@@ -15,12 +15,12 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         vertical spacing: 0, padding: 0 do
           # Choose control group.
           @tabs_group = group do
-            @tab_buttons = horizontal padding: 0, spacing: 5 do
+            @tab_buttons = horizontal padding: 0, spacing: 2 do
               TABS.each do |name|
                 radio_button(t.tab[name].text, name, tip: t.tab[name].tip, border_thickness: 0)
               end
@@ -35,8 +35,8 @@ module Wrath
             end
           end
 
-          scroll_window height: 300, width: $window.width - 40, background_color: BACKGROUND_COLOR do
-            @key_grid = grid num_columns: 2, padding: 10, spacing: 10
+          scroll_window height: 75, width: $window.width - 10, background_color: BACKGROUND_COLOR do
+            @key_grid = grid num_columns: 2, padding: 2.5, spacing: 2.5
           end
         end
 
@@ -90,10 +90,10 @@ module Wrath
         clear
 
         controls.keys(@tabs_group.value).each do |control|
-          key_label = label t.label[control], width: 270
+          key_label = label t.label[control], width: 95
           key = controls[@tabs_group.value, control]
           button_label = key.to_s.tr('_', ' ')
-          button(button_label, width: 350) { choose_key control, key_label }
+          button(button_label, width: 75) { choose_key control, key_label }
         end
       end
     end

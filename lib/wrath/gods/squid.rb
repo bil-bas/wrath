@@ -1,7 +1,7 @@
 module Wrath
   class Squid < God
     def on_disaster_start(sender)
-      SquidTentacle.create(position: spawn_position($window.retro_height), parent: parent) unless parent.client?
+      SquidTentacle.create(position: spawn_position($window.height), parent: parent) unless parent.client?
     end
 
     def on_disaster_end(sender)

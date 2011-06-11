@@ -27,7 +27,7 @@ module Wrath
 
       # Draw overlay to make it look dark.
       if in_disaster?
-        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, DISASTER_DARKNESS_COLOR)
+        $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, DISASTER_DARKNESS_COLOR)
         # TODO: Add emergency lighting.
       end
     end

@@ -14,12 +14,12 @@ class Menu < Gui
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
     horizontal spacing: 0, align: :center do
-      @left_priests = vertical padding: 0, spacing: 14
+      @left_priests = vertical padding: 0, spacing: 1
       vertical spacing: 0, padding: 0 do
-        label t.title, font_size: 30 * sprite_scale, color: Color.rgb(50, 120, 255), width: 125 * sprite_scale, justify: :center
-        label t.subtitle, font_size: 10 * sprite_scale, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
-        vertical spacing: 8, align: :center do
-          options = { width: 300, font_size: 28, justify: :center, shortcut: :auto }
+        label t.title, font_size: 30, color: Color.rgb(50, 120, 255), width: 30, justify: :center
+        label t.subtitle, font_size: 10, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
+        vertical spacing: 2, align: :center do
+          options = { width: 75, font_size: 7, justify: :center, shortcut: :auto }
           ACTIONS.each_pair do |name, action|
             button(t.button[name].text, options.merge(tip: t.button[name].tip)) do
               case action
@@ -30,13 +30,13 @@ class Menu < Gui
           end
         end
 
-        label "v#{VERSION}", font_size: 18, justify: :center, align: :center
+        label t.label.version(VERSION), font_size: 4, justify: :center, align: :center
       end
 
-      @right_priests = vertical padding: 0, spacing: 14
+      @right_priests = vertical padding: 0, spacing: 1
     end
 
-    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), $window.sprite_scale * 2.3) }
+    icons = Priest::NAMES.map {|name| ScaledImage.new(Priest.icon(name), 2.3) }
     @left_priests.clear
     @left_priests.with do
       icons[0..4].each_with_index {|icon, i| label '', icon: icon, tip: Priest.title(Priest::NAMES[i]) }

@@ -1,3 +1,4 @@
+module Wrath
 class Gui < Fidgit::GuiState
   BACKGROUND_COLOR = Color.rgb(0, 0, 75)
 
@@ -9,7 +10,6 @@ class Gui < Fidgit::GuiState
     super
 
     self.cursor.image = Image["gui/cursor.png"]
-    self.cursor.factor = $window.sprite_scale
 
     create_background
 
@@ -26,19 +26,20 @@ class Gui < Fidgit::GuiState
 
   def draw
     @@background_image.draw 0, 0, -Float::INFINITY if draw_background?
-    $window.scale(1.0 / $window.sprite_scale) { super }
+    super
   end
 
   def create_background
     unless defined? @@background_image
-      @@background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height, color: Color.rgb(0, 0, 40))
+      @@background_image = TexPlay.create_image($window, $window.width, $window.height, color: Color.rgb(0, 0, 40))
       $window.render_to_image(@@background_image) do
-        color = Color.rgb(255, 255, 255)
+        color = Color.rgb(220, 220, 255)
         500.times do
-          color.alpha = 75 + rand(50)
-          pixel.draw(rand($window.retro_width), rand($window.retro_height), 0, 1, 1, color)
+          color.alpha = random(75, 125).to_i
+          pixel.draw(rand(Game::REAL_WIDTH), rand(Game::REAL_HEIGHT), 0, 1, 1, color)
         end
       end
     end
   end
+end
 end

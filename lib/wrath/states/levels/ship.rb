@@ -12,12 +12,12 @@ class Level < GameState
 
       # Static objects.
       MAST_SPAWNS.each do |pos|
-        Mast.create(x: altar.x + pos[0], y: Margin::TOP + (($window.retro_height - Margin::TOP) / 2) + pos[1])
+        Mast.create(x: altar.x + pos[0], y: Margin::TOP + (($window.height - Margin::TOP) / 2) + pos[1])
       end
 
-      (0...$window.retro_width).step(8) do |x|
-        Bulwalk.create(x: x + 4, y: 16) unless x.between?($window.retro_width / 2 - 8, $window.retro_width / 2)
-        Bulwalk.create(x: x + 4, y: $window.retro_height - 1)
+      (0...$window.width).step(8) do |x|
+        Bulwalk.create(x: x + 4, y: 16) unless x.between?($window.width / 2 - 8, $window.width / 2)
+        Bulwalk.create(x: x + 4, y: $window.height - 1)
       end
     end
 
@@ -36,13 +36,13 @@ class Level < GameState
       super
 
       if started?
-        2.times { WaterDroplet.create(parent: self, position: [rand($window.retro_width), rand($window.retro_height), 1],
+        2.times { WaterDroplet.create(parent: self, position: [rand($window.width), rand($window.height), 1],
                                       velocity: [-0.5 + rand(0.99), 0, 0.2 + rand(0.3)], casts_shadow: false) }
       end
     end
 
     def create_altar
-      Altar.create(x: $window.retro_width / 2, y: Tile::HEIGHT * 3.5)
+      Altar.create(x: $window.width / 2, y: Tile::HEIGHT * 3.5)
     end
   end
 end

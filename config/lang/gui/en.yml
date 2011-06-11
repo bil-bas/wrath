@@ -191,6 +191,8 @@ gui:
   menu:
     title: Wrath
     subtitle: Appease or Die!
+    label:
+      version: v%1 by Spooner
     button:
       play:
         text: Play

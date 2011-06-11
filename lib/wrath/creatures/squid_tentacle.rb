@@ -37,7 +37,7 @@ module Wrath
     def update
       return unless exists?
 
-      destroy if parent.host? and z > $window.retro_height
+      destroy if parent.host? and z > $window.height
 
       self.z_velocity = if @leaving
                           3

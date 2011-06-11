@@ -40,7 +40,7 @@ module Wrath
       end
 
       vertical spacing: 0 do
-        label heading, font_size: 32
+        label heading, font_size: 8
 
         player_grid
 
@@ -98,7 +98,7 @@ module Wrath
     def level_picker
       grid num_columns: 2, padding_h: 0 do
         label t.label.map
-        @level_picker = combo_box value: Level::LEVELS.first, width: $window.width * 0.75, enabled: (not client?) do
+        @level_picker = combo_box value: Level::LEVELS.first, width: 140, enabled: (not client?), align: :center do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
             @god_picker.value = level::GOD
@@ -106,7 +106,7 @@ module Wrath
         end
 
         label t.label.god
-        @god_picker = combo_box value: @level_picker.value::GOD, width: $window.width * 0.75 do
+        @god_picker = combo_box value: @level_picker.value::GOD, width: 140, align: :center do
           subscribe :changed do |sender, god|
             send_message(Message::UpdateLobby.new(:god, god)) if host?
           end
@@ -119,7 +119,7 @@ module Wrath
       old_value = combo.value
       combo.clear
       Priest::NAMES.each do |name|
-        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), $window.sprite_scale * 0.75)
+        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), 0.75)
       end
       combo.value = old_value || Priest::FREE_UNLOCKS[combo_index] # Default 2 will be picked, since they are always playable.
     end
@@ -130,8 +130,8 @@ module Wrath
       @god_picker.clear
       @level_picker.clear
       Level::LEVELS.each do |level|
-        @god_picker.item(level::GOD.to_s, level::GOD, icon: ScaledImage.new(level::GOD.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
-        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, $window.sprite_scale * 0.75), enabled: level.unlocked?)
+        @god_picker.item(level::GOD.to_s, level::GOD, icon: ScaledImage.new(level::GOD.icon, 0.75), enabled: level.unlocked?)
+        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, 0.75), enabled: level.unlocked?)
       end
       @level_picker.value = old_level_value if old_level_value
       # God will be selected based on the level.
@@ -156,7 +156,7 @@ module Wrath
       @player_sprite_combos ||= {}
 
       is_local = ((player_number == @player_number) or local?)
-      @player_sprite_combos[player_name] = combo_box width: 290, enabled: is_local do
+      @player_sprite_combos[player_name] = combo_box width: 72, enabled: is_local, align: :center do
         subscribe :changed do |sender, name|
           enable_priest_options
 

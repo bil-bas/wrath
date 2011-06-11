@@ -11,7 +11,7 @@ class Level < GameState
       # Static objects.
       18.times { Block.create(stack: [1, 1, 1, 1, 2, 2, 3].sample) }
 
-      (0...$window.retro_width).step(9) do |x|
+      (0...$window.width).step(9) do |x|
         Block.create(x: x + 4, y: 16, stack: 2)
       end
     end

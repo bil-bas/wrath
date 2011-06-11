@@ -40,7 +40,7 @@ module Wrath
     def draw
       super
 
-      intensity = ((parent.retro_height - z.to_f) / parent.retro_height) - 0.75
+      intensity = ((parent.height - z.to_f) / parent.height) - 0.75
       color = Color::GREEN.dup
       color.alpha = 100
       intensity *= (3 + Math::sin(milliseconds / 500.0))

@@ -70,8 +70,7 @@ end
 class Game < Window
   include Log
 
-  RETRO_WIDTH = 192
-  RETRO_HEIGHT = 120
+  REAL_WIDTH, REAL_HEIGHT = 192, 120 # Actual rendering size.
 
   SETTINGS_CONFIG_FILE = 'settings.yml' # The general settings file.
   STATISTICS_CONFIG_FILE = 'statistics.yml'
@@ -90,20 +89,27 @@ class Game < Window
 
   attr_reader :pixel, :sprite_scale, :achievement_manager, :potential_fps
 
-  def retro_width; RETRO_WIDTH; end
-  def retro_height; RETRO_HEIGHT; end
-  def width; @effective_width; end
-  def height; @effective_height; end
+  # Fudge to allow TexPlay's render_to_image to work!
+  def unretro(&block)
+    @retro_sizing = false
+    yield
+    @retro_sizing = true
+  end
+  def width; @retro_sizing ? @width : super; end
+  def height; @retro_sizing ? @height : super; end
 
   def t; R18n.get.t.game; end
 
   def initialize
+    @retro_sizing = true
+    @width, @height = REAL_WIDTH, REAL_HEIGHT
+
     full_screen = settings[:video, :full_screen]
     if full_screen
       # Run at desktop resolution; saves infinite headaches!
       width, height = [screen_width, screen_height]
-      @sprite_scale = [width / RETRO_WIDTH.to_f, height / RETRO_HEIGHT.to_f].min
-      @effective_width, @effective_height = (RETRO_WIDTH * @sprite_scale).to_i, (RETRO_HEIGHT * @sprite_scale).to_i
+      @sprite_scale = [width / REAL_WIDTH.to_f, height / REAL_HEIGHT.to_f].min
+      @effective_width, @effective_height = @width * @sprite_scale, @height * @sprite_scale
       @correct_aspect = (@effective_width == screen_width) and (@effective_height == screen_height)
       unless @correct_aspect
         @offset_x = (screen_width - @effective_width) / 2
@@ -112,10 +118,13 @@ class Game < Window
     else
       # Run in a window at an integer scaling up factor.
       @sprite_scale = settings[:video, :window_scale]
-      width, height = [RETRO_WIDTH * @sprite_scale, RETRO_HEIGHT * @sprite_scale]
+      width, height = [REAL_WIDTH * @sprite_scale, REAL_HEIGHT * @sprite_scale]
       @effective_width, @effective_height = width, height
       @correct_aspect = true
     end
+
+    Font.factor_stored = @sprite_scale
+    Font.factor_rendered = 1.0 / @sprite_scale
 
     log.info { "Opened window at #{width}x#{height} (X#{@sprite_scale} zoom)" }
 
@@ -190,7 +199,7 @@ class Game < Window
       scale(@sprite_scale) { super }
     else
       translate(@offset_x, @offset_y) do
-        clip_to(0, 0, @effective_width, @effective_height) do
+        clip_to(0, 0, width, height) do
           scale(@sprite_scale) { super }
         end
       end

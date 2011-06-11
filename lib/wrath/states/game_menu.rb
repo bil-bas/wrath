@@ -1,5 +1,7 @@
 module Wrath
-  class GameMenu < Gui
+  class GameMenu < Fidgit::DialogState
+    def self.t; R18n.get.t.gui[Inflector.underscore(Inflector.demodulize(name))]; end
+    def t; self.class.t; end
     def draw_background?; false; end
 
     def initialize
@@ -9,14 +11,12 @@ module Wrath
       @released_button = false
     end
 
-    def setup
-      super
-
+    def pushed
       @close_button = controls[:general, :menu]
       on_input(@close_button) { pop_game_state if @released_button }
 
-      vertical background_color: BACKGROUND_COLOR, align: :center do
-        options = { width: 300, justify: :center }
+      vertical background_color: Gui::BACKGROUND_COLOR, align: :center do
+        options = { width: 75, justify: :center }
         button t.button.resume.text, options.merge(tip: t.button.resume.tip, shortcut: :auto) do
           pop_game_state
         end
@@ -38,15 +38,8 @@ module Wrath
       end
     end
 
-    def finalize
-      super
+    def popped
       input.delete @close_button
-    end
-
-    def draw
-      previous_game_state.draw
-      $window.flush
-      super
     end
 
     def update

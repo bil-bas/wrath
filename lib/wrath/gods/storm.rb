@@ -39,7 +39,7 @@ module Wrath
         mode = :default
       end
 
-      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.retro_width, $window.retro_height, color, mode )
+      $window.pixel.draw(0, 0, ZOrder::FOREGROUND, $window.width, $window.height, color, mode )
     end
   end
 end

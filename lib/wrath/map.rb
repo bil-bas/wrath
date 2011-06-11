@@ -27,10 +27,11 @@ module Wrath
       all_tiles.each(&:render_edges)
 
       # Cache all the images into a big image, to save drawing them separately.
-      @background_image = TexPlay.create_image($window, $window.retro_width, $window.retro_height)
+      @background_image = TexPlay.create_image($window, $window.width, $window.height)
       $window.render_to_image(@background_image) do
         all_tiles.each(&:draw)
       end
+      @background_image.refresh_cache
 
       every(AnimatedTile::ANIMATION_PERIOD, &method(:update_animations).to_proc)
 

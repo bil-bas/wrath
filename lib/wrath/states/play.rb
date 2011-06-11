@@ -6,11 +6,11 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
-        vertical padding: 0, spacing: 10 do
+        vertical padding: 0, spacing: 2.5 do
           BUTTONS.each do |name|
-            button(t.button[name].text, icon: icon(name), width: 350, shortcut: :auto, tip: t.button[name].tip) { send("#{name}_game") }
+            button(t.button[name].text, icon: Image["gui/play_#{name}.png"], width: 87, shortcut: :auto, tip: t.button[name].tip) { send("#{name}_game") }
           end
         end
 
@@ -18,10 +18,6 @@ module Wrath
           button(t.button.back.text, shortcut: :auto) { pop_game_state }
         end
       end
-    end
-
-    def icon(type)
-      ScaledImage.new(Image["gui/play_#{type}.png"], $window.sprite_scale)
     end
 
     def offline_game

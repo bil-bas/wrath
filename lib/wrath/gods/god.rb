@@ -62,7 +62,7 @@ module Wrath
 
     def initialize(options = {})
       options = {
-          x: $window.retro_width / 2,
+          x: $window.width / 2,
           y: 1,
           zorder: ZOrder::GUI,
           rotation_center: :top_center,
@@ -153,8 +153,8 @@ module Wrath
     def spawn_position(height)
       margin = parent.class::Margin
       [
-        margin::LEFT + rand($window.retro_width - margin::LEFT - margin::RIGHT),
-        margin::TOP + rand($window.retro_height - margin::TOP - margin::BOTTOM),
+        margin::LEFT + rand($window.width - margin::LEFT - margin::RIGHT),
+        margin::TOP + rand($window.height - margin::TOP - margin::BOTTOM),
         height
       ]
     end

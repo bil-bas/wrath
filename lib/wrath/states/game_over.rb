@@ -35,7 +35,7 @@ class GameOver < Gui
                               x: @avatar.x, y: @avatar.y - @avatar.z - @avatar.height / 2.0,
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
 
-    horizontal spacing: 10, padding_top: $window.height - 75, padding_left: $window.width / 2 - 200 do
+    horizontal spacing: 2.5, padding_top: $window.height - 15, align_h: :center do
       button t.button.lobby.text, z: ZOrder::GUI, tip: t.button.lobby.tip do
         return_to_lobby
       end

@@ -8,7 +8,7 @@
 :elements:
   :Element:
     :font_name: pixelated.ttf
-    :font_size: 24
+    :font_size: 6
     :color: ?blue_white
     :background_color: ?none
     :border_color: ?light_blue
@@ -21,24 +21,28 @@
       :background_color: ?light_blue
 
   :Packer:
-    :spacing_h: 20
-    :spacing_v: 20
-    :padding_left: 16
-    :padding_right: 16
-    :padding_top: 12
-    :padding_bottom: 18
+    :spacing_h: 2
+    :spacing_v: 2
+    :padding_left: 4
+    :padding_right: 4
+    :padding_top: 3
+    :padding_bottom: 4.5
 
   :Button:
-    :border_thickness: 2
-    :padding_left: 16
-    :padding_right: 16
+    :border_thickness: 0.5
+    :padding_left: 4
+    :padding_right: 4
+    :padding_top: 0
+    :padding_bottom: 0
     :background_color: ?dark_blue
 
   :ComboBox:
     :border_thickness: 0
 
   :ToolTip:
-    :font_size: 15
+    :font_size: 4
+    :padding_top: 1
+    :padding_bottom: 1
     :background_color: ?very_dark_blue
 
   :TextArea:
@@ -46,7 +50,8 @@
     :background_color: ?very_dark_blue
     
   :ScrollBar: # < Composite
-    :rail_width: 24
+    :rail_width: 6
     
   :ScrollWindow: # < Composite
-    :scroll_bar_thickness: 24
+    :scroll_bar_thickness: 6
+

@@ -8,7 +8,9 @@ module Wrath
       options = {
           background_color: BACKGROUND_COLOR,
           color: TEXT_COLOR,
-          padding_left: 12,
+          padding_left: 3,
+          padding_top: 1,
+          padding_bottom: 1,
       }.merge! options
 
       super("#{total.floor} / #{required.floor}", options)
@@ -45,15 +47,15 @@ module Wrath
 
       vertical do
         horizontal padding: 0 do |packer|
-          packer.label t.title, font_size: 32
+          packer.label t.title, font_size: 8
           completed = achievement_manager.achievements.count {|a| a.complete? }
           Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
-                                    parent: packer, width: $window.width - 450, font_size: 32)
+                                    parent: packer, width: $window.width - 112, font_size: 8)
         end
 
-        scroll_window width: $window.width - 40, height: $window.height - 150, background_color: BACKGROUND_COLOR do
+        scroll_window width: $window.width - 10, height: $window.height - 37, background_color: BACKGROUND_COLOR do
           # List will be populated in #update.
-          @achievements_list = vertical spacing: 5
+          @achievements_list = vertical spacing: 1.25
         end
 
         horizontal padding: 0 do
@@ -94,35 +96,36 @@ module Wrath
     
     protected
     def add_achievement(achieve, packer)
-      horizontal parent: packer, padding: 4, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
-        label "", icon: ScaledImage.new(achieve.icon, sprite_scale * 1.5),
-            border_thickness: 4, border_color: Color::BLACK, padding: 0
+      horizontal parent: packer, padding: 2, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
+        label "", icon: ScaledImage.new(achieve.icon, 1.5),
+            border_thickness: 1, border_color: Color::BLACK, padding: 0
 
-        vertical padding: 0, spacing: 0 do
+        vertical padding_left: 2, padding: 0, spacing: 0 do
           horizontal padding: 0, spacing: 0 do |packer|
             # title
             color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
-            packer.label achieve.title, width: 400, font_size: 20, color: color
+            packer.label achieve.title, width: 100, font_size: 5, color: color, padding: 0
 
             # Progress bar, if needed.
             if achieve.complete?
-              @achieved_time_labels << packer.label('', font_size: 15, padding_left: 0)
+              @achieved_time_labels << packer.label('', font_size: 4, padding: 0)
             else
               ProgressBar.new(achieve.total, achieve.required,
-                      parent: packer, width: $window.width - 590, height: 20, font_size: 15)
+                      parent: packer, width: $window.width - 147, height: 5, font_size: 4)
             end
           end
 
           # Description of what has been done.
-          text_area text: achieve.description, font_size: 15, width: $window.width - 180,
-              background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false
+          text_area text: achieve.description, font_size: 4, width: $window.width - 45,
+              background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false,
+              padding: 0
 
           unless achieve.unlocks.empty?
-            horizontal padding: 0, spacing: 4 do
+            horizontal padding_top: 2, padding: 0, spacing: 3 do
               achieve.unlocks.each do |unlock|
-                icon = ScaledImage.new(unlock.icon, sprite_scale * 0.75)
+                icon = ScaledImage.new(unlock.icon, 0.75)
                 title = unlock.unlocked? ? t.unlocked : t.locked
-                label "", icon: icon, tip: "#{title}: #{unlock.title}", background_color: UNLOCK_BACKGROUND_COLOR
+                label "", icon: icon, tip: "#{title}: #{unlock.title}", padding: 1, background_color: UNLOCK_BACKGROUND_COLOR
               end
             end
           end

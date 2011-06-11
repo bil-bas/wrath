@@ -7,17 +7,17 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         horizontal padding: 0 do
           group do
             grid num_columns: 2, padding: 0 do
               # Windowed options.
-              radio_button t.button.windowed.text, false, width: 250, tip: t.button.windowed.tip
+              radio_button t.button.windowed.text, false, width: 80, tip: t.button.windowed.tip
 
-              @window_scale_combo = combo_box value: settings[:video, :window_scale], width: 250 do
+              @window_scale_combo = combo_box value: settings[:video, :window_scale], width: 90, align: :center do
                 SCALE_RANGE.each do |scale|
-                  w, h = retro_width * scale, retro_height * scale
+                  w, h = $window.width * scale, $window.height * scale
                   if w <= max_window_width and h <= max_window_height
                     item "#{w}x#{h} #{t.zoom(scale)}", scale
                   end
@@ -30,9 +30,9 @@ module Wrath
               end
 
               # full-screen options.
-              radio_button t.button.full_screen.text, true, width: 250, tip: t.button.full_screen.tip
+              radio_button t.button.full_screen.text, true, width: 62, tip: t.button.full_screen.tip
 
-              label "(#{screen_width}x#{screen_height})"
+              label "#{screen_width}x#{screen_height}"
             end
 
             self.value = settings[:video, :full_screen]
@@ -47,7 +47,7 @@ module Wrath
 
         @warning_label = label " "
 
-        horizontal padding: 0, spacing: 20 do
+        horizontal padding: 0, spacing: 5 do
           button(t.button.back.text, shortcut: :auto) { pop_game_state }
           button(t.button.default.text, tip: t.button.default.tip) do
             @window_scale_combo.value = DEFAULT_SCALE
