@@ -4,7 +4,7 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         grid num_columns: 2, padding: 0 do
           name_entry

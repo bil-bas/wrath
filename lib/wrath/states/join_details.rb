@@ -4,13 +4,13 @@ module Wrath
       super
 
       vertical do
-        label t.title, font_size: 32
+        label t.title, font_size: 8
 
         grid num_columns: 2, padding: 0 do
           name_entry
 
           label t.label.address
-          @address = text_area text: settings[:network, :address], max_height: 30, width: $window.width / 2
+          @address = text_area TEXT_ENTRY_OPTIONS.merge(text: settings[:network, :address])
 
           port_entry
         end
