@@ -1,14 +1,22 @@
 module Wrath
 class Level < GameState
   class Desert < Level
-    DEFAULT_TILE = Sand
+    DEFAULT_TILE = DesertSand
 
     GOD = Mummy
 
     def create_objects
       super
 
-      map.tiles.flatten.select {|t| t.is_a? Sand }.each do |tile|
+      [-24, 24].each do |x|
+        x += altar.x
+        (-30..+30).step(20) do |y|
+          y += altar.y
+          Column.create(position: [x, y, 0])
+        end
+      end
+
+      map.tiles.flatten.select {|t| t.is_a? DEFAULT_TILE }.each do |tile|
         if tile.adjacent_tiles(directions: :orthogonal).any? {|t| t.is_a? Water }
           PalmTree.create(x: tile.x, y: tile.y, z: 0) if rand() < 0.6
         end
@@ -37,9 +45,9 @@ class Level < GameState
       end
 
       # Put sand under the altar, to clean away water.
-      ((num_rows / 2 - 1)..(num_rows / 2 + 3)).each do |y|
+      ((num_rows / 2 - 3)..(num_rows / 2 + 5)).each do |y|
         ((num_columns / 2 - 3)..(num_columns / 2 + 2)).each do |x|
-          grid[y][x] = Sand
+          grid[y][x] = DEFAULT_TILE
         end
       end
 

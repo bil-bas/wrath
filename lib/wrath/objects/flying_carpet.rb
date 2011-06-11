@@ -2,7 +2,7 @@ module Wrath
   class FlyingCarpet < DynamicObject
     trait :timer
 
-    LEVITATE_HEIGHT = 15
+    LEVITATE_HEIGHT = 16.5
     EXTRA_SPEED = 1
     FAVOUR_COST = 1 / 1000.0 # Minimal cost.
 

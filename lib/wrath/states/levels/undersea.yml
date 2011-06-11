@@ -15,6 +15,8 @@
     :initial: 3
   :Seaweed:
     :initial: 12
+  :Column:
+    :initial: 4
 
   :DeepOne:
     :initial: 3
