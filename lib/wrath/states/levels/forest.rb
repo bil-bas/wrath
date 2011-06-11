@@ -25,11 +25,11 @@ class Level < GameState
 
 
       # Standing stones.
-      (-180...180).step(360 / NUM_STANDING_STONES) do |angle|
-        angle = angle.degrees_to_radians
-        Boulder.create(x: altar.x + Math::sin(angle) * STANDING_STONES_RADIUS,
-                       y: altar.y + Math::cos(angle) * STANDING_STONES_RADIUS, factor_x: 0.7)
-      end
+#      (-180...180).step(360 / NUM_STANDING_STONES) do |angle|
+#        angle = angle.degrees_to_radians
+#        Boulder.create(x: altar.x + Math::sin(angle) * STANDING_STONES_RADIUS,
+#                       y: altar.y + Math::cos(angle) * STANDING_STONES_RADIUS, factor_x: 0.7)
+#      end
     end
 
     def random_tiles
