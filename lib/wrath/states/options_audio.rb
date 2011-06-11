@@ -18,7 +18,7 @@ module Wrath
           end
           @master_percentage = label "100%"
           @master_slider.value = $window.volume
-          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: :auto) do |sender, value|
+          @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: :auto, width: 35) do |sender, value|
             if value
               $window.mute
             else
@@ -37,7 +37,7 @@ module Wrath
           @effects_percentage = label "100%"
           @effects_slider.value = Sample.volume
 
-          button(t.button.play_sample.text) { Sample["objects/explosion.ogg"].play }
+          button(t.button.play_sample.text, width: 35) { Sample["objects/explosion.ogg"].play }
 
           # MUSIC
           label t.label.music

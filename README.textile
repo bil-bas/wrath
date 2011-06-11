@@ -95,7 +95,7 @@ h2. Third party assets used
 * Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. These sprites are under the "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/ license.
 * Original sprites created with "GIMP":http://www.gimp.org/
 * Sound effects created using "bfxr":http://www.bfxr.net/
-* "Pixelated" font - created by Affinity and Epsilon (see <tt>media/fonts/pixelated.txt</tt>)
+* "04FONT":http://www.04.jp.org font - Copyright 1998-2003 Yuji Oshihoto
 * "Gosu":http://libgosu.org/ game development library
 * "Chingu":http://ippa.se/chingu game library (extending Gosu)
 * "Fidgit":https://github.com/Spooner/fidgit gui library (extending Chingu)

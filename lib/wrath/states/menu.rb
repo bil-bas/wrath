@@ -16,10 +16,10 @@ class Menu < Gui
     horizontal spacing: 0, align: :center do
       @left_priests = vertical padding: 0, spacing: 1
       vertical spacing: 0, padding: 0 do
-        label t.title, font_size: 30, color: Color.rgb(50, 120, 255), width: 30, justify: :center
+        label t.title, font_size: 30, color: Color.rgb(50, 120, 255), width: 30, justify: :center, padding_v: 0
         label t.subtitle, font_size: 10, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
         vertical spacing: 2, align: :center do
-          options = { width: 75, font_size: 7, justify: :center, shortcut: :auto }
+          options = { width: 75, justify: :center, shortcut: :auto }
           ACTIONS.each_pair do |name, action|
             button(t.button[name].text, options.merge(tip: t.button[name].tip)) do
               case action

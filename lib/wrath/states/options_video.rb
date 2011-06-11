@@ -30,7 +30,7 @@ module Wrath
               end
 
               # full-screen options.
-              radio_button t.button.full_screen.text, true, width: 62, tip: t.button.full_screen.tip
+              radio_button t.button.full_screen.text, true, width: 80, tip: t.button.full_screen.tip
 
               label "#{screen_width}x#{screen_height}"
             end
