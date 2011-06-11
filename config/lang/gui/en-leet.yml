@@ -162,6 +162,8 @@ gui:
   menu: 
     title: WR47H
     subtitle: 4PP3453 0R D13!
+    label: 
+      version: V%1 8Y 5P00N3R
     button: 
       play: 
         text: P14Y
@@ -216,10 +218,15 @@ gui:
     title: 0P710N5 | V1D30
     zoom: (X%1 200M)
     label: 
-      window_size: W1ND0W 5123
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
       back: *id001
+      windowed: 
+        text: W1ND0W3D
+        tip: RUN 7H3 64M3 1N 4 W1ND0W
+      full_screen: 
+        text: FU11-5CR33N
+        tip: RUN 7H3 64M3 1N 4 FU11 5CR33N 47 D35K70P R3501U710N
       default: 
         text: D3F4U175
         tip: R3537 70 D3F4U17 V41U35

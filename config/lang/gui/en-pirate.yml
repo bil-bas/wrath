@@ -162,6 +162,8 @@ gui:
   menu: 
     title: Wrath
     subtitle: Appease or Die!
+    label: 
+      version: v%1 by Spooner
     button: 
       play: 
         text: Play
@@ -216,10 +218,15 @@ gui:
     title: Riggin' | Video
     zoom: (X%1 zoom)
     label: 
-      window_size: Window size
       warning: Changes require that th' game be restarted
     button: 
       back: *id001
+      windowed: 
+        text: Windowed
+        tip: Run th' game in a window
+      full_screen: 
+        text: Full-screen
+        tip: Run th' game in a full screen at desktop resolution
       default: 
         text: Defaults
         tip: Reset t' default values
