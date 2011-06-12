@@ -16,7 +16,7 @@ module Wrath
     def schedule_gas
       after(150 + rand(250)) do
         if in_disaster?
-          GasJet.create(position: spawn_position(0))
+          GasJet.create(parent: parent, position: spawn_position(0))
           schedule_gas
         end
       end

@@ -332,7 +332,7 @@ class Level < GameState
       if map
         if map.tiles_to_create? # Create a couple of tiles.
           # Client must create all at once, otherwise might not be ready for the host sending objects!
-          map.create_tiles(client? ? Float::INFINITY : 10)
+          map.create_tiles(client? ? 100000 : 10)
         elsif map.incomplete? # All the tiles have been created, splice them onto the background.
           map.generate_background
         elsif not client? # Create some objects!
@@ -382,6 +382,9 @@ class Level < GameState
     @winner = winner
     @winner.win!
     @winner.opponent.lose!
+
+    # Ensure that if we have any game-states above us, that we always push the GameOver directly on top of us.
+    game_state_manager.pop_until_game_state self
     push_game_state GameOver.new(winner)
   end
 

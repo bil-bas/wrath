@@ -12,6 +12,8 @@ module Chingu
     def_delegators :$window, :sprite_scale, :width, :height
     def_delegators :@game_state_manager, :pop_until_game_state
 
+    def networked?; false; end
+
     alias_method :original_initialize, :initialize
     public
     def initialize(options = {})
@@ -30,10 +32,6 @@ module Chingu
     def object_by_id(id)
       game_objects.object_by_id(id)
     end
-
-    public
-    # Do we allow a specific network message to perform its action?
-    def accept_message?(message); false; end
     
     public
     # Fudge to allow Fidgit::Elements to be drawn in Chingu states.

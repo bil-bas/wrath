@@ -25,6 +25,8 @@ module Wrath
   end
 
   class ViewAchievements  < Gui
+    include ShownOverNetworked
+
     ACHIEVEMENT_BACKGROUND_COLOR = Color.rgb(0, 0, 20)
 
     INCOMPLETE_TITLE_COLOR = Color.rgb(150, 150, 150)

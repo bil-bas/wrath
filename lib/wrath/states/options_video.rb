@@ -1,5 +1,7 @@
 module Wrath
   class OptionsVideo < Gui
+    include ShownOverNetworked
+
     SCALE_RANGE = 4..12
     DEFAULT_SCALE = 4
 

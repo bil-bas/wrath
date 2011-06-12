@@ -19,7 +19,7 @@ module Wrath
     end
 
     def go_to_sleep
-      Tree.create(position: position, can_wake: true)
+      Tree.create(parent: parent, position: position, can_wake: true)
       self.destroy
     end
 

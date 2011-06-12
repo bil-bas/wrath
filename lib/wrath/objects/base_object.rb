@@ -262,7 +262,7 @@ class BaseObject < GameObject
 
     @tile = parent.tile_at_coordinate(x, y)
     if @tile.nil?
-      log.warn { "#{self.class} found outside the map, at [#{x}, #{y}] - destroyed" }
+      log.warn { "#{self} found outside the map, at [#{x}, #{y}] - destroyed" }
       destroy
       return
     end

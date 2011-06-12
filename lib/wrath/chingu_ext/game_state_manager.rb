@@ -5,12 +5,12 @@ module Chingu
     #    
     def pop_until_game_state(new_state, options = {})
       if new_state.is_a? Class
-        raise ArgumentError, "No state of given class is on the stack" unless @game_states[0..-2].any? {|s| s.is_a? new_state }
+        raise ArgumentError, "No state of given class is on the stack" unless @game_states.any? {|s| s.is_a? new_state }
 
         pop_game_state(options) until current_game_state.is_a? new_state
 
       else
-        raise ArgumentError, "State is not on the stack" unless @game_states[0..-2].include? new_state
+        raise ArgumentError, "State is not on the stack" unless @game_states.include? new_state
 
         pop_game_state(options) until current_game_state == new_state
       end
@@ -123,5 +123,5 @@ module Chingu
       self.inside_state = nil   # no longer 'inside' (as in within initialize() etc) a game state
     end
     alias :pop :pop_game_state
-  end  
+  end
 end

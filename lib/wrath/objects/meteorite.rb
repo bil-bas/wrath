@@ -28,7 +28,7 @@ module Wrath
         @landed = true
         Sample["objects/explosion.ogg"].play_at_x(x)
         self.image = @frames[SPRITE_EMBEDDED]
-        Crater.create(position: position) unless parent.client?
+        Crater.create(parent: parent, position: position) unless parent.client?
         # TODO: Splash and smoke?
       end
     end

@@ -8,6 +8,10 @@ module Wrath
 
     public
     def accept_message?(message); [Message::NewGame, Message::UpdateLobby].find {|m| message.is_a? m }; end
+    def networked?; !!@network; end
+    def host?; @network.is_a? Server; end
+    def client?; @network.is_a? Client; end
+    def offline?; @network.nil?; end
 
     public
     def initialize(network, opponent_name, self_name = nil)
@@ -65,7 +69,7 @@ module Wrath
     end
 
     def extra_buttons
-      if @network
+      if networked?
         @ready_button = toggle_button(t.button.ready.text, shortcut: :auto) do |sender, value|
           update_ready @player_number, value
           send_message(Message::UpdateLobby.new(:ready, @player_number, value))
@@ -75,15 +79,11 @@ module Wrath
       if client?
         label t.label.wait_for_start
       else
-        @start_button = button(t.button.start.text, enabled: local?, shortcut: :auto) do
+        @start_button = button(t.button.start.text, enabled: offline?, shortcut: :auto) do
           new_game(@level_picker.value, @god_picker.value)
         end
       end
     end
-
-    def host?; @network.is_a? Server; end
-    def client?; @network.is_a? Client; end
-    def local?; @network.nil?; end
 
     def send_message(message)
       if client?
@@ -154,12 +154,12 @@ module Wrath
     def player_row(player_name, player_number)
       @player_sprite_combos ||= {}
 
-      is_local = ((player_number == @player_number) or local?)
+      is_local = ((player_number == @player_number) or offline?)
       @player_sprite_combos[player_name] = combo_box width: 72, enabled: is_local, align: :center do
         subscribe :changed do |sender, name|
           enable_priest_options
 
-          send_message(Message::UpdateLobby.new(:player, player_number, name)) unless local?
+          send_message(Message::UpdateLobby.new(:player, player_number, name)) unless offline?
         end
       end
 

@@ -1,5 +1,7 @@
 module Wrath
   class OptionsControls < Gui
+    include ShownOverNetworked
+
     TABS = [:offline_player_1, :offline_player_2, :online_player, :general]
 
     def initialize

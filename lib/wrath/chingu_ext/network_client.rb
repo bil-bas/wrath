@@ -236,6 +236,8 @@ module Chingu
       # Send whatever raw data to the server
       # Returns amount of data sent, including header.
       def send_data(data)
+        return 0 unless @socket
+
         length = @socket.write([data.length].pack(NetworkServer::PACKET_HEADER_FORMAT))
         length += @socket.write(data)
         @packets_sent += 1

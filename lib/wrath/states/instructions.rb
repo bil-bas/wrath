@@ -1,5 +1,7 @@
 module Wrath
   class Instructions < Gui
+    include ShownOverNetworked
+
     TABS = [:gods, :priests, :favour]
 
     def setup

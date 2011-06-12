@@ -1,5 +1,7 @@
 module Wrath
   class OptionsGeneral < Gui
+    include ShownOverNetworked
+
     def body
       horizontal padding: 0 do
         label t.label.locale

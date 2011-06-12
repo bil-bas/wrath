@@ -10,7 +10,7 @@ module Wrath
       unless parent.client?
         # Create some trees if there aren't enough.
         (MIN_TREES - Tree.all.size).times.each do |tree|
-          Tree.create(can_wake: true)
+          Tree.create(parent: parent, can_wake: true)
         end
 
         Tree.all.select(&:can_wake?).sample(NUM_ENTS).each do |tree|

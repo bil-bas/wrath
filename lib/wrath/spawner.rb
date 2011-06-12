@@ -42,7 +42,7 @@ module Wrath
 
     def spawn_initial(number)
       @initial_spawns.shift(number).each do |klass|
-        klass.create(possible_contents: @possible_contents[klass])
+        klass.create(parent: parent, possible_contents: @possible_contents[klass])
       end
 
       nil

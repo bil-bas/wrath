@@ -1,5 +1,7 @@
 module Wrath
   class GameMenu < Fidgit::DialogState
+    include ShownOverNetworked
+
     def self.t; R18n.get.t.gui[Inflector.underscore(Inflector.demodulize(name))]; end
     def t; self.class.t; end
     def draw_background?; false; end
@@ -11,12 +13,14 @@ module Wrath
       @released_button = false
     end
 
-    def pushed
+    def setup
+      super
+
       @close_button = controls[:general, :menu]
       on_input(@close_button) { pop_game_state if @released_button }
 
       vertical background_color: Gui::BACKGROUND_COLOR, align: :center do
-        options = { width: 75, justify: :center }
+        options = { width: 50, font_size: 5, justify: :center }
         button t.button.resume.text, options.merge(tip: t.button.resume.tip, shortcut: :auto) do
           pop_game_state
         end
@@ -38,13 +42,10 @@ module Wrath
       end
     end
 
-    def popped
-      input.delete @close_button
-    end
-
-    def update
+    def finalize
       super
-      # TODO: Update previous if networked.
+      container.clear
+      input.delete @close_button
     end
   end
 end

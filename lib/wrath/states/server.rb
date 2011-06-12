@@ -6,6 +6,7 @@ class Server < GameStates::NetworkServer
 
   public
   def accept_message?(message); [Message::ClientReady].find {|m| message.is_a? m }; end
+  def networked?; true; end
 
   public
   def initialize(options = {})

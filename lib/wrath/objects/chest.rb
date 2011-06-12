@@ -50,7 +50,7 @@ class Chest < Container
   def refill
     if empty? and not @possible_contents.empty? and not parent.client?
       klass = @possible_contents.sample
-      object = klass.create(x: -100 * rand(100), y: -100 * rand(100), y: 100)
+      object = klass.create(parent: parent, x: -100 * rand(100), y: -100 * rand(100), y: 100)
       pick_up(object)
     end
   end

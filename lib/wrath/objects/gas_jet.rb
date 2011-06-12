@@ -25,8 +25,8 @@ module Wrath
       self.image = @frames.next
 
       if rand(100) < 3
-        Smoke.create(x: x - 3 + rand(4) + rand(4), y: y - z - 8 - rand(3), zorder: y - 0.01 + rand(0.02),
-        color: GAS_COLOR)
+        Smoke.create(parent: parent, x: x - 3 + rand(4) + rand(4), y: y - z - 8 - rand(3),
+                     zorder: y - 0.01 + rand(0.02), color: GAS_COLOR)
       end
     end
 

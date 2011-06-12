@@ -1,5 +1,7 @@
 module Wrath
   class OptionsAudio < Gui
+    include ShownOverNetworked
+
     SLIDER_OPTIONS = { width: 75, height: 6, groove_thickness: 2, align_v: :center, range: 0.0..1.0 }
 
     def body

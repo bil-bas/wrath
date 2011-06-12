@@ -34,9 +34,13 @@ class GameOver < Gui
     @sparkle = GameObject.new(image: sparkle_frames[0],
                               x: @avatar.x, y: @avatar.y - @avatar.z - @avatar.height / 2.0,
                               zorder: @avatar.zorder, alpha: 150, mode: :additive)
+
+    update_stats
   end
 
   def setup
+    super
+
     horizontal spacing: 2.5, padding_top: $window.height - 15, align_h: :center do
       button t.button.lobby.text, z: ZOrder::GUI, tip: t.button.lobby.tip do
         return_to_lobby
@@ -102,19 +106,14 @@ class GameOver < Gui
 
   def replay
     end_game
-    pop_game_state
+    pop_until_game_state previous_game_state
     current_game_state.replay
   end
 
   def play_next
     end_game
-    pop_game_state
+     pop_until_game_state previous_game_state
     current_game_state.play_next_level
-  end
-
-  def setup
-    super
-    update_stats
   end
 
   def update

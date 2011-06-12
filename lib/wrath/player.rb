@@ -129,7 +129,8 @@ class Player < BasicGameObject
             @avatar.contents.favor.to_f / FAVOR_TO_WIN
           end
 
-      move_by_keys if local? and not parent.winner
+      # Dont' move via keys if the parent is "covered" by another state.
+      move_by_keys if local? and (parent == parent.current_game_state)
     end
   end
 

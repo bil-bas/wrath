@@ -56,14 +56,14 @@ module Wrath
       super
 
       if @brewing and rand(100) < 20
-         Smoke.create(x: x - 3 + rand(4) + rand(4), y: y - z - height, zorder: zorder - 0.001, color: SMOKE_COLOR)
+         Smoke.create(parent: parent, x: x - 3 + rand(4) + rand(4), y: y - z - height, zorder: zorder - 0.001, color: SMOKE_COLOR)
       end
     end
 
     def complete_brew(result)
       @brewing = false
       self.image = @frames[IMAGE_UPRIGHT]
-      result.create(x: x, y: y, z: z + height, velocity: [0, 0.1, 0.5]) unless parent.client?
+      result.create(parent: parent, x: x, y: y, z: z + height, velocity: [0, 0.1, 0.5]) unless parent.client?
     end
   end
 end

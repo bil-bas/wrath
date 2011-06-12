@@ -4,6 +4,7 @@ class Client < GameStates::NetworkClient
 
   public
   def accept_message?(message); [Message::ServerReady].find {|m| message.is_a? m }; end
+  def networked?; true; end
 
   def initialize(options = {})
     options = {

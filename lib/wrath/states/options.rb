@@ -1,5 +1,7 @@
 module Wrath
   class Options < Gui
+    include ShownOverNetworked
+
     PAGES = {
         OptionsAudio => :audio,
         OptionsVideo => :video,

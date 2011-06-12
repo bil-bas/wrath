@@ -9,7 +9,7 @@ class Message
 
     protected
     def action(state)
-      object = @object_class.create(@options)
+      object = @object_class.create(@options.merge(parent: state))
 
       # Ensure the objects are attached to the correct player.
       # TODO: I'd like to rely on this being less of a kludge.
