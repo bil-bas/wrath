@@ -331,7 +331,8 @@ class Level < GameState
     else
       if map
         if map.tiles_to_create? # Create a couple of tiles.
-          map.create_tiles(client? ? Float::INFINITE : 10) # Client must create all at once!
+          # Client must create all at once, otherwise might not be ready for the host sending objects!
+          map.create_tiles(client? ? Float::INFINITY : 10)
         elsif map.incomplete? # All the tiles have been created, splice them onto the background.
           map.generate_background
         elsif not client? # Create some objects!
