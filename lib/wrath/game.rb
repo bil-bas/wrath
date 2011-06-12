@@ -194,28 +194,43 @@ class Game < Window
   end
 
   def draw
-    draw_started = milliseconds
-
-    # Draw sprites at the retrofied scale. If in full-screen at an odd aspect ratio, then cry.
-    if @correct_aspect
-      scale(@sprite_scale) { super }
-    else
-      translate(@offset_x, @offset_y) do
-        clip_to(0, 0, width, height) do
-          scale(@sprite_scale) { super }
+    if @error_message
+      begin
+        font_size = 4
+        @error_font ||= Font.new(self, default_font_name, font_size)
+        @error_message.each_line.with_index do |line, i|
+          @error_font.original_draw line.strip, @sprite_scale, @sprite_scale + (i * font_size * @sprite_scale), 0
         end
+      rescue => ex
+      end
+    else
+      begin
+        draw_started = milliseconds
+
+        # Draw sprites at the retrofied scale. If in full-screen at an odd aspect ratio, then cry.
+        if @correct_aspect
+          scale(@sprite_scale) { super }
+        else
+          translate(@offset_x, @offset_y) do
+            clip_to(0, 0, width, height) do
+              scale(@sprite_scale) { super }
+            end
+          end
+        end
+
+        @used_time += milliseconds - draw_started
+
+        @overlays.each {|o| o.draw if o.visible? }
+
+      rescue => ex
+         handle_error('draw', ex)
       end
     end
-
-    @used_time += milliseconds - draw_started
-    
-    @overlays.each {|o| o.draw if o.visible? }
-  rescue => ex
-    log.error "#draw: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
-    raise ex
   end
 
   def update
+    return if @error_message
+
     update_started = milliseconds
     
     @overlays.each(&:update)
@@ -226,20 +241,34 @@ class Game < Window
 
     recalculate_cpu_load
   rescue => ex
-    log.error "#update: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
-    raise ex
+    handle_error('update', ex)
   end
 
   # Ensure that all Gosu call-backs catch errors properly.
   %w(needs_redraw? needs_cursor? lose_focus button_down button_up).each do |callback|
     define_method callback do |*args|
+      return false if @error_message
+
       begin
         super(*args)
       rescue => ex
-        log.error "##{callback}: #{ex.class}: #{ex}\n#{ex.backtrace.join("\n")}"
-        raise ex
+        handle_error(callback, ex)
       end
     end
+  end
+
+  def handle_error(where, exception)
+    @error_message =<<TEXT
+<c=ff0000><b>Fatal error occurred in #{self.class}##{where}</b></c>
+
+Full log written to: #{CONSOLE ? 'console' : "\n<i>  #{LOG_FILE}</i>"}
+
+#{exception.class}: #{exception.message}
+#{exception.backtrace.join("\n")}
+TEXT
+
+    log.error @error_message
+    game_state_manager.game_states.clear
   end
 
   def recalculate_cpu_load
