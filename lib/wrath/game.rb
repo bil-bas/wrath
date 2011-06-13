@@ -103,6 +103,7 @@ class Game < Window
   def t; R18n.get.t.game; end
 
   def initialize
+    @error_message = nil
     @retro_sizing = true
     @width, @height = REAL_WIDTH, REAL_HEIGHT
 

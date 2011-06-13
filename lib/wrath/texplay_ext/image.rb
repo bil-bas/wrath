@@ -12,7 +12,7 @@ module Gosu
 
     # A white silhouette of the image.
     def silhouette
-      unless @silhouette
+      unless defined? @silhouette
         refresh_cache
         @silhouette = self.dup
         @silhouette.clear(dest_ignore: :transparent, color: :white)
@@ -23,7 +23,7 @@ module Gosu
 
     # Array of [colour, x, y] for all solid pixels in the object.
     def explosion
-      unless @explosion
+      unless defined? @explosion
         refresh_cache
         @explosion = []
         each do |color, x, y|

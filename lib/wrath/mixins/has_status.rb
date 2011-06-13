@@ -27,7 +27,7 @@ module Wrath
 
     def initialize(*args)
       @statuses = []
-      super *args
+      super(*args)
     end
 
     # Get the status of this type, if any.

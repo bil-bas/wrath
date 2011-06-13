@@ -39,10 +39,10 @@ module Wrath
     # This is called by Message::PerformAction or when host/local player tries to do something.
     def perform_action(target)
      if target
-        target.activated_by(self)
-      else
-        drop
-      end
+       target.activated_by(self)
+     else
+       drop
+     end
     end
 
     public

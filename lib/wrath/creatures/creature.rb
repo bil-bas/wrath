@@ -51,7 +51,7 @@ class Creature < Container
   attr_reader :state, :speed, :health, :player, :max_health, :facing, :strength
   attr_reader :flying_rise_speed, :flying_height
 
-  attr_writer :player, :state, :facing, :strength, :speed, :flying_rise_speed, :flying_height
+  attr_writer :player, :state, :strength, :speed, :flying_rise_speed, :flying_height
 
   alias_method :carrying?, :full?
   alias_method :empty_handed?, :empty?
