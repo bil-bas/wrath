@@ -16,7 +16,7 @@ module Wrath
 
         switch_game_state Menu
       else
-        Priest.icon(@preload_priests.pop)
+        Priest.animation(@preload_priests.pop)
       end
     end
   end
