@@ -55,7 +55,7 @@ module Wrath
     end
 
     def body
-      scroll_window width: width, height: 85, background_color: BACKGROUND_COLOR do
+      scroll_window width: width, height: 88, background_color: BACKGROUND_COLOR do
         # List will be populated in #update.
         @achievements_list = vertical spacing: 1.25
       end

@@ -33,7 +33,7 @@ module Wrath
           end
         end
 
-        scroll_window height: 75, width: $window.width - 10, background_color: BACKGROUND_COLOR do
+        scroll_window height: 80, width: $window.width - 10, background_color: BACKGROUND_COLOR do
           @key_grid = grid num_columns: 2, padding: 2.5, spacing: 2.5
         end
       end

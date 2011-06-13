@@ -2,6 +2,8 @@ module Wrath
 class Gui < Fidgit::GuiState
   BACKGROUND_COLOR = Color.rgb(0, 0, 75)
 
+  BODY_HEIGHT = 92
+
   def self.t; R18n.get.t.gui[Inflector.underscore(Inflector.demodulize(name))]; end
   def t; self.class.t; end
   def draw_background?; true; end
@@ -37,7 +39,7 @@ class Gui < Fidgit::GuiState
           extra_title if respond_to? :extra_title
         end
 
-        vertical padding: 0, height: 90, width: $window.width - 10 do
+        vertical padding: 0, height: BODY_HEIGHT, width: $window.width - 10 do
           body
         end
 
