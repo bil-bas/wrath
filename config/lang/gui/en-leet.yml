@@ -29,6 +29,8 @@ god:
 priest: 
   acolyte: 
     name: 4C01Y73
+  chaplain: 
+    name: CH4P141N
   cutie: 
     name: CU713
   druidess: 
@@ -43,6 +45,8 @@ priest:
     name: 533R
   shaman: 
     name: 5H4M4N
+  scientist: 
+    name: 5C13N7157
   thaumaturge: 
     name: 7H4UM47UR63
   witch: 

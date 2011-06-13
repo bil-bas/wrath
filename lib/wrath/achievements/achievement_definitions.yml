@@ -172,7 +172,10 @@
     - [:sacrifices, :totals, :animals]
     - [:sacrifices, :totals, :humanoids]
   :required: 1000
-  :unlocks: []
+  :unlocks:
+    -
+      :type: :priest
+      :name: :chaplain
 
 # ---------------------------------------
 # Sacrifices (by type).
@@ -196,7 +199,10 @@
   :statistics:
     - [:sacrifices, :type, :TestSubject]
   :required: 1
-  :unlocks: []
+  :unlocks:
+    -
+      :type: :priest
+      :name: :scientist
 
 -
   :name: :sacrificed_sheep

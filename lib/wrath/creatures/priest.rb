@@ -4,7 +4,7 @@ class Priest < Humanoid
   MAX_HEALTH = 100
   CHEER_SPRITE = 4
 
-  NAMES = [:acolyte, :cutie, :druidess, :monk, :priestess, :prophet, :seer, :shaman, :thaumaturge, :witch]
+  NAMES = [:acolyte, :chaplain, :cutie, :druidess, :monk, :priestess, :prophet, :scientist, :seer, :shaman, :thaumaturge, :witch]
   FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
 
@@ -26,18 +26,31 @@ class Priest < Humanoid
   end
 
   @@icons = {} # Icons for denoting locked and unlocked states.
+  @@animations = {}
+
+  def self.animation(name)
+    unless @@animations.has_key? name
+      @@animations[name] = Animation.new(file: animation_file(name))
+    end
+
+    @@animations[name]
+  end
+
+  def self.unlocked?(name)
+    manager = $window.achievement_manager
+    FREE_UNLOCKS.include?(name) or (manager and manager.unlocked?(:priest, name))
+  end
 
   def self.icon(name)
     unless @@icons[name]
-      unlocked_icon = SpriteSheet.new(animation_file(name), 8, 8)[0]
+      unlocked_icon = animation(name)[0]
 
       locked_icon = unlocked_icon.silhouette
       locked_icon.clear color: LOCKED_COLOR, dest_ignore: :transparent
       @@icons[name] = { unlocked: unlocked_icon, locked: locked_icon }
     end
 
-    manager = $window.achievement_manager
-    if FREE_UNLOCKS.include?(name) or (manager and manager.unlocked?(:priest, name))
+    if unlocked?(name)
       @@icons[name][:unlocked]
     else
       @@icons[name][:locked]
@@ -53,7 +66,7 @@ class Priest < Humanoid
     }.merge! options
 
     @name = options[:name]
-    options[:animation] = Animation.new(file: self.class.animation_file(@name))
+    options[:animation] = self.class.animation(@name).dup
 
     super(options)
   end

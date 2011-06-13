@@ -36,6 +36,8 @@ god:
 priest:
   acolyte:
     name: Acolyte
+  chaplain:
+    name: Chaplain
   cutie:
     name: Cutie
   druidess:
@@ -50,6 +52,8 @@ priest:
     name: Seer
   shaman:
     name: Shaman
+  scientist:
+    name: Scientist
   thaumaturge:
     name: Thaumaturge
   witch:
