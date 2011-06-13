@@ -259,17 +259,23 @@ class Game < Window
   end
 
   def handle_error(where, exception)
-    @error_message =<<TEXT
+    begin
+      @error_message =<<TEXT
 <c=ff0000><b>Fatal error occurred in #{self.class}##{where}</b></c>
 
 Full log written to: #{CONSOLE ? 'console' : "\n<i>  #{LOG_FILE}</i>"}
+Please send the log to Spooner at bil.bagpuss@gmail.com - Thanks!
 
 #{exception.class}: #{exception.message}
 #{exception.backtrace.join("\n")}
 TEXT
 
-    log.error @error_message
-    game_state_manager.game_states.clear
+      game_state_manager.clear_game_states
+      log.error @error_message
+
+    rescue
+      # Ignore errors in this bit.
+    end
   end
 
   def recalculate_cpu_load
