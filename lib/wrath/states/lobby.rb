@@ -118,7 +118,7 @@ module Wrath
       old_value = combo.value
       combo.clear
       Priest::NAMES.each do |name|
-        combo.item Priest.title(name), name, icon: ScaledImage.new(Priest.icon(name), 0.75)
+        combo.item Priest.title(name), name, icon: Priest.icon(name)
       end
       combo.value = old_value || Priest::FREE_UNLOCKS[combo_index] # Default 2 will be picked, since they are always playable.
     end
@@ -129,8 +129,8 @@ module Wrath
       @god_picker.clear
       @level_picker.clear
       Level::LEVELS.each do |level|
-        @god_picker.item(level::GOD.to_s, level::GOD, icon: ScaledImage.new(level::GOD.icon, 0.75), enabled: level.unlocked?)
-        @level_picker.item(level.to_s, level, icon: ScaledImage.new(level.icon, 0.75), enabled: level.unlocked?)
+        @god_picker.item(level::GOD.to_s, level::GOD, icon: level::GOD.icon, enabled: level.unlocked?)
+        @level_picker.item(level.to_s, level, icon: level.icon, enabled: level.unlocked?)
       end
       @level_picker.value = old_level_value if old_level_value
       # God will be selected based on the level.
