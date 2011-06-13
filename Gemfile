@@ -1,6 +1,6 @@
 source "http://gemcutter.org"
 
-gem "gosu", "~>0.7.32"
+gem "gosu", "~>0.7.33"
 gem "chingu", "~>0.9rc5"
 # gem "chingu", :path => "~/RubymineProjects/chingu"
 
