@@ -2,6 +2,17 @@ module Wrath
   class OptionsGeneral < Gui
     include ShownOverNetworked
 
+    def unlocked?(locale)
+      case locale
+        when R18n::Locales::EnPirate
+          $window.achievement_manager.unlocked?(:general, :language_pirate)
+        when R18n::Locales::EnLeet
+           $window.achievement_manager.unlocked?(:general, :language_leet)
+        else
+          true
+      end
+    end
+
     def body
       horizontal padding: 0 do
         label t.label.locale
@@ -14,7 +25,7 @@ module Wrath
               locale_class_name = locale.code.split('-').map {|s| s.capitalize }.join.to_sym
               locale = R18n::Locales.const_get(locale_class_name).new
             end
-            item locale.title, locale.code
+            item locale.title, locale.code, enabled: unlocked?(locale)
           end
 
           subscribe :changed do |sender, locale|

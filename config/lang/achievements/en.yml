@@ -105,3 +105,13 @@ achievement:
   status_irradiated:
     title: Nightlight
     description: Irradiated for a minute.
+
+unlock:
+  choose_god:
+    title: Religious freedom
+
+  language_leet:
+    title: Talk like a n00b
+
+  language_pirate:
+    title: Talk like a pirate

@@ -87,6 +87,9 @@
     -
       :type: :priest
       :name: :priestess
+    -
+      :type: :general
+      :name: :language_pirate
 
 -
   :name: :played_undersea
@@ -126,6 +129,9 @@
     -
       :type: :priest
       :name: :cutie
+    -
+      :type: :general
+      :name: :language_leet
        
 -
   :name: :played_moon
@@ -139,7 +145,6 @@
     -
       :type: :general
       :name: :choose_god
-      :title: Choose your own diety
 
 # ---------------------------------------
 # Sacrifices (general).
