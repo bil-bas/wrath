@@ -11,7 +11,13 @@ module Wrath
 
     def t; R18n.get.t.achievement; end
     def title; t[name].title; end
-    def description; t[name].description; end
+    def description
+      if name.to_s =~ /played_(\w+)/
+        t[name].description(R18n.get.t.level[$1].name)
+      else
+        t[name].description
+      end
+    end
 
     public
     def initialize(definition, manager, already_done)

@@ -25,35 +25,35 @@ achievement:
   # ---------------------------------------
   played_forest:
     title: Forester
-    description: Played the Forest level with an eye to rapid deforestation.
+    description: Played %1 with an eye to rapid deforestation.
 
   played_cave:
     title: Spelunker
-    description: Played the Cave level in the dark.
+    description: Played %1 in the dark.
 
   played_island:
     title: Castaway
-    description: Played the Island level with a friend who doesn't talk much.
+    description: Played %1 with a friend who doesn't talk much.
 
   played_ship:
     title: All in the eye-liner
-    description: Played the Ship level with a mockney accent and a bit too much eye-makeup.
+    description: Played %1 with a mockney accent and a bit too much eye-makeup.
 
   played_undersea:
     title: Aquamarina
-    description: Played the Undersea level with visible string.
+    description: Played %1 with visible string.
 
   played_desert:
     title: Sand got in the sandwiches
-    description: Played the Desert level without Tupperware.
+    description: Played %1 without Tupperware.
 
   played_facility:
     title: Tested
-    description: Played the Facility level while being overseen by a benevolent AI.
+    description: Played %1 while being overseen by a benevolent AI.
 
   played_moon:
     title: Cosmic Horror
-    description: Played the Yuggoth level without much sanity left.
+    description: Played %1 without much sanity left.
   # ---------------------------------------
   # Sacrifices (general).
   # ---------------------------------------

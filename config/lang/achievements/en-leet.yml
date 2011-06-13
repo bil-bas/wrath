@@ -14,28 +14,28 @@ achievement:
     description: P14Y3D F0R 10 H0UR5, WH1CH 15 V3RY N34R1Y 4 7H0U54ND Y34R5.
   played_forest: 
     title: F0R3573R
-    description: P14Y3D 7H3 F0R357 13V31 W17H 4N 3Y3 70 R4P1D D3F0R3574710N.
+    description: P14Y3D %1 W17H 4N 3Y3 70 R4P1D D3F0R3574710N.
   played_cave: 
     title: 5P31UNK3R
-    description: P14Y3D 7H3 C4V3 13V31 1N 7H3 D4RK.
+    description: P14Y3D %1 1N 7H3 D4RK.
   played_island: 
     title: C4574W4Y
-    description: P14Y3D 7H3 1514ND 13V31 W17H 4 FR13ND WH0 D035N'7 741K MUCH.
+    description: P14Y3D %1 W17H 4 FR13ND WH0 D035N'7 741K MUCH.
   played_ship: 
     title: 411 1N 7H3 3Y3-11N3R
-    description: P14Y3D 7H3 5H1P 13V31 W17H 4 M0XN3Y 4CC3N7 4ND 4 817 700 MUCH 3Y3-M4K3UP.
+    description: P14Y3D %1 W17H 4 M0XN3Y 4CC3N7 4ND 4 817 700 MUCH 3Y3-M4K3UP.
   played_undersea: 
     title: 4QU4M4R1N4
-    description: P14Y3D 7H3 UND3R534 13V31 W17H V151813 57R1N6.
+    description: P14Y3D %1 W17H V151813 57R1N6.
   played_desert: 
     title: 54ND 607 1N 7H3 54NDW1CH35
-    description: P14Y3D 7H3 D353R7 13V31 W17H0U7 7UPP3RW4R3.
+    description: P14Y3D %1 W17H0U7 7UPP3RW4R3.
   played_facility: 
     title: 73573D
-    description: P14Y3D 7H3 F4C1117Y 13V31 WH113 831N6 0V3R533N 8Y 4 83N3V013N7 41.
+    description: P14Y3D %1 WH113 831N6 0V3R533N 8Y 4 83N3V013N7 41.
   played_moon: 
     title: C05M1C H0RR0R
-    description: P14Y3D 7H3 YU6607H 13V31 W17H0U7 MUCH 54N17Y 13F7.
+    description: P14Y3D %1 W17H0U7 MUCH 54N17Y 13F7.
   sacrificed_object: 
     title: WR3X3R
     description: 54CR1F1C3D 100 1N4N1M473 08J3C75.

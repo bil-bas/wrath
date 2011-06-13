@@ -14,28 +14,28 @@ achievement:
     description: Played for 10 hours, which be very nearly a thousand years.
   played_forest: 
     title: Forester
-    description: Played th' Forest level with an eye t' rapid deforestation.
+    description: Played %1 with an eye t' rapid deforestation.
   played_cave: 
     title: Spelunker
-    description: Played th' Cave level in th' dark.
+    description: Played %1 in th' dark.
   played_island: 
     title: Castaway
-    description: Played th' Island level with a friend who doesn't talk much.
+    description: Played %1 with a friend who doesn't talk much.
   played_ship: 
     title: All in th' eye-liner
-    description: Played th' Ship level with a mockney accent an' a bit too much eye-makeup.
+    description: Played %1 with a mockney accent an' a bit too much eye-makeup.
   played_undersea: 
     title: Aquamarina
-    description: Played th' Undersea level with visible strin'.
+    description: Played %1 with visible strin'.
   played_desert: 
     title: Sand got in th' sandwiches
-    description: Played th' Desert level without Tupperware.
+    description: Played %1 without Tupperware.
   played_facility: 
     title: Tested
-    description: Played th' Facility level while bein' overseen by a benevolent AI.
+    description: Played %1 while bein' overseen by a benevolent AI.
   played_moon: 
     title: Cosmic Horror
-    description: Played th' Yuggoth level without much sanity left.
+    description: Played %1 without much sanity left.
   sacrificed_object: 
     title: Wrecker
     description: Sacrificed 100 inanimate objects.
