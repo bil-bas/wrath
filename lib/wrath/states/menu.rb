@@ -1,8 +1,8 @@
 module Wrath
 class Menu < Gui
   class WalkingPriest < GameObject
-    VELOCITY = 15 / 1000.0
-    LEFT_X = 25
+    VELOCITY = 15 / 1000.0 unless defined? VELOCITY
+    LEFT_X = 25 unless defined? LEFT_X
 
     def initialize(name, options = {})
       options = {
@@ -15,6 +15,7 @@ class Menu < Gui
       super(options)
 
       @animation = Priest.animation(name)[0..1]
+      @velocity = VELOCITY
 
       self.image = @animation[0]
     end
@@ -23,15 +24,24 @@ class Menu < Gui
       self.image = @animation.next
     end
 
+    def reverse_direction
+      self.factor_x *= -1
+      @velocity *= -1
+    end
+
     def update
       super
 
-      self.y += VELOCITY * parent.frame_time
+      self.y += @velocity * parent.frame_time
 
-      if y >= $window.height + height
-        self.y -= $window.height + height
-        self.x = (x > LEFT_X) ? LEFT_X : (Game::REAL_WIDTH - LEFT_X)
-        self.factor_x *= -1
+      if @velocity > 0 and y > ($window.height + height)
+        self.y -= 2 * (y - ($window.height + height))
+        self.x = Game::REAL_WIDTH - LEFT_X
+        reverse_direction
+      elsif @velocity < 0 and y < 0
+        self.y *= -1
+        self.x = LEFT_X
+        reverse_direction
       end
 
       self.zorder = y
