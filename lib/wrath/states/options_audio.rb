@@ -54,10 +54,14 @@ module Wrath
 
     def extra_buttons
       button(t.button.default.text, tip: t.button.default.tip) do
-        @master_slider.value = 0.5
-        @effects_slider.value = 1.0
-        @music_slider.value = 1.0
-        @mute_button.value = false
+        message(t.dialog.confirm_default.message, type: :ok_cancel) do |result|
+          if result == :ok
+            @master_slider.value = 0.5
+            @effects_slider.value = 1.0
+            @music_slider.value = 1.0
+            @mute_button.value = false
+          end
+        end
       end
     end
 

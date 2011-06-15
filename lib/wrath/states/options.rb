@@ -18,12 +18,16 @@ module Wrath
 
     def extra_buttons
       button(t.button.default.text, tip: t.button.default.tip) do
-        settings.reset_to_default
-        controls.reset_to_default
+        message(t.dialog.confirm_default.message, type: :ok_cancel) do |result|
+          if result == :ok
+            settings.reset_to_default
+            controls.reset_to_default
 
-        # Just in case we reset the language.
-        R18n.from_env LANG_DIR, settings[:locale]
-        $window.options_changed
+            # Just in case we reset the language.
+            R18n.from_env LANG_DIR, settings[:locale]
+            $window.options_changed
+          end
+        end
       end
     end
   end

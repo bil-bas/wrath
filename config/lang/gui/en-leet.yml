@@ -73,6 +73,9 @@ gui:
     title: 4CH13V3M3N75
     locked: 10X3D
     unlocked: UN10X3D
+    dialog: 
+      confirm_reset: 
+        message: R3411Y D31373 411 57471571C5, 4CH1V3M3N75 4ND UN10X5?
     button: 
       back: *id001
       unlock: 
@@ -182,6 +185,9 @@ gui:
         tip: 134V3 64M3
   options: 
     title: 0P710N5
+    dialog: 
+      confirm_default: 
+        message: R3411Y R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35?
     button: 
       back: *id001
       audio: 
@@ -197,6 +203,9 @@ gui:
         tip: R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35
   options_audio: 
     title: 0P710N5 | 4UD10
+    dialog: 
+      confirm_default: 
+        message: R3411Y 537 411 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6?
     label: 
       master: M4573R
       effects: 3FF3C75
@@ -221,6 +230,9 @@ gui:
   options_video: 
     title: 0P710N5 | V1D30
     zoom: (X%1 200M)
+    dialog: 
+      confirm_default: 
+        message: R3411Y RUN 7H3 64M3 1N 4 W1ND0W 47 7H3 D3F4U17 5123?
     label: 
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
@@ -238,6 +250,9 @@ gui:
         text: 3X17
   options_controls: 
     title: 0P710N5 | C0N7R015
+    dialog: 
+      confirm_default: 
+        message: R3411Y D3F4U17 411 C0N7R015?
     label: 
       up: UP
       down: D0WN

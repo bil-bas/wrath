@@ -43,8 +43,12 @@ module Wrath
 
     def extra_buttons
       button(t.button.default.text, tip: t.button.default.tip) do
-        controls.reset_to_default
-        $window.options_changed
+        message(t.dialog.confirm_default.message, type: :ok_cancel) do |result|
+          if result == :ok
+            controls.reset_to_default
+            $window.options_changed
+          end
+        end
       end
     end
 

@@ -85,6 +85,9 @@ gui:
     title: Achievements
     locked: Locked
     unlocked: Unlocked
+    dialog:
+      confirm_reset:
+        message: Really delete all statistics, achivements and unlocks?
     button:
       back: *back_button
       unlock:
@@ -213,6 +216,9 @@ gui:
   # Options.
   options:
     title: Options
+    dialog:
+      confirm_default:
+        message: Really reset all options (audio, video and controls) to their default values?
     button:
       back: *back_button
       audio:
@@ -230,6 +236,9 @@ gui:
   # Options - Audio.
   options_audio:
     title: Options | Audio
+    dialog:
+      confirm_default:
+        message: Really set all volumes to default values and remove muting?
     label:
       master: Master
       effects: Effects
@@ -258,6 +267,9 @@ gui:
   options_video:
     title: Options | Video
     zoom: (X%1 zoom)
+    dialog:
+      confirm_default:
+        message: Really run the game in a window at the default size?
     label:
       warning: Changes require that the game be restarted
     button:
@@ -277,6 +289,9 @@ gui:
   # Options - Controls.
   options_controls:
     title: Options | Controls
+    dialog:
+      confirm_default:
+        message: Really default all controls?
     label:
       up: Up
       down: Down

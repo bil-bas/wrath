@@ -73,6 +73,9 @@ gui:
     title: Deeds
     locked: Locked
     unlocked: Unlocked
+    dialog: 
+      confirm_reset: 
+        message: Really delete all statistics, achivements an' unlocks?
     button: 
       back: *id001
       unlock: 
@@ -182,6 +185,9 @@ gui:
         tip: Leave game
   options: 
     title: Riggin'
+    dialog: 
+      confirm_default: 
+        message: Really reset all riggin' (audio, video an' controls) t' their default values?
     button: 
       back: *id001
       audio: 
@@ -197,6 +203,9 @@ gui:
         tip: Reset all riggin' (audio, video an' controls) t' their default values
   options_audio: 
     title: Riggin' | Audio
+    dialog: 
+      confirm_default: 
+        message: Really set all volumes t' default values an' remove mutin'?
     label: 
       master: Master
       effects: Effects
@@ -221,6 +230,9 @@ gui:
   options_video: 
     title: Riggin' | Video
     zoom: (X%1 zoom)
+    dialog: 
+      confirm_default: 
+        message: Really run th' game in a window at th' default size?
     label: 
       warning: Changes require that th' game be restarted
     button: 
@@ -238,6 +250,9 @@ gui:
         text: Exit
   options_controls: 
     title: Riggin' | Controls
+    dialog: 
+      confirm_default: 
+        message: Really default all controls?
     label: 
       up: Up
       down: Down

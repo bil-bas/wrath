@@ -63,8 +63,12 @@ module Wrath
 
     def extra_buttons
       button t.button.reset.text, tip: t.button.reset.tip do |sender|
-        achievement_manager.reset
-        switch_game_state self.class
+        message(t.dialog.confirm_reset.message, type: :ok_cancel) do |result|
+          if result == :ok
+            achievement_manager.reset
+            switch_game_state self.class
+          end
+        end
       end
 
       if DEVELOPMENT_MODE

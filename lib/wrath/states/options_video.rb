@@ -7,7 +7,7 @@ module Wrath
 
     def body
       horizontal padding: 0 do
-        group do
+        @full_screen_group = group do
           grid num_columns: 2, padding: 0 do
             # Windowed options.
             radio_button t.button.windowed.text, false, width: 80, tip: t.button.windowed.tip
@@ -47,7 +47,12 @@ module Wrath
 
     def extra_buttons
       button(t.button.default.text, tip: t.button.default.tip) do
-        @window_scale_combo.value = DEFAULT_SCALE
+        message(t.dialog.confirm_default.message, type: :ok_cancel) do |result|
+          if result == :ok
+            @window_scale_combo.value = DEFAULT_SCALE
+            @full_screen_group.value = false
+          end
+        end
       end
 
       @exit_button = button(t.button.exit.text, enabled: false) do
