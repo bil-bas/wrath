@@ -1,5 +1,7 @@
 module Wrath
   class NetworkOverlay < Overlay
+    trait :timer
+
     MAX_HISTORY = 300
     SCALE = 250.0
     SENT_COLOR = Color.rgba(0, 0, 255, 100)
