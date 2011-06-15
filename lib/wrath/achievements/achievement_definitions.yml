@@ -22,7 +22,10 @@
     - [:played, :offline, :duration]
     - [:played, :online, :duration]
   :required: 3600
-  :unlocks: []
+  :unlocks:
+    -
+      :type: :priest
+      :name: :chaplain
 
 -
   :name: :long_play_2
@@ -180,7 +183,7 @@
   :unlocks:
     -
       :type: :priest
-      :name: :chaplain
+      :name: :nun
 
 # ---------------------------------------
 # Sacrifices (by type).

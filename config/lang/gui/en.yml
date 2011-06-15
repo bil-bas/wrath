@@ -44,6 +44,8 @@ priest:
     name: Druidess
   monk:
     name: Monk
+  nun:
+    name: Nun
   priestess:
     name: Priestess
   prophet:
@@ -141,7 +143,7 @@ gui:
       priests:
         title: Priests
         body: |
-           * Each player picks one of eight priests. All priests are identical in play, but some look cooler than others.
+           * Each player picks one of thirteen priests. All priests are identical in play, but some look cooler than others.
 
            * Your priest can pick up, use or throw objects or creatures. They do this with a single "action" key.
 

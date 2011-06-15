@@ -37,6 +37,8 @@ priest:
     name: Druidess
   monk: 
     name: Monk
+  nun: 
+    name: Nun
   priestess: 
     name: Priestess
   prophet: 
@@ -121,7 +123,7 @@ gui:
       priests: 
         title: Buccaneers
         body: |
-          * Each pirate picks one o' eight buccaneers. All buccaneers be identical in play, but some look cooler than others.
+          * Each pirate picks one o' thirteen buccaneers. All buccaneers be identical in play, but some look cooler than others.
           
           * Yer buccaneer can pick up, use or throw objects or creatures. They do this with a single "action" key.
           

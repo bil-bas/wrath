@@ -37,6 +37,8 @@ priest:
     name: DRU1D355
   monk: 
     name: M0NK
+  nun: 
+    name: NUN
   priestess: 
     name: N008355
   prophet: 
@@ -121,7 +123,7 @@ gui:
       priests: 
         title: N0085
         body: |
-          * 34CH P14Y3R P1X5 0N3 0F 316H7 N0085. 411 N0085 4R3 1D3N71C41 1N P14Y, 8U7 50M3 100K C0013R 7H4N 07H3R5.
+          * 34CH P14Y3R P1X5 0N3 0F 7H1R733N N0085. 411 N0085 4R3 1D3N71C41 1N P14Y, 8U7 50M3 100K C0013R 7H4N 07H3R5.
           
           * Y0UR N008 C4N P1X UP, U53 0R 7HR0W 08J3C75 0R CR347UR35. 7H3Y D0 7H15 W17H 4 51N613 "4C710N" K3Y.
           
