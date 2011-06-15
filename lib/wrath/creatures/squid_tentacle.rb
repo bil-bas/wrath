@@ -20,6 +20,7 @@ module Wrath
           speed: 0.6,
           factor_y: 1.5,
           animation: "squid_tentacle_32x128.png",
+          collision_width: 20,
       }.merge! options
 
       @leaving = false
