@@ -22,7 +22,7 @@ class Priest < Humanoid
   end
 
   def self.animation_file(name)
-    "players/#{name}_8x8.png"
+    "players/#{name}_8x10.png"
   end
 
   @@icons = {} # Icons for denoting locked and unlocked states.
@@ -63,6 +63,8 @@ class Priest < Humanoid
     options = {
       speed: 2,
       health: MAX_HEALTH,
+      collision_width: 8,
+      collision_height: 8,
     }.merge! options
 
     @name = options[:name]
