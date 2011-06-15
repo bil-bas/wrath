@@ -7,6 +7,8 @@ class Priest < Humanoid
   NAMES = [:acolyte, :chaplain, :cutie, :druidess, :monk, :nun, :priestess, :prophet, :scientist, :seer, :shaman, :thaumaturge, :witch]
   FREE_UNLOCKS = [:monk, :witch] # Others must be manually unlocked.
   LOCKED_COLOR = Color.rgba(150, 150, 150, 200)
+  ICON_WIDTH = ICON_HEIGHT = 8
+  ICON_CROP = [0, 2, 8, 10]
 
   def breathes?(substance)
     case substance
@@ -43,7 +45,11 @@ class Priest < Humanoid
 
   def self.icon(name)
     unless @@icons[name]
-      unlocked_icon = animation(name)[0]
+      full_image = animation(name)[0]
+      full_image.refresh_cache
+
+      unlocked_icon = TexPlay.create_image($window, ICON_WIDTH, ICON_HEIGHT)
+      unlocked_icon.splice full_image, 0, 0, crop: ICON_CROP
 
       locked_icon = unlocked_icon.silhouette
       locked_icon.clear color: LOCKED_COLOR, dest_ignore: :transparent

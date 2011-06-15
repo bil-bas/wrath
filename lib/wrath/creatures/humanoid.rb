@@ -4,7 +4,7 @@ module Wrath
   # portrait image)
   class Humanoid < Creature
     PORTRAIT_WIDTH = 7
-    PORTRAIT_CROP = [1, 0, 5, 4]
+    PORTRAIT_CROP = [1, 2, 5, 6]
     PORTRAIT_PADDING = 1
 
     def breathes?(medium); true; end

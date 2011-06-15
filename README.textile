@@ -87,7 +87,7 @@ h2. Credits
 Many thanks to:
 
 * SiliconEidolon for the initial brainstorming session that gave birth to the game.
-* Spiderspit, SiliconEidolon, Ippa, Myx, Spaz, mathias_, jlnr and Banisterfiend for alpha play-testing and suggestions.
+* Spiderspit, SiliconEidolon, Ippa, Myx, Spaz, mathias_, jlnr, Dahrkael_ and Banisterfiend for alpha play-testing and suggestions.
 * Members of TIGSource who gave feedback in the the "Wrath topic":http://forums.tigsource.com/index.php?topic=19459.msg557507.
 * Ippa for code snippets I stole; I mean, was given :)
 * jlnr for making the OS X executable package (and putting up with helping me build it on Linux!).
