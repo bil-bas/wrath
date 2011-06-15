@@ -1,3 +1,5 @@
+require_relative "status"
+
 module Wrath
   class Status < GameObject
     # Being larger also affects your encumbrance and strength.

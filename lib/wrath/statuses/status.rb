@@ -1,5 +1,4 @@
 module Wrath
-  # Image is the icon to show under the player's GUI box.
   class Status < GameObject
     include Log
     include Fidgit::Event

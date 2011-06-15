@@ -13,6 +13,8 @@ class StaticObject < BaseObject
     }.merge! options
 
     super options
+
+    parent.objects << self if options[:interactive]
   end
 end
 end

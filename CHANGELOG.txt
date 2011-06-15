@@ -1,6 +1,7 @@
 === CHANGELOG ===
 
 Next release
+  * Can now anoint sacrificial creatures (at the font) for extra favour when sacrificed.
   * Added 3 new playable priests (chaplain, nun and scientist).
   * Game will now run in full-screen (at desktop resolution only; there will be black edging unless screen has a 16:10 aspect ratio).
   * Added menu, on <escape> by default, that can be accessed in-game (instructions and options are available). This also pauses when playing offline.

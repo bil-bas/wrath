@@ -1,5 +1,7 @@
+require_relative "status"
+
 module Wrath
-  class Status < GameObject
+  class Status
     # Being poisoned makes you weaker and also
     class Poisoned < Status
       STRENGTH_PENALTY = 0.2

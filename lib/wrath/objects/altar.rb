@@ -20,6 +20,7 @@ class Altar < StaticObject
     options = {
       animation: "altar_8x5.png",
       paused: false,
+      interactive: true,
     }.merge! options
 
     @blood = 0

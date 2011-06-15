@@ -282,7 +282,6 @@ class Level < GameState
     log.info "Creating objects"
 
     @altar = create_altar
-    @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
     player1 = Priest.create(name: @priest_names[0], local: true, x: altar.x - 12, y: altar.y,
@@ -293,6 +292,8 @@ class Level < GameState
     player2 = Priest.create(name: @priest_names[1], local: @network.nil?, x: altar.x + 12, y: altar.y,
                             factor_x: -1)
     players[1].avatar = player2
+
+    HolyFont.create
 
     @spawner = Spawner.create(self.class)
   end

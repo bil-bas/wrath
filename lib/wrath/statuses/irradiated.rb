@@ -1,8 +1,10 @@
+require_relative "status"
+
 module Wrath
-  class Status < GameObject
-    STRENGTH_BONUS = 0.5
+  class Status
     # Being irradiated makes you strong and glowey.
     class Irradiated < Status
+      STRENGTH_BONUS = 0.5
       OVERLAY_COLOR = Color.rgba(0, 250, 0, 100)
       DAMAGE = 3 / 1000.0
       
