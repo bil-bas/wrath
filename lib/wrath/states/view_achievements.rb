@@ -62,13 +62,15 @@ module Wrath
     end
 
     def extra_buttons
-      toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
-        achievement_manager.unlocks_disabled = value
-      end
-
       button t.button.reset.text, tip: t.button.reset.tip do |sender|
         achievement_manager.reset
         switch_game_state self.class
+      end
+
+      if DEVELOPMENT_MODE
+        toggle_button(t.button.unlock.text, tip: t.button.unlock.tip, value: achievement_manager.unlocks_disabled?) do |sender, value|
+          achievement_manager.unlocks_disabled = value
+        end
       end
     end
 

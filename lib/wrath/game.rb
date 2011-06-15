@@ -3,7 +3,6 @@ require 'forwardable'
 require 'yaml'
 require 'fileutils'
 require 'logger'
-require 'benchmark'
 
 # Gems
 begin
@@ -263,7 +262,7 @@ class Game < Window
       @error_message =<<TEXT
 <c=ff0000><b>Fatal error occurred in #{self.class}##{where}</b></c>
 
-Full log written to: #{CONSOLE ? 'console' : "\n<i>  #{LOG_FILE}</i>"}
+Full log written to: #{LOG_FILE ? "\n<i>  #{LOG_FILE}</i>" : 'console' }
 Please send the log to Spooner at bil.bagpuss@gmail.com - Thanks!
 
 #{exception.class}: #{exception.message}

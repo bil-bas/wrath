@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-begin
-  CONSOLE = (not (ENV['OCRA_EXECUTABLE'] or defined?(OSX_EXECUTABLE) or (ARGV[0] == '--logfile'))) or (ARGV[0] == '--console')
+require 'optparse'
 
+begin
   EXTRACT_PATH = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
   ROOT_PATH = if ENV['OCRA_EXECUTABLE']
@@ -15,18 +15,75 @@ begin
 
   APP_NAME = File.basename(__FILE__).chomp(File.extname(__FILE__))
 
-  # Create multiple log-files if debugging on my machine.
-  log_file_name = if __FILE__ =~ %r[C:/Users/Spooner/RubymineProjects/]
-                    "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}.log"
-                  else
-                    "#{APP_NAME}.log"
-                  end
-  LOG_FILE = File.join(ROOT_PATH, log_file_name)
+  RUNNING_FROM_EXECUTABLE = (ENV['OCRA_EXECUTABLE'] or defined?(OSX_EXECUTABLE))
 
-  BIN_DIR = File.join(ROOT_PATH, 'bin')
-  ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
+  DEFAULT_LOG_FILE = "#{APP_NAME}.log"
+  DEFAULT_LOG_FILE_PATH = File.join(ROOT_PATH, DEFAULT_LOG_FILE)
 
-  unless CONSOLE
+  def parse_options
+    options = {}
+
+    OptionParser.new do |parser|
+      parser.banner =<<TEXT
+Usage: #{File.basename(__FILE__)} [options]
+
+  Defaults to using --#{RUNNING_FROM_EXECUTABLE ? 'log' : 'console'}
+
+TEXT
+
+      parser.on('-?', '-h', '--help', 'Display this screen') do
+        puts parser
+        exit
+      end
+
+      options[:dev] = false
+      parser.on('--dev', 'Development mode') do
+        options[:dev] = true
+      end
+
+      parser.on('--console', 'Console mode (no log file)') do
+        options[:log] = nil # Write to console.
+      end
+
+      parser.on('--log [FILE]', "Write log to a file (defaults to '#{DEFAULT_LOG_FILE}')") do |file|
+        options[:log] = file ? file : DEFAULT_LOG_FILE_PATH
+      end
+
+      parser.on('--timestamp', "Adds a timestamp to the log file") do
+        options[:timestamp] = true
+      end
+
+      begin
+        parser.parse!
+      rescue OptionParser::ParseError => ex
+        puts "ERROR: #{ex.message}"
+        puts
+        puts parser
+        exit
+      end
+    end
+
+    options
+  end
+
+  options = parse_options
+
+  # Default to console mode normally; default to logfile when running executable.
+  if RUNNING_FROM_EXECUTABLE and not options.has_key?(:log)
+    options[:log] = DEFAULT_LOG_FILE_PATH
+  end
+
+  LOG_FILE = options[:log]
+  DEVELOPMENT_MODE = options[:dev]
+
+  ENV['PATH'] = "#{File.join(ROOT_PATH, 'bin')};#{ENV['PATH']}"
+
+  if LOG_FILE
+    # Add a timestamp to the end of the log file-name.
+    if options[:timestamp]
+      LOG_FILE.sub!(/(\.\w+)$/, "_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}\\1")
+    end
+
     puts "Redirecting output to '#{LOG_FILE}'"
 
     original_stderr = $stderr.dup
@@ -38,9 +95,10 @@ begin
     $stdout.sync = true
   end
 
-  require_relative "../lib/wrath"
+  require_relative "../lib/#{APP_NAME}"
 
-  exit_message = Wrath::Game.run unless defined? Ocra
+  app_module = Kernel::const_get(APP_NAME.split('_').map(&:capitalize).join.to_sym)
+  exit_message = app_module::Game.run unless defined? Ocra
 
 rescue => ex
   $stderr.puts "FATAL ERROR - #{ex.class}: #{ex.message}\n#{ex.backtrace.join("\n")}"
