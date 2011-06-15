@@ -2,8 +2,6 @@ module Wrath
   class AchievementManager
     include Fidgit::Event
 
-    DEFINITIONS_FILE = File.join(File.dirname(__FILE__), 'achievement_definitions.yml')
-
     event :on_achievement_gained # [sender, achievement]
     event :on_unlock_gained # [sender, unlock]
 
@@ -13,7 +11,8 @@ module Wrath
     def unlocks_disabled=(value); @unlocks_disabled = value; end
 
     public
-    def initialize(achievements_settings_file, statistics)
+    def initialize(definitions_file, achievements_settings_file, statistics)
+      @definitions_file = definitions_file
       @achievements_settings = Settings.new(achievements_settings_file, auto_save: false)
       @statistics = statistics
 
@@ -34,7 +33,7 @@ module Wrath
 
       @monitors = Hash.new {|hash, key| hash[key] = [] }
 
-      definitions = YAML.load(File.read(DEFINITIONS_FILE))
+      definitions = YAML.load(File.read(@definitions_file))
       definitions.each do |definition|
         already_done = (@achievements_settings[definition[:name], :complete] || false)
         @achievements << Achievement.new(definition, self, already_done)

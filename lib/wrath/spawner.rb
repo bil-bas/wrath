@@ -20,7 +20,7 @@ module Wrath
 
       # Create objects to create (slowly) during the setup period.
       klass = Inflector.underscore(Inflector.demodulize(level_class.name))
-      spawn_data = YAML.load(File.read(File.join(EXTRACT_PATH, 'lib/wrath/states/levels', "#{klass}.yml")))[:objects]
+      spawn_data = YAML.load(File.read(File.join(EXTRACT_PATH, "config/levels/#{klass}.yml")))[:objects]
 
       @initial_spawns = []
       @spawn_caps = {}

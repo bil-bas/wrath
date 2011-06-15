@@ -44,7 +44,7 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
-Fidgit::Element.schema.merge_schema! YAML.load(File.read(File.join(EXTRACT_PATH, 'lib', 'wrath', 'schema.yml')))
+Fidgit::Element.schema.merge_schema! YAML.load(File.read(File.join(EXTRACT_PATH, 'config', 'schema.yml')))
 
 module Wrath
 
@@ -77,6 +77,8 @@ class Game < Window
   STATISTICS_CONFIG_FILE = 'statistics.yml'
   CONTROLS_CONFIG_FILE = 'controls.yml'
   ACHIEVEMENTS_CONFIG_FILE = 'achievements.yml'
+
+  ACHIEVEMENTS_DEFINITION_FILE = File.join(EXTRACT_PATH, 'config/achievement_definitions.yml')
 
   @@settings = Settings.new(SETTINGS_CONFIG_FILE)
   @@controls = Settings.new(CONTROLS_CONFIG_FILE)
@@ -166,7 +168,7 @@ class Game < Window
     R18n.from_env LANG_DIR, @@settings[:locale]
 
     log.info "Reading achievement/stats"
-    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_CONFIG_FILE, @@statistics)
+    @achievement_manager = AchievementManager.new(ACHIEVEMENTS_DEFINITION_FILE, ACHIEVEMENTS_CONFIG_FILE, @@statistics)
     add_overlay AchievementOverlay.new(@achievement_manager)
 
     options_changed
