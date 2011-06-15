@@ -99,7 +99,7 @@ module Wrath
         @contents.position = [
             x + (@contents_offset[0]) * x_sign,
             y + @contents_offset[1] + 0.00001,
-            z + height + @contents.z_offset + @contents_offset[2]
+            z + collision_height + @contents.z_offset + @contents_offset[2]
         ]
       end
     end
