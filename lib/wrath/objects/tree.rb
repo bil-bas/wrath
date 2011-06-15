@@ -7,6 +7,7 @@ class Tree < StaticObject
       shape: :circle,
       animation: "tree_12x12.png",
       can_wake: false,
+      collision_width: 8,
     }.merge! options
 
     @can_wake = options[:can_wake]

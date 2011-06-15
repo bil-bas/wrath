@@ -16,7 +16,7 @@ class BaseObject < GameObject
 
   event :on_stopped # Has stopped bouncing.
 
-  attr_reader :frames, :elasticity
+  attr_reader :frames, :elasticity, :collision_height, :collision_width
   attr_writer :local
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
 
@@ -110,7 +110,10 @@ class BaseObject < GameObject
 
     width = options[:radius] ? options[:radius] * 2 : width
 
-    init_physics(options[:x], options[:y], width, height, options[:collision_type], options[:shape], options[:mass])
+    @collision_height = options[:collision_height] || height
+    @collision_width = options[:collision_width] || width
+
+    init_physics(options[:x], options[:y], @collision_width, options[:collision_type], options[:shape], options[:mass])
 
     @z = options[:z]
     @elasticity = options[:elasticity]
@@ -152,7 +155,7 @@ class BaseObject < GameObject
   end
 
   public
-  def init_physics(x, y, width, height, collision_type, shape, mass)
+  def init_physics(x, y, width, collision_type, shape, mass)
     @body = CP::Body.new(mass, Float::INFINITY)
     @body.p = CP::Vec2.new(x, y)
     @body_position = @body.p
