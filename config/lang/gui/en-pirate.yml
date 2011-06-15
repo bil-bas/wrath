@@ -119,6 +119,8 @@ gui:
           * Gods slowly become angry then they rain down disasters until they become bored (anger bar fills then empties).
           
           * As ye make sacrifices, it reduces th' anger o' th' god as well as givin' ye Holy Favour.
+          
+          * Th' god will ask for specific creatures, which will reap greater rewards when sacrificed.
 
       priests: 
         title: Buccaneers
@@ -137,6 +139,8 @@ gui:
           * Accumulate favour by makin' sacrifices at th' altar (buccaneers start standin' next t' th' altar).
           
           * Th' gods like animals, people an' treasures as sacrifices, but dislike mundane things, like rocks.
+          
+          * Creatures can be anointed at th' font t' give more favor when sacrificed.
           
           * Yer holy favour be shown as a white bar. Fill th' bar afor th' other buccaneer t' win!
           

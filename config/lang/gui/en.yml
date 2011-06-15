@@ -140,6 +140,8 @@ gui:
 
           * As you make sacrifices, it reduces the anger of the god as well as giving you Holy Favour.
 
+          * The god will ask for specific creatures, which will reap greater rewards when sacrificed.
+
       priests:
         title: Priests
         body: |
@@ -157,6 +159,8 @@ gui:
           * Accumulate favour by making sacrifices at the altar (priests start standing next to the altar).
 
           * The gods like animals, people and treasures as sacrifices, but dislike mundane things, like rocks.
+
+          * Creatures can be anointed at the font to give more favor when sacrificed.
 
           * Your holy favour is shown as a white bar. Fill the bar before the other priest to win!
 
