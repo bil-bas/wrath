@@ -1,13 +1,16 @@
 module Wrath
   class Lobby < Gui
-
     READY_COLOR = Color.rgb(0, 0, 0)
     UNREADY_BACKGROUND_COLOR = Color.rgb(50, 50, 50)
     READY_BACKGROUND_COLOR = Color.rgb(0, 255, 0)
     DISAMBIGUATION_SUFFIX = '_'
+    CHAT_FONT_SIZE = 4
+    MAX_CHAT_LINES = 100
+
+    attr_reader :player_names, :network
 
     public
-    def accept_message?(message); [Message::NewGame, Message::UpdateLobby].find {|m| message.is_a? m }; end
+    def accept_message?(message); [Message::NewGame, Message::UpdateLobby, Message::Say].find {|m| message.is_a? m }; end
     def networked?; !!@network; end
     def host?; @network.is_a? Server; end
     def client?; @network.is_a? Client; end
@@ -26,6 +29,8 @@ module Wrath
       @player_names[1] += DISAMBIGUATION_SUFFIX if @player_names[1] == @player_names[0]
 
       @player_number = host? ? 0 : 1
+
+      on_input([:enter, :return], :chat_entered) if networked?
     end
 
     def title
@@ -44,6 +49,25 @@ module Wrath
 
     def back_button_pressed
       pop_until_game_state Play
+    end
+
+    def chat_entered
+      @chat_entry.publish :focus unless @chat_entry.focused?
+
+      return if @chat_entry.text.empty?
+
+      send_message(Message::Say.new((host? ? 0 : 1), @chat_entry.text))
+      say(player_names[host? ? 0 : 1], @chat_entry.text)
+      @chat_entry.text = ''
+    end
+
+    def say(player, message)
+      text = @chat_body.text
+      text.sub!(/.+\n/, '') if text.count("\n") >= MAX_CHAT_LINES
+      text += "\n" unless text.empty?
+      text += "#{player}: #{message}"
+      @chat_body.text = text
+      @chat_window.offset_y = Float::INFINITY # Scroll the window down to the end, so we can see the new text.
     end
 
     def setup
@@ -66,6 +90,25 @@ module Wrath
       player_grid
 
       level_picker
+
+      chat_area if networked?
+    end
+
+    def chat_area
+      vertical spacing: 0, border_thickness: 0.5, border_color: Color::WHITE, background_color: BACKGROUND_COLOR, padding: 0 do
+        @chat_window = scroll_window border_thickness: 0, width: $window.width - 10, height: 28, padding: 1 do
+          @chat_body = text_area enabled: false, font_size: CHAT_FONT_SIZE, padding: 0, line_spacing: 0.5,
+                                 width: $window.width - 20, background_color: BACKGROUND_COLOR
+        end
+
+        horizontal padding: 1 do
+          @chat_entry = text_area font_size: CHAT_FONT_SIZE, align_v: :center, padding: 1, width: $window.width - 75,
+                                  border_thickness: 0.25, border_color: Color::WHITE
+          button "Send", font_size: CHAT_FONT_SIZE, padding: 1.5 do
+            chat_entered
+          end
+        end
+      end
     end
 
     def extra_buttons
@@ -87,9 +130,9 @@ module Wrath
 
     def send_message(message)
       if client?
-        @network.send_msg(message)
+        network.send_msg(message)
       else
-        @network.broadcast_msg(message)
+        network.broadcast_msg(message)
       end
     end
 

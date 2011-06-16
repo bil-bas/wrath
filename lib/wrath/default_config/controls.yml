@@ -21,6 +21,7 @@
   :action: :space
 
 :general:
+  :chat: :return
   :menu: :escape
   :toggle_fps: :f
   :toggle_network: :n

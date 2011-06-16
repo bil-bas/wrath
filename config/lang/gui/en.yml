@@ -189,6 +189,8 @@ gui:
 
     button:
       back: *back_button
+      send:
+        text: Send
       ready:
         text: Ready
       start:

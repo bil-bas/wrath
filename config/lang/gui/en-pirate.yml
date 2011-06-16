@@ -163,6 +163,8 @@ gui:
       offline: Lobby
     button: 
       back: *id001
+      send: 
+        text: Send
       ready: 
         text: Ready
       start: 

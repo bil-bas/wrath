@@ -163,6 +163,8 @@ gui:
       offline: 1088Y
     button: 
       back: *id001
+      send: 
+        text: 53ND
       ready: 
         text: R34DY
       start: 
