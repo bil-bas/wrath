@@ -132,11 +132,6 @@ class Level < GameState
       push_game_state GameMenu
     end
 
-    on_input(controls[:general, :toggle_fps]) do
-      @fps_overlay ||= $window.add_overlay FPSOverlay.new
-      @fps_overlay.toggle
-    end
-
     players.each(&:setup_inputs)
 
     log.info "Started playing"
@@ -282,6 +277,7 @@ class Level < GameState
     log.info "Creating objects"
 
     @altar = create_altar
+    @objects << @altar # Needs to be added manually, since it is a static object.
 
     # Player 1.
     player1 = Priest.create(name: @priest_names[0], local: true, x: altar.x - 12, y: altar.y,

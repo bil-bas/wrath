@@ -146,6 +146,7 @@ class Game < Window
     @last_time = milliseconds
     @potential_fps = 0
     @overlays = []
+    @fps_overlay = nil
 
     log.info "Reading sound settings"
     self.volume = settings[:audio, :master_volume]
@@ -183,6 +184,16 @@ class Game < Window
     state = game_state_manager.current_game_state
     state.finalize if state.respond_to? :finalize
     state.setup if state.respond_to? :setup
+
+    on_input(controls[:general, :toggle_fps]) do
+      if @fps_overlay
+        remove_overlay @fps_overlay
+        @fps_overlay = nil
+      else
+        @fps_overlay = FPSOverlay.new
+        add_overlay @fps_overlay
+      end
+    end
   end
 
   def add_overlay(overlay)
@@ -234,7 +245,8 @@ class Game < Window
     return if @error_message
 
     update_started = milliseconds
-    
+
+    @overlays.each(&:update_trait)
     @overlays.each(&:update)
 
     super
