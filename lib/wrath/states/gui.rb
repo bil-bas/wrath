@@ -32,9 +32,9 @@ class Gui < Fidgit::GuiState
     super
 
     if respond_to? :body
-      vertical spacing: 0, do
+      vertical spacing: 0 do
         horizontal padding: 0 do
-          label title, font_size: 8, padding_left: 0, color: Color.rgb(90, 180, 255)
+          label title, font_height: 8, padding_bottom: 2, color: Color.rgb(90, 180, 255)
 
           extra_title if respond_to? :extra_title
         end

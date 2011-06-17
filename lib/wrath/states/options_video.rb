@@ -29,7 +29,7 @@ module Wrath
             # full-screen options.
             radio_button t.button.full_screen.text, true, width: 80, tip: t.button.full_screen.tip
 
-            label "#{screen_width}x#{screen_height}"
+            label "#{screen_width}x#{screen_height}", align_v: :center
           end
 
           self.value = settings[:video, :full_screen]

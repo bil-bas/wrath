@@ -20,7 +20,7 @@ module Wrath
       on_input(@close_button) { pop_game_state if @released_button }
 
       vertical background_color: Gui::BACKGROUND_COLOR, align: :center do
-        options = { width: 50, font_size: 5, justify: :center }
+        options = { width: 50, font_height: 5, justify: :center }
         button t.button.resume.text, options.merge(tip: t.button.resume.tip, shortcut: :auto) do
           pop_game_state
         end

@@ -3,12 +3,12 @@ module Wrath
     TEXT_COLOR = Color.rgba(255, 255, 255, 100)
     SHADOW_COLOR = Color.rgba(0, 0, 0, 100)
     SHADOW_OFFSET = 2
-    FONT_SIZE = 24
+    FONT_HEIGHT = 24
 
     def initialize
       super(visible: true)
 
-      @font = Font[FONT_SIZE]
+      @font = Font[FONT_HEIGHT]
     end
 
     def draw

@@ -8,9 +8,10 @@ module Wrath
       options = {
           background_color: BACKGROUND_COLOR,
           color: TEXT_COLOR,
-          padding_left: 3,
+          padding_left: 2,
           padding_top: 1,
           padding_bottom: 1,
+          padding_right: 2,
       }.merge! options
 
       super("#{total.floor} / #{required.floor}", options)
@@ -51,7 +52,7 @@ module Wrath
     def extra_title
       completed = achievement_manager.achievements.count {|a| a.complete? }
       Wrath::ProgressBar.new(completed, achievement_manager.achievements.size,
-                             parent: self, width: $window.width - 112, font_size: 6, align_v: :center)
+                             parent: self, width: 70, font_height: 5, align_h: :right, align_v: :center)
     end
 
     def body
@@ -102,35 +103,34 @@ module Wrath
     protected
     def add_achievement(achieve, packer)
       horizontal parent: packer, padding: 2, spacing: 0, background_color: ACHIEVEMENT_BACKGROUND_COLOR do
-        label "", icon: ScaledImage.new(achieve.icon, 1.5),
-            border_thickness: 1, border_color: Color::BLACK, padding: 0
+        image_frame achieve.icon, factor: 1.5,
+            border_thickness: 1, border_color: Color::BLACK
 
         vertical padding_left: 2, padding: 0, spacing: 0 do
           horizontal padding: 0, spacing: 0 do |packer|
             # title
             color = achieve.complete? ? COMPLETE_TITLE_COLOR : INCOMPLETE_TITLE_COLOR
-            packer.label achieve.title, width: 100, font_size: 5, color: color, padding: 0
+            packer.label achieve.title, width: 100, font_height: 5, color: color, padding: 0
 
             # Progress bar, if needed.
             if achieve.complete?
-              @achieved_time_labels << packer.label('', font_size: 4, padding: 0)
+              @achieved_time_labels << packer.label('', font_height: 4, padding: 0)
             else
               ProgressBar.new(achieve.total, achieve.required,
-                      parent: packer, width: $window.width - 147, height: 5, font_size: 4)
+                      parent: packer, width: 40, font_height: 4)
             end
           end
 
           # Description of what has been done.
-          text_area text: achieve.description, font_size: 4, width: $window.width - 45,
+          text_area text: achieve.description, font_height: 4, width: $window.width - 45,
               background_color: ACHIEVEMENT_BACKGROUND_COLOR, enabled: false,
               padding: 0
 
           unless achieve.unlocks.empty?
             horizontal padding_top: 2, padding: 0, spacing: 3 do
               achieve.unlocks.each do |unlock|
-                icon = ScaledImage.new(unlock.icon, 0.75)
                 title = unlock.unlocked? ? t.unlocked : t.locked
-                label "", icon: icon, tip: "#{title}: #{unlock.title}", padding: 1, background_color: UNLOCK_BACKGROUND_COLOR
+                image_frame unlock.icon, factor: 0.75, tip: "#{title}: #{unlock.title}", padding: 1, background_color: UNLOCK_BACKGROUND_COLOR
               end
             end
           end

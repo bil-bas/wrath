@@ -90,7 +90,7 @@ module Wrath
         clear
 
         controls.keys(@tabs_group.value).each do |control|
-          key_label = label t.label[control], width: 95
+          key_label = label t.label[control], width: 80
           key = controls[@tabs_group.value, control]
           button_label = key.to_s.tr('_', ' ')
           button(button_label, width: 75) { choose_key control, key_label }

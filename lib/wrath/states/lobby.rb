@@ -4,7 +4,7 @@ module Wrath
     UNREADY_BACKGROUND_COLOR = Color.rgb(50, 50, 50)
     READY_BACKGROUND_COLOR = Color.rgb(0, 255, 0)
     DISAMBIGUATION_SUFFIX = '_'
-    CHAT_FONT_SIZE = 4
+    CHAT_FONT_HEIGHT = 4
     MAX_CHAT_LINES = 100
 
     attr_reader :player_names, :network
@@ -97,14 +97,14 @@ module Wrath
     def chat_area
       vertical spacing: 0, border_thickness: 0.5, border_color: Color::WHITE, background_color: BACKGROUND_COLOR, padding: 0 do
         @chat_window = scroll_window border_thickness: 0, width: $window.width - 10, height: 28, padding: 1 do
-          @chat_body = text_area enabled: false, font_size: CHAT_FONT_SIZE, padding: 0, line_spacing: 0.5,
+          @chat_body = text_area enabled: false, font_height: CHAT_FONT_HEIGHT, padding: 0, line_spacing: 0.5,
                                  width: $window.width - 20, background_color: BACKGROUND_COLOR
         end
 
         horizontal padding: 1 do
-          @chat_entry = text_area font_size: CHAT_FONT_SIZE, align_v: :center, padding: 1, width: $window.width - 75,
+          @chat_entry = text_area font_height: CHAT_FONT_HEIGHT, align_v: :center, padding: 1, width: $window.width - 75,
                                   border_thickness: 0.25, border_color: Color::WHITE
-          button "Send", font_size: CHAT_FONT_SIZE, padding: 1.5 do
+          button "Send", font_height: CHAT_FONT_HEIGHT, padding: 1.5 do
             chat_entered
           end
         end
@@ -138,17 +138,17 @@ module Wrath
 
     protected
     def level_picker
-      grid num_columns: 2, padding: 0, spacing: 1 do
-        label t.label.map
-        @level_picker = combo_box value: Level::LEVELS.first, width: 140, enabled: (not client?), align: :center do
+      grid num_columns: 2, padding: 0, spacing_v: 1, spacing_h: 3 do
+        label t.label.map, align_v: :center
+        @level_picker = combo_box value: Level::LEVELS.first, enabled: (not client?), do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
             @god_picker.value = level::GOD
           end
         end
 
-        label t.label.god
-        @god_picker = combo_box value: @level_picker.value::GOD, width: 140, align: :center do
+        label t.label.god, align_v: :center
+        @god_picker = combo_box value: @level_picker.value::GOD, do
           subscribe :changed do |sender, god|
             send_message(Message::UpdateLobby.new(:god, god)) if host?
           end
@@ -186,7 +186,7 @@ module Wrath
       @ready_indicators = []
       @num_readies = 0
 
-      grid num_columns: 3, padding: 0, spacing: 1 do
+      grid num_columns: 3, padding: 0, spacing_v: 1, spacing_h: 3 do
         @player_names.each_with_index do |player_name, player_number|
           player_row player_name, player_number
         end
@@ -198,7 +198,7 @@ module Wrath
       @player_sprite_combos ||= {}
 
       is_local = ((player_number == @player_number) or offline?)
-      @player_sprite_combos[player_name] = combo_box width: 72, enabled: is_local, align: :center do
+      @player_sprite_combos[player_name] = combo_box enabled: is_local do
         subscribe :changed do |sender, name|
           enable_priest_options
 
@@ -206,7 +206,7 @@ module Wrath
         end
       end
 
-      label player_name
+      label player_name, align_v: :center
 
       if @network
         @ready_indicators << label(t.label.ready, color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)

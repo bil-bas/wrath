@@ -29,7 +29,7 @@ module Wrath
         end
 
         @scroll_window = scroll_window width: $window.width - 10, height: 80, background_color: BACKGROUND_COLOR do
-          @body_text = text_area padding: 2, font_size: 5, enabled: false, background_color: BACKGROUND_COLOR,width: $window.width - 16
+          @body_text = text_area padding: 2, font_height: 5, enabled: false, background_color: BACKGROUND_COLOR,width: $window.width - 16
         end
 
         @tabs_group.value = TABS.first

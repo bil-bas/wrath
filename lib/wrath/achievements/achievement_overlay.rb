@@ -9,8 +9,8 @@ module Wrath
     
     class Popup < Fidgit::Composite 
       TEXT_WIDTH = 135
-      TITLE_FONT_SIZE = 18
-      BODY_FONT_SIZE = 15
+      TITLE_FONT_HEIGHT = 18
+      BODY_FONT_HEIGHT = 15
       ICON_BACKGROUND_COLOR = Color.rgb(0, 0, 50)
       
       class Clock < BasicGameObject
@@ -21,8 +21,8 @@ module Wrath
       
       def initialize(title, body, icon, options = {})
         options = {
-          font: $window.class::FONT,
-          font_size: BODY_FONT_SIZE,
+          font_name: $window.class::FONT,
+          font_height: BODY_FONT_HEIGHT,
           border_color: BORDER_COLOR,
           border_thickness: 2,
           z: ZOrder::GUI,
@@ -30,13 +30,14 @@ module Wrath
         
         super(options)
         
-        label_options = { z: ZOrder::GUI, font: options[:font], font_size: options[:font_size] }
+        label_options = { z: ZOrder::GUI, font_name: options[:font_name], font_height: options[:font_height] }
         
-        @packer = horizontal padding: 0, spacing: 0 do
-          label "", label_options.merge(icon: ScaledImage.new(icon, $window.sprite_scale), padding: 0, border_thickness: 4, border_color: ICON_BACKGROUND_COLOR)            
+        @packer = horizontal padding: 4, spacing: 4 do
+          image_frame icon, factor: 6, padding: 4, z: ZOrder::GUI, background_color: ICON_BACKGROUND_COLOR
+
           vertical padding: 0, spacing: 0 do
-            label title, label_options.merge(color: TITLE_COLOR, font_size: TITLE_FONT_SIZE)
-            text_area label_options.merge(width: TEXT_WIDTH, text: body, background_color: Color::NONE)
+            label title, label_options.merge(color: TITLE_COLOR, font_height: TITLE_FONT_HEIGHT)
+            text_area label_options.merge(width: TEXT_WIDTH, padding_left: 0, text: body, background_color: Color::NONE)
           end
           
         end

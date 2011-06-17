@@ -209,10 +209,10 @@ class Game < Window
   def draw
     if @error_message
       begin
-        font_size = 4
-        @error_font ||= Font.new(self, default_font_name, font_size)
+        font_height = 4
+        @error_font ||= Font.new(self, default_font_name, font_height)
         @error_message.each_line.with_index do |line, i|
-          @error_font.original_draw line.strip, @sprite_scale, @sprite_scale + (i * font_size * @sprite_scale), 0
+          @error_font.original_draw line.strip, @sprite_scale, @sprite_scale + (i * font_height * @sprite_scale), 0
         end
       rescue => ex
       end

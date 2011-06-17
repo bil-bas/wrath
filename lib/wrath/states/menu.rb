@@ -75,8 +75,8 @@ class Menu < Gui
 
     horizontal spacing: 0, align: :center do
       vertical spacing: 0, padding: 0 do
-        label t.title, font_size: 30, color: Color.rgb(50, 120, 255), width: 30, justify: :center, padding_v: 0
-        label t.subtitle, font_size: 10, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
+        label t.title, font_height: 30, color: Color.rgb(50, 120, 255), width: 30, justify: :center, padding_v: 0
+        label t.subtitle, font_height: 10, color: Color.rgb(90, 180, 255), align: :center, padding_top: 0, justify: :center
         vertical spacing: 2, align: :center do
           options = { width: 75, justify: :center, shortcut: :auto }
           ACTIONS.each_pair do |name, action|
@@ -89,7 +89,7 @@ class Menu < Gui
           end
         end
 
-        label t.label.version(VERSION), font_size: 4, justify: :center, align: :center
+        label t.label.version(VERSION), font_height: 4, justify: :center, align: :center
       end
     end
 

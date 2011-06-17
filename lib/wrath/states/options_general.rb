@@ -15,7 +15,7 @@ module Wrath
 
     def body
       horizontal padding: 0 do
-        label t.label.locale
+        label t.label.locale, align_v: :center
         @locale_combo = combo_box value: settings[:locale], width: 120, align: :center do
           default = R18n::Locale.load(R18n::I18n.system_locale).title
           item "#{t.default_locale} (#{default})", ''
