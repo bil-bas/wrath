@@ -35,6 +35,11 @@ module Wrath
       super.merge! discovered: @discovered
     end
 
+    def draw_loved
+      # Don't give away the fact that we are a mimic if no-one knows yet!
+      super if discovered?
+    end
+
     def activated_by(actor)
       if discovered?
         super(actor) # Just pick up.

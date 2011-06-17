@@ -30,6 +30,11 @@ module Wrath
     def self.unlocked_picking?; $window.achievement_manager.unlocked?(:general, :choose_god); end
     def self.icon; Image["gods/#{name[/[^:]+$/].downcase}_portrait.png"]; end
 
+
+    def loves?(object)
+      object.class == @loves
+    end
+
     def loves=(loves)
       @loves = loves
       @loves_object.image = @loves.default_image if @loves

@@ -228,13 +228,28 @@ class Creature < Container
     # Draw a health bar, but only if injured.
     if health < max_health and not inside_container?
       bar_x = x - (width / 2)
-      bar_z = z + height + 2 + (empty_handed? ? 0 : contents.height + contents.z_offset)
+      bar_z = z + height + 2 + (empty_handed? ? 0 : contents.collision_height + contents.z_offset)
       health_width = width * health / max_health.to_f
       $window.pixel.draw_rot bar_x, y - bar_z, y, 0, 0, 1, width, HEALTH_BAR_THICKNESS, HEALTH_BAR_BACKGROUND
       $window.pixel.draw_rot bar_x, y - bar_z, y, 0, 0, 1, health_width, HEALTH_BAR_THICKNESS, HEALTH_BAR_FOREGROUND
     end
 
+    # Draw an indicator over the head of whatever the god loves!
+    draw_loved if loved?
+
     draw_dazed if state == :lying
+  end
+
+  public
+  def loved?
+    parent.god.loves?(self)
+  end
+
+  protected
+  def draw_loved
+    [6, 4, 2].each do |size|
+      $window.pixel.draw_rot x, y - collision_height - z - 6, zorder, 45, 0.5, 0.5, size, size, Color.rgba(100, 100, 255, 150), :additive
+    end
   end
 
   protected
