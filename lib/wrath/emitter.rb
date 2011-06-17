@@ -28,7 +28,7 @@ class Emitter
     number = options[:number]
     thrown_by = Array(options[:thrown_by])
 
-    random(number).times do
+    random(number).round.times do
       angle = rand(360)
       speed = random(@h_speed)
       y_velocity = Math::sin(angle) * speed

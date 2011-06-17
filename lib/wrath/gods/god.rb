@@ -16,6 +16,7 @@ module Wrath
 
     ANOINTED_MULTIPLIER = 1.5
     LOVE_MULTIPLIER = 1.5 # Favour multiplier for loved type.
+    UNLOVED_MODIFIER = 0.25 # Favour multiplier for anything not loved.
 
     event :on_disaster_start
     event :on_disaster_end
@@ -39,8 +40,10 @@ module Wrath
 
     def favor_for(object)
       favor = object.base_favor
-      favor *= ANOINTED_MULTIPLIER if object.is_a? Creature and object.anointed?
-      favor *= LOVE_MULTIPLIER if (object.class == @loves)
+      if object.is_a? Creature
+        favor *= ANOINTED_MULTIPLIER if object.anointed?
+        favor *= (object.class == @loves) ? LOVE_MULTIPLIER : UNLOVED_MODIFIER
+      end
       favor
     end
 

@@ -428,8 +428,12 @@ class Creature < Container
   protected
   def on_being_dropped(container)
     super(container)
-    remove_status(:anointed) if anointed?
+
     @state = :thrown
+  end
+
+  def on_stopped(sender)
+    remove_status(:anointed) if anointed?
   end
 
   public
