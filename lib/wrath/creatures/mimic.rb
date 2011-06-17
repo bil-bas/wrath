@@ -16,7 +16,7 @@ module Wrath
         favor: 10,
         health: 30,
         vertical_jump: 0.6,
-        horizontal_jump: 1.2,
+        speed: 1.2,
         elasticity: 0.1,
         move_interval: 1000,
         move_type: :none, # Doesn't move until it is awakened.

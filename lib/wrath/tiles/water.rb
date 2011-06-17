@@ -39,6 +39,9 @@ class Water < AnimatedTile
 
   def touched_by(object)
     case object
+      when Creature
+        object.remove_status(:burning) if object.burning?
+
       when Fire, Wrath::Particle
         object.destroy
         return

@@ -107,7 +107,6 @@ class Creature < Container
 
     # For jumpers:
     @vertical_jump = options[:vertical_jump]
-    @horizontal_jump = options[:horizontal_jump]
 
     self.move_type = options[:move_type]
 
@@ -136,7 +135,7 @@ class Creature < Container
         raise ":walk_duration and :speed required for walkers" unless @walk_duration and @speed
         raise ":move_interval required" unless @move_interval
       when :jump
-        raise ":vertical_jump and :horizontal_jump required for walkers" unless @vertical_jump and @horizontal_jump
+        raise ":vertical_jump and :speed required for jumpers" unless @vertical_jump and @speed
         raise ":move_interval required" unless @move_interval
       when :none
         nil
@@ -190,7 +189,7 @@ class Creature < Container
   def start_jumping
     self.facing = rand(360)
     @z_velocity = random(@vertical_jump * 0.75, @vertical_jump * 1.25)
-    h_jump = random(@horizontal_jump * 0.75, @horizontal_jump * 1.25)
+    h_jump = random(@speed * 0.75, @speed * 1.25)
     @y_velocity = Math::sin(facing) * h_jump
     @x_velocity = Math::cos(facing) * h_jump
   end

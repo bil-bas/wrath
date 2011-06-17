@@ -7,7 +7,7 @@ module Wrath
           favor: 6,
           health: 20,
           vertical_jump: 1.2,
-          horizontal_jump: 1,
+          speed: 1,
           elasticity: 0.5,
           move_interval: 500,
           encumbrance: 0.7, # To simulate covering your eyes.

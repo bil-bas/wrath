@@ -5,7 +5,7 @@ module Wrath
           favor: 6,
           health: 20,
           vertical_jump: 1,
-          horizontal_jump: 1.2,
+          speed: 1.2,
           elasticity: 0.8,
           move_interval: 1000,
           encumbrance: 0.2,

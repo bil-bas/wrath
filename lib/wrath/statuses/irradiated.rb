@@ -7,12 +7,10 @@ module Wrath
       STRENGTH_BONUS = 0.5
       OVERLAY_COLOR = Color.rgba(0, 250, 0, 100)
       DAMAGE = 3 / 1000.0
-      
-      @@outlines = []
 
       def update
         OVERLAY_COLOR.alpha = ((1.3 + Math::sin(milliseconds / 250.0)) * 90).to_i
-        owner.wound(DAMAGE * parent.frame_time, self, :over_time)
+        owner.wound(DAMAGE * parent.frame_time, self, :over_time) unless parent.client?
         super
       end
       

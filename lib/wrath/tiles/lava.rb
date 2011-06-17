@@ -21,6 +21,7 @@ class Lava < Water
       when Creature
         damage = filled? ? FILLED_DAMAGE : DAMAGE
         object.wound(damage * parent.frame_time, self, :over_time) unless parent.client?
+        object.apply_status(:burning, duration: Fire::BURN_DURATION)
 
       else
         object.destroy

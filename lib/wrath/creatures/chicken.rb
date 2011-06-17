@@ -8,7 +8,7 @@ module Wrath
           favor: 4,
           health: 10,
           vertical_jump: 0.6,
-          horizontal_jump: 0.8,
+          speed: 0.8,
           move_interval: 250,
           encumbrance: 0.1,
           z_offset: -1,

@@ -10,7 +10,7 @@ module Wrath
           favor: 0,
           health: 30,
           vertical_jump: 0.4,
-          horizontal_jump: 2.4,
+          speed: 2.4,
           elasticity: 0.6,
           move_interval: 600,
           encumbrance: 0.4, # Relevant for the corpse.
