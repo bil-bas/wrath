@@ -6,7 +6,7 @@ module Wrath
     class Burning < Status
       SPEED_BONUS = 1
       DAMAGE = 1.5 / 1000.0
-      FLAME_COLOR = Color.rgba(255, 255, 255, 150)
+      ANIMATION_INTERVAL = 250
 
       def update
         owner.wound(DAMAGE * parent.frame_time, self, :over_time) unless parent.client?
@@ -21,12 +21,17 @@ module Wrath
 
       def draw
         $window.clip_to(0, 0, 10000, owner.y) do
-          @@image ||= SpriteSheet.new("objects/fire_8x8.png", 8, 8, 2)[0, 0]
-          angle = owner.x_velocity * - 15
-          @@image.draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.zorder - 0.01,
+          @@animation ||= Animation.new(file: "objects/fire_8x8.png")
+          angle = if owner.inside_container?
+                    owner.container.x_velocity
+                  else
+                    owner.x_velocity
+                  end
+          angle *= - 15
+          @@animation[(milliseconds / ANIMATION_INTERVAL) % 2].draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.zorder - 0.01,
                            angle, 0.5, 1,
-                           owner.collision_width * 1.1 / @@image.width,
-                           owner.collision_height * 1.5 / @@image.height, FLAME_COLOR
+                           owner.collision_width * 1.1 / @@animation[0].width,
+                           owner.collision_height * 1.5 / @@animation[0].height, Fire::FLAME_COLOR, :additive
         end
 
         intensity = [1.5 - (owner.z * 0.05), 0].max

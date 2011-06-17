@@ -6,6 +6,7 @@ module Wrath
     ANIMATION_DELAY = 500
     GLOW_COLOR = Color.rgb(255, 255, 50)
     DPS = 5
+    FLAME_COLOR = Color.rgba(255, 255, 255, 100)
 
     def initialize(options = {})
       options = {
@@ -17,6 +18,8 @@ module Wrath
           animation: "fire_8x8.png",
           casts_shadow: false,
           sacrifice_particle: Spark,
+          color: FLAME_COLOR,
+          mode: :additive,
       }.merge! options
 
       super options
