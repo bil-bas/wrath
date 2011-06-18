@@ -23,12 +23,8 @@ module Wrath
       super options
     end
 
-    def on_collision(other)
-      if other.is_a? Creature and self.hurts?(other) and can_hit?(other)
-        other.apply_status(:poisoned, duration: POISON_DURATION)
-      end
-
-      super(other)
+    def on_having_wounded(sender, damage, other, type)
+      other.apply_status(:poisoned, duration: POISON_DURATION)
     end
   end
 end

@@ -7,7 +7,9 @@ class Creature < Container
   include Fidgit::Event
   include HasStatus
 
-  event :on_wounded
+  event :on_wounded # On all machines
+  event :on_having_wounded # Not client-side.
+  event :on_being_wounded # Not client-side
 
   trait :timer
 
@@ -553,6 +555,9 @@ class Creature < Container
     end
 
     self.health -= damage
+
+    wounder.publish :on_having_wounded, damage, self, type
+    publish :on_being_wounded, damage, wounder, type
 
     if alive? and type == :hit
       knocked_down_by(wounder)

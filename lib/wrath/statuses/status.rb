@@ -7,6 +7,7 @@ module Wrath
 
     event :on_applied # [self, creature]
     event :on_removed # [self, creature]
+    event :on_having_wounded # Not client-side.
 
     attr_reader :owner # Object this status is applied to.
 
