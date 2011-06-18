@@ -43,6 +43,8 @@ module Wrath
       @damage_per_hit = options[:damage_per_hit]
       @damage_per_second = options[:damage_per_second]
 
+      @flammable = options[:flammable]
+
       @thrown_by = [] # These will be immune from colliding with the object.
 
       super options

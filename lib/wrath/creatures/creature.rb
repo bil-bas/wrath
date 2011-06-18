@@ -71,7 +71,6 @@ class Creature < Container
   def affected_by_gravity?; super and not (flying_height > 0 and upright?); end
   def prone?; [:lying, :thrown].include? state; end
   def upright?; not prone?; end
-  def flammable?; @flammable; end
 
   public
   def initialize(options = {})
@@ -89,7 +88,6 @@ class Creature < Container
 
     super options
 
-    @flammable = options[:flammable]
     @flying_height = options[:flying_height]
     @flying_rise_speed = options[:flying_rise_speed]
     @max_health = @health = options[:health]
