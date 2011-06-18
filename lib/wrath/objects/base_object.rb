@@ -16,7 +16,7 @@ class BaseObject < GameObject
 
   event :on_stopped # Has stopped bouncing.
 
-  attr_reader :frames, :elasticity, :collision_height, :collision_width
+  attr_reader :frames, :elasticity, :collision_height, :collision_width, :sacrifice_particle
   attr_writer :local
   attr_accessor :z, :x_velocity, :y_velocity, :z_velocity
 
@@ -337,7 +337,7 @@ class BaseObject < GameObject
   # The object has been sacrificed at an altar.
   def sacrificed(actor, altar)
     self.position = [altar.x, altar.y, altar.z + altar.height]
-    explode(@sacrifice_particle, parent).each do |particle|
+    explode(sacrifice_particle, parent).each do |particle|
       angle = rand(360)
       speed = rand() * @sacrifice_speed
       particle.velocity = [

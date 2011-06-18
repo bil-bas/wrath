@@ -260,10 +260,10 @@ class Level < GameState
       if client?
         false
       elsif not ((a.z > b.z + b.collision_height) or (b.z > a.z + a.collision_height))
-        collides = a.on_collision(b)
-        collides ||= b.on_collision(a)
+        collidesAB = a.on_collision(b)
+        collidesBA = b.on_collision(a)
 
-        collides
+        collidesAB or collidesBA
       end
     end
   end

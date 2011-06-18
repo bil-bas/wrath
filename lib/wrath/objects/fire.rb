@@ -1,33 +1,27 @@
 module Wrath
+  # Fire on the ground. Can't be picked up, since it is considered to be burning what is underneath.
   class Fire < DynamicObject
-    trait :timer
+    ANIMATION_INTERVAL = 500
 
-    BURN_DURATION = 5000
-    ANIMATION_DELAY = 500
-    GLOW_COLOR = Color.rgb(255, 255, 50)
-    FLAME_COLOR = Color.rgba(255, 255, 255, 100)
+    def can_be_picked_up?(actor); false; end
+    def burning?; true; end
 
     def initialize(options = {})
       options = {
-          favor: 2,
-          encumbrance: 0,
-          elasticity: 0.2,
-          z_offset: -2,
           animation: "fire_8x8.png",
           casts_shadow: false,
           sacrifice_particle: Spark,
-          color: FLAME_COLOR,
-          mode: :additive,
+          collision_height: 8,
+          color: Status::Burning::FLAME_COLOR,
       }.merge! options
 
       super options
 
-      @frames.delay = ANIMATION_DELAY
+      @frames.delay = ANIMATION_INTERVAL
     end
 
     def update
       super
-
       self.image = @frames.next
 
       if rand(100) < 3
@@ -39,16 +33,7 @@ module Wrath
       super
 
       intensity = [1.5 - (z * 0.05), 0].max
-      GLOW_COLOR.alpha = (40 * intensity).to_i
-      parent.draw_glow(x, y, GLOW_COLOR, intensity)
-    end
-
-    def on_collision(other)
-      if other.is_a? Creature
-        other.apply_status(:burning, duration: BURN_DURATION)
-      end
-
-      super(other)
+      parent.draw_glow(x, y, Status::Burning::GLOW_COLOR, intensity)
     end
   end
 end

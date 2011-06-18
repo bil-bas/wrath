@@ -47,12 +47,16 @@ module Wrath
         objects.each do |object|
           if object.is_a? Fire
             object.destroy
-          elsif object.is_a? DynamicObject and object.thrown?
-            # Todo: Make the dampening based on velocity, so faster things slow quicker.
-            multiplier = 1.0 - 0.001 * frame_time
-            object.x_velocity *= multiplier
-            object.y_velocity *= multiplier
-            object.z_velocity *= multiplier
+          else
+            object.remove_status :burning if object.burning?
+
+            if object.is_a? DynamicObject and object.thrown?
+              # Todo: Make the dampening based on velocity, so faster things slow quicker.
+              multiplier = 1.0 - 0.001 * frame_time
+              object.x_velocity *= multiplier
+              object.y_velocity *= multiplier
+              object.z_velocity *= multiplier
+            end
           end
         end
 

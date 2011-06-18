@@ -2,13 +2,7 @@ module Wrath
 
   # Any sort of living being.
 class Creature < Container
-  extend Forwardable
-
-  include Fidgit::Event
-  include HasStatus
-
   event :on_wounded # On all machines
-  event :on_having_wounded # Not client-side.
   event :on_being_wounded # Not client-side
 
   trait :timer
@@ -77,6 +71,7 @@ class Creature < Container
   def affected_by_gravity?; super and not (flying_height > 0 and upright?); end
   def prone?; [:lying, :thrown].include? state; end
   def upright?; not prone?; end
+  def flammable?; @flammable; end
 
   public
   def initialize(options = {})
@@ -89,10 +84,12 @@ class Creature < Container
         facing: 0,
         sacrifice_particle: BloodDroplet,
         move_interval: 2000,
+        flammable: true,
     }.merge! options
 
     super options
 
+    @flammable = options[:flammable]
     @flying_height = options[:flying_height]
     @flying_rise_speed = options[:flying_rise_speed]
     @max_health = @health = options[:health]
@@ -490,7 +487,7 @@ class Creature < Container
           end
         end
 
-        false
+        super(other)
 
       when StaticObject
         # Turn if we are walking into a static. 1000 degrees/second.

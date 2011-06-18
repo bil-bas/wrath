@@ -12,7 +12,7 @@
     :initial: 1
   :Mushroom:
     :initial: 5
-  :Fire:
+  :CampFire:
     :initial: 2
 
   :Bard:

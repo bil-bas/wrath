@@ -1,6 +1,12 @@
+require_relative "base_object" # Needed to prevent events being created out of sync via require_all.
+
 module Wrath
   # An object that can move around and be picked up and put into things.
   class DynamicObject < BaseObject
+    include HasStatus
+
+    event :on_having_wounded # Not client-side.
+
     MIN_ENCUMBRANCE_TO_KNOCK_DOWN = 0.2 # Enough weight to knock creatures over when hit by them.
 
     attr_reader :container, :thrown_by, :z_offset, :damage_per_second, :damage_per_hit
@@ -19,6 +25,7 @@ module Wrath
     def on_being_picked_up(by); end
     def on_being_dropped(by); end
     def thrown?; not @thrown_by.empty?; end
+    def flammable?; @flammable; end
 
     public
     def initialize(options = {})
@@ -27,6 +34,7 @@ module Wrath
           damage_per_second: 0,
           encumbrance: 0.2,
           z_offset: 0,
+          flammable: false,
       }.merge! options
 
       @encumbrance = options[:encumbrance]
@@ -86,6 +94,11 @@ module Wrath
         when Wall
           # Everything, except carried objects, hit walls.
           not inside_container?
+
+        when DynamicObject
+          apply_status(:burning, duration: Status::Burning::DEFAULT_BURN_DURATION) if flammable? and other.burning?
+
+          false
 
         else
           false

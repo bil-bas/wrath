@@ -5,12 +5,11 @@
     :contents:
       - :Chicken
       - :StrengthPotion
-      - :Fire
       - :FlyingCarpet
       - :Crown
   :Rock:
     :initial: 8
-  :Fire:
+  :CampFire:
     :initial: 4
   :Mushroom:
     :initial: 8

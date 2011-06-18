@@ -39,9 +39,6 @@ class Water < AnimatedTile
 
   def touched_by(object)
     case object
-      when Creature
-        object.remove_status(:burning) if object.burning?
-
       when Fire, Wrath::Particle
         object.destroy
         return
@@ -53,6 +50,9 @@ class Water < AnimatedTile
           self.filled = true
           return
         end
+
+      when DynamicObject
+        object.remove_status(:burning) if object.burning? and not object.parent.client?
 
       else
         if not filled? and (object.z + object.height) > 0 and rand(100) < 15

@@ -2,14 +2,18 @@ require_relative "status"
 
 module Wrath
   class Status
-    # Being anointed at the font empowers a sacrifice.
+    # Being on fire is no fun. Creatures will be speeded up and hurt, but plain objects won't.
     class Burning < Status
       SPEED_BONUS = 1
-      DAMAGE = 3 / 1000.0
-      ANIMATION_INTERVAL = 250
+      DAMAGE = 2 / 1000.0
+      ANIMATION_INTERVAL = 500
+      DEFAULT_BURN_DURATION = 5000
+
+      GLOW_COLOR = Color.rgba(255, 255, 50, 50) # Yellowy glow.
+      FLAME_COLOR = Color.rgba(255, 255, 255, 100) # Semi-transparent flames.
 
       def update
-        owner.wound(DAMAGE * parent.frame_time, self, :over_time) unless parent.client?
+        owner.wound(DAMAGE * parent.frame_time, self, :over_time) if owner.respond_to?(:wound) and not parent.client?
 
         if rand(100) < 3
           Smoke.create(parent: parent, x: random(owner.x - owner.collision_width / 2, owner.x + owner.collision_width / 2),
@@ -30,23 +34,23 @@ module Wrath
                     owner.x_velocity
                   end
           angle *= - 15
-          @@animation[@frame_number].draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.zorder - 0.01,
+          @@animation[@frame_number].draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.y - 0.01,
                            angle, 0.5, 1,
                            owner.collision_width * 1.1 / @@animation[0].width,
-                           owner.collision_height * 1.5 / @@animation[0].height, Fire::FLAME_COLOR, :additive
+                           owner.collision_height * 1.5 / @@animation[0].height, FLAME_COLOR, :additive
         end
 
         intensity = [1.5 - (owner.z * 0.05), 0].max
-        parent.draw_glow(owner.x, owner.y, Fire::GLOW_COLOR, intensity)
+        parent.draw_glow(owner.x, owner.y, GLOW_COLOR, intensity)
       end
 
       def on_applied(sender, creature)
         @frame_number = 0
-        creature.speed += SPEED_BONUS
+        creature.speed += SPEED_BONUS if creature.respond_to? :speed=
       end
 
       def on_removed(sender, creature)
-        creature.speed -= SPEED_BONUS
+        creature.speed -= SPEED_BONUS if creature.respond_to? :speed=
       end
     end
   end

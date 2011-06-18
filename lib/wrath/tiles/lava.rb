@@ -1,5 +1,7 @@
 module Wrath
 class Lava < Water
+  include Fidgit::Event
+
   ANIMATION_POSITIONS = [[0, 2], [1, 2]]
   IMAGE_POSITION_FILLED = [2, 3]
 
@@ -7,6 +9,8 @@ class Lava < Water
   FILLED_DAMAGE = 2 / 1000.0 # Still take some damage when standing on the rock.
   GLOW_COLOR = Color.rgba(255, 100, 0, 20)
   GLOW_SIZE = 0.65
+
+  event :on_having_wounded
 
   def edge_type; :hard_curve; end
 
@@ -21,7 +25,7 @@ class Lava < Water
       when Creature
         damage = filled? ? FILLED_DAMAGE : DAMAGE
         object.wound(damage * parent.frame_time, self, :over_time) unless parent.client?
-        object.apply_status(:burning, duration: Fire::BURN_DURATION)
+        object.apply_status(:burning, duration: Status::Burning::BURN_DURATION)
 
       else
         object.destroy

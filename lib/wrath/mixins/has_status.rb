@@ -3,7 +3,6 @@ module Wrath
     attr_reader :statuses
 
     def self.included(base)
-      base.send :include, Fidgit::Event
       base.event :on_applied_status # [self, Status]
       base.event :on_removed_status # [self, Status]
     end

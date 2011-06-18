@@ -12,7 +12,7 @@ module Wrath
     DISASTER_COLOR = Color.rgb(255, 0, 255)
     ANGER_WIDTH = 30 # Of the bar.
     BORDER_WIDTH = 1
-    PATIENCE_DURATION = 30 # 30s before first disaster.
+    PATIENCE_DURATION = 8 # 30s before first disaster.
 
     ANOINTED_MULTIPLIER = 1.5
     LOVE_MULTIPLIER = 1.5 # Favour multiplier for loved type.

@@ -1,7 +1,7 @@
 === CHANGELOG ===
 
 Next release
-  * Added burning effects (from fire and lava) that can be put out in water.
+  * Added burning effects (from fire and lava) that can be put out in water. Burning things set fire to other flammable things.
   * Can now anoint sacrificial creatures (at the font) for extra favour when sacrificed.
   * Added 3 new playable priests (chaplain, nun and scientist).
   * Game will now run in full-screen (at desktop resolution only; there will be black edging unless screen has a 16:10 aspect ratio).
