@@ -224,6 +224,7 @@
   :name: :death_fire
   :statistics:
     - [:deaths, :type, :Fire]
+    - [:deaths, :type, :Burning]
   :required: 1
   :unlocks: []
 
