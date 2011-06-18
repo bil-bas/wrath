@@ -5,7 +5,7 @@ module Wrath
     # Being anointed at the font empowers a sacrifice.
     class Burning < Status
       SPEED_BONUS = 1
-      DAMAGE = 1.5 / 1000.0
+      DAMAGE = 3 / 1000.0
       ANIMATION_INTERVAL = 250
 
       def update

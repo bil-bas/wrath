@@ -5,12 +5,10 @@ module Wrath
     BURN_DURATION = 5000
     ANIMATION_DELAY = 500
     GLOW_COLOR = Color.rgb(255, 255, 50)
-    DPS = 5
     FLAME_COLOR = Color.rgba(255, 255, 255, 100)
 
     def initialize(options = {})
       options = {
-          damage_per_second: DPS,
           favor: 2,
           encumbrance: 0,
           elasticity: 0.2,
