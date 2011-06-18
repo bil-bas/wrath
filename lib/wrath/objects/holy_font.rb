@@ -33,11 +33,11 @@ module Wrath
       if object.is_a? Creature and object.favor > 0 and not object.anointed?
         object.apply_status(:anointed)
 
-        Sample["objects/font_anoint.ogg"].play
+        Sample["objects/font_anoint.ogg"].play_at_x(x)
 
         log.debug { "#{actor} anointed #{object}" }
       else
-        Sample["objects/font_anoint_fail.ogg"].play
+        Sample["objects/font_anoint_fail.ogg"].play_at_x(x)
 
         log.debug { "#{actor} failed to anoint #{object}" }
       end
