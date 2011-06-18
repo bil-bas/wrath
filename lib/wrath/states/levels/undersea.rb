@@ -48,7 +48,7 @@ module Wrath
           if object.is_a? Fire
             object.destroy
           else
-            object.remove_status :burning if object.burning?
+            object.remove_status :burning if object.is_a?(HasStatus) and object.burning?
 
             if object.is_a? DynamicObject and object.thrown?
               # Todo: Make the dampening based on velocity, so faster things slow quicker.
