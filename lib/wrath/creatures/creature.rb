@@ -114,6 +114,10 @@ class Creature < Container
 
     @state = :standing
 
+    @hurt_over_time_sound = Sample["creatures/hurt_over_time.ogg"]
+    @hurt_over_time_sound.volume = 0.5
+    @hurt_over_time_sound_instance = nil
+
     @first_wounded_at = @last_wounded_at = nil
 
     @walking_animation = @frames[FRAME_WALK1..FRAME_WALK2]
@@ -202,9 +206,16 @@ class Creature < Container
 
   protected
   def on_wounded(sender, damage)
-    if controlled_by_player? and damage >= 2
-      # TODO: Need a better way to avoid making sound for DOT.
-      Sample["creatures/hurt.ogg"].play_at_x(x)
+    if controlled_by_player?
+      if damage >= 2
+        # TODO: Need a better way to avoid making sound for DOT.
+        Sample["creatures/hurt.ogg"].play_at_x(x)
+      else
+        # Only play a single hurt sound at a time.
+        unless @hurt_over_time_sound_instance and @hurt_over_time_sound_instance.playing?
+          @hurt_over_time_sound_instance = @hurt_over_time_sound.play_at_x(x)
+        end
+      end
     end
 
     # Try to move away from pain.
