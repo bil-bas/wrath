@@ -16,6 +16,8 @@ module Wrath
                        y: owner.y - owner.z - owner.collision_height - rand(3), zorder: owner.y - 0.01 + rand(0.02))
         end
 
+        @frame_number = (milliseconds / ANIMATION_INTERVAL) % 2
+
         super
       end
 
@@ -28,7 +30,7 @@ module Wrath
                     owner.x_velocity
                   end
           angle *= - 15
-          @@animation[(milliseconds / ANIMATION_INTERVAL) % 2].draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.zorder - 0.01,
+          @@animation[@frame_number].draw_rot owner.x, owner.y - owner.z - owner.collision_height / 3.0, owner.zorder - 0.01,
                            angle, 0.5, 1,
                            owner.collision_width * 1.1 / @@animation[0].width,
                            owner.collision_height * 1.5 / @@animation[0].height, Fire::FLAME_COLOR, :additive
@@ -39,6 +41,7 @@ module Wrath
       end
 
       def on_applied(sender, creature)
+        @frame_number = 0
         creature.speed += SPEED_BONUS
       end
 
