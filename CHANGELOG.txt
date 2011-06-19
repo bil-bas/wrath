@@ -13,6 +13,7 @@ Next release
   * Game can be played in Piratical and 1337 english text.
   * Fixed: Completion times for all achievements already gained, are set to the current time whenever the application is started.
   * Fixed: Several creatures do not yield favour.
+  * Fixed: Client can fall over and never be able to get up again.
   * Many minor improvements to the GUI, especially when scaling to higher resolutions.
 
 v0.1.0 (2011-06-07)

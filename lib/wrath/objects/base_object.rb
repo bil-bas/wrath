@@ -291,7 +291,7 @@ class BaseObject < GameObject
 
         if @z_velocity < 0.2
           self.velocity = [0, 0, 0]
-          halt unless (networked? and parent.client?) or not parent.started?
+          halt if local? and parent.started?
         end
       end
     end
@@ -359,7 +359,7 @@ class BaseObject < GameObject
   def halt(pos = nil)
     self.position = pos if pos
     self.velocity = [0, 0, 0]
-    parent.send_message(Message::Halt.new(self)) if networked? and parent.host?
+    parent.send_message(Message::Halt.new(self)) if local? and networked? and parent.networked?
     publish :on_stopped
   end
 

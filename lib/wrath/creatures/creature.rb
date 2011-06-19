@@ -197,7 +197,6 @@ class Creature < Container
 
   protected
   def start_walking
-    self.state = :walking
     self.facing = rand(360)
     @walk_time_left = random(@walk_duration * 0.5, @walk_duration * 1.5)
   end
@@ -216,8 +215,9 @@ class Creature < Container
       end
     end
 
-    # Try to move away from pain.
+    # Try to move away from pain immediately, if we are standing still and waiting to start moving..
     if timer_exists? :move
+      log.debug "#{self}: Took damage when stationary, so starting to move"
       stop_timer(:move)
       start_moving
     end
@@ -377,9 +377,9 @@ class Creature < Container
     # Ensure that state is updated remotely.
     case @state
       when :standing
-        @state = :walking if [x_velocity, y_velocity] != [0, 0]
+        @state = :walking if ([x_velocity, y_velocity] != [0, 0]) or walking_to_do?
       when :walking
-        @state = :standing if [x_velocity, y_velocity] == [0, 0]
+        @state = :standing if ([x_velocity, y_velocity] == [0, 0]) and not walking_to_do?
     end
   end
 
@@ -396,8 +396,8 @@ class Creature < Container
       end
     end
 
-    # Float upwards if flying.
-    if flying_height > 0 and upright?
+    # Float upwards if flying. 0.05 to allow for rounding errors.
+    if flying_height > 0.05 and upright?
       if z >= flying_height
         self.z = flying_height
         self.z_velocity = 0
