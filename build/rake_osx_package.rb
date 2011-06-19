@@ -5,7 +5,8 @@
 GAME_URL = "com.github.spooner.#{APP}"
 OSX_APP = "#{APP.capitalize}.app"
 
-OSX_GEMS = %w[chingu fidgit]
+# Clipboard is required via fidgit.
+OSX_GEMS = %w[chingu fidgit clipboard r18n-core r18n-desktop]
 
 RELEASE_FOLDER_OSX = "#{RELEASE_FOLDER_BASE}_OSX_10_6"
 
@@ -56,11 +57,18 @@ task osx_app: :readme do
     gem_path = File.join(%x[bundle show #{gem}].chomp, 'lib', '.')
     cp_r gem_path, TMP_OSX_GEM_DIR
 
-    # Fidgit reads a file outside of /lib, which is both evil and not supported by the .app!
-    if gem == "fidgit"
-      ["config", "media"].each do |folder|
-        cp_r File.expand_path(File.join(gem_path, '..', folder)), File.dirname(TMP_OSX_GEM_DIR)
-      end
+    # Some gems use files outside of /lib, which is not supported by the .app!
+    extra_folders = case gem
+                      when 'fidgit'
+                        %w[config media]
+                      when 'r18n-core'
+                        %w[base locales]
+                      else
+                        []
+                    end
+
+    extra_folders.each do |folder|
+      cp_r File.expand_path(File.join(gem_path, '..', folder)), File.dirname(TMP_OSX_GEM_DIR)
     end
   end
 
