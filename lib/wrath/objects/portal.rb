@@ -35,7 +35,7 @@ module Wrath
 
       every(ANIMATION_INTERVAL) { animate }
 
-      halt
+      on_stopped(self) # Fake an event to get the effect.
     end
 
     def animate
@@ -54,7 +54,7 @@ module Wrath
       @current_animation = @frames[GROUND_ANIM]
       animate
       @on_ground = true
-      self.rotation_center =  :center_center
+      self.rotation_center = :center_center
     end
 
     def teleport(other)

@@ -37,8 +37,9 @@ class Egg < DynamicObject
     case other
       when Humanoid
         if not other.thrown? and not thrown_by.include? other and (not inside_container?) and z > ground_level
+          my_parent = parent
           destroy
-          other.pick_up(BrokenEgg.create(parent: parent))
+          other.pick_up(BrokenEgg.create(parent: my_parent))
         end
     end
 

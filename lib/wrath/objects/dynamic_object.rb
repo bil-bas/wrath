@@ -116,10 +116,10 @@ module Wrath
     end
 
     public
-    def halt
+    def halt(pos = nil)
       @thrown_by.clear
       set_body_velocity(0, 0)
-      super
+      super(pos)
     end
 
     public

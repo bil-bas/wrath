@@ -15,11 +15,5 @@ module Wrath
 
       super options
     end
-
-    def activated_by(actor)
-      contents.position = self.position
-      drop
-      destroy
-    end
   end
 end

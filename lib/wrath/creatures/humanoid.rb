@@ -35,7 +35,7 @@ module Wrath
       @player = player
 
       if controlled_by_player?
-        halt
+        halt unless (networked? and parent.client?) or not parent.started?
       else
         schedule_move
       end

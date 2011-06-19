@@ -184,7 +184,7 @@ class Player < BasicGameObject
           # S
           moving.move(180)
         else
-          moving.halt
+          moving.set_body_velocity(0, 0)
         end
     end
   end

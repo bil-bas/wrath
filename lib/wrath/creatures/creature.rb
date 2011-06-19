@@ -113,7 +113,7 @@ class Creature < Container
     @state = :standing
 
     @hurt_over_time_sound = Sample["creatures/hurt_over_time.ogg"]
-    @hurt_over_time_sound.volume = 0.5
+    @hurt_over_time_sound.volume = 0.25
     @hurt_over_time_sound_instance = nil
 
     @first_wounded_at = @last_wounded_at = nil
@@ -164,9 +164,9 @@ class Creature < Container
 
   protected
   def schedule_move
-    if local? and not controlled_by_player?
+    if exists? and local? and not controlled_by_player?
       after(@move_interval + (rand(@move_interval / 2.0) + rand(@move_interval / 2.0)), name: :move) do
-        if local? and not controlled_by_player?
+        if exists? and local? and not controlled_by_player?
           if @state == :standing
             start_moving
           else
@@ -204,7 +204,7 @@ class Creature < Container
 
   protected
   def on_wounded(sender, damage)
-    if controlled_by_player?
+    if controlled_by_player? and local?
       if damage >= 2
         # TODO: Need a better way to avoid making sound for DOT.
         Sample["creatures/hurt.ogg"].play_at_x(x)
@@ -304,7 +304,7 @@ class Creature < Container
       @state = :standing
       schedule_move unless parent.client?
     else
-      log.warn "#{self} told to stand up when not lying down (#{state.inspect})"
+      log.warn { "#{self} told to stand up when not lying down (#{state.inspect})" }
     end
   end
 
@@ -379,7 +379,7 @@ class Creature < Container
       when :standing
         @state = :walking if [x_velocity, y_velocity] != [0, 0]
       when :walking
-        halt if [x_velocity, y_velocity] == [0, 0]
+        @state = :standing if [x_velocity, y_velocity] == [0, 0]
     end
   end
 
@@ -407,6 +407,8 @@ class Creature < Container
     end
 
     super
+
+    return unless exists?
 
     sync_state
 
@@ -609,22 +611,24 @@ class Creature < Container
   end
 
   public
-  def halt
+  def halt(pos = nil)
     case @state
       when :thrown
         # Lie down then stand up if we were thrown.
-        @state = :lying
-        after(stand_up_delay, name: :stand_up) { stand_up } unless parent.client?
-      else
+        self.state = :lying
+        after(stand_up_delay, name: :stand_up) { stand_up if exists? } unless parent.client?
+      when :walking, :standing
         @walk_time_left = 0
         self.state = :standing
 
         # Has been jumping or walking, but come to a stand-still.
         stop_timer :move if timer_exists? :move
         schedule_move
+      else
+        log.warn { "#{self} halted unexpectedly when #{@state.inspect}" }
     end
 
-    super
+    super(pos)
   end
 end
 end

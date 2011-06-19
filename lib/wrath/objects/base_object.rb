@@ -291,7 +291,7 @@ class BaseObject < GameObject
 
         if @z_velocity < 0.2
           self.velocity = [0, 0, 0]
-          halt
+          halt unless (networked? and parent.client?) or not parent.started?
         end
       end
     end
@@ -356,9 +356,10 @@ class BaseObject < GameObject
 
   public
   # Called when the object stops moving.
-  def halt
-    #parent.send_message(Message::Stop.new(self)) if networked? and parent.host?
+  def halt(pos = nil)
+    self.position = pos if pos
     self.velocity = [0, 0, 0]
+    parent.send_message(Message::Halt.new(self)) if networked? and parent.host?
     publish :on_stopped
   end
 
@@ -386,6 +387,11 @@ class BaseObject < GameObject
     end
 
     fragments
+  end
+
+  public
+  def overlaps_vertically?(other)
+    (other.z < z + collision_height) and (z < other.z + other.collision_height)
   end
 
   public

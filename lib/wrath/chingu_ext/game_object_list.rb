@@ -21,5 +21,20 @@ module Chingu
     def object_by_id(id)
       @objects_by_id[id]
     end
+
+    def update
+      # Ensure you don't call update on objects that have already been destroyed.
+      @unpaused_game_objects.each do |go|
+        if go.is_a? Wrath::BaseObject
+          if go.exists?
+            go.update_trait
+            go.update if go.exists?
+          end
+        else
+          go.update_trait
+          go.update
+        end
+      end
+    end
   end
 end

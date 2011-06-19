@@ -20,6 +20,7 @@ class Level < GameState
       Message::Destroy,
       Message::EndGame,
       Message::GodLoves,
+      Message::Halt,
       Message::KnockedDown,
       Message::PerformAction,
       Message::RemoveStatus,
@@ -238,16 +239,16 @@ class Level < GameState
 
 
     @space.on_collision(:particle, [:static, :object]) do |a, b|
-      if (a.z > b.z + b.collision_height) or (b.z > a.z + a.collision_height)
-        false
-      else
+      if a.overlaps_vertically?(b)
         a.on_collision(b)
+      else
+        false
       end
     end
 
     # Objects collide with static objects, unless they are being carried or heights are different.
     @space.on_collision(:object, :static) do |a, b|
-      not (a.inside_container? or (a.z > b.z + b.collision_height) or (b.z > a.z + a.collision_height))
+      a.overlaps_vertically?(b) and not a.inside_container?
     end
 
     # Objects collide with the wall, unless they are being carried.
@@ -259,11 +260,13 @@ class Level < GameState
       # Objects only affect one another on the host/local machine and only if they touch vertically.
       if client?
         false
-      elsif not ((a.z > b.z + b.collision_height) or (b.z > a.z + a.collision_height))
+      elsif a.overlaps_vertically?(b)
         collidesAB = a.on_collision(b)
         collidesBA = b.on_collision(a)
 
         collidesAB or collidesBA
+      else
+        false
       end
     end
   end

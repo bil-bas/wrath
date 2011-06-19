@@ -39,7 +39,7 @@ module Wrath
       if existing_status
         existing_status.reapply(options)
       else
-        status = @@status_types[type].new(self, options)
+        status = @@status_types[type].new(self, options.merge(parent: parent))
         parent.send_message(Message::ApplyStatus.new(self, status)) if parent.host?
 
         @statuses << status

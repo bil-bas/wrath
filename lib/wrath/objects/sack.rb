@@ -25,9 +25,8 @@ module Wrath
 
     public
     def activated_by(actor)
-      @parent.send_message Message::PerformAction.new(actor, self) if parent.host?
-
-      # Open the bag and spit out its contents.
+      # Open the bag and spit out its contents. No need to sync the action, since
+      # the drop/destroy will clean up for us.
       contents.position = self.position
       drop
       destroy
