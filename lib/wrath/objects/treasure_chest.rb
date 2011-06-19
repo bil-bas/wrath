@@ -22,9 +22,10 @@ module Wrath
     end
 
     def activated_by(actor)
-      if @open
+      if @open or not parent.started? # Allow a container to pick me up at start of game.
         actor.pick_up(self)
       else
+        parent.send_message(Message::PerformAction.new(actor, self)) if parent.host?
         @open = true
         self.image = @frames[OPEN_IMAGE]
       end
