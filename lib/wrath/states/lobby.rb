@@ -209,7 +209,7 @@ module Wrath
       label player_name, align_v: :center
 
       if @network
-        @ready_indicators << label(t.label.ready, color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)
+        @ready_indicators << label(t.label.ready, padding_h: 2, padding_v: 1, align_v: :center, color: READY_COLOR, background_color: UNREADY_BACKGROUND_COLOR)
       else
         label ''
       end
