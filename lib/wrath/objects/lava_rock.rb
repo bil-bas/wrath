@@ -19,16 +19,15 @@ module Wrath
     end
 
     def on_stopped(sender)
+      pos = position
+      pos[2] += height
+
+      Sample["objects/explosion.ogg"].play_at_x(x)
+      tile = parent.map.replace_tile(x, y, Lava)
+      tile.filled = true
+
       unless parent.client?
-        pos = position
-        pos[2] += height
-
         @@fire_explosion.emit(pos, thrown_by: [self])
-
-        Sample["objects/explosion.ogg"].play_at_x(x)
-        tile = parent.map.replace_tile(x, y, Lava)
-        tile.filled = true
-
         destroy
       end
     end
