@@ -21,6 +21,8 @@ class Player < BasicGameObject
   carried_color.alpha = 100
   CARRIED_FAVOR_BAR_COLOR = carried_color
 
+  TARGET_INDICATOR_COLOR = Color.rgba(255, 255, 255, 50)
+
   PADDING = 1
 
   attr_reader :number, :avatar, :favor, :visible, :priest_name
@@ -190,7 +192,7 @@ class Player < BasicGameObject
   end
 
   def draw
-    if avatar
+    if avatar and avatar.exists?
       portrait = avatar.portrait
 
       # Draw background and bars.
@@ -224,6 +226,17 @@ class Player < BasicGameObject
                 end
 
       @font.draw_rel message, *@gui_pos, ZOrder::GUI, 0, 0, 0.25, 0.25, STATUS_COLOR
+
+      indicate_action_target if local?
+    end
+  end
+
+  def indicate_action_target
+    target = avatar.action_target
+    if target
+      $window.pixel.draw_rot target.x, target.y - target.z - target.collision_height / 2, target.zorder - 0.01,
+                         0, 0.5, 1,
+                         1, target.collision_height / 2 + 4, TARGET_INDICATOR_COLOR
     end
   end
 end

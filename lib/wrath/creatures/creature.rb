@@ -26,6 +26,8 @@ class Creature < Container
   FRAME_CARRIED = 2
   FRAME_DEAD = 3
 
+  STAND_UP_INVULNERABILITY_DURATION = 750
+
   THROW_BASE_SPEED = 1.5
   THROW_MOVING_SPEED_MULTIPLIER = 3.5 # Speed things are thrown at, compared to own speed.
 
@@ -303,6 +305,10 @@ class Creature < Container
       parent.send_message(Message::StandUp.new(self)) if parent.host?
       @state = :standing
       schedule_move unless parent.client?
+      if controlled_by_player?
+        apply_status(:invulnerable, duration: parent.client? ? nil : STAND_UP_INVULNERABILITY_DURATION,
+                     network_remove: false)
+      end
     else
       log.warn { "#{self} told to stand up when not lying down (#{state.inspect})" }
     end
@@ -348,15 +354,20 @@ class Creature < Container
   end
 
   public
-  # The creature tries to perform an action, at the will of a Player.
-  def action
+  def action_target
     # Find all objects within range, then check them in order
     # and activate the first on we can (generally, pick it up).
     near_objects = parent.objects - [self]
     near_objects.select! {|g| distance_to(g) <= ACTION_DISTANCE }
     near_objects.sort_by! {|g| distance_to(g) }
 
-    target = near_objects.find {|o| o.can_be_activated?(self) }
+    near_objects.find {|o| o.can_be_activated?(self) }
+  end
+
+  public
+  # The creature tries to perform an action, at the will of a Player.
+  def action
+    target = action_target
 
     # Special case if we are carrying something that we can't drop.
     if not target and not empty_handed? and not @contents.can_be_dropped?
@@ -548,6 +559,8 @@ class Creature < Container
   public
   def wound(damage, wounder, type)
     raise ArgumentError.new("bad type: #{type.inspect}") unless [:hit, :over_time].include? type
+
+    return if invulnerable?
 
     if local? and controlled_by_player?
       stats = parent.statistics

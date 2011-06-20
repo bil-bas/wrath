@@ -10,6 +10,8 @@ class Priest < Humanoid
   ICON_WIDTH = ICON_HEIGHT = 8
   ICON_CROP = [0, 2, 8, 10]
 
+  SPAWN_INVULNERABILITY_DURATION = 1500
+
   def breathes?(substance)
     case substance
       when :air
@@ -77,6 +79,10 @@ class Priest < Humanoid
     options[:animation] = self.class.animation(@name).dup
 
     super(options)
+
+    # Should be forced immediately you are spawned.
+    apply_status(:invulnerable, duration: parent.client? ? nil : SPAWN_INVULNERABILITY_DURATION,
+                 network_apply: false)
   end
 
   def recreate_options

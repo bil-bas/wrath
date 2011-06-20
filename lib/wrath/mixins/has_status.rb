@@ -35,12 +35,16 @@ module Wrath
     end
 
     def apply_status(type, options = {})
+      options = {
+          network_update: true,
+      }.merge! options
+
       existing_status = status(type)
       if existing_status
         existing_status.reapply(options)
       else
         status = @@status_types[type].new(self, options.merge(parent: parent))
-        parent.send_message(Message::ApplyStatus.new(self, status)) if parent and parent.host?
+        parent.send_message(Message::ApplyStatus.new(self, status)) if status.network_apply? and parent and parent.host?
 
         @statuses << status
         @statuses.sort_by {|s| s.type }
@@ -53,7 +57,7 @@ module Wrath
       return unless status(type)
 
       status = @statuses.delete status(type)
-      parent.send_message(Message::RemoveStatus.new(self, status)) if parent and parent.host?
+      parent.send_message(Message::RemoveStatus.new(self, status)) if status.network_remove? and parent and parent.host?
       status.remove
 
       publish :on_removed_status, status

@@ -1,6 +1,7 @@
 === CHANGELOG ===
 
 Next release
+  * Invulnerable for a short while at the start of the game and when standing up (in the latter case, to prevent you from being juggled).
   * Added burning effects (from fire and lava) that can be put out in water. Burning things set fire to other flammable things.
   * Can now anoint sacrificial creatures (at the font) for extra favour when sacrificed.
   * Added 3 new playable priests (chaplain, nun and scientist).

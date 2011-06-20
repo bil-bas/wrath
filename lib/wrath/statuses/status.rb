@@ -13,16 +13,22 @@ module Wrath
 
     def self.type; name.downcase[/[^:]+$/].to_sym; end
     def type; @type ||= self.class.type; end
+    def network_apply?; @network_apply; end
+    def network_remove?; @network_remove; end
 
     # If :duration option is missing, duration is indefinite.
     def initialize(owner, options = {})
       options = {
-          image: Image["statuses/#{type}.png"]
+          image: Image["statuses/#{type}.png"],
+          network_apply: true,
+          network_remove: true,
       }.merge! options
 
       raise ArgumentError("Owner must be networked") unless owner.networked?
 
       @owner = owner
+      @network_apply = options[:network_apply]
+      @network_remove = options[:network_remove]
 
       super options
 
