@@ -5,106 +5,107 @@ achievement:
   # ---------------------------------------
   played_online:
     title: Paranoid
-    description: Played an online game, not letting anyone touch my precious keyboard. Just have to worry about the alien mind-control lasers now!
+    description: Play an online game, not letting anyone touch your precious keyboard. Just have to worry about the alien mind-control lasers now!
 
   played_offline:
     title: War of elbows
-    description: Played an offline game, in which there should have been lots of frantic elbowing action.
+    description: Play an offline game, in which there should be lots of frantic elbowing action (bloody noses is going too far, though).
 
   long_play_1:
     title: Waster of time
-    description: Played for an hour; time which won't ever be got back.
+    description: Play for an hour; time which you won't ever get back.
 
 
   long_play_2:
     title: Methuselah
-    description: Played for 10 hours, which is very nearly a thousand years.
+    description: Play for 10 hours, which is very nearly a thousand years.
 
   # ---------------------------------------
   # Number of times played each level.
   # ---------------------------------------
   played_forest:
     title: Forester
-    description: Played %1 with an eye to rapid deforestation.
+    description: Play %1 with an eye to rapid deforestation.
 
   played_cave:
     title: Spelunker
-    description: Played %1 in the dark.
+    description: Play %1 in the dark.
 
   played_island:
     title: Castaway
-    description: Played %1 with a friend who doesn't talk much.
+    description: Play %1 with a friend who doesn't talk much.
 
   played_ship:
     title: All in the eye-liner
-    description: Played %1 with a mockney accent and a bit too much eye-makeup.
+    description: Play %1 with a mockney accent and a bit too much eye-makeup.
 
   played_undersea:
     title: Aquamarina
-    description: Played %1 with visible string.
+    description: Play %1 with visible string.
 
   played_desert:
     title: Sand got in the sandwiches
-    description: Played %1 without Tupperware.
+    description: Play %1 without Tupperware.
 
   played_facility:
     title: Tested
-    description: Played %1 while being overseen by a benevolent AI.
+    description: Play %1 while being overseen by a benevolent AI.
 
   played_moon:
     title: Cosmic Horror
-    description: Played %1 without much sanity left.
+    description: Play %1 without much sanity left.
   # ---------------------------------------
   # Sacrifices (general).
   # ---------------------------------------
   sacrificed_object:
     title: Wrecker
-    description: Sacrificed 100 inanimate objects.
+    description: Sacrifice 100 inanimate objects.
 
   sacrificed_animal:
     title: Animal sacrifice
-    description: Sacrificed 10 defenceless animals.
+    description: Sacrifice 10 defenceless animals.
 
   sacrificed_humanoid:
     title: The sun will come up tomorrow
-    description: Indulged in human(oid) sacrifice. The Aztecs swore by it!
+    description: Indulge in human(oid) sacrifice. The Aztecs swore by it!
 
   sacrificed_everything:
     title: High Priest
-    description: Made 1000 sacrifices, just to make sure.
+    description: Make 1000 sacrifices, just to make sure!
 
   # ---------------------------------------
   # Sacrifices (by type).
   # ---------------------------------------
   sacrificed_knight:
     title: Knightmare
-    description: Sacrificed brave Sir Robin, who didn't get to run away.
+    description: Sacrifice a knight, who unlike brave Sir Robin, won't get to run away.
 
   sacrificed_monkey:
-    title: 12 Monkeys
-    description: Sacrificed twelve monkeys.
+    title: Twelve Monkeys
+    description: Sacrifice 12 monkeys.
+
   sacrificed_test_subject:
     title: Slave to the Machine
-    description: Sacrificed the life of the innocent test subject for Science.
+    description: Sacrifice the life of the innocent test subject for Science.
 
   sacrificed_sheep:
     title: Butcher
-    description: Sacrificed 100 sheep.
+    description: Sacrifice 100 sheep.
 
   # Deaths
   death_fire:
     title: Charcoal briquette
-    description: Burned to death.
+    description: Burn to death.
 
   # Damage levels.
   damage_1:
     title: Black and blue
-    description: Took 10,000 damage.
+    description: Take 10,000 damage.
 
   # Status effects.
   status_irradiated:
     title: Nightlight
-    description: Irradiated for a minute.
+    description: Be irradiated for a minute.
 
 unlock:
   choose_god:
