@@ -32,7 +32,8 @@ module Wrath
 
       super options
 
-      duration_timer(options[:duration]) if options[:duration]
+      duration = options[:duration]
+      duration_timer(duration) if duration < Float::INFINITY
       
       # Ensure that the stat exists.
       parent.statistics[:status, type] = parent.statistics[:status, type] || 0.0
@@ -40,7 +41,7 @@ module Wrath
       publish :on_applied, @owner
 
       log.debug do
-        duration = options[:duration] ? "for #{options[:duration]}ms" : "indefinitely"
+        duration = (duration < Float::INFINITY) ? "for #{duration}ms" : "indefinitely"
         "Applied status #{type.inspect} to #{@owner} #{duration}"
       end
     end
@@ -50,12 +51,13 @@ module Wrath
     end
     
     # Called if the status effect is already on an object.
-    # Duration reset to that of the new duration.
+    # Duration reset to that of the new duration, unless the remaining duration is greater.
     def reapply(options = {})
-      if timer_exists? :duration
-        stop_timer :duration
-        duration_timer(options[:duration])
-      end    
+      new_duration = options[:duration]
+      if new_duration > timer_time_remaining(:duration)
+        stop_timer :duration if timer_exists? :duration
+        duration_timer(new_duration) if new_duration < Float::INFINITY
+      end
     end
 
     def update

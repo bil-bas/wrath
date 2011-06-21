@@ -341,8 +341,8 @@ class BaseObject < GameObject
       angle = rand(360)
       speed = rand() * @sacrifice_speed
       particle.velocity = [
-          Math::sin(angle) * speed,
-          Math::cos(angle) * speed,
+          offset_x(angle, speed),
+          offset_y(angle, speed),
           rand() * @sacrifice_speed
       ]
     end
@@ -410,6 +410,7 @@ class BaseObject < GameObject
 
     log.debug { "Destroyed network object #{self}" } if @id
 
+    @danger_zone.destroy if @danger_zone
     @parent.space.remove_shape @shape
     @parent.space.remove_body @body
 

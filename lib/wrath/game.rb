@@ -54,6 +54,7 @@ LANG_DIR = File.join(EXTRACT_PATH, 'config/lang')
 module CollisionGroup
   STATIC = 1 # statics and walls
   PARTICLE = 2 # particles
+  DANGER = 3
 end
 
 module ZOrder

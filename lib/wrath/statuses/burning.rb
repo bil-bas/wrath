@@ -7,13 +7,14 @@ module Wrath
       SPEED_BONUS = 1
       DAMAGE = 2 / 1000.0
       ANIMATION_INTERVAL = 500
-      DEFAULT_BURN_DURATION = 5000
+      DEFAULT_PRIMARY_BURN_DURATION = 5000 # Hit by a camp-fire or lava
+      DEFAULT_SECONDARY_BURN_DURATION = 1000 # Hit by something that was on fire.
 
       GLOW_COLOR = Color.rgba(255, 255, 50, 50) # Yellowy glow.
       FLAME_COLOR = Color.rgba(255, 255, 255, 100) # Semi-transparent flames.
 
       def update
-        owner.wound(DAMAGE * parent.frame_time, self, :over_time) if owner.respond_to?(:wound) and not parent.client?
+        owner.wound(DAMAGE * parent.frame_time, self, :over_time) if owner.is_a?(Creature) and not parent.client?
 
         if rand(100) < 3
           Smoke.create(parent: parent, x: random(owner.x - owner.collision_width / 2, owner.x + owner.collision_width / 2),

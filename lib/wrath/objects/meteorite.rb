@@ -7,6 +7,8 @@ module Wrath
     SPRITE_FLAME = 2
 
     FLAME_COLOR = Color.rgba(255, 255, 255, 175)
+
+    def dangerous?(other); true; end
     
     def initialize(options = {})
       options = {

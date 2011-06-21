@@ -98,6 +98,7 @@ module Wrath
       old_tile = tile_at_coordinate(x, y)
       if old_tile.is_a? AnimatedTile
         @animated_tiles.delete old_tile
+        old_tile.destroy # Remove any collision shapes, for example.
       end
 
       grid_x, grid_y = (x / Tile::WIDTH).floor, (y / Tile::HEIGHT).floor

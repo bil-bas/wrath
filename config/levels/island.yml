@@ -39,4 +39,4 @@
     :cap: 2
   :Mosquito:
     :initial: 2
-    :cap: 2
+    # Don't respawn these, since you can't sacrifice them.

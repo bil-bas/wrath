@@ -1,7 +1,5 @@
 module Wrath
   module HasStatus
-    attr_reader :statuses
-
     def self.included(base)
       base.event :on_applied_status # [self, Status]
       base.event :on_removed_status # [self, Status]
@@ -22,21 +20,22 @@ module Wrath
       end
     end
 
+    def statuses; @statuses.values; end
     def valid_status?(type); @@status_types.has_key? type; end
 
     def initialize(*args)
-      @statuses = []
+      @statuses = {}
       super(*args)
     end
 
     # Get the status of this type, if any.
     def status(type)
-      @statuses.find {|s| s.type == type }
+      @statuses[type]
     end
 
     def apply_status(type, options = {})
       options = {
-          network_update: true,
+          duration: Float::INFINITY,
       }.merge! options
 
       existing_status = status(type)
@@ -46,8 +45,7 @@ module Wrath
         status = @@status_types[type].new(self, options.merge(parent: parent))
         parent.send_message(Message::ApplyStatus.new(self, status)) if status.network_apply? and parent and parent.host?
 
-        @statuses << status
-        @statuses.sort_by {|s| s.type }
+        @statuses[type] = status
 
         publish :on_applied_status, status
       end
@@ -56,7 +54,7 @@ module Wrath
     def remove_status(type)
       return unless status(type)
 
-      status = @statuses.delete status(type)
+      status = @statuses.delete type
       parent.send_message(Message::RemoveStatus.new(self, status)) if status.network_remove? and parent and parent.host?
       status.remove
 
@@ -64,14 +62,17 @@ module Wrath
     end
 
     def update
-      @statuses.each(&:update_trait)
-      @statuses.each(&:update)
+      @statuses.each_value do |status|
+        status.update_trait if exists?
+        status.update if exists?
+      end
+
       super
     end
 
     def draw
       super
-      @statuses.each(&:draw)
+      @statuses.each_value(&:draw)
     end
   end
 end

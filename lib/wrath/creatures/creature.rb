@@ -58,7 +58,13 @@ class Creature < Container
   def mount?; false; end
   def alive?; @health > 0; end
   def dead?; @health <= 0; end
-  def facing=(angle); @facing = angle % 360; end
+  def facing=(angle)
+    @facing = angle % 360
+    current_speed = distance(0, 0, x_velocity, y_velocity)
+    self.x_velocity = offset_x(@facing, current_speed)
+    self.y_velocity = offset_y(@facing, current_speed)
+    @facing
+  end
   def controlled_by_player?; false; end
   def can_be_picked_up?(container); ((@state == :lying) or (not hurts?(container) and not controlled_by_player?)) and super; end
   def stand_up_delay; controlled_by_player? ? PLAYER_STAND_UP_DELAY : CREATURE_STAND_UP_DELAY; end
@@ -151,7 +157,7 @@ class Creature < Container
   def die!
     # Create a corpse to replace this fellow. This will be created simultaneously on all machines, using the next available id.
     corpse = Corpse.create(parent: parent, animation: @frames[FRAME_DEAD..FRAME_DEAD], z_offset: z_offset,
-                  encumbrance: encumbrance, position: position, velocity: velocity,
+                  encumbrance: encumbrance, position: position,
                   emitter: @death_explosion, local: (not parent.client?),
                   factor_x: factor_x, factor_y: factor_y)
 
@@ -193,8 +199,8 @@ class Creature < Container
     self.facing = rand(360)
     @z_velocity = random(@vertical_jump * 0.75, @vertical_jump * 1.25)
     h_jump = random(@speed * 0.75, @speed * 1.25)
-    @y_velocity = Math::sin(facing) * h_jump
-    @x_velocity = Math::cos(facing) * h_jump
+    @x_velocity = offset_x(facing, h_jump)
+    @y_velocity = offset_y(facing, h_jump)
   end
 
   protected
@@ -215,13 +221,6 @@ class Creature < Container
           @hurt_over_time_sound_instance = @hurt_over_time_sound.play_at_x(x)
         end
       end
-    end
-
-    # Try to move away from pain immediately, if we are standing still and waiting to start moving..
-    if timer_exists? :move
-      log.debug "#{self}: Took damage when stationary, so starting to move"
-      stop_timer(:move)
-      start_moving
     end
   end
 
@@ -619,6 +618,26 @@ class Creature < Container
         else
           @overlay_color = nil
         end
+      end
+    end
+  end
+
+  public
+  def avoid_danger(other)
+    if upright? and other.dangerous?(self) and not controlled_by_player?
+      # Try to move away from pain immediately, if we are standing still and waiting to start moving..
+      if timer_exists? :move
+        log.debug { "#{self}: In a danger-zone, so began to move again" }
+        stop_timer(:move)
+        start_moving
+      end
+
+      away_from_danger = Gosu::angle(other.x, other.y, x, y)
+      if Gosu::angle_diff(facing, away_from_danger) > 90
+        log.debug { "#{self} avoiding dangerous #{other}; turning from #{facing} to #{away_from_danger}" }
+
+        # Face away from threats.
+        self.facing = away_from_danger
       end
     end
   end

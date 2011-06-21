@@ -40,6 +40,7 @@ class Tile < GameObject
   def z; 0; end
   def edge_type; :soft_curve; end
   def sprite_position; self.class.const_get(:SPRITE_POSITION); end
+  def to_s; "#{self.class} at [#{@grid_x}, #{@grid_y}]; position (#{x}, #{y})"; end
 
   def initialize(map, grid_x, grid_y, options = {})
     options = {

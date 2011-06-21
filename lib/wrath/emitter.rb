@@ -31,8 +31,8 @@ class Emitter
     random(number).round.times do
       angle = rand(360)
       speed = random(@h_speed)
-      y_velocity = Math::sin(angle) * speed
-      x_velocity = Math::cos(angle) * speed
+      y_velocity = offset_x(angle, speed)
+      x_velocity = offset_y(angle, speed)
       @type.create(parent: @parent, position: position, thrown_by: thrown_by,
         velocity: [x_velocity, y_velocity, random(@z_velocity)])
     end

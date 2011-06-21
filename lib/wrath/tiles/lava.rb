@@ -14,7 +14,28 @@ class Lava < Water
 
   event :on_having_wounded
 
+  def dangerous?(other); other.flying_height <= 0.01; end
+
   def edge_type; :hard_curve; end
+  def exists?; @exists; end
+
+  def initialize(*args)
+    super(*args)
+
+    @body = CP::StaticBody.new
+    @body.p = vec2(x, y)
+    map.parent.space.add_body @body
+    @danger_zone = DangerZone.new(self, @body, :rectangle, (WIDTH / 2), map.parent.space)
+
+    @exists = true
+  end
+
+  def destroy
+    @danger_zone.destroy
+    map.parent.space.remove_body @body
+
+    @exists = false
+  end
 
   def touched_by(object)
     case object
@@ -27,7 +48,7 @@ class Lava < Water
       when Creature
         unless parent.client?
           object.wound(DAMAGE * parent.frame_time, self, :over_time) unless filled?
-          object.apply_status(:burning, duration: Status::Burning::DEFAULT_BURN_DURATION)
+          object.apply_status(:burning, duration: Status::Burning::DEFAULT_PRIMARY_BURN_DURATION)
         end
 
       else

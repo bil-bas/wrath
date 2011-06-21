@@ -42,5 +42,14 @@ module Wrath
         log.debug { "#{actor} failed to anoint #{object}" }
       end
     end
+
+    def on_collision(other)
+      # TODO: This is a static, so won't get collisions...erm.
+      if other.burning?
+        other.remove_status(:burning)
+      end
+
+      super(other)
+    end
   end
 end

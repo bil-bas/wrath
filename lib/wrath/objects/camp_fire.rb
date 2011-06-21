@@ -10,7 +10,7 @@ module Wrath
           elasticity: 0.2,
           z_offset: -2,
           animation: "camp_fire_8x4.png",
-          collision_height: 8.5,
+          collision_height: 6, # Encourage the flames to be nice and big :)
           burning: true,
           flammable: true,
       }.merge! options
@@ -23,10 +23,19 @@ module Wrath
     def apply_status(type, options = {})
       # Ensure that when we burn, we burn forever!
       if type == :burning
-        options = options.merge(duration: nil)
+        options = options.dup
+        options.delete(:duration)
       end
 
       super(type, options)
+    end
+
+    def on_collision(other)
+      if other.flammable? and burning?
+        other.apply_status(:burning, duration: Status::Burning::DEFAULT_PRIMARY_BURN_DURATION)
+      end
+
+      super(other)
     end
   end
 end

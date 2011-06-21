@@ -13,6 +13,7 @@ module Wrath
     attr_reader :encumbrance
     attr_writer :encumbrance
 
+    def dangerous?(other); hurts?(other) or (burning? and other.flammable?); end
     def hurts?(other); @damage_per_hit > 0 or @damage_per_second > 0; end
     def can_be_dropped?; true; end
     def can_be_picked_up?(container)
@@ -50,6 +51,13 @@ module Wrath
       super options
 
       parent.objects << self if networked?
+
+      @danger_zone = if damage_per_hit > 0 or damage_per_second > 0
+                       DangerZone.new(self, @body, @shape, (collision_width / 2), parent.space)
+                     else
+                       nil
+                     end
+
     end
 
     public
@@ -98,7 +106,7 @@ module Wrath
           not inside_container?
 
         when DynamicObject
-          apply_status(:burning, duration: Status::Burning::DEFAULT_BURN_DURATION) if flammable? and other.burning?
+          apply_status(:burning, duration: Status::Burning::DEFAULT_SECONDARY_BURN_DURATION) if flammable? and other.burning?
 
           false
 
@@ -124,9 +132,11 @@ module Wrath
 
     public
     def destroy
-      @container.drop if inside_container? and exists?
-      parent.objects.delete self if exists?
-
+      if exists?
+        @container.drop if inside_container?
+        @danger_zone.destroy if @danger_zone
+        parent.objects.delete self
+      end
       super
     end
   end

@@ -269,6 +269,12 @@ class Level < GameState
         false
       end
     end
+
+    @space.on_collision(:object, :danger) do |object, danger|
+      object.avoid_danger(danger) if object.is_a?(Creature)
+
+      false
+    end
   end
 
   def create_altar

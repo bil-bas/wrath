@@ -8,6 +8,7 @@ class Rock < DynamicObject
 
   DAMAGE = 5
 
+  def dangerous?(other); false; end # No-one "avoids" rocks, though they can hurt in certain circumstances.
   def can_hit?(other); thrown? and super(other); end
 
   def initialize(options = {})
