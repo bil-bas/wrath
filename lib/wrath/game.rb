@@ -44,6 +44,11 @@ include Chingu
 
 RequireAll.require_all File.dirname(__FILE__)
 
+# If compiling Ocra executable, include all internationalization locales files.
+if defined? Ocra
+  RequireAll.require_all R18n::Locale::LOCALES_DIR
+end
+
 Fidgit::Element.schema.merge_schema! YAML.load(File.read(File.join(EXTRACT_PATH, 'config', 'schema.yml')))
 
 module Wrath

@@ -1,18 +1,19 @@
 GEM
   remote: http://gemcutter.org/
   specs:
-    chingu (0.9rc5)
-      gosu (>= 0.7.27.1)
+    chingu (0.9rc7)
+      gosu (>= 0.7.33)
+      gosu (>= 0.7.33)
     chipmunk (5.3.4.4)
     chipmunk (5.3.4.4-x86-mingw32)
-    clipboard (0.9.8)
+    clipboard (0.9.9)
     ffi (1.0.9)
     ffi (1.0.9-x86-mingw32)
-    fidgit (0.1.7)
+    fidgit (0.1.8)
       chingu (~> 0.9rc5)
-      clipboard (~> 0.9.8)
+      clipboard (~> 0.9.9)
       ffi (~> 1.0.9)
-      gosu (~> 0.7.32)
+      gosu (~> 0.7.33)
     gosu (0.7.33)
     gosu (0.7.33-x86-mingw32)
     r18n-core (0.4.9)
@@ -28,9 +29,9 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  chingu (~> 0.9rc5)
+  chingu (~> 0.9rc7)
   chipmunk (~> 5.3.4)
-  fidgit (~> 0.1.7)
+  fidgit (~> 0.1.8)
   gosu (~> 0.7.33)
   r18n-desktop (~> 0.4.9)
   texplay (~> 0.3.5)
