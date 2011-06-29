@@ -59,13 +59,21 @@ class Menu < Gui
     exit: :close,
   }
 
+  TITLE_MUSIC = "Give_Me_A_Map.ogg"
+
   def initialize
+    @music = Song[TITLE_MUSIC]
+    @music.stop
+
     super
+
     every(1000.0 / 16) { @priests.each(&:animate) }
   end
 
   def setup
     super
+
+    @music.play(true)
 
     Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
@@ -89,7 +97,9 @@ class Menu < Gui
           end
         end
 
-        label t.label.version(VERSION), font_height: 4, justify: :center, align: :center
+        [t.label.version(VERSION), t.label.credits1, t.label.credits2].each do |text|
+          label text, font_height: 4, justify: :center, align: :center
+        end
       end
     end
 
@@ -97,6 +107,8 @@ class Menu < Gui
   end
 
   def finalize
+    @music.pause
+
     super
     game_objects.each(&:destroy)
   end

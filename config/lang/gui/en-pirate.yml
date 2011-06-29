@@ -178,7 +178,9 @@ gui:
     title: Wrath
     subtitle: Appease or Die!
     label: 
-      version: v%1 by Spooner
+      version: Wrath v%1
+      credits1: "Art, Sound & Code: Spooner"
+      credits2: "Music: Brian Peppers"
     button: 
       play: 
         text: Play
@@ -224,6 +226,10 @@ gui:
         text: Mute
       play_sample: 
         text: Play
+      play_song: 
+        text: Play
+      stop_song: 
+        text: Stop
       default: 
         text: Defaults
         tip: Reset volumes t' default values an' remove mutin'

@@ -18,6 +18,9 @@ module Wrath
     LOVE_MULTIPLIER = 1.5 # Favour multiplier for loved type.
     UNLOVED_MODIFIER = 0.25 # Favour multiplier for anything not loved.
 
+    HAPPY_MUSIC = "No_Map.ogg"
+    ANGRY_MUSIC = "Turn_For_The_Worst.ogg"
+
     event :on_disaster_start
     event :on_disaster_end
 
@@ -101,6 +104,10 @@ module Wrath
                                      zorder: ZOrder::GUI, rotation_center: :bottom_center, factor: 0.7)
       change_loved
 
+      @happy_music = Song[HAPPY_MUSIC]
+      @angry_music = Song[ANGRY_MUSIC]
+      restart_music
+
       subscribe(:on_disaster_start) { disaster_start }
       subscribe(:on_disaster_end) { disaster_end }
     end
@@ -153,11 +160,15 @@ module Wrath
     def disaster_start
       @num_disasters += 1
       @in_disaster = true
+
+      restart_music
     end
 
     def disaster_end
       change_loved
       @in_disaster = false
+
+      restart_music
     end
 
     def spawn_position(height)
@@ -167,6 +178,25 @@ module Wrath
         margin::TOP + rand($window.height - margin::TOP - margin::BOTTOM),
         height
       ]
+    end
+
+    def restart_music
+      stop_music
+      start_music
+    end
+
+    def start_music
+      stop_music
+      if @in_disaster
+        @angry_music.play(true)
+      else
+        @happy_music.play(true)
+      end
+    end
+
+    def stop_music
+      @happy_music.pause
+      @angry_music.pause
     end
   end
 end

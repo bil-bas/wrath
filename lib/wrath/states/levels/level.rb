@@ -135,11 +135,14 @@ class Level < GameState
 
     players.each(&:setup_inputs)
 
+    @god.start_music if defined? @god unless networked?
+
     log.info "Started playing"
   end
 
   def finalize
     input.clear
+    @god.stop_music if defined? @god unless networked?
     log.info "Stopped playing"
   end
   

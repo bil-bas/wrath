@@ -178,7 +178,9 @@ gui:
     title: WR47H
     subtitle: 4PP3453 0R D13!
     label: 
-      version: V%1 8Y 5P00N3R
+      version: WR47H V%1
+      credits1: "4R7, 50UND & C0D3: 5P00N3R"
+      credits2: "MU51C: 8R14N P3PP3R5"
     button: 
       play: 
         text: P14Y
@@ -224,6 +226,10 @@ gui:
         text: MU73
       play_sample: 
         text: P14Y
+      play_song: 
+        text: P14Y
+      stop_song: 
+        text: 570P
       default: 
         text: D3F4U175
         tip: R3537 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6

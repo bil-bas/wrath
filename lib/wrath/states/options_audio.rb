@@ -3,19 +3,20 @@ module Wrath
     include ShownOverNetworked
 
     SLIDER_OPTIONS = { width: 75, height: 6, groove_thickness: 2, align_v: :center, range: 0.0..1.0 }
+    BUTTON_WIDTH = 30
 
     def body
       grid num_columns: 4, padding: 0 do
         # MASTER
-        label t.label.master
+        label t.label.master, align_v: :center
         @master_slider = slider SLIDER_OPTIONS do |sender, value|
           $window.volume = value
           settings[:audio, :master_volume] = value
           @master_percentage.text = "#{(value * 100).round}%"
         end
-        @master_percentage = label "100%"
+        @master_percentage = label "100%", align_v: :center
         @master_slider.value = $window.volume
-        @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: :auto, width: 35) do |sender, value|
+        @mute_button = toggle_button(t.button.mute.text, value: $window.muted?, shortcut: :auto, width: BUTTON_WIDTH) do |sender, value|
           if value
             $window.mute
           else
@@ -25,30 +26,30 @@ module Wrath
         end
 
         # EFFECTS
-        label t.label.effects
+        label t.label.effects, align_v: :center
         @effects_slider = slider SLIDER_OPTIONS do |sender, value|
           Sample.volume = value
           settings[:audio, :effects_volume] = value
           @effects_percentage.text = "#{(value * 100).round}%"
         end
-        @effects_percentage = label "100%"
+        @effects_percentage = label "100%", align_v: :center
         @effects_slider.value = Sample.volume
 
-        button(t.button.play_sample.text, width: 35) { Sample["objects/explosion.ogg"].play }
+        button(t.button.play_sample.text, width: BUTTON_WIDTH) { Sample["objects/explosion.ogg"].play }
 
         # MUSIC
-        label t.label.music
+        label t.label.music, align_v: :center
         @music_slider = slider SLIDER_OPTIONS do |sender, value|
           Song.volume = value
           settings[:audio, :music_volume] = value
           @music_percentage.text = "#{(value * 100).round}%"
         end
-        @music_percentage = label "100%"
+        @music_percentage = label "100%", align_v: :center
         @music_slider.value = Song.volume
 
-        #@song = Song["Simply dance - Libra @4_00.ogg"]
+        @music = Song[Menu::TITLE_MUSIC]
 
-        #@play_song_button = button(t.button.play_song.text) { @song.playing? ? @song.stop : @song.play }
+        @play_music_button = button(t.button.play_song.text, width: BUTTON_WIDTH) { @music.playing? ? @music.pause : @music.play(true) }
       end
     end
 
@@ -67,7 +68,7 @@ module Wrath
 
     def update
       super
-      #@play_song_button.text = @song.playing? ? "Stop" : "Play"
+      @play_music_button.text = @music.playing? ? t.button.stop_song.text : t.button.play_song.text
     end
 
     def pushed
@@ -76,7 +77,7 @@ module Wrath
 
     def popped
       log.info { "Stopped editing audio settings" }
-      #@song.stop
+      @music.pause
     end
   end
 end
