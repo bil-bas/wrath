@@ -20,6 +20,7 @@ module Wrath
 
     HAPPY_MUSIC = "No_Map.ogg"
     ANGRY_MUSIC = "Turn_For_The_Worst.ogg"
+    MUSIC_VOLUME = 0.3 # Music in-game should be more ambient.
 
     event :on_disaster_start
     event :on_disaster_end
@@ -105,7 +106,9 @@ module Wrath
       change_loved
 
       @happy_music = Song[HAPPY_MUSIC]
+      @happy_music.volume = MUSIC_VOLUME
       @angry_music = Song[ANGRY_MUSIC]
+      @angry_music.volume = MUSIC_VOLUME
       restart_music
 
       subscribe(:on_disaster_start) { disaster_start }
