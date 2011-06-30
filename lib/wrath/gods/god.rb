@@ -184,12 +184,16 @@ module Wrath
     end
 
     def restart_music
-      stop_music
-      start_music
+      # If this isn't the current game-state, then it won't be playing music anyway.
+      if parent.current_game_state == parent
+        stop_music
+        start_music
+      end
     end
 
     def start_music
       stop_music
+
       if @in_disaster
         @angry_music.play(true)
       else
