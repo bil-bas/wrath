@@ -2,7 +2,7 @@ require_relative "status"
 
 module Wrath
   class Status
-    # Being on fire is no fun. Creatures will be speeded up and hurt, but plain objects won't.
+    # Being on fire is no fun. Creatures will be sped up and hurt, but plain objects won't.
     class Burning < Status
       SPEED_BONUS = 1
       DAMAGE = 2 / 1000.0
@@ -14,12 +14,12 @@ module Wrath
       FLAME_COLOR = Color.rgba(255, 255, 255, 100) # Semi-transparent flames.
 
       def update
-        owner.wound(DAMAGE * parent.frame_time, self, :over_time) if owner.is_a?(Creature) and not parent.client?
-
         if rand(100) < 3
           Smoke.create(parent: parent, x: random(owner.x - owner.collision_width / 2, owner.x + owner.collision_width / 2),
                        y: owner.y - owner.z - owner.collision_height - rand(3), zorder: owner.y - 0.01 + rand(0.02))
         end
+
+        owner.wound(DAMAGE * parent.frame_time, self, :over_time) if owner.is_a?(Creature) and not parent.client?
 
         @frame_number = (milliseconds / ANIMATION_INTERVAL) % 2
 

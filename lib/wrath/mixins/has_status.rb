@@ -63,8 +63,8 @@ module Wrath
 
     def update
       @statuses.each_value do |status|
-        status.update_trait if exists?
-        status.update if exists?
+        status.update_trait if exists? and status.owner == self
+        status.update if exists? and status.owner == self
       end
 
       super

@@ -61,9 +61,7 @@ module Wrath
     end
 
     def update
-      return unless @owner
-          
-      if @owner.local? and @owner.controlled_by_player?
+      if @owner and @owner.local? and @owner.controlled_by_player?
         parent.statistics[:status, type] = parent.statistics[:status, type] + (parent.frame_time / 1000.0)
       end
       
