@@ -12,6 +12,11 @@ module Wrath
       init_key_codes
     end
 
+    def setup
+      init_translations
+      super
+    end
+
     public
     def body
       vertical spacing: 0, padding: 0 do
@@ -61,9 +66,7 @@ module Wrath
           if $window.button_down?(code)
             # If it is defined in Chingu, allow its use. If not, leave the key as it is.
             if symbols = Chingu::Input::CONSTANT_TO_SYMBOL[code]
-              symbol = symbols.first
-              symbol = :space if symbol == :' '
-              controls[@tabs_group.value, @control_waiting_for_key] = symbol
+              controls[@tabs_group.value, @control_waiting_for_key] = symbols.first
             end
 
             @control_waiting_for_key = nil
@@ -84,6 +87,48 @@ module Wrath
     end
 
     protected
+    # Try to find a translation for at least one of the key-symbols, then apply that translation to all key-symbols
+    # in this group.
+    def init_translations
+      @key_translations = {}
+
+      translations = R18n.get.t.controls
+
+      Input::CONSTANT_TO_SYMBOL.values.each do |keys|
+        translation = nil
+
+        keys.each do |key|
+          translation = case key.to_s
+                          when /^f(\d+)/
+                            translations.function($1)
+                          when /^keypad_(.*)/
+                            translations.keypad($1)
+                          when /^numpad_(.*)/
+                            translations.numpad($1)
+                          when /^gamepad_button_(.*)/
+                            translations.gamepad_button($1)
+                          when /^gamepad_(.*)/
+                            translations.gamepad($1)
+                          when 'a'..'z'
+                            Window.button_id_to_char(Input::SYMBOL_TO_CONSTANT[key]).capitalize
+                          when '0'..'9'
+                            key
+                          else
+                            translations[key]
+                        end
+
+          break if translation
+        end
+
+        unless translation and ((not translation.respond_to?(:translated?)) or translation.translated?)
+          raise "Failed to find translation for any of #{keys.inspect}"
+        end
+
+        keys.each {|key| @key_translations[key] = translation }
+      end
+    end
+
+    protected
     # Make a new list of keys in the main part of the window.
     def list_keys
       @key_grid.with do
@@ -92,8 +137,7 @@ module Wrath
         controls.keys(@tabs_group.value).each do |control|
           key_label = label t.label[control], width: 80
           key = controls[@tabs_group.value, control]
-          button_label = key.to_s.tr('_', ' ')
-          button(button_label, width: 75) { choose_key control, key_label }
+          button(@key_translations[key], width: 75) { choose_key control, key_label }
         end
       end
     end

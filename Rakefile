@@ -98,7 +98,7 @@ end
 
 desc "Translate locale files"
 task :translate do
-  %w[gui achievements].each do |dir|
+  %w[gui achievements controls].each do |dir|
     lang_dir = File.join(File.dirname(__FILE__), "/config/lang/#{dir}")
     en = File.join(lang_dir, 'en.yml')
 

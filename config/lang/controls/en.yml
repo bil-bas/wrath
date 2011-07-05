@@ -1,0 +1,54 @@
+---
+controls:
+# General keys
+  ' ': Space
+  space: Space
+  backspace: Backspace
+  delete: Delete
+  end: End
+  enter: Enter
+  escape: Escape
+  home: Home
+  insert: Insert
+  tabulator: Tab
+  page_down: Page down
+  page_up: Page up
+  return: Return
+  function: F%1
+
+# Arrows
+  down_arrow: Down
+  left_arrow: Left
+  right_arrow: Right
+  up_arrow: Up
+
+# Meta-keys
+  left_alt: Left alt
+  left_control: Left control
+  left_meta: Left meta
+  left_shift: Left shift
+
+  right_alt: Right alt/meta
+  right_control: Right control
+  right_meta: Right meta
+  right_shift: Right shift
+
+# Numpad
+  numpad: Numpad %1
+  '+': 'Numpad +'
+  '/': 'Numpad /'
+  '*': 'Numpad *'
+  '-': 'Numpad -'
+
+# Mouse
+  left_mouse_button: Left mouse button
+  middle_mouse_button: Middle mouse button
+  right_mouse_button: Right mouse button
+  mouse_wheel_down: Mouse wheel down
+  mouse_wheel_up: Mouse wheel up
+
+# Game-pad
+  gamepad: Gamepad %1
+  gamepad_button: Gamepad button %1
+
+

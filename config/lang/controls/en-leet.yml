@@ -1,0 +1,40 @@
+--- 
+controls: 
+  " ": 5P4C3
+  space: 5P4C3
+  backspace: 84X5P4C3
+  delete: D31373
+  end: 3ND
+  enter: 3N73R
+  escape: 35C4P3
+  home: H0M3
+  insert: 1N53R7
+  tabulator: "748"
+  page_down: P463 D0WN
+  page_up: P463 UP
+  return: R37URN
+  function: F%1
+  down_arrow: D0WN
+  left_arrow: 13F7
+  right_arrow: R16H7
+  up_arrow: UP
+  left_alt: 13F7 417
+  left_control: 13F7 C0N7R01
+  left_meta: 13F7 M374
+  left_shift: 13F7 5H1F7
+  right_alt: R16H7 417/M374
+  right_control: R16H7 C0N7R01
+  right_meta: R16H7 M374
+  right_shift: R16H7 5H1F7
+  numpad: NUMP4D %1
+  +: NUMP4D +
+  /: NUMP4D /
+  "*": NUMP4D *
+  "-": NUMP4D -
+  left_mouse_button: 13F7 M0U53 8U770N
+  middle_mouse_button: M1DD13 M0U53 8U770N
+  right_mouse_button: R16H7 M0U53 8U770N
+  mouse_wheel_down: M0U53 WH331 D0WN
+  mouse_wheel_up: M0U53 WH331 UP
+  gamepad: 64M3P4D %1
+  gamepad_button: 64M3P4D 8U770N %1
