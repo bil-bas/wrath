@@ -7,6 +7,8 @@ class Gui < Fidgit::GuiState
   def self.t; R18n.get.t.gui[Inflector.underscore(Inflector.demodulize(name))]; end
   def t; self.class.t; end
   def draw_background?; true; end
+  # Allows pages to stop escape popping the state if they want to use it for something.
+  def escape_disabled?; false; end
 
   def initialize
     super
@@ -16,7 +18,7 @@ class Gui < Fidgit::GuiState
     create_background
 
     if t.button.back.text.translated?
-      on_input(:escape) { pop_game_state }
+      on_input(:escape) { pop_game_state unless escape_disabled? }
     end
   end
 

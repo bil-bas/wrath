@@ -4,6 +4,8 @@ module Wrath
 
     TABS = [:offline_player_1, :offline_player_2, :online_player, :general]
 
+    def escape_disabled?; !!@control_waiting_for_key; end
+
     def initialize
       super
 
@@ -79,11 +81,10 @@ module Wrath
     end
 
     protected
-    # Get all possible key codes supported by Gosu, except escape, which takes us out of the screen.
+    # Get all possible key codes supported by Gosu.
     def init_key_codes
       @key_codes = (Gosu::KbRangeBegin..Gosu::KbRangeEnd).to_a +
-          (Gosu::GpRangeBegin..Gosu::GpRangeEnd).to_a -
-          [Gosu::KbEscape]
+          (Gosu::GpRangeBegin..Gosu::GpRangeEnd).to_a
     end
 
     protected
