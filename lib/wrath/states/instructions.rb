@@ -9,8 +9,8 @@ module Wrath
 
       Gosu::register_entity(:b, Image['gui/bullet.png'])
 
-      on_input([:up, :mouse_wheel_up], :previous_tab)
-      on_input([:down, :mouse_wheel_down], :next_tab)
+      on_input(:up, :previous_tab)
+      on_input(:down, :next_tab)
     end
 
     def next_tab
@@ -39,19 +39,22 @@ module Wrath
             current.color, current.background_color = current.background_color, current.color
             @scroll_window.offset_y = 0
 
+            @heading_image.image = Image["instructions/#{value}.png"]
+
             @previous_button.enabled = (value != TABS.first)
             @next_button.enabled = (value != TABS.last)
           end
         end
 
         vertical padding: 0, spacing: 0 do
-          @scroll_window = scroll_window width: 130, height: 87, background_color: BACKGROUND_COLOR do
-            @body_text = text_area padding: 2, enabled: false, background_color: BACKGROUND_COLOR, width: 125
+          @scroll_window = scroll_window width: 134, height: 87, background_color: BACKGROUND_COLOR do
+            @heading_image = image_frame nil, factor: 2
+            @body_text = text_area padding: 2, enabled: false, background_color: BACKGROUND_COLOR, width: 128
           end
 
           horizontal align_h: :center do
-            @previous_button = button t.button.previous.text, shortcut: :auto, &:previous_tab
-            @next_button = button t.button.next.text, shortcut: :auto, &:next_tab
+            @previous_button = button(t.button.previous.text, shortcut: :auto) { previous_tab }
+            @next_button = button(t.button.next.text, shortcut: :auto) { next_tab }
           end
         end
 

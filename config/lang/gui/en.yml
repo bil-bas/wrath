@@ -136,20 +136,16 @@ gui:
       gods:
         title: The Gods
         body: |
-          * The god will ask for specific creatures, which will reap greater rewards when sacrificed.
-
-          * The image of the creature the god demands is shown next to their portrait at the top of the screen.
+          * Gods ask for specific creatures, which will reap greater rewards when sacrificed.
 
           * Sacrificing creatures that were not requested, will provide very little reward.
 
       anger:
         title: Anger
         body: |
-          * Gods are wrathful and enjoy smiting more than anything else (well, except seducing mortals)!
+          * Gods slowly become angry then they rain down disasters until they become bored (bar fills then empties).
 
-          * Gods slowly become angry then they rain down disasters until they become bored (anger bar fills then empties).
-
-          * As you make sacrifices, it reduces the anger of the god as well as giving you Holy Favour.
+          * Each sacrifice reduces the anger of the god as well as giving favour.
 
       maps:
         title: Maps
@@ -172,28 +168,26 @@ gui:
 
           * They do this with a single "action" key, which is context-sensitive.
 
-          * When near an object that can be interacted with, it will be marked.
-
       favour:
         title: Favour
         body: |
-          * Accumulate favour by making sacrifices at the altar (priests start standing next to the altar).
-
           * The gods like animals, people and treasures as sacrifices, but dislike mundane things, like rocks.
 
-          * Favour can also be used to power magical items (e.g. magic carpets).
+          * Favour can also be used to power magical items.
 
       altar:
         title: The Altar
         body: |
           * Creatures and objects can be sacrificed at the altar.
 
+          * Accumulate favour by making sacrifices at the altar.
+
       font:
         title: The Font
         body: |
-          * Creatures can be anointed at the font to give more favor when sacrificed.
+          * Creatures may be anointed at the font to give more favour when sacrificed.
 
-          * Anointed creatures will stop being so if dropped.
+          * Dropping an anointed creature will remove the blessing, but it can be re-anointed.
 
       winning:
         title: Winning
