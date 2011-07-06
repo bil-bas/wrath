@@ -5,7 +5,7 @@ module Wrath
     ANIMATION_DELAY = 50
     GLOW_COLOR = Color.rgb(200, 200, 255)
 
-    def damage_per_second(other); 30; end
+    def damage_per_second; 30; end
     def can_be_picked_up?(actor); false; end
 
     def initialize(options = {})

@@ -5,7 +5,7 @@ module Wrath
     POISON_DURATION = 4000
     GAS_COLOR = Color.rgba(0, 200, 0, 100)
 
-    def damage_per_second(other); 10; end
+    def damage_per_second; 10; end
     def can_be_picked_up?(actor); false; end
 
     def initialize(options = {})
