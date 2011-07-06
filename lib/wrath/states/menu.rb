@@ -97,7 +97,7 @@ class Menu < Gui
           end
         end
 
-        [t.label.version(VERSION), t.label.credits1, t.label.credits2].each do |text|
+        [t.label.version(VERSION)].each do |text|
           label text, font_height: 4, justify: :center, align: :center
         end
       end

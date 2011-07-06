@@ -127,45 +127,100 @@ gui:
     title: Instructions
     button:
       back: *back_button
+      next:
+        text: Next
+      previous:
+        text: Previous
 
     tab:
       gods:
         title: The Gods
         body: |
-          * Gods are wrathful and enjoy smiting more than anything else (well, except seducing mortals)!
+          * The god will ask for specific creatures, which will reap greater rewards when sacrificed.
 
-          * Each map has a local deity that you must appease, such as the god of earthquakes or storms.
+          * The image of the creature the god demands is shown next to their portrait at the top of the screen.
+
+          * Sacrificing creatures that were not requested, will provide very little reward.
+
+      anger:
+        title: Anger
+        body: |
+          * Gods are wrathful and enjoy smiting more than anything else (well, except seducing mortals)!
 
           * Gods slowly become angry then they rain down disasters until they become bored (anger bar fills then empties).
 
           * As you make sacrifices, it reduces the anger of the god as well as giving you Holy Favour.
 
-          * The god will ask for specific creatures, which will reap greater rewards when sacrificed.
+      maps:
+        title: Maps
+        body: |
+          * Each realm has a local deity that you must appease, such as the god of earthquakes or storms.
+
+          * If all realms have been played, you will be able to pick any god in any realm.
 
       priests:
         title: Priests
         body: |
-           * Each player picks one of thirteen priests. All priests are identical in play, but some look cooler than others.
+          * Each player picks one of thirteen priests, though not all will be unlocked initially.
 
-           * Your priest can pick up, use or throw objects or creatures. They do this with a single "action" key.
+          * All priests are identical in play, but some look cooler than others.
 
-           * A priest's current health is shown as a red bar next to her portrait.
+      interaction:
+        title: Interaction
+        body: |
+          * Your priest can pick up, use or throw objects or creatures.
 
-           * Dying will mean the other player wins by default!
+          * They do this with a single "action" key, which is context-sensitive.
+
+          * When near an object that can be interacted with, it will be marked.
 
       favour:
-        title: Holy Favour
+        title: Favour
         body: |
           * Accumulate favour by making sacrifices at the altar (priests start standing next to the altar).
 
           * The gods like animals, people and treasures as sacrifices, but dislike mundane things, like rocks.
 
-          * Creatures can be anointed at the font to give more favor when sacrificed.
-
-          * Your holy favour is shown as a white bar. Fill the bar before the other priest to win!
-
           * Favour can also be used to power magical items (e.g. magic carpets).
 
+      altar:
+        title: The Altar
+        body: |
+          * Creatures and objects can be sacrificed at the altar.
+
+      font:
+        title: The Font
+        body: |
+          * Creatures can be anointed at the font to give more favor when sacrificed.
+
+          * Anointed creatures will stop being so if dropped.
+
+      winning:
+        title: Winning
+        body: |
+          * Your holy favour is shown as a white bar. Fill the bar before the other priest to win!
+
+          * Your health is shown as a red bar. Dying will mean the other player wins by default!
+
+      credits:
+        title: Credits
+        body: |
+          * Art, Sound & Code: Spooner
+
+          * Music: Brian Peppers
+
+          * Font: Copyright 1998-2003 Yuji Oshihoto
+
+          * Some sprites and the overall graphical style: Oryx
+
+          * Libraries (Ruby gems):
+            - Gosu by jlnr
+            - Chingu by Ippa
+            - TexPlay by Banisterfiend
+            - Fidgit by Spooner
+            - Chipmunk
+            - R18n
+            - Ocra (for Windows executable)
 
   # Join Details
   join_details:
@@ -207,9 +262,8 @@ gui:
     title: Wrath
     subtitle: Appease or Die!
     label:
-      version: Wrath v%1
-      credits1: 'Art, Sound & Code: Spooner'
-      credits2: 'Music: Brian Peppers'
+      version: v%1
+
     button:
       play:
         text: Play
