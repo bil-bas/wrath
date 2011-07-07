@@ -86,6 +86,43 @@ level:
 
 # Gui screens.
 gui:
+  credits:
+    title: Credits
+    button:
+      back: *back_button
+    body: |
+      &spooner; Art, Design, Code & Sound: Spooner
+
+      &music; Music: Brian Peppers
+
+      &font; Font: Copyright 1998-2003 Yuji Oshihoto
+
+      &oryx; Some sprites & graphical style: Oryx
+
+      &ruby; Libraries (Ruby gems):
+        - Gosu by jlnr
+        - Chingu by Ippa
+        - TexPlay by Banisterfiend
+        - Fidgit by Spooner
+        - Chipmunk
+        - R18n
+        - Ocra (for Windows executable)
+
+      ________________________________
+
+      Special thanks to:
+
+      * SiliconEidolon for the initial brainstorming session that gave birth to the game.
+
+      * Spiderspit, SiliconEidolon, Ippa, Myx, Spaz, mathias_, jlnr, Dahrkael_ Pie, and Banisterfiend for play-testing and suggestions.
+
+      * Members of TIGSource who gave feedback in the the Wrath topic.
+
+      * Ippa for code snippets I stole; I mean, was given :)
+
+      * jlnr for making the OS X executable package (and putting up with helping me build it on Linux!).
+
+
   # View Achievements
   view_achievements:
     title: Achievements
@@ -203,26 +240,6 @@ gui:
 
           * Your health is shown as a red bar. Dying will mean the other player wins by default!
 
-      credits:
-        title: Credits
-        body: |
-          * Art, Sound & Code: Spooner
-
-          * Music: Brian Peppers
-
-          * Font: Copyright 1998-2003 Yuji Oshihoto
-
-          * Some sprites and the overall graphical style: Oryx
-
-          * Libraries (Ruby gems):
-            - Gosu by jlnr
-            - Chingu by Ippa
-            - TexPlay by Banisterfiend
-            - Fidgit by Spooner
-            - Chipmunk
-            - R18n
-            - Ocra (for Windows executable)
-
   # Join Details
   join_details:
     title: Joining a Game
@@ -280,6 +297,9 @@ gui:
         text: Achievements
         tip: Review your achievements
       options: *options_button
+      credits:
+        text: Credits
+        tip: See who is to blame for the game
       exit:
         text: Exit
         tip: Leave game

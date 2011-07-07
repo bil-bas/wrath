@@ -56,6 +56,7 @@ class Menu < Gui
     instructions: Instructions,
     achievements: ViewAchievements,
     options: Options,
+    credits: Credits,
     exit: :close,
   }
 

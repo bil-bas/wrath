@@ -2,7 +2,7 @@ module Wrath
   class Instructions < Gui
     include ShownOverNetworked
 
-    TABS = [:gods, :anger, :maps, :priests, :favour, :interaction, :altar, :font, :winning, :credits]
+    TABS = [:gods, :anger, :maps, :priests, :favour, :interaction, :altar, :font, :winning]
 
     def setup
       super

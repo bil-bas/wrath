@@ -1,5 +1,5 @@
 --- 
-back: &id003 
+back: &id001 
   text: 84X
 instructions: &id004 
   text: 1N57RUC710N5
@@ -7,9 +7,9 @@ instructions: &id004
 options: &id005 
   text: 0P710N5
   tip: V13W 4ND CH4N63 64M3 53771N65
-cancel_button: &id002 
+cancel_button: &id003 
   text: C4NC31
-ok_button: &id001 
+ok_button: &id002 
   text: 0K
 game: 
   title: "-=- WR47H: 4PP3453 0R D13! -=- 8Y 5P00N3R -=-"
@@ -75,6 +75,42 @@ level:
   undersea: 
     name: D4V3Y J0N35' D00M
 gui: 
+  credits: 
+    title: CR3D175
+    button: 
+      back: *id001
+    body: |
+      &5P00N3R; 4R7, D3516N, C0D3 & 50UND: 5P00N3R
+      
+      &MU51C; MU51C: 8R14N P3PP3R5
+      
+      &F0N7; F0N7: C0PYR16H7 1998-2003 YUJ1 05H1H070
+      
+      &0RYX; 50M3 5PR1735 & 6R4PH1C41 57Y13: 0RYX
+      
+      &RU8Y; 118R4R135 (RU8Y 63M5):
+        - 605U 8Y J1NR
+        - CH1N6U 8Y 1PP4
+        - 73XP14Y 8Y 84N1573RF13ND
+        - F1D617 8Y 5P00N3R
+        - CH1PMUNK
+        - R18N
+        - 0CR4 (F0R W1ND0W5 3X3CU74813)
+      
+      ________________________________
+      
+      5P3C141 7H4NK5 70:
+      
+      * 5111C0N31D010N F0R 7H3 1N17141 8R41N570RM1N6 535510N 7H47 64V3 81R7H 70 7H3 64M3.
+      
+      * 5P1D3R5P17, 5111C0N31D010N, 1PP4, MYX, 5P42, M47H145_, J1NR, D4HRK431_ P13, 4ND 84N1573RF13ND F0R P14Y-73571N6 4ND 5U6635710N5.
+      
+      * M3M83R5 0F 71650URC3 WH0 64V3 F33D84X 1N 7H3 7H3 WR47H 70P1C.
+      
+      * 1PP4 F0R C0D3 5N1PP375 1 57013; 1 M34N, W45 61V3N :)
+      
+      * J1NR F0R M4K1N6 7H3 05 X 3X3CU74813 P4X463 (4ND PU771N6 UP W17H H31P1N6 M3 8U11D 17 0N 11NUX!).
+
   view_achievements: 
     title: 4CH13V3M3N75
     locked: 10X3D
@@ -83,10 +119,10 @@ gui:
       confirm_reset: 
         message: R3411Y D31373 411 57471571C5, 4CH1V3M3N75 4ND UN10X5?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     button: 
-      back: *id003
+      back: *id001
       unlock: 
         text: UN10X 411
         tip: 4110W U53 0F 411 F347UR35, 3V3N 1F 7H3Y 4R3 10X3D, UN711 64M3 15 R3574R73D
@@ -108,13 +144,13 @@ gui:
       player_name: P14Y3R N4M3
       port: P0R7
     button: 
-      back: *id003
+      back: *id001
       host: 
         text: H057
   instructions: 
     title: 1N57RUC710N5
     button: 
-      back: *id003
+      back: *id001
       next: 
         text: N3X7
       previous: 
@@ -183,26 +219,6 @@ gui:
           
           * Y0UR H3417H 15 5H0WN 45 4 R3D 84R. DY1N6 W111 M34N 7H3 07H3R P14Y3R W1N5 8Y D3F4U17!
 
-      credits: 
-        title: CR3D175
-        body: |
-          * 4R7, 50UND & C0D3: 5P00N3R
-          
-          * MU51C: 8R14N P3PP3R5
-          
-          * F0N7: C0PYR16H7 1998-2003 YUJ1 05H1H070
-          
-          * 50M3 5PR1735 4ND 7H3 0V3R411 6R4PH1C41 57Y13: 0RYX
-          
-          * 118R4R135 (RU8Y 63M5):
-            - 605U 8Y J1NR
-            - CH1N6U 8Y 1PP4
-            - 73XP14Y 8Y 84N1573RF13ND
-            - F1D617 8Y 5P00N3R
-            - CH1PMUNK
-            - R18N
-            - 0CR4 (F0R W1ND0W5 3X3CU74813)
-
   join_details: 
     title: J01N1N6 4 64M3
     label: 
@@ -210,7 +226,7 @@ gui:
       address: H057 4DDR355
       port: H057 P0R7
     button: 
-      back: *id003
+      back: *id001
       join: 
         text: J01N
   lobby: 
@@ -219,7 +235,7 @@ gui:
       client: C113N7 1088Y
       offline: 1088Y
     button: 
-      back: *id003
+      back: *id001
       send: 
         text: 53ND
       ready: 
@@ -238,8 +254,8 @@ gui:
       confirm_quit: 
         message: R3411Y 134V3?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       version: V%1
     button: 
@@ -251,6 +267,9 @@ gui:
         text: 4CH13V3M3N75
         tip: R3V13W Y0UR 4CH13V3M3N75
       options: *id005
+      credits: 
+        text: CR3D175
+        tip: 533 WH0 15 70 814M3 F0R 7H3 64M3
       exit: 
         text: 3X17
         tip: 134V3 64M3
@@ -260,10 +279,10 @@ gui:
       confirm_default: 
         message: R3411Y R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     button: 
-      back: *id003
+      back: *id001
       audio: 
         text: 4UD10
       video: 
@@ -281,14 +300,14 @@ gui:
       confirm_default: 
         message: R3411Y 537 411 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       master: M4573R
       effects: 3FF3C75
       music: MU51C
     button: 
-      back: *id003
+      back: *id001
       mute: 
         text: MU73
       play_sample: 
@@ -307,7 +326,7 @@ gui:
       locale: 10C413
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
-      back: *id003
+      back: *id001
   options_video: 
     title: 0P710N5 | V1D30
     zoom: (X%1 200M)
@@ -315,12 +334,12 @@ gui:
       confirm_default: 
         message: R3411Y RUN 7H3 64M3 1N 4 W1ND0W 47 7H3 D3F4U17 5123?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
-      back: *id003
+      back: *id001
       windowed: 
         text: W1ND0W3D
         tip: RUN 7H3 64M3 1N 4 W1ND0W
@@ -338,8 +357,8 @@ gui:
       confirm_default: 
         message: R3411Y D3F4U17 411 C0N7R015?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       up: UP
       down: D0WN
@@ -351,7 +370,7 @@ gui:
       chat: CH47 (0N11N3)
       menu: M3NU
     button: 
-      back: *id003
+      back: *id001
       default: 
         text: D3F4U175
         tip: R3537 411 C0N7R015 70 7H31R D3F4U17 V41U35
@@ -371,7 +390,7 @@ gui:
   play: 
     title: P14Y WR47H
     button: 
-      back: *id003
+      back: *id001
       offline: 
         text: 0FF11N3 64M3
         tip: 807H P14Y3R5 0N 7H3 54M3 K3Y804RD

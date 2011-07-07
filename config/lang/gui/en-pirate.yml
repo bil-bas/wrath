@@ -1,5 +1,5 @@
 --- 
-back: &id003 
+back: &id001 
   text: Belay
 instructions: &id004 
   text: Instructions
@@ -7,9 +7,9 @@ instructions: &id004
 options: &id005 
   text: Riggin'
   tip: View an' change game settings
-cancel_button: &id002 
+cancel_button: &id003 
   text: Cancel
-ok_button: &id001 
+ok_button: &id002 
   text: OK
 game: 
   title: "-=- Wrath: Appease or Die! -=- by Spooner -=-"
@@ -75,6 +75,42 @@ level:
   undersea: 
     name: Davey Jones' Doom
 gui: 
+  credits: 
+    title: Credits
+    button: 
+      back: *id001
+    body: |
+      &spooner; Art, Design, Code & Sound: Spooner
+      
+      &music; Music: Brian Peppers
+      
+      &font; Font: Copyright 1998-2003 Yuji Oshihoto
+      
+      &oryx; Some sprites & graphical style: Oryx
+      
+      &ruby; Libraries (Ruby gems):
+        - Gosu by jlnr
+        - Chingu by Ippa
+        - TexPlay by Banisterfiend
+        - Fidgit by Spooner
+        - Chipmunk
+        - R18n
+        - Ocra (for Windows executable)
+      
+      ________________________________
+      
+      Special thanks t':
+      
+      * SiliconEidolon for th' initial brainstormin' session that gave birth t' th' game.
+      
+      * Spiderspit, SiliconEidolon, Ippa, Myx, Spaz, mathias_, jlnr, Dahrkael_ Pie, an' Banisterfiend for play-testin' an' suggestions.
+      
+      * Members o' TIGSource who gave feedback in th' th' Wrath topic.
+      
+      * Ippa for code snippets I stole; I mean, was given :)
+      
+      * jlnr for makin' th' OS X executable package (an' puttin' up with helpin' me build it on Linux!).
+
   view_achievements: 
     title: Deeds
     locked: Locked
@@ -83,10 +119,10 @@ gui:
       confirm_reset: 
         message: Really delete all statistics, achivements an' unlocks?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     button: 
-      back: *id003
+      back: *id001
       unlock: 
         text: Unlock all
         tip: Allow use o' all features, even if they be locked, until game be restarted
@@ -108,13 +144,13 @@ gui:
       player_name: Pirate name
       port: Port
     button: 
-      back: *id003
+      back: *id001
       host: 
         text: Host
   instructions: 
     title: Instructions
     button: 
-      back: *id003
+      back: *id001
       next: 
         text: Next
       previous: 
@@ -183,26 +219,6 @@ gui:
           
           * Yer health be shown as a red bar. Dyin' will mean th' other pirate wins by default!
 
-      credits: 
-        title: Credits
-        body: |
-          * Art, Sound & Code: Spooner
-          
-          * Music: Brian Peppers
-          
-          * Font: Copyright 1998-2003 Yuji Oshihoto
-          
-          * Some sprites an' th' overall graphical style: Oryx
-          
-          * Libraries (Ruby gems):
-            - Gosu by jlnr
-            - Chingu by Ippa
-            - TexPlay by Banisterfiend
-            - Fidgit by Spooner
-            - Chipmunk
-            - R18n
-            - Ocra (for Windows executable)
-
   join_details: 
     title: Joinin' a Game
     label: 
@@ -210,7 +226,7 @@ gui:
       address: Host address
       port: Host port
     button: 
-      back: *id003
+      back: *id001
       join: 
         text: Join
   lobby: 
@@ -219,7 +235,7 @@ gui:
       client: Client lobby
       offline: Lobby
     button: 
-      back: *id003
+      back: *id001
       send: 
         text: Send
       ready: 
@@ -238,8 +254,8 @@ gui:
       confirm_quit: 
         message: Really leave?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       version: v%1
     button: 
@@ -251,6 +267,9 @@ gui:
         text: Deeds
         tip: Review yer deeds
       options: *id005
+      credits: 
+        text: Credits
+        tip: See who be t' blame for th' game
       exit: 
         text: Exit
         tip: Leave game
@@ -260,10 +279,10 @@ gui:
       confirm_default: 
         message: Really reset all riggin' (audio, video an' controls) t' their default values?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     button: 
-      back: *id003
+      back: *id001
       audio: 
         text: Audio
       video: 
@@ -281,14 +300,14 @@ gui:
       confirm_default: 
         message: Really set all volumes t' default values an' remove mutin'?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       master: Master
       effects: Effects
       music: Music
     button: 
-      back: *id003
+      back: *id001
       mute: 
         text: Mute
       play_sample: 
@@ -307,7 +326,7 @@ gui:
       locale: Locale
       warning: Changes require that th' game be restarted
     button: 
-      back: *id003
+      back: *id001
   options_video: 
     title: Riggin' | Video
     zoom: (X%1 zoom)
@@ -315,12 +334,12 @@ gui:
       confirm_default: 
         message: Really run th' game in a window at th' default size?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       warning: Changes require that th' game be restarted
     button: 
-      back: *id003
+      back: *id001
       windowed: 
         text: Windowed
         tip: Run th' game in a window
@@ -338,8 +357,8 @@ gui:
       confirm_default: 
         message: Really default all controls?
         button: 
-          ok: *id001
-          cancel: *id002
+          ok: *id002
+          cancel: *id003
     label: 
       up: Up
       down: Down
@@ -351,7 +370,7 @@ gui:
       chat: Chat (online)
       menu: Menu
     button: 
-      back: *id003
+      back: *id001
       default: 
         text: Defaults
         tip: Reset all controls t' their default values
@@ -371,7 +390,7 @@ gui:
   play: 
     title: Play Wrath
     button: 
-      back: *id003
+      back: *id001
       offline: 
         text: Offline game
         tip: Both pirates on th' same keyboard
