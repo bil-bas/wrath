@@ -114,9 +114,14 @@ class Menu < Gui
   end
 
   def close
-    log.info "Exited game"
-    super
-    exit
+    translation = t.dialog.confirm_quit
+    message(translation.message, type: :ok_cancel, ok_text: translation.button.ok.text, cancel_text: translation.button.cancel.text) do |result|
+      if result == :ok
+        log.info "Exited game"
+        super
+        exit
+      end
+    end
   end
 end
 end

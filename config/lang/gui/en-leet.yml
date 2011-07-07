@@ -1,12 +1,16 @@
 --- 
-back: &id001 
+back: &id003 
   text: 84X
-instructions: &id002 
+instructions: &id004 
   text: 1N57RUC710N5
   tip: 134RN H0W 70 P14Y 7H3 64M3
-options: &id003 
+options: &id005 
   text: 0P710N5
   tip: V13W 4ND CH4N63 64M3 53771N65
+cancel_button: &id002 
+  text: C4NC31
+ok_button: &id001 
+  text: 0K
 game: 
   title: "-=- WR47H: 4PP3453 0R D13! -=- 8Y 5P00N3R -=-"
 god: 
@@ -78,8 +82,11 @@ gui:
     dialog: 
       confirm_reset: 
         message: R3411Y D31373 411 57471571C5, 4CH1V3M3N75 4ND UN10X5?
+        button: 
+          ok: *id001
+          cancel: *id002
     button: 
-      back: *id001
+      back: *id003
       unlock: 
         text: UN10X 411
         tip: 4110W U53 0F 411 F347UR35, 3V3N 1F 7H3Y 4R3 10X3D, UN711 64M3 15 R3574R73D
@@ -91,8 +98,8 @@ gui:
       resume: 
         text: R35UM3
         tip: R35UM3 P14Y1N6 7H3 CURR3N7 64M3
-      instructions: *id002
-      options: *id003
+      instructions: *id004
+      options: *id005
       quit: 
         text: QU17
   host_details: 
@@ -101,13 +108,13 @@ gui:
       player_name: P14Y3R N4M3
       port: P0R7
     button: 
-      back: *id001
+      back: *id003
       host: 
         text: H057
   instructions: 
     title: 1N57RUC710N5
     button: 
-      back: *id001
+      back: *id003
       next: 
         text: N3X7
       previous: 
@@ -203,7 +210,7 @@ gui:
       address: H057 4DDR355
       port: H057 P0R7
     button: 
-      back: *id001
+      back: *id003
       join: 
         text: J01N
   lobby: 
@@ -212,7 +219,7 @@ gui:
       client: C113N7 1088Y
       offline: 1088Y
     button: 
-      back: *id001
+      back: *id003
       send: 
         text: 53ND
       ready: 
@@ -227,17 +234,23 @@ gui:
   menu: 
     title: WR47H
     subtitle: 4PP3453 0R D13!
+    dialog: 
+      confirm_quit: 
+        message: R3411Y 134V3?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       version: V%1
     button: 
       play: 
         text: P14Y
         tip: P14Y 7H3 64M3, 0N- 0R 0FF-11N3
-      instructions: *id002
+      instructions: *id004
       achievements: 
         text: 4CH13V3M3N75
         tip: R3V13W Y0UR 4CH13V3M3N75
-      options: *id003
+      options: *id005
       exit: 
         text: 3X17
         tip: 134V3 64M3
@@ -246,8 +259,11 @@ gui:
     dialog: 
       confirm_default: 
         message: R3411Y R3537 411 0P710N5 (4UD10, V1D30 4ND C0N7R015) 70 7H31R D3F4U17 V41U35?
+        button: 
+          ok: *id001
+          cancel: *id002
     button: 
-      back: *id001
+      back: *id003
       audio: 
         text: 4UD10
       video: 
@@ -264,12 +280,15 @@ gui:
     dialog: 
       confirm_default: 
         message: R3411Y 537 411 V01UM35 70 D3F4U17 V41U35 4ND R3M0V3 MU71N6?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       master: M4573R
       effects: 3FF3C75
       music: MU51C
     button: 
-      back: *id001
+      back: *id003
       mute: 
         text: MU73
       play_sample: 
@@ -288,17 +307,20 @@ gui:
       locale: 10C413
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
-      back: *id001
+      back: *id003
   options_video: 
     title: 0P710N5 | V1D30
     zoom: (X%1 200M)
     dialog: 
       confirm_default: 
         message: R3411Y RUN 7H3 64M3 1N 4 W1ND0W 47 7H3 D3F4U17 5123?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       warning: CH4N635 R3QU1R3 7H47 7H3 64M3 83 R3574R73D
     button: 
-      back: *id001
+      back: *id003
       windowed: 
         text: W1ND0W3D
         tip: RUN 7H3 64M3 1N 4 W1ND0W
@@ -315,6 +337,9 @@ gui:
     dialog: 
       confirm_default: 
         message: R3411Y D3F4U17 411 C0N7R015?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       up: UP
       down: D0WN
@@ -326,7 +351,7 @@ gui:
       chat: CH47 (0N11N3)
       menu: M3NU
     button: 
-      back: *id001
+      back: *id003
       default: 
         text: D3F4U175
         tip: R3537 411 C0N7R015 70 7H31R D3F4U17 V41U35
@@ -346,7 +371,7 @@ gui:
   play: 
     title: P14Y WR47H
     button: 
-      back: *id001
+      back: *id003
       offline: 
         text: 0FF11N3 64M3
         tip: 807H P14Y3R5 0N 7H3 54M3 K3Y804RD

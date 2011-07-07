@@ -1,12 +1,16 @@
 --- 
-back: &id001 
+back: &id003 
   text: Belay
-instructions: &id002 
+instructions: &id004 
   text: Instructions
   tip: Learn how t' play th' game
-options: &id003 
+options: &id005 
   text: Riggin'
   tip: View an' change game settings
+cancel_button: &id002 
+  text: Cancel
+ok_button: &id001 
+  text: OK
 game: 
   title: "-=- Wrath: Appease or Die! -=- by Spooner -=-"
 god: 
@@ -78,8 +82,11 @@ gui:
     dialog: 
       confirm_reset: 
         message: Really delete all statistics, achivements an' unlocks?
+        button: 
+          ok: *id001
+          cancel: *id002
     button: 
-      back: *id001
+      back: *id003
       unlock: 
         text: Unlock all
         tip: Allow use o' all features, even if they be locked, until game be restarted
@@ -91,8 +98,8 @@ gui:
       resume: 
         text: Resume
         tip: Resume playin' th' current game
-      instructions: *id002
-      options: *id003
+      instructions: *id004
+      options: *id005
       quit: 
         text: Quit
   host_details: 
@@ -101,13 +108,13 @@ gui:
       player_name: Pirate name
       port: Port
     button: 
-      back: *id001
+      back: *id003
       host: 
         text: Host
   instructions: 
     title: Instructions
     button: 
-      back: *id001
+      back: *id003
       next: 
         text: Next
       previous: 
@@ -203,7 +210,7 @@ gui:
       address: Host address
       port: Host port
     button: 
-      back: *id001
+      back: *id003
       join: 
         text: Join
   lobby: 
@@ -212,7 +219,7 @@ gui:
       client: Client lobby
       offline: Lobby
     button: 
-      back: *id001
+      back: *id003
       send: 
         text: Send
       ready: 
@@ -227,17 +234,23 @@ gui:
   menu: 
     title: Wrath
     subtitle: Appease or Die!
+    dialog: 
+      confirm_quit: 
+        message: Really leave?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       version: v%1
     button: 
       play: 
         text: Play
         tip: Play th' game, on- or off-line
-      instructions: *id002
+      instructions: *id004
       achievements: 
         text: Deeds
         tip: Review yer deeds
-      options: *id003
+      options: *id005
       exit: 
         text: Exit
         tip: Leave game
@@ -246,8 +259,11 @@ gui:
     dialog: 
       confirm_default: 
         message: Really reset all riggin' (audio, video an' controls) t' their default values?
+        button: 
+          ok: *id001
+          cancel: *id002
     button: 
-      back: *id001
+      back: *id003
       audio: 
         text: Audio
       video: 
@@ -264,12 +280,15 @@ gui:
     dialog: 
       confirm_default: 
         message: Really set all volumes t' default values an' remove mutin'?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       master: Master
       effects: Effects
       music: Music
     button: 
-      back: *id001
+      back: *id003
       mute: 
         text: Mute
       play_sample: 
@@ -288,17 +307,20 @@ gui:
       locale: Locale
       warning: Changes require that th' game be restarted
     button: 
-      back: *id001
+      back: *id003
   options_video: 
     title: Riggin' | Video
     zoom: (X%1 zoom)
     dialog: 
       confirm_default: 
         message: Really run th' game in a window at th' default size?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       warning: Changes require that th' game be restarted
     button: 
-      back: *id001
+      back: *id003
       windowed: 
         text: Windowed
         tip: Run th' game in a window
@@ -315,6 +337,9 @@ gui:
     dialog: 
       confirm_default: 
         message: Really default all controls?
+        button: 
+          ok: *id001
+          cancel: *id002
     label: 
       up: Up
       down: Down
@@ -326,7 +351,7 @@ gui:
       chat: Chat (online)
       menu: Menu
     button: 
-      back: *id001
+      back: *id003
       default: 
         text: Defaults
         tip: Reset all controls t' their default values
@@ -346,7 +371,7 @@ gui:
   play: 
     title: Play Wrath
     button: 
-      back: *id001
+      back: *id003
       offline: 
         text: Offline game
         tip: Both pirates on th' same keyboard

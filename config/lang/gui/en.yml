@@ -8,6 +8,10 @@ instructions: &instructions_button
 options: &options_button
   text: Options
   tip: View and change game settings
+cancel_button: &cancel_button
+  text: Cancel
+ok_button: &ok_button
+  text: OK
 
 # Game window.
 game:
@@ -90,6 +94,9 @@ gui:
     dialog:
       confirm_reset:
         message: Really delete all statistics, achivements and unlocks?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     button:
       back: *back_button
       unlock:
@@ -255,6 +262,12 @@ gui:
   menu:
     title: Wrath
     subtitle: Appease or Die!
+    dialog:
+      confirm_quit:
+        message: Really leave?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     label:
       version: v%1
 
@@ -277,6 +290,9 @@ gui:
     dialog:
       confirm_default:
         message: Really reset all options (audio, video and controls) to their default values?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     button:
       back: *back_button
       audio:
@@ -297,6 +313,9 @@ gui:
     dialog:
       confirm_default:
         message: Really set all volumes to default values and remove muting?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     label:
       master: Master
       effects: Effects
@@ -332,6 +351,9 @@ gui:
     dialog:
       confirm_default:
         message: Really run the game in a window at the default size?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     label:
       warning: Changes require that the game be restarted
     button:
@@ -354,6 +376,9 @@ gui:
     dialog:
       confirm_default:
         message: Really default all controls?
+        button:
+          ok: *ok_button
+          cancel: *cancel_button
     label:
       up: Up
       down: Down

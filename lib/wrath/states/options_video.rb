@@ -47,7 +47,8 @@ module Wrath
 
     def extra_buttons
       button(t.button.default.text, tip: t.button.default.tip) do
-        message(t.dialog.confirm_default.message, type: :ok_cancel) do |result|
+        translation = t.dialog.confirm_default
+        message(translation.message, type: :ok_cancel, ok_text: translation.button.ok.text, cancel_text: translation.button.cancel.text) do |result|
           if result == :ok
             @window_scale_combo.value = DEFAULT_SCALE
             @full_screen_group.value = false
