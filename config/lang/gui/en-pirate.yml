@@ -80,11 +80,11 @@ gui:
     button: 
       back: *id001
     body: |
-      &spooner; Art, Design, Code & Sound: Spooner
+      &spooner; Everythin' else: Spooner (Bil Bas)
       
-      &music; Music: Brian Peppers
+      &music; Music: Maverick (Brian Peppers)
       
-      &font; Font: Copyright 1998-2003 Yuji Oshihoto
+      &font; Font: 04FONT Copyright 1998-2003 Yuji Oshihoto
       
       &oryx; Some sprites & graphical style: Oryx
       

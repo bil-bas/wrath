@@ -94,7 +94,7 @@ Many thanks to:
 
 h2. Third party tools and assets used
 
-* Original music by "Brian Peppers":http://polyhedricpeppers.weebly.com/. !http://i.creativecommons.org/l/by-sa/3.0/88x31.png(CC BY-SA)!:http://creativecommons.org/licenses/by-sa/3.0/
+* Original music by "Maverick (Brian Peppers)":http://polyhedricpeppers.weebly.com/. !http://i.creativecommons.org/l/by-sa/3.0/88x31.png(CC BY-SA)!:http://creativecommons.org/licenses/by-sa/3.0/
 * Most sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. !http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png(CC BY-NC-ND)!:http://creativecommons.org/licenses/by-nc-nd/3.0/
 * Original sprites created with "GIMP":http://www.gimp.org/
 * Sound effects created using "bfxr":http://www.bfxr.net/ and converted using "Audacity":http://audacity.sourceforge.net/
