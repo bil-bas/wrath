@@ -140,7 +140,7 @@ module Wrath
     def level_picker
       grid num_columns: 2, padding: 0, spacing_v: 1, spacing_h: 3 do
         label t.label.map, align_v: :center
-        @level_picker = combo_box value: Level::LEVELS.first, enabled: (not client?), do
+        @level_picker = combo_box value: Level::LEVELS.first, enabled: (not client?) do
           subscribe :changed do |sender, level|
             send_message(Message::UpdateLobby.new(:level, level)) if host?
             @god_picker.value = level::GOD
@@ -148,7 +148,7 @@ module Wrath
         end
 
         label t.label.god, align_v: :center
-        @god_picker = combo_box value: @level_picker.value::GOD, do
+        @god_picker = combo_box value: @level_picker.value::GOD do
           subscribe :changed do |sender, god|
             send_message(Message::UpdateLobby.new(:god, god)) if host?
           end

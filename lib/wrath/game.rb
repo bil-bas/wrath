@@ -1,3 +1,5 @@
+Config = RbConfig if defined? RbConfig # 1.9.3 fudge.
+
 # Standard libs
 require 'forwardable'
 require 'yaml'
