@@ -5,22 +5,34 @@
 -
   :name: :played_online
   :statistics:
-    - [:played, :online, :times]
+    -
+      - :played
+      - :online
+      - :times
   :required: 1
   :unlocks: []
 
 -
   :name: :played_offline
   :statistics:
-    - [:played, :offline, :times]
+    -
+      - :played
+      - :offline
+      - :times
   :required: 1
   :unlocks: []
 
 -
   :name: :long_play_1
   :statistics:
-    - [:played, :offline, :duration]
-    - [:played, :online, :duration]
+    -
+      - :played
+      - :offline
+      - :times
+    -
+      - :played
+      - :online
+      - :times
   :required: 3600
   :unlocks:
     -
@@ -30,8 +42,14 @@
 -
   :name: :long_play_2
   :statistics:
-    - [:played, :offline, :duration]
-    - [:played, :online, :duration]
+    -
+      - :played
+      - :offline
+      - :duration
+    -
+      - :played
+      - :online
+      - :duration
   :required: 36000
   :unlocks: []
 
@@ -42,7 +60,10 @@
 -
   :name: :played_forest
   :statistics:
-    - [:levels, :Forest, :played]
+    - 
+      - :levels
+      - :Forest
+      - :played
   :required: 1
   :unlocks:
     -
@@ -55,7 +76,10 @@
 -
   :name: :played_cave
   :statistics:
-    - [:levels, :Cave, :played]
+    -  
+      - :levels
+      - :Cave
+      - :played
   :required: 1
   :unlocks:
     -
@@ -68,7 +92,10 @@
 -
   :name: :played_island
   :statistics:
-    - [:levels, :Island, :played]
+    - 
+      - :levels
+      - :Island
+      - :played
   :required: 1
   :unlocks:
     -
@@ -81,7 +108,10 @@
 -
   :name: :played_ship
   :statistics:
-    - [:levels, :Ship, :played]
+    - 
+      - :levels
+      - :Ship
+      - :played
   :required: 1
   :unlocks:
     -
@@ -97,7 +127,10 @@
 -
   :name: :played_undersea
   :statistics:
-    - [:levels, :Undersea, :played]
+    - 
+      - :levels
+      - :Undersea
+      - :played
   :required: 1
   :unlocks:
     -
@@ -110,7 +143,10 @@
 -
   :name: :played_desert
   :statistics:
-    - [:levels, :Desert, :played]
+    - 
+      - :levels
+      - :Desert
+      - :played
   :required: 1
   :unlocks:
     -
@@ -123,7 +159,10 @@
 -
   :name: :played_facility
   :statistics:
-    - [:levels, :Facility, :played]
+    - 
+      - :levels
+      - :Facility
+      - :played
   :required: 1
   :unlocks:
     -
@@ -139,7 +178,10 @@
 -
   :name: :played_moon
   :statistics:
-    - [:levels, :Moon, :played]
+    - 
+      - :levels
+      - :Moon
+      - :played
   :required: 1
   :unlocks:
     -
@@ -155,30 +197,48 @@
 -
   :name: :sacrificed_object
   :statistics:
-    - [:sacrifices, :totals, :objects]
+    - 
+      - :sacrifices
+      - :totals
+      - :objects
   :required: 100
   :unlocks: []
 
 -
   :name: :sacrificed_animal
   :statistics:
-    - [:sacrifices, :totals, :animals]
+    - 
+      - :sacrifices
+      - :totals
+      - :animals
   :required: 10
   :unlocks: []
 
 -
   :name: :sacrificed_humanoid
   :statistics:
-    - [:sacrifices, :totals, :humanoids]
+    - 
+      - :sacrifices
+      - :totals
+      - :humanoids
   :required: 1
   :unlocks: []
 
 -
   :name: :sacrificed_everything
   :statistics:
-    - [:sacrifices, :totals, :objects]
-    - [:sacrifices, :totals, :animals]
-    - [:sacrifices, :totals, :humanoids]
+    - 
+      - :sacrifices
+      - :totals
+      - :objects
+    - 
+      - :sacrifices
+      - :totals
+      - :animals
+    - 
+      - :sacrifices
+      - :totals
+      - :humanoids
   :required: 1000
   :unlocks:
     -
@@ -191,21 +251,30 @@
 -
   :name: :sacrificed_knight
   :statistics:
-    - [:sacrifices, :type, :Knight]
+    - 
+      - :sacrifices
+      - :type
+      - :Knight
   :required: 1
   :unlocks: []
 
 -
   :name: :sacrificed_monkey
   :statistics:
-    - [:sacrifices, :type, :Monkey]
+    - 
+      - :sacrifices
+      - :type
+      - :Monkey
   :required: 12
   :unlocks: []
 
 -
   :name: :sacrificed_test_subject
   :statistics:
-    - [:sacrifices, :type, :TestSubject]
+    - 
+      - :sacrifices
+      - :type
+      - :TestSubject
   :required: 1
   :unlocks:
     -
@@ -215,7 +284,10 @@
 -
   :name: :sacrificed_sheep
   :statistics:
-    - [:sacrifices, :type, :Sheep]
+    - 
+      - :sacrifices
+      - :type
+      - :Sheep
   :required: 100
   :unlocks: []
 
@@ -223,8 +295,14 @@
 -
   :name: :death_fire
   :statistics:
-    - [:deaths, :type, :Fire]
-    - [:deaths, :type, :Burning]
+    - 
+      - :deaths
+      - :type
+      - :Fire
+    - 
+      - :deaths
+      - :type
+      - :Burning
   :required: 1
   :unlocks: []
 
@@ -232,7 +310,9 @@
 -
   :name: :damage_1
   :statistics:
-    - [:damage, :total]
+    - 
+      - :damage
+      - :total
   :required: 10000
   :unlocks: []
 
@@ -240,6 +320,8 @@
 -
   :name: :status_irradiated
   :statistics:
-    - [:status, :irradiated]
+    - 
+      - :status
+      - :irradiated
   :required: 60.0
   :unlocks: []

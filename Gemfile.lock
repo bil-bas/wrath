@@ -19,9 +19,9 @@ GEM
     r18n-core (0.4.12)
     r18n-desktop (0.4.12)
       r18n-core (= 0.4.12)
-    texplay (0.3.5)
-      gosu (>= 0.7.25)
     texplay (0.3.5-x86-mingw32)
+      gosu (>= 0.7.25)
+    texplay (0.4.2)
       gosu (>= 0.7.25)
 
 PLATFORMS
@@ -34,4 +34,4 @@ DEPENDENCIES
   fidgit (~> 0.1.9)
   gosu (~> 0.7.38)
   r18n-desktop (~> 0.4.9)
-  texplay (~> 0.3.5)
+  texplay (~> 0.3)
