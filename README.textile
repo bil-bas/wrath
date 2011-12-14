@@ -1,10 +1,6 @@
-h1. Wrath: Appease or Die! [v0.0.3alpha]
+h1. Wrath: Appease or Die!
 
----
-
-* "Github project (Spooner/wrath)":https://github.com/Spooner/wrath (including issue tracker and downloads)
-* "Devlog @ libgosu forums":http://www.libgosu.org/cgi-bin/mwf/topic_show.pl?tid=554
-* "Feedback @ TIGSource forums":http://forums.tigsource.com/index.php?topic=19459
+* Website: http://spooner.github.com/games/wrath/
 * The game was developed by Spooner (Bil Bas) bil.bagpuss@gmail.com
 
 h2. Description
