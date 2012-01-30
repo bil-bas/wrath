@@ -9,11 +9,6 @@ RELEASE_VERSION = Wrath::VERSION
 
 OSX_GEMS = %w[chingu fidgit clipboard] # Source gems for inclusion in the .app package.
 
-#LICENSE_FILE = "COPYING.txt"
-
-# My scripts which help me package games.
-require_relative "../release_packager/lib/release_packager"
-
 CLEAN.include("*.log")
 CLOBBER.include("doc/**/*")
 
